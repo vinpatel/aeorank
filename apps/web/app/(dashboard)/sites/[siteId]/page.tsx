@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { createServerSupabaseClient } from "@/lib/supabase";
 import { ScanStatus } from "@/components/ScanStatus";
 import { ScoreBreakdown } from "@/components/ScoreBreakdown";
+import { ScoreChart } from "@/components/ScoreChart";
 import type { DimensionScore } from "@aeorank/core";
 
 interface PageProps {
@@ -40,6 +41,24 @@ export default async function SiteDetailPage({ params }: PageProps) {
 		.order("scanned_at", { ascending: false })
 		.limit(1)
 		.maybeSingle();
+
+	// Fetch last 30 days of completed scans for score history chart
+	const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString();
+	const { data: historyScans } = await supabase
+		.from("scans")
+		.select("score, scanned_at")
+		.eq("site_id", siteId)
+		.eq("user_id", userId)
+		.eq("status", "complete")
+		.gte("scanned_at", thirtyDaysAgo)
+		.order("scanned_at", { ascending: true });
+
+	const scoreHistory = (historyScans ?? [])
+		.filter((s) => s.score != null)
+		.map((s) => ({
+			date: s.scanned_at as string,
+			score: s.score as number,
+		}));
 
 	return (
 		<div style={{ maxWidth: "800px" }}>
@@ -133,6 +152,23 @@ export default async function SiteDetailPage({ params }: PageProps) {
 									})}
 								</span>
 							)}
+						</div>
+					)}
+					{scoreHistory.length > 0 && (
+						<div style={{ marginBottom: "24px" }}>
+							<p
+								style={{
+									fontSize: "12px",
+									fontWeight: 600,
+									color: "#6b7280",
+									textTransform: "uppercase",
+									letterSpacing: "0.05em",
+									marginBottom: "8px",
+								}}
+							>
+								Score History (30 days)
+							</p>
+							<ScoreChart data={scoreHistory} />
 						</div>
 					)}
 					<ScoreBreakdown
