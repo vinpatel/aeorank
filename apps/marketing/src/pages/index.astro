@@ -1,76 +1,20 @@
 ---
 import Base from "../layouts/Base.astro";
+import Hero from "../components/Hero.astro";
+import HowItWorks from "../components/HowItWorks.astro";
+import FilesList from "../components/FilesList.astro";
+import ScoringExplainer from "../components/ScoringExplainer.astro";
+import Pricing from "../components/Pricing.astro";
+import FAQ from "../components/FAQ.astro";
+import CTASection from "../components/CTASection.astro";
 ---
 
 <Base title="AEOrank — AI Engine Optimization for Every Website">
-	<section id="hero" class="px-6 py-24">
-		<div class="mx-auto max-w-6xl">
-			<h1 class="text-5xl font-bold leading-tight md:text-6xl">Make Your Site Visible to AI</h1>
-			<p class="mt-6 max-w-2xl text-lg text-text-muted">
-				AI engines power 40% of web discovery. AEOrank scans your site, scores your AI visibility
-				across 12 dimensions, and generates the 8 files that make AI engines find you.
-			</p>
-			<div class="mt-8 flex items-center gap-4">
-				<a
-					href="https://docs.aeorank.dev/getting-started/"
-					class="inline-block bg-accent px-6 py-3 text-base font-medium text-bg rounded-sm"
-				>
-					Get Started Free
-				</a>
-				<a href="#how-it-works" class="text-base text-text-muted hover:text-text">
-					See How It Works &rarr;
-				</a>
-			</div>
-		</div>
-	</section>
-
-	<section id="how-it-works" class="border-t border-border px-6 py-24">
-		<div class="mx-auto max-w-6xl">
-			<h2 class="text-4xl font-bold md:text-5xl">Three Commands. Eight Files. Zero Config.</h2>
-			<p class="mt-4 text-lg text-text-muted">From scan to deployment-ready files in under 30 seconds.</p>
-		</div>
-	</section>
-
-	<section id="files" class="border-t border-border px-6 py-24">
-		<div class="mx-auto max-w-6xl">
-			<h2 class="text-4xl font-bold md:text-5xl">8 Files. Every One Matters.</h2>
-			<p class="mt-4 text-lg text-text-muted">AEOrank generates the complete set of files AI engines look for.</p>
-		</div>
-	</section>
-
-	<section id="scoring" class="border-t border-border px-6 py-24">
-		<div class="mx-auto max-w-6xl">
-			<h2 class="text-4xl font-bold md:text-5xl">12 Dimensions. One Score.</h2>
-			<p class="mt-4 text-lg text-text-muted">AEOrank measures what actually matters for AI engine visibility.</p>
-		</div>
-	</section>
-
-	<section id="pricing" class="border-t border-border px-6 py-24">
-		<div class="mx-auto max-w-6xl">
-			<h2 class="text-4xl font-bold md:text-5xl">Simple Pricing</h2>
-			<p class="mt-4 text-lg text-text-muted">The CLI is free forever. Pay when you need the dashboard.</p>
-		</div>
-	</section>
-
-	<section id="faq" class="border-t border-border px-6 py-24">
-		<div class="mx-auto max-w-6xl">
-			<h2 class="text-4xl font-bold md:text-5xl">Questions & Answers</h2>
-		</div>
-	</section>
-
-	<section id="get-started" class="border-t border-border px-6 py-24">
-		<div class="mx-auto max-w-6xl text-center">
-			<h2 class="text-4xl font-bold md:text-5xl">Ready to See Your Score?</h2>
-			<div class="mx-auto mt-8 max-w-lg rounded-sm bg-accent p-4">
-				<code class="font-mono text-bg">npx aeorank scan https://your-site.com</code>
-			</div>
-			<a
-				href="https://docs.aeorank.dev/getting-started/"
-				class="mt-8 inline-block bg-accent px-6 py-3 text-base font-medium text-bg rounded-sm"
-			>
-				Read the Quick Start Guide
-			</a>
-			<p class="mt-4 text-sm text-text-muted">Free. Open source. No account required.</p>
-		</div>
-	</section>
+	<Hero />
+	<HowItWorks />
+	<FilesList />
+	<ScoringExplainer />
+	<Pricing />
+	<FAQ />
+	<CTASection />
 </Base>
