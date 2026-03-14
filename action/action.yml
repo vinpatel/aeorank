@@ -1,0 +1,121 @@
+name: "AEOrank — AEO Scanner"
+description: "Scan any URL for AI Engine Optimization (AEO) score. Posts results as a GitHub Check and PR comment."
+author: "AEOrank"
+
+branding:
+  icon: "bar-chart-2"
+  color: "blue"
+
+inputs:
+  url:
+    description: "URL to scan"
+    required: true
+  token:
+    description: "GitHub token for API calls"
+    required: false
+    default: ${{ github.token }}
+  fail-below:
+    description: "Fail the Check if AEO score drops below this value (0 = never fail)"
+    required: false
+    default: "0"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Run AEOrank scan
+      id: scan
+      shell: bash
+      run: |
+        RESULT=$(npx aeorank@latest scan "${{ inputs.url }}" --format json --no-files 2>/dev/null)
+        echo "result<<AEORANK_EOF" >> $GITHUB_OUTPUT
+        echo "$RESULT" >> $GITHUB_OUTPUT
+        echo "AEORANK_EOF" >> $GITHUB_OUTPUT
+        # Extract score for quick access
+        SCORE=$(echo "$RESULT" | node -e "const d=require('fs').readFileSync('/dev/stdin','utf8');console.log(JSON.parse(d).score)")
+        echo "score=$SCORE" >> $GITHUB_OUTPUT
+        GRADE=$(echo "$RESULT" | node -e "const d=require('fs').readFileSync('/dev/stdin','utf8');console.log(JSON.parse(d).grade)")
+        echo "grade=$GRADE" >> $GITHUB_OUTPUT
+
+    - name: Post Check Run
+      uses: actions/github-script@v8
+      env:
+        SCAN_RESULT: ${{ steps.scan.outputs.result }}
+        FAIL_BELOW: ${{ inputs.fail-below }}
+      with:
+        github-token: ${{ inputs.token }}
+        script: |
+          const result = JSON.parse(process.env.SCAN_RESULT);
+          const failBelow = parseInt(process.env.FAIL_BELOW, 10);
+          const { score, grade, url, dimensions } = result;
+
+          // Build dimension table markdown
+          const statusEmoji = { pass: '✅', warn: '⚠️', fail: '❌' };
+          const rows = dimensions.map(d =>
+            `| ${d.name} | ${d.score}/${d.maxScore} | ${statusEmoji[d.status]} ${d.status.toUpperCase()} | ${d.hint} |`
+          );
+          const table = [
+            '| Dimension | Score | Status | Recommendation |',
+            '|-----------|-------|--------|----------------|',
+            ...rows
+          ].join('\n');
+
+          // Determine correct SHA (PR head, not merge commit)
+          const sha = context.eventName === 'pull_request'
+            ? context.payload.pull_request.head.sha
+            : context.sha;
+
+          // Determine Check conclusion
+          let conclusion;
+          if (failBelow > 0 && score < failBelow) {
+            conclusion = 'failure';
+          } else if (score >= 70) {
+            conclusion = 'success';
+          } else if (score >= 40) {
+            conclusion = 'neutral';
+          } else {
+            conclusion = 'failure';
+          }
+
+          // Post Check Run
+          await github.rest.checks.create({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            head_sha: sha,
+            name: 'AEOrank Score',
+            status: 'completed',
+            conclusion: conclusion,
+            output: {
+              title: `AEO Score: ${score}/100 (${grade})`,
+              summary: `Your site scored **${score}** — Grade **${grade}** | Scanned: ${url}`,
+              text: table,
+            }
+          });
+
+          // Export table for PR comment step
+          core.exportVariable('AEORANK_TABLE', table);
+
+    - name: Find existing PR comment
+      if: ${{ github.event_name == 'pull_request' }}
+      id: fc
+      uses: peter-evans/find-comment@v3
+      with:
+        token: ${{ inputs.token }}
+        issue-number: ${{ github.event.pull_request.number }}
+        comment-author: "github-actions[bot]"
+        body-includes: "<!-- aeorank-score -->"
+
+    - name: Upsert PR comment
+      if: ${{ github.event_name == 'pull_request' }}
+      uses: peter-evans/create-or-update-comment@v5
+      with:
+        token: ${{ inputs.token }}
+        comment-id: ${{ steps.fc.outputs.comment-id }}
+        issue-number: ${{ github.event.pull_request.number }}
+        edit-mode: replace
+        body: |
+          <!-- aeorank-score -->
+          ## AEOrank Score: ${{ steps.scan.outputs.score }}/100 (${{ steps.scan.outputs.grade }})
+
+          ${{ env.AEORANK_TABLE }}
+
+          *Scanned ${{ inputs.url }} · [What is AEOrank?](https://aeorank.dev)*
