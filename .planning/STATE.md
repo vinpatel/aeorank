@@ -1,3 +1,16 @@
+---
+gsd_state_version: 1.0
+milestone: v1.0
+milestone_name: milestone
+status: unknown
+last_updated: "2026-03-14T19:58:20.868Z"
+progress:
+  total_phases: 4
+  completed_phases: 2
+  total_plans: 14
+  completed_plans: 9
+---
+
 # Project State
 
 ## Project Reference
@@ -5,16 +18,16 @@
 See: .planning/PROJECT.md (updated 2026-03-14)
 
 **Core value:** A developer runs `npx aeorank scan <url>` with zero config and gets an AEO score plus all 8 generated files needed for AI visibility — in under 30 seconds.
-**Current focus:** Phase 3 complete. Ready for Phase 4.
+**Current focus:** Phase 4 in progress. Plan 1 of 1 complete — composite GitHub Action built.
 
 ## Current Position
 
-Phase: 3 of 5 (Web Presence) — COMPLETE
-Plan: 4 of 4 in Phase 3
-Status: Phase 3 complete
-Last activity: 2026-03-14 — All 4 plans executed across 2 waves. Marketing site builds, docs site builds (18 pages), GitHub Actions workflows created.
+Phase: 4 of 5 (GitHub Action) — IN PROGRESS
+Plan: 1 of 1 in Phase 4 — COMPLETE
+Status: Phase 4 plan 1 complete
+Last activity: 2026-03-14 — Composite GitHub Action (action.yml + README.md) created with Check Run posting, PR comment upsert, fail-below threshold.
 
-Progress: [##########] 100% (Phase 3)
+Progress: [##########] 100% (Phase 4 Plan 1)
 
 ## Performance Metrics
 
@@ -36,6 +49,21 @@ Progress: [##########] 100% (Phase 3)
 - Trend: accelerating (content/config plans faster than code plans)
 
 *Updated after each plan completion*
+
+| Phase 04-github-action P01 | 78s | 2 tasks | 2 files |
+
+## Phase 4 Deliverables
+
+### Composite GitHub Action (`aeorank/action@v1`)
+- **action.yml:** Composite action with 4 steps — scan, Check Run, find-comment, upsert-comment
+- **Inputs:** url (required), token (default: github.token), fail-below (default: 0)
+- **Check Run:** Posts to GitHub Checks API via actions/github-script@v8; dimension table in output.text
+- **PR Comment:** Upserts via peter-evans/find-comment@v3 + create-or-update-comment@v5 with hidden marker
+- **Fail-below:** Failure conclusion when score < threshold, regardless of raw score band
+- **README.md:** 163-line Marketplace listing with quick start, permissions, full workflow, fork PR notes
+
+### Requirements covered
+GHA-01, GHA-02, GHA-03, GHA-04, GHA-05
 
 ## Phase 1 Deliverables
 
@@ -108,6 +136,10 @@ Recent decisions affecting current work:
 - [Phase 3]: Used @tailwindcss/vite (not deprecated @astrojs/tailwind) for Tailwind CSS 4
 - [Phase 3]: GitHub Pages limits 1 custom domain per repo — docs deploys to separate aeorank/docs repo
 - [Phase 3]: Starlight uses default theme (not customized to match marketing site brand)
+- [Phase 04-github-action]: Use env: block to pass large JSON scan result to github-script (not template interpolation)
+- [Phase 04-github-action]: Use AEORANK_EOF as multiline delimiter to avoid collision with generic EOF
+- [Phase 04-github-action]: Use context.payload.pull_request.head.sha on PR events, not context.sha (merge commit)
+- [Phase 04-github-action]: Check conclusion: failure(<40 or fail-below), neutral(40-69), success(70+)
 
 ### Pending Todos
 
@@ -123,5 +155,5 @@ Recent decisions affecting current work:
 ## Session Continuity
 
 Last session: 2026-03-14
-Stopped at: Phase 3 complete. All 4 plans executed across 2 waves. Ready for Phase 4 (GitHub Action).
+Stopped at: Completed 04-github-action-01-PLAN.md — composite GitHub Action built.
 Resume file: None
