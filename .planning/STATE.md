@@ -3,12 +3,12 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: unknown
-last_updated: "2026-03-14T23:37:02.137Z"
+last_updated: "2026-03-14T23:43:40.822Z"
 progress:
   total_phases: 5
   completed_phases: 3
   total_plans: 19
-  completed_plans: 11
+  completed_plans: 12
 ---
 
 # Project State
@@ -18,16 +18,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-14)
 
 **Core value:** A developer runs `npx aeorank scan <url>` with zero config and gets an AEO score plus all 8 generated files needed for AI visibility — in under 30 seconds.
-**Current focus:** Phase 5 in progress. Plan 01 complete — Next.js 16 foundation with Clerk auth, Supabase client, SSRF validation, and database schema.
+**Current focus:** Phase 5 in progress. Plan 03 complete — Stripe billing with Embedded Checkout, webhook handler, and upgrade page.
 
 ## Current Position
 
 Phase: 5 of 5 (SaaS Dashboard) — IN PROGRESS
-Plan: 1 of 5 in Phase 5 — COMPLETE (plan 1 done, plans 2-5 remaining)
+Plan: 3 of 5 in Phase 5 — COMPLETE (plans 1, 3 done; plans 2, 4, 5 remaining — plan 2 exists but scan API has qstash dependency)
 Status: Phase 5 in progress
-Last activity: 2026-03-14 — Next.js 16 foundation set up; Clerk auth wired, Supabase client factory created, SSRF validation implemented with 12 tests.
+Last activity: 2026-03-14 — Stripe billing implemented: /upgrade pricing page, Embedded Checkout modal, webhook handler syncing subscriptions to Supabase.
 
-Progress: [##########] (Phase 5 Plan 1 of 5)
+Progress: [############] (Phase 5 Plan 3 of 5)
 
 ## Performance Metrics
 
@@ -53,6 +53,7 @@ Progress: [##########] (Phase 5 Plan 1 of 5)
 | Phase 04-github-action P01 | 78s | 2 tasks | 2 files |
 | Phase 04-github-action P02 | 27s | 2 tasks | 1 files |
 | Phase 05-saas-dashboard P01 | 306s | 2 tasks | 15 files |
+| Phase 05-saas-dashboard P03 | 4min | 2 tasks | 8 files |
 
 ## Phase 4 Deliverables
 
@@ -146,6 +147,9 @@ Recent decisions affecting current work:
 - [Phase 05-saas-dashboard]: Clerk v6 auth.protect() API: auth param in clerkMiddleware is AuthFn with protect() as direct property, not auth().protect()
 - [Phase 05-saas-dashboard]: proxy.ts confirmed for Next.js 16 middleware; PROXY_FILENAME constant exists alongside MIDDLEWARE_FILENAME in Next.js 16 constants
 - [Phase 05-saas-dashboard]: Supabase client uses Clerk native accessToken() integration (not deprecated JWT template)
+- [Phase 05-saas-dashboard]: Stripe client must be a lazy factory (getStripeClient) not singleton — next build evaluates modules without env vars
+- [Phase 05-saas-dashboard]: Stripe v20 current_period_end is on SubscriptionItem not Subscription top-level
+- [Phase 05-saas-dashboard]: Stripe webhook returns 200 on handler errors to prevent Stripe retry storms on transient DB failures
 
 ### Pending Todos
 
@@ -162,5 +166,5 @@ Recent decisions affecting current work:
 ## Session Continuity
 
 Last session: 2026-03-14
-Stopped at: Completed 05-saas-dashboard-01-PLAN.md — Next.js 16 foundation with Clerk auth, Supabase client factory (native Clerk integration), SSRF validation (12 tests), and database schema.
+Stopped at: Completed 05-saas-dashboard-03-PLAN.md — Stripe billing with Embedded Checkout, webhook handler (checkout.session.completed, subscription events), /upgrade pricing page, CheckoutButton modal, PlanBadge in nav.
 Resume file: None

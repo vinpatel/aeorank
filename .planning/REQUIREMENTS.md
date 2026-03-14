@@ -76,7 +76,7 @@ Requirements for initial release. Each maps to roadmap phases.
 - [ ] **DASH-02**: Add site by URL → scan → display score with 12-dimension breakdown
 - [ ] **DASH-03**: Score history chart (30-day sparkline)
 - [ ] **DASH-04**: One-click ZIP download of all generated files
-- [ ] **DASH-05**: Stripe subscriptions (Free / Pro $29 / API $99)
+- [x] **DASH-05**: Stripe subscriptions (Free / Pro $29 / API $99)
 
 ## v2 Requirements
 
@@ -161,7 +161,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | DASH-02 | Phase 5 | Pending |
 | DASH-03 | Phase 5 | Pending |
 | DASH-04 | Phase 5 | Pending |
-| DASH-05 | Phase 5 | Pending |
+| DASH-05 | Phase 5 | Complete |
 
 **Coverage:**
 - v1 requirements: 40 total
