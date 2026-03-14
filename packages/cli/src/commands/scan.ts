@@ -1,12 +1,13 @@
-import { Command } from "commander";
-import { writeFileSync, mkdirSync, existsSync, readdirSync } from "node:fs";
+import { existsSync, mkdirSync, readdirSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { scan } from "@aeorank/core";
 import type { ScanConfig } from "@aeorank/core";
 import chalk from "chalk";
+import { Command } from "commander";
+import { loadConfig, mergeConfig } from "../config.js";
 import { handleError } from "../errors.js";
-import { createSpinner } from "../ui/spinner.js";
 import { renderDimensionTable, renderNextSteps, renderScore } from "../ui/score-display.js";
+import { createSpinner } from "../ui/spinner.js";
 
 export const scanCommand = new Command("scan")
 	.description("Scan a URL for AEO (AI Engine Optimization) score")
@@ -39,10 +40,16 @@ export const scanCommand = new Command("scan")
 				process.exit(1);
 			}
 
-			// Build config
-			const scanConfig: Partial<ScanConfig> = {};
-			if (options.maxPages) {
-				scanConfig.maxPages = options.maxPages;
+			// Load and merge config
+			const userConfig = await loadConfig(options.config);
+			const { scanConfig, outputDir: configOutputDir } = mergeConfig(userConfig, {
+				maxPages: options.maxPages,
+				output: options.output !== "./aeorank-output" ? options.output : undefined,
+			});
+
+			// Use config output dir if CLI didn't override
+			if (options.output === "./aeorank-output" && configOutputDir !== "./aeorank-output") {
+				options.output = configOutputDir;
 			}
 
 			// Start scanning
@@ -68,9 +75,7 @@ export const scanCommand = new Command("scan")
 
 				// Check for existing files
 				if (existsSync(outputDir) && readdirSync(outputDir).length > 0 && !options.overwrite) {
-					console.error(
-						chalk.red(`Error: Output files already exist in ${outputDir}.`),
-					);
+					console.error(chalk.red(`Error: Output files already exist in ${outputDir}.`));
 					console.error("Use --overwrite to replace existing files.");
 					process.exit(1);
 				}

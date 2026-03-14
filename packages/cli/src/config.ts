@@ -1,8 +1,8 @@
-import { resolve } from "node:path";
 import { existsSync } from "node:fs";
+import { resolve } from "node:path";
+import { pathToFileURL } from "node:url";
 import { DEFAULT_CONFIG } from "@aeorank/core";
 import type { AeorankConfig, ScanConfig } from "@aeorank/core";
-import { pathToFileURL } from "node:url";
 
 /** Default config filename */
 export const CONFIG_FILENAME = "aeorank.config.js";
@@ -26,9 +26,7 @@ export async function loadConfig(configPath?: string): Promise<AeorankConfig | n
 
 		return config as AeorankConfig;
 	} catch (error) {
-		throw new Error(
-			`Could not read config at ${resolvedPath}. Check the file for syntax errors.`,
-		);
+		throw new Error(`Could not read config at ${resolvedPath}. Check the file for syntax errors.`);
 	}
 }
 

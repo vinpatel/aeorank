@@ -1,8 +1,8 @@
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { mkdirSync, existsSync, readdirSync, writeFileSync, rmSync } from "node:fs";
-import { join } from "node:path";
+import { existsSync, mkdirSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
+import { join } from "node:path";
 import type { ScanResult } from "@aeorank/core";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 // Mock @aeorank/core
 vi.mock("@aeorank/core", () => ({
@@ -190,13 +190,7 @@ describe("scan command", () => {
 		const { scanCommand } = await import("../commands/scan.js");
 		const outputDir = join(tmpDir, "output");
 
-		await scanCommand.parseAsync([
-			"node",
-			"scan",
-			"https://example.com",
-			"--output",
-			outputDir,
-		]);
+		await scanCommand.parseAsync(["node", "scan", "https://example.com", "--output", outputDir]);
 
 		const allOutput = logSpy.mock.calls.map((c) => String(c[0])).join("\n");
 		expect(allOutput).toContain("65/100");
@@ -226,7 +220,7 @@ describe("scan command", () => {
 		});
 
 		expect(jsonCall).toBeTruthy();
-		const parsed = JSON.parse(String(jsonCall![0]));
+		const parsed = JSON.parse(String(jsonCall?.[0]));
 		expect(parsed.score).toBe(65);
 		expect(parsed.grade).toBe("C");
 		expect(parsed.dimensions).toHaveLength(12);
@@ -247,13 +241,7 @@ describe("scan command", () => {
 		const { scanCommand } = await import("../commands/scan.js");
 		const outputDir = join(tmpDir, "files-output");
 
-		await scanCommand.parseAsync([
-			"node",
-			"scan",
-			"https://example.com",
-			"--output",
-			outputDir,
-		]);
+		await scanCommand.parseAsync(["node", "scan", "https://example.com", "--output", outputDir]);
 
 		expect(existsSync(join(outputDir, "llms.txt"))).toBe(true);
 		expect(existsSync(join(outputDir, "schema.json"))).toBe(true);
@@ -281,13 +269,7 @@ describe("scan command", () => {
 		mkdirSync(outputDir, { recursive: true });
 		writeFileSync(join(outputDir, "existing.txt"), "data");
 
-		await scanCommand.parseAsync([
-			"node",
-			"scan",
-			"https://example.com",
-			"--output",
-			outputDir,
-		]);
+		await scanCommand.parseAsync(["node", "scan", "https://example.com", "--output", outputDir]);
 
 		expect(exitSpy).toHaveBeenCalledWith(1);
 		const allErrors = errorSpy.mock.calls.map((c) => String(c[0])).join("\n");
@@ -300,12 +282,7 @@ describe("scan command", () => {
 
 		const { scanCommand } = await import("../commands/scan.js");
 
-		await scanCommand.parseAsync([
-			"node",
-			"scan",
-			"https://example.com",
-			"--no-files",
-		]);
+		await scanCommand.parseAsync(["node", "scan", "https://example.com", "--no-files"]);
 
 		expect(exitSpy).toHaveBeenCalledWith(1);
 		const allErrors = errorSpy.mock.calls.map((c) => String(c[0])).join("\n");
