@@ -1,33 +1,33 @@
 {
-  "name": "@aeorank/cli",
-  "version": "0.0.1",
-  "private": false,
-  "type": "module",
-  "bin": {
-    "aeorank": "./dist/index.js"
-  },
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    }
-  },
-  "files": ["dist"],
-  "scripts": {
-    "build": "tsup",
-    "test": "vitest run",
-    "dev": "tsup --watch",
-    "typecheck": "tsc --noEmit"
-  },
-  "dependencies": {
-    "@aeorank/core": "workspace:*",
-    "commander": "^13.0.0",
-    "chalk": "^5.4.0",
-    "ora": "^8.2.0"
-  },
-  "devDependencies": {
-    "typescript": "^5.7.0",
-    "vitest": "^3.2.0",
-    "tsup": "^8.4.0"
-  }
+	"name": "@aeorank/cli",
+	"version": "0.0.1",
+	"private": false,
+	"type": "module",
+	"bin": {
+		"aeorank": "./dist/index.js"
+	},
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.js"
+		}
+	},
+	"files": ["dist"],
+	"scripts": {
+		"build": "tsup",
+		"test": "vitest run",
+		"dev": "tsup --watch",
+		"typecheck": "tsc --noEmit"
+	},
+	"dependencies": {
+		"@aeorank/core": "workspace:*",
+		"commander": "^13.0.0",
+		"chalk": "^5.4.0",
+		"ora": "^8.2.0"
+	},
+	"devDependencies": {
+		"typescript": "^5.7.0",
+		"vitest": "^3.2.0",
+		"tsup": "^8.4.0"
+	}
 }

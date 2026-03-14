@@ -1,5 +1,5 @@
-import chalk from "chalk";
 import type { DimensionScore, ScanResult } from "@aeorank/core";
+import chalk from "chalk";
 
 const WEIGHT_PRIORITY: Record<string, number> = {
 	high: 3,
@@ -32,7 +32,9 @@ export function renderScore(result: ScanResult): string {
 		"",
 		color.bold(`  AEO Score: ${result.score}/100 (${result.grade})`),
 		"",
-		chalk.dim(`  ${result.siteName} — ${result.pagesScanned} pages scanned in ${(result.duration / 1000).toFixed(1)}s`),
+		chalk.dim(
+			`  ${result.siteName} — ${result.pagesScanned} pages scanned in ${(result.duration / 1000).toFixed(1)}s`,
+		),
 		"",
 	];
 	return lines.join("\n");
@@ -85,8 +87,7 @@ export function renderNextSteps(dimensions: DimensionScore[]): string {
 	for (let i = 0; i < top.length; i++) {
 		const dim = top[i];
 		const label = WEIGHT_LABEL[dim.weight];
-		const color =
-			label === "HIGH" ? chalk.red : label === "MEDIUM" ? chalk.yellow : chalk.dim;
+		const color = label === "HIGH" ? chalk.red : label === "MEDIUM" ? chalk.yellow : chalk.dim;
 		lines.push(`  ${i + 1}. ${color(`[${label}]`)} ${dim.hint}`);
 	}
 

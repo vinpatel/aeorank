@@ -1,5 +1,5 @@
-import { describe, expect, it } from "vitest";
 import type { DimensionScore, ScanResult } from "@aeorank/core";
+import { describe, expect, it } from "vitest";
 import { renderDimensionTable, renderNextSteps, renderScore } from "../ui/score-display.js";
 
 // Strip ANSI color codes for assertions

@@ -42,7 +42,7 @@ export function handleError(error: unknown): { message: string; suggestion: stri
 			msg.includes("Could not reach")
 		) {
 			return {
-				message: `Could not reach the URL.`,
+				message: "Could not reach the URL.",
 				suggestion: "Check the URL and your internet connection.",
 			};
 		}
@@ -64,7 +64,7 @@ export function handleError(error: unknown): { message: string; suggestion: stri
 		// Permission errors
 		if (code === "EACCES" || code === "EPERM" || msg.includes("permission denied")) {
 			return {
-				message: `Permission denied.`,
+				message: "Permission denied.",
 				suggestion: "Check directory permissions or use --output <dir>.",
 			};
 		}

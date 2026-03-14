@@ -1,7 +1,7 @@
-import { Command } from "commander";
 import { existsSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import chalk from "chalk";
+import { Command } from "commander";
 import { CONFIG_FILENAME } from "../config.js";
 
 const CONFIG_TEMPLATE = `/** @type {import('@aeorank/core').AeorankConfig} */
@@ -27,9 +27,7 @@ export const initCommand = new Command("init")
 		const configPath = join(process.cwd(), CONFIG_FILENAME);
 
 		if (existsSync(configPath) && !options.overwrite) {
-			console.error(
-				chalk.yellow(`${CONFIG_FILENAME} already exists.`),
-			);
+			console.error(chalk.yellow(`${CONFIG_FILENAME} already exists.`));
 			console.error("Use --overwrite to replace it.");
 			process.exit(1);
 		}
