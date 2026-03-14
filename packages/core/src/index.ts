@@ -31,3 +31,8 @@ export {
 	calculateWeightedScore,
 	slugify,
 } from "./utils.js";
+
+// Scanner
+export { scanUrl, parsePage, parseRobotsTxt, createFetcher, discoverUrls } from "./scanner/index.js";
+export type { RobotsInfo } from "./scanner/index.js";
+export type { FetcherFn, FetchResult } from "./scanner/index.js";
