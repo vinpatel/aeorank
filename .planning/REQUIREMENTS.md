@@ -49,11 +49,11 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### GitHub Action
 
-- [ ] **GHA-01**: Composite action wrapping CLI, published to Marketplace as aeorank/action@v1
-- [ ] **GHA-02**: Action uses only GITHUB_TOKEN — zero external credentials for basic use
-- [ ] **GHA-03**: Action posts AEO Score as a GitHub Check (pass/neutral/fail) with dimension table
-- [ ] **GHA-04**: Action posts score table as PR comment, upserts using hidden marker (never spams)
-- [ ] **GHA-05**: Action supports fail-below threshold input (default 0 = never fail)
+- [x] **GHA-01**: Composite action wrapping CLI, published to Marketplace as aeorank/action@v1
+- [x] **GHA-02**: Action uses only GITHUB_TOKEN — zero external credentials for basic use
+- [x] **GHA-03**: Action posts AEO Score as a GitHub Check (pass/neutral/fail) with dimension table
+- [x] **GHA-04**: Action posts score table as PR comment, upserts using hidden marker (never spams)
+- [x] **GHA-05**: Action supports fail-below threshold input (default 0 = never fail)
 
 ### Marketing Site
 
@@ -152,11 +152,11 @@ Which phases cover which requirements. Updated during roadmap creation.
 | DOCS-03 | Phase 3 | Pending |
 | DOCS-04 | Phase 3 | Pending |
 | DOCS-05 | Phase 3 | Pending |
-| GHA-01 | Phase 4 | Pending |
-| GHA-02 | Phase 4 | Pending |
-| GHA-03 | Phase 4 | Pending |
-| GHA-04 | Phase 4 | Pending |
-| GHA-05 | Phase 4 | Pending |
+| GHA-01 | Phase 4 | Complete |
+| GHA-02 | Phase 4 | Complete |
+| GHA-03 | Phase 4 | Complete |
+| GHA-04 | Phase 4 | Complete |
+| GHA-05 | Phase 4 | Complete |
 | DASH-01 | Phase 5 | Pending |
 | DASH-02 | Phase 5 | Pending |
 | DASH-03 | Phase 5 | Pending |
