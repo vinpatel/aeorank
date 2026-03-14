@@ -73,7 +73,7 @@ Requirements for initial release. Each maps to roadmap phases.
 ### Web Dashboard
 
 - [x] **DASH-01**: Next.js 16 App Router with Clerk auth
-- [ ] **DASH-02**: Add site by URL → scan → display score with 12-dimension breakdown
+- [x] **DASH-02**: Add site by URL → scan → display score with 12-dimension breakdown
 - [ ] **DASH-03**: Score history chart (30-day sparkline)
 - [ ] **DASH-04**: One-click ZIP download of all generated files
 - [x] **DASH-05**: Stripe subscriptions (Free / Pro $29 / API $99)
@@ -158,7 +158,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | GHA-04 | Phase 4 | Complete |
 | GHA-05 | Phase 4 | Complete |
 | DASH-01 | Phase 5 | Complete |
-| DASH-02 | Phase 5 | Pending |
+| DASH-02 | Phase 5 | Complete |
 | DASH-03 | Phase 5 | Pending |
 | DASH-04 | Phase 5 | Pending |
 | DASH-05 | Phase 5 | Complete |
