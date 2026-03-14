@@ -39,3 +39,6 @@ export type { FetcherFn, FetchResult } from "./scanner/index.js";
 
 // Scorer
 export { calculateAeoScore } from "./scorer/index.js";
+
+// Generators
+export { generateFiles } from "./generators/index.js";
