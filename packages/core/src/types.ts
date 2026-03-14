@@ -1,0 +1,105 @@
+/** A single parsed page from a scan */
+export interface ScannedPage {
+	url: string;
+	title: string;
+	metaDescription: string;
+	headings: Heading[];
+	bodyText: string;
+	schemaOrg: object[];
+	links: PageLink[];
+	canonical: string | null;
+	robotsMeta: string | null;
+	language: string | null;
+	wordCount: number;
+	hasDatePublished: boolean;
+	authorName: string | null;
+}
+
+export interface Heading {
+	level: number;
+	text: string;
+	id: string | null;
+}
+
+export interface PageLink {
+	href: string;
+	text: string;
+	internal: boolean;
+}
+
+/** Metadata collected during scan (robots.txt, sitemap, etc.) */
+export interface ScanMeta {
+	url: string;
+	robotsTxt: {
+		raw: string | null;
+		crawlerAccess: Record<string, "allowed" | "disallowed" | "unknown">;
+		crawlDelay: number | null;
+	};
+	sitemapXml: string | null;
+	existingLlmsTxt: string | null;
+	platform: string | null;
+	responseTimeMs: number;
+}
+
+/** Complete scan result with score, dimensions, and generated files */
+export interface ScanResult {
+	url: string;
+	siteName: string;
+	siteDescription: string;
+	score: number;
+	grade: string;
+	dimensions: DimensionScore[];
+	files: GeneratedFile[];
+	pages: ScannedPage[];
+	meta: ScanMeta;
+	pagesScanned: number;
+	duration: number;
+	scannedAt: string;
+}
+
+/** Score for a single dimension (0-10) */
+export interface DimensionScore {
+	id: string;
+	name: string;
+	score: number;
+	maxScore: number;
+	weight: "high" | "medium" | "low";
+	status: "pass" | "warn" | "fail";
+	hint: string;
+}
+
+/** A generated file (name + content string) */
+export interface GeneratedFile {
+	name: string;
+	content: string;
+}
+
+/** Scanner configuration */
+export interface ScanConfig {
+	maxPages: number;
+	concurrency: number;
+	timeout: number;
+	userAgent: string;
+	respectCrawlDelay: boolean;
+}
+
+/** Top-level AEOrank config */
+export interface AeorankConfig {
+	site: {
+		url: string;
+		name?: string;
+		description?: string;
+	};
+	output: {
+		dir: string;
+	};
+	scanner: Partial<ScanConfig>;
+}
+
+/** Definition of a scoring dimension */
+export interface DimensionDef {
+	id: string;
+	name: string;
+	weight: "high" | "medium" | "low";
+	maxScore: number;
+}

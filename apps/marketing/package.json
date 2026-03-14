@@ -1,0 +1,10 @@
+{
+  "name": "@aeorank/marketing",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "echo 'Phase 3 stub'",
+    "dev": "echo 'Phase 3 stub'"
+  }
+}
