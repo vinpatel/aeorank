@@ -114,10 +114,7 @@ function detectAuthor($: cheerio.CheerioAPI, schemaOrg: object[]): string | null
 	return null;
 }
 
-function detectDatePublished(
-	$: cheerio.CheerioAPI,
-	schemaOrg: object[],
-): boolean {
+function detectDatePublished($: cheerio.CheerioAPI, schemaOrg: object[]): boolean {
 	// Check meta tags
 	if ($('meta[property="article:published_time"]').attr("content")) return true;
 	if ($('meta[name="date"]').attr("content")) return true;

@@ -52,7 +52,7 @@ export function generateSchemaJson(result: ScanResult): string {
 		"@graph": graph,
 	};
 
-	return JSON.stringify(schema, null, 2) + "\n";
+	return `${JSON.stringify(schema, null, 2)}\n`;
 }
 
 interface QAPair {
@@ -86,9 +86,7 @@ function extractFaqPairs(result: ScanResult): QAPair[] {
 			if (headings[i].text.includes("?")) {
 				// Next heading or body text as answer
 				const nextText =
-					i + 1 < headings.length
-						? headings[i + 1].text
-						: page.bodyText.slice(0, 200);
+					i + 1 < headings.length ? headings[i + 1].text : page.bodyText.slice(0, 200);
 				if (!pairs.some((p) => p.question === headings[i].text)) {
 					pairs.push({
 						question: headings[i].text,

@@ -1,10 +1,10 @@
 import { describe, expect, it } from "vitest";
 import { generateFiles } from "../generators/index.js";
-import { generateLlmsTxt } from "../generators/llms-txt.js";
 import { generateLlmsFullTxt } from "../generators/llms-full.js";
-import { generateSchemaJson } from "../generators/schema-json.js";
+import { generateLlmsTxt } from "../generators/llms-txt.js";
 import { generateRobotsPatch } from "../generators/robots-patch.js";
-import type { ScanResult, ScannedPage, ScanMeta, DimensionScore } from "../types.js";
+import { generateSchemaJson } from "../generators/schema-json.js";
+import type { DimensionScore, ScanMeta, ScanResult, ScannedPage } from "../types.js";
 
 function makeDimension(id: string): DimensionScore {
 	return { id, name: id, score: 5, maxScore: 10, weight: "medium", status: "warn", hint: "" };

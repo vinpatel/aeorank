@@ -47,9 +47,7 @@ describe("parsePage", () => {
 			(s) => (s as Record<string, unknown>)["@type"] === "Organization",
 		);
 		expect(org).toBeDefined();
-		const web = page.schemaOrg.find(
-			(s) => (s as Record<string, unknown>)["@type"] === "WebSite",
-		);
+		const web = page.schemaOrg.find((s) => (s as Record<string, unknown>)["@type"] === "WebSite");
 		expect(web).toBeDefined();
 	});
 

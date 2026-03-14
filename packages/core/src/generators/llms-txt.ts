@@ -18,9 +18,7 @@ export function generateLlmsTxt(result: ScanResult): string {
 	const sections = groupPagesBySection(result);
 
 	// Sort sections alphabetically
-	const sortedSections = [...sections.entries()].sort((a, b) =>
-		a[0].localeCompare(b[0]),
-	);
+	const sortedSections = [...sections.entries()].sort((a, b) => a[0].localeCompare(b[0]));
 
 	for (const [sectionName, pages] of sortedSections) {
 		lines.push(`## ${sectionName}`);
@@ -34,7 +32,7 @@ export function generateLlmsTxt(result: ScanResult): string {
 		lines.push("");
 	}
 
-	return lines.join("\n").trim() + "\n";
+	return `${lines.join("\n").trim()}\n`;
 }
 
 function groupPagesBySection(result: ScanResult): Map<string, typeof result.pages> {
@@ -49,10 +47,10 @@ function groupPagesBySection(result: ScanResult): Map<string, typeof result.page
 			if (!sections.has(sectionName)) {
 				sections.set(sectionName, []);
 			}
-			sections.get(sectionName)!.push(page);
+			sections.get(sectionName)?.push(page);
 		} catch {
 			if (!sections.has("Main")) sections.set("Main", []);
-			sections.get("Main")!.push(page);
+			sections.get("Main")?.push(page);
 		}
 	}
 

@@ -16,7 +16,10 @@ function makePage(overrides: Partial<ScannedPage> = {}): ScannedPage {
 		schemaOrg: [
 			{ "@type": "Organization", name: "Test" },
 			{ "@type": "WebSite", name: "Test" },
-			{ "@type": "FAQPage", mainEntity: [{ "@type": "Question" }, { "@type": "Question" }, { "@type": "Question" }] },
+			{
+				"@type": "FAQPage",
+				mainEntity: [{ "@type": "Question" }, { "@type": "Question" }, { "@type": "Question" }],
+			},
 			{ "@type": "Article", author: { name: "Jane" } },
 			{ "@type": "BreadcrumbList" },
 		],
@@ -65,10 +68,7 @@ function makeZeroMeta(): ScanMeta {
 
 describe("calculateAeoScore", () => {
 	it("returns high score for perfect inputs", () => {
-		const pages = [
-			makePage(),
-			makePage({ url: "https://example.com/about" }),
-		];
+		const pages = [makePage(), makePage({ url: "https://example.com/about" })];
 		const result = calculateAeoScore(pages, makePerfectMeta());
 		expect(result.score).toBeGreaterThanOrEqual(70);
 		expect(result.dimensions).toHaveLength(12);
@@ -120,9 +120,7 @@ describe("calculateAeoScore", () => {
 		const pages = [makePage(), makePage({ url: "https://example.com/about" })];
 		const meta = makePerfectMeta();
 
-		const results = Array.from({ length: 10 }, () =>
-			calculateAeoScore(pages, meta),
-		);
+		const results = Array.from({ length: 10 }, () => calculateAeoScore(pages, meta));
 
 		const first = JSON.stringify(results[0]);
 		for (let i = 1; i < results.length; i++) {
@@ -153,8 +151,7 @@ describe("calculateAeoScore", () => {
 
 		// High-weight dimensions should pull score up significantly
 		const highWeightDims = result.dimensions.filter((d) => d.weight === "high");
-		const avgHighScore =
-			highWeightDims.reduce((s, d) => s + d.score, 0) / highWeightDims.length;
+		const avgHighScore = highWeightDims.reduce((s, d) => s + d.score, 0) / highWeightDims.length;
 		expect(avgHighScore).toBeGreaterThan(5);
 	});
 });

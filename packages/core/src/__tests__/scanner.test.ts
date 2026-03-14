@@ -1,9 +1,9 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it, vi } from "vitest";
-import { scanUrl } from "../scanner/index.js";
 import { discoverUrls } from "../scanner/discovery.js";
 import type { FetchResult } from "../scanner/fetcher.js";
+import { scanUrl } from "../scanner/index.js";
 
 const fixturesDir = join(import.meta.dirname, "fixtures");
 const sampleHtml = readFileSync(join(fixturesDir, "sample-page.html"), "utf-8");

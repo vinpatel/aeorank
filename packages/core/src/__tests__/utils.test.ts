@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import type { DimensionScore } from "../types.js";
 import {
 	calculateWeightedScore,
 	getDimensionStatus,
@@ -7,7 +8,6 @@ import {
 	normalizeUrl,
 	slugify,
 } from "../utils.js";
-import type { DimensionScore } from "../types.js";
 
 describe("normalizeUrl", () => {
 	it("strips trailing slash", () => {
@@ -98,10 +98,7 @@ describe("getDimensionStatus", () => {
 });
 
 describe("calculateWeightedScore", () => {
-	const makeDimension = (
-		score: number,
-		weight: "high" | "medium" | "low",
-	): DimensionScore => ({
+	const makeDimension = (score: number, weight: "high" | "medium" | "low"): DimensionScore => ({
 		id: "test",
 		name: "Test",
 		score,
@@ -132,9 +129,7 @@ describe("calculateWeightedScore", () => {
 	it("weights high dimensions more", () => {
 		const highOnly: DimensionScore[] = [makeDimension(10, "high"), makeDimension(0, "low")];
 		const lowOnly: DimensionScore[] = [makeDimension(0, "high"), makeDimension(10, "low")];
-		expect(calculateWeightedScore(highOnly)).toBeGreaterThan(
-			calculateWeightedScore(lowOnly),
-		);
+		expect(calculateWeightedScore(highOnly)).toBeGreaterThan(calculateWeightedScore(lowOnly));
 	});
 
 	it("returns 0 for empty dimensions", () => {

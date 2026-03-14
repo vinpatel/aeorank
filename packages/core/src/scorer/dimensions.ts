@@ -31,9 +31,10 @@ export function scoreLlmsTxt(pages: ScannedPage[], meta: ScanMeta): DimensionSco
 		maxScore: 10,
 		weight: "high",
 		status: getDimensionStatus(score, 10),
-		hint: score < 10
-			? "Create /llms.txt with H1 title, blockquote summary, and H2 sections linking to key pages"
-			: "llms.txt is well-structured",
+		hint:
+			score < 10
+				? "Create /llms.txt with H1 title, blockquote summary, and H2 sections linking to key pages"
+				: "llms.txt is well-structured",
 	};
 }
 
@@ -81,9 +82,13 @@ export function scoreSchemaMarkup(pages: ScannedPage[], _meta: ScanMeta): Dimens
 		maxScore: 10,
 		weight: "high",
 		status: getDimensionStatus(score, 10),
-		hint: score < 10
-			? `Add schema.org types: ${[...targetTypes].filter((t) => !foundTypes.has(t)).slice(0, 3).join(", ")}`
-			: "Comprehensive schema.org markup present",
+		hint:
+			score < 10
+				? `Add schema.org types: ${[...targetTypes]
+						.filter((t) => !foundTypes.has(t))
+						.slice(0, 3)
+						.join(", ")}`
+				: "Comprehensive schema.org markup present",
 	};
 }
 
@@ -109,16 +114,23 @@ export function scoreAiCrawlerAccess(_pages: ScannedPage[], meta: ScanMeta): Dim
 		maxScore: 10,
 		weight: "medium",
 		status: getDimensionStatus(score, 10),
-		hint: score < 10
-			? "Allow AI crawlers (GPTBot, ClaudeBot, PerplexityBot, Google-Extended) in robots.txt"
-			: "All AI crawlers allowed",
+		hint:
+			score < 10
+				? "Allow AI crawlers (GPTBot, ClaudeBot, PerplexityBot, Google-Extended) in robots.txt"
+				: "All AI crawlers allowed",
 	};
 }
 
 /** Dimension 4: Content Structure (high weight) */
 export function scoreContentStructure(pages: ScannedPage[], _meta: ScanMeta): DimensionScore {
 	if (pages.length === 0) {
-		return makeDimension("content-structure", "Content Structure", 0, "high", "No pages to analyze");
+		return makeDimension(
+			"content-structure",
+			"Content Structure",
+			0,
+			"high",
+			"No pages to analyze",
+		);
 	}
 
 	const sortedPages = [...pages].sort((a, b) => a.url.localeCompare(b.url));
@@ -155,14 +167,22 @@ export function scoreContentStructure(pages: ScannedPage[], _meta: ScanMeta): Di
 		"Content Structure",
 		score,
 		"high",
-		score < 10 ? "Add H1 to every page and maintain proper heading hierarchy (H1->H2->H3)" : "Strong content structure",
+		score < 10
+			? "Add H1 to every page and maintain proper heading hierarchy (H1->H2->H3)"
+			: "Strong content structure",
 	);
 }
 
 /** Dimension 5: Answer-First Formatting (medium weight) */
 export function scoreAnswerFirst(pages: ScannedPage[], _meta: ScanMeta): DimensionScore {
 	if (pages.length === 0) {
-		return makeDimension("answer-first", "Answer-First Formatting", 0, "medium", "No pages to analyze");
+		return makeDimension(
+			"answer-first",
+			"Answer-First Formatting",
+			0,
+			"medium",
+			"No pages to analyze",
+		);
 	}
 
 	const sortedPages = [...pages].sort((a, b) => a.url.localeCompare(b.url));
@@ -187,7 +207,9 @@ export function scoreAnswerFirst(pages: ScannedPage[], _meta: ScanMeta): Dimensi
 		"Answer-First Formatting",
 		score,
 		"medium",
-		score < 10 ? "Start pages with concise lead paragraphs (<300 chars) that directly answer the page topic" : "Good answer-first formatting",
+		score < 10
+			? "Start pages with concise lead paragraphs (<300 chars) that directly answer the page topic"
+			: "Good answer-first formatting",
 	);
 }
 
@@ -213,9 +235,7 @@ export function scoreFaqSpeakable(pages: ScannedPage[], _meta: ScanMeta): Dimens
 		}
 
 		// Check for FAQ-like headings
-		const faqHeadings = page.headings.filter(
-			(h) => h.text.includes("?") || /faq/i.test(h.text),
-		);
+		const faqHeadings = page.headings.filter((h) => h.text.includes("?") || /faq/i.test(h.text));
 		if (faqHeadings.length > 0) hasFaqContent = true;
 	}
 
@@ -230,7 +250,9 @@ export function scoreFaqSpeakable(pages: ScannedPage[], _meta: ScanMeta): Dimens
 		"FAQ & Speakable",
 		score,
 		"medium",
-		score < 10 ? "Add FAQPage schema markup with 3+ question-answer pairs" : "FAQ schema is well-implemented",
+		score < 10
+			? "Add FAQPage schema markup with 3+ question-answer pairs"
+			: "FAQ schema is well-implemented",
 	);
 }
 
@@ -259,14 +281,22 @@ export function scoreEeatSignals(pages: ScannedPage[], _meta: ScanMeta): Dimensi
 		"E-E-A-T Signals",
 		score,
 		"medium",
-		score < 10 ? "Add author names, publication dates, and an About page with credentials" : "Strong E-E-A-T signals",
+		score < 10
+			? "Add author names, publication dates, and an About page with credentials"
+			: "Strong E-E-A-T signals",
 	);
 }
 
 /** Dimension 8: Meta Descriptions (medium weight) */
 export function scoreMetaDescriptions(pages: ScannedPage[], _meta: ScanMeta): DimensionScore {
 	if (pages.length === 0) {
-		return makeDimension("meta-descriptions", "Meta Descriptions", 0, "medium", "No pages to analyze");
+		return makeDimension(
+			"meta-descriptions",
+			"Meta Descriptions",
+			0,
+			"medium",
+			"No pages to analyze",
+		);
 	}
 
 	const sortedPages = [...pages].sort((a, b) => a.url.localeCompare(b.url));
@@ -296,7 +326,9 @@ export function scoreMetaDescriptions(pages: ScannedPage[], _meta: ScanMeta): Di
 		"Meta Descriptions",
 		score,
 		"medium",
-		score < 10 ? "Add meta descriptions (50-160 chars) to all pages" : "Meta descriptions are optimal",
+		score < 10
+			? "Add meta descriptions (50-160 chars) to all pages"
+			: "Meta descriptions are optimal",
 	);
 }
 
@@ -341,7 +373,9 @@ export function scoreHttpsRedirects(pages: ScannedPage[], meta: ScanMeta): Dimen
 		"HTTPS & Redirects",
 		score,
 		"low",
-		score < 10 ? "Ensure HTTPS and add canonical URLs to all pages" : "HTTPS and canonical URLs configured",
+		score < 10
+			? "Ensure HTTPS and add canonical URLs to all pages"
+			: "HTTPS and canonical URLs configured",
 	);
 }
 
@@ -370,14 +404,22 @@ export function scorePageFreshness(pages: ScannedPage[], _meta: ScanMeta): Dimen
 		"Page Freshness",
 		score,
 		"low",
-		score < 10 ? "Add publication and last-modified dates to content pages" : "Date signals present",
+		score < 10
+			? "Add publication and last-modified dates to content pages"
+			: "Date signals present",
 	);
 }
 
 /** Dimension 12: Citation Anchors (medium weight) */
 export function scoreCitationAnchors(pages: ScannedPage[], _meta: ScanMeta): DimensionScore {
 	if (pages.length === 0) {
-		return makeDimension("citation-anchors", "Citation Anchors", 0, "medium", "No pages to analyze");
+		return makeDimension(
+			"citation-anchors",
+			"Citation Anchors",
+			0,
+			"medium",
+			"No pages to analyze",
+		);
 	}
 
 	const sortedPages = [...pages].sort((a, b) => a.url.localeCompare(b.url));
@@ -405,7 +447,9 @@ export function scoreCitationAnchors(pages: ScannedPage[], _meta: ScanMeta): Dim
 		"Citation Anchors",
 		score,
 		"medium",
-		score < 10 ? "Add id attributes to H2 and H3 headings for deep linking" : "Headings are deep-linkable",
+		score < 10
+			? "Add id attributes to H2 and H3 headings for deep linking"
+			: "Headings are deep-linkable",
 	);
 }
 

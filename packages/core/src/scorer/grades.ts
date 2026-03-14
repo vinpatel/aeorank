@@ -18,10 +18,7 @@ export function getStatus(score: number): "pass" | "warn" | "fail" {
 }
 
 /** Get dimension status based on score/maxScore ratio */
-export function getDimensionStatus(
-	score: number,
-	maxScore: number,
-): "pass" | "warn" | "fail" {
+export function getDimensionStatus(score: number, maxScore: number): "pass" | "warn" | "fail" {
 	const pct = (score / maxScore) * 100;
 	return getStatus(pct);
 }

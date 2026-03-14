@@ -13,11 +13,7 @@ export function generateSitemapAi(result: ScanResult): string {
 	const sortedPages = [...result.pages].sort((a, b) => a.url.localeCompare(b.url));
 
 	for (const page of sortedPages) {
-		const summary = page.bodyText
-			.slice(0, 200)
-			.replace(/\n/g, " ")
-			.replace(/\s+/g, " ")
-			.trim();
+		const summary = page.bodyText.slice(0, 200).replace(/\n/g, " ").replace(/\s+/g, " ").trim();
 
 		lines.push("  <url>");
 		lines.push(`    <loc>${escapeXml(page.url)}</loc>`);

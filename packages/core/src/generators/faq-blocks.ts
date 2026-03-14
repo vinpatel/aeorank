@@ -44,9 +44,7 @@ export function generateFaqBlocks(result: ScanResult): string {
 	lines.push('<div itemscope itemtype="https://schema.org/FAQPage">');
 
 	for (const qa of pairs) {
-		lines.push(
-			'  <div itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">',
-		);
+		lines.push('  <div itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">');
 		lines.push(`    <h3 itemprop="name">${escapeHtml(qa.question)}</h3>`);
 		lines.push(
 			'    <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">',
