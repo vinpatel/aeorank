@@ -77,7 +77,12 @@ Decimal phases appear between their surrounding integers in numeric order.
   2. A returning user can view a 30-day sparkline chart showing how their score has changed over time
   3. A user can click "Download files" and receive a ZIP containing all 8 generated files for their site
   4. A user can upgrade from Free to Pro ($29) via Stripe and be granted the corresponding access without manual intervention
-**Plans**: TBD
+**Plans**: 5 plans
+- [ ] 05-01-PLAN.md — Next.js 16 bootstrap, Clerk auth, Supabase client, SSRF validation, DB schema
+- [ ] 05-02-PLAN.md — Scan flow: add site form, QStash async dispatch, score display with dimensions
+- [ ] 05-03-PLAN.md — Stripe billing: checkout, webhook handler, subscription sync
+- [ ] 05-04-PLAN.md — Score history sparkline chart and ZIP file download
+- [ ] 05-05-PLAN.md — Human verification of complete SaaS dashboard
 
 ## Progress
 
@@ -90,4 +95,4 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | 2. CLI | 3/3 | Complete | 2026-03-14 |
 | 3. Web Presence | 4/4 | Complete | 2026-03-14 |
 | 4. GitHub Action | 2/2 | Complete   | 2026-03-14 |
-| 5. SaaS Dashboard | 0/TBD | Not started | - |
+| 5. SaaS Dashboard | 0/5 | Not started | - |
