@@ -1,0 +1,52 @@
+---
+const steps = [
+	{
+		number: "01",
+		title: "Scan",
+		code: "npx aeorank scan https://your-site.com",
+		description:
+			"Point AEOrank at any URL. It crawls up to 50 pages, analyzes structure, schema markup, and AI readiness signals. Takes under 30 seconds.",
+	},
+	{
+		number: "02",
+		title: "Score",
+		code: null,
+		description:
+			"Get an AEO score from 0-100 across 12 weighted dimensions. See exactly which signals are strong, which need work, and what to fix first.",
+	},
+	{
+		number: "03",
+		title: "Generate",
+		code: null,
+		description:
+			"Get 8 files tailored to your site: llms.txt, schema.json, robots directives, FAQ markup, and more. Deploy them and watch your AI visibility improve.",
+	},
+];
+---
+
+<section id="how-it-works" class="border-t border-border px-6 py-24">
+	<div class="mx-auto max-w-6xl">
+		<h2 class="text-4xl font-bold md:text-5xl">
+			Three Commands. Eight Files. Zero Config.
+		</h2>
+		<p class="mt-4 text-lg text-text-muted">
+			From scan to deployment-ready files in under 30 seconds.
+		</p>
+		<div class="mt-16 grid grid-cols-1 gap-12 md:grid-cols-3">
+			{
+				steps.map((step) => (
+					<div>
+						<div class="text-5xl font-bold text-border">{step.number}</div>
+						<h3 class="mt-4 text-2xl font-bold">{step.title}</h3>
+						{step.code && (
+							<div class="mt-4 rounded-sm bg-accent p-3">
+								<code class="font-mono text-sm text-bg">{step.code}</code>
+							</div>
+						)}
+						<p class="mt-4 text-text-muted">{step.description}</p>
+					</div>
+				))
+			}
+		</div>
+	</div>
+</section>

@@ -1,0 +1,33 @@
+---
+import TerminalDemo from "./TerminalDemo.tsx";
+---
+
+<section id="hero" class="px-6 py-24">
+	<div class="mx-auto max-w-6xl">
+		<h1 class="text-5xl font-bold leading-tight md:text-6xl">
+			Your Site Is Invisible to AI
+		</h1>
+		<p class="mt-6 max-w-2xl text-lg text-text-muted">
+			AI engines power 40% of web discovery. AEOrank scans your site, scores
+			your AI visibility across 12 dimensions, and generates the 8 files that
+			make AI engines find you.
+		</p>
+		<div class="mt-8 flex flex-wrap items-center gap-4">
+			<a
+				href="https://docs.aeorank.dev/getting-started/"
+				class="inline-block bg-accent px-6 py-3 text-base font-medium text-bg rounded-sm"
+			>
+				Get Started Free
+			</a>
+			<a
+				href="#how-it-works"
+				class="text-base text-text-muted hover:text-text"
+			>
+				See How It Works &rarr;
+			</a>
+		</div>
+		<div class="mt-12 mx-auto max-w-2xl">
+			<TerminalDemo client:visible />
+		</div>
+	</div>
+</section>

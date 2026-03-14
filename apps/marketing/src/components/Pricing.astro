@@ -1,0 +1,101 @@
+---
+const tiers = [
+	{
+		name: "Free",
+		price: "$0",
+		period: "forever",
+		description: "The CLI is open source and MIT-licensed.",
+		features: ["Unlimited scans", "All 8 generated files", "JSON output for CI", "Community support"],
+		cta: "Install Now",
+		ctaLink: "https://docs.aeorank.dev/getting-started/",
+		highlighted: true,
+		available: true,
+	},
+	{
+		name: "Pro",
+		price: "$29",
+		period: "/month",
+		description: "Dashboard with history and insights.",
+		features: ["Everything Free", "Web dashboard", "Score history charts", "Up to 5 sites"],
+		cta: "Coming Soon",
+		ctaLink: "#",
+		highlighted: false,
+		available: false,
+	},
+	{
+		name: "API",
+		price: "$99",
+		period: "/month",
+		description: "Programmatic access and webhooks.",
+		features: ["Everything Pro", "REST API access", "Up to 50 sites", "Webhook notifications"],
+		cta: "Coming Soon",
+		ctaLink: "#",
+		highlighted: false,
+		available: false,
+	},
+	{
+		name: "Agency",
+		price: "$499",
+		period: "/month",
+		description: "White-label reports for clients.",
+		features: [
+			"Everything API",
+			"Unlimited sites",
+			"White-label PDF reports",
+			"Priority support",
+		],
+		cta: "Coming Soon",
+		ctaLink: "#",
+		highlighted: false,
+		available: false,
+	},
+];
+---
+
+<section id="pricing" class="border-t border-border px-6 py-24">
+	<div class="mx-auto max-w-6xl">
+		<h2 class="text-4xl font-bold md:text-5xl">Simple Pricing</h2>
+		<p class="mt-4 text-lg text-text-muted">
+			The CLI is free forever. Pay when you need the dashboard.
+		</p>
+		<div class="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+			{
+				tiers.map((tier) => (
+					<div
+						class:list={[
+							"flex flex-col border p-6",
+							tier.highlighted ? "border-accent border-2" : "border-border",
+							!tier.available && "opacity-70",
+						]}
+					>
+						<h3 class="text-lg font-bold">{tier.name}</h3>
+						<div class="mt-2">
+							<span class="text-3xl font-bold">{tier.price}</span>
+							<span class="text-sm text-text-muted">{tier.period}</span>
+						</div>
+						<p class="mt-2 text-sm text-text-muted">{tier.description}</p>
+						<ul class="mt-6 flex-1 space-y-2">
+							{tier.features.map((f) => (
+								<li class="text-sm">
+									<span class="mr-2">&#10003;</span>
+									{f}
+								</li>
+							))}
+						</ul>
+						<a
+							href={tier.ctaLink}
+							class:list={[
+								"mt-6 block py-2 text-center text-sm font-medium rounded-sm",
+								tier.available
+									? "bg-accent text-bg"
+									: "border border-border text-text-muted cursor-not-allowed",
+							]}
+						>
+							{tier.cta}
+						</a>
+					</div>
+				))
+			}
+		</div>
+	</div>
+</section>
