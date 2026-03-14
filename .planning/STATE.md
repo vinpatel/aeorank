@@ -3,12 +3,12 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: unknown
-last_updated: "2026-03-14T23:58:00.000Z"
+last_updated: "2026-03-14T23:51:07.288Z"
 progress:
   total_phases: 5
   completed_phases: 3
   total_plans: 19
-  completed_plans: 13
+  completed_plans: 15
 ---
 
 # Project State
@@ -18,16 +18,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-14)
 
 **Core value:** A developer runs `npx aeorank scan <url>` with zero config and gets an AEO score plus all 8 generated files needed for AI visibility — in under 30 seconds.
-**Current focus:** Phase 5 in progress. Plans 01, 02, 03 complete — Next.js foundation, scan pipeline (QStash + Supabase), Stripe billing.
+**Current focus:** Phase 5 in progress. Plans 01, 02, 03, 04 complete — Next.js foundation, scan pipeline (QStash + Supabase), Stripe billing, score chart + ZIP download.
 
 ## Current Position
 
 Phase: 5 of 5 (SaaS Dashboard) — IN PROGRESS
-Plan: 3 of 5 in Phase 5 — COMPLETE (plans 1, 2, 3 done; plans 4, 5 remaining)
+Plan: 4 of 5 in Phase 5 — COMPLETE (plans 1, 2, 3, 4 done; plan 5 remaining)
 Status: Phase 5 in progress
-Last activity: 2026-03-14 — Scan pipeline complete: AddSiteForm, POST /api/scan (QStash enqueue), POST /api/scan/process (scan() + Supabase write), ScanStatus polling, ScoreBreakdown 12-dimension table, site detail page.
+Last activity: 2026-03-14 — Score chart + ZIP download: ScoreChart 30-day sparkline, GET /api/download/[siteId], DownloadButton, site detail page updated.
 
-Progress: [##############] (Phase 5 Plan 3 of 5)
+Progress: [################] (Phase 5 Plan 4 of 5)
 
 ## Performance Metrics
 
@@ -55,6 +55,7 @@ Progress: [##############] (Phase 5 Plan 3 of 5)
 | Phase 05-saas-dashboard P01 | 306s | 2 tasks | 15 files |
 | Phase 05-saas-dashboard P02 | 20min | 2 tasks | 9 files |
 | Phase 05-saas-dashboard P03 | 4min | 2 tasks | 8 files |
+| Phase 05-saas-dashboard P04 | 2min | 2 tasks | 5 files |
 
 ## Phase 4 Deliverables
 
@@ -153,6 +154,7 @@ Recent decisions affecting current work:
 - [Phase 05-saas-dashboard]: Stripe client must be a lazy factory (getStripeClient) not singleton — next build evaluates modules without env vars
 - [Phase 05-saas-dashboard]: Stripe v20 current_period_end is on SubscriptionItem not Subscription top-level
 - [Phase 05-saas-dashboard]: Stripe webhook returns 200 on handler errors to prevent Stripe retry storms on transient DB failures
+- [Phase 05-saas-dashboard]: JSZip arraybuffer output type required for Next.js Route Handler Response BodyInit compatibility (nodebuffer and uint8array both fail TypeScript strict mode)
 
 ### Pending Todos
 
@@ -169,5 +171,5 @@ Recent decisions affecting current work:
 ## Session Continuity
 
 Last session: 2026-03-14
-Stopped at: Completed 05-saas-dashboard-02-PLAN.md — QStash scan pipeline with AddSiteForm, /api/scan, /api/scan/process, /api/scan/status, ScanStatus polling, ScoreBreakdown 12-dimension table, dashboard site list, site detail page.
+Stopped at: Completed 05-saas-dashboard-04-PLAN.md — ScoreChart 30-day sparkline (Recharts), GET /api/download/[siteId] (JSZip arraybuffer), DownloadButton client component, site detail page updated.
 Resume file: None
