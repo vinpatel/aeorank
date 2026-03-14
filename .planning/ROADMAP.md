@@ -14,7 +14,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 - [ ] **Phase 1: Core Engine** - Monorepo + shared scan/score/generate library that all other surfaces depend on
 - [x] **Phase 2: CLI** - `npx aeorank scan <url>` published to npm as MIT; primary developer acquisition channel
-- [ ] **Phase 3: Web Presence** - Marketing site at aeorank.dev and docs at docs.aeorank.dev
+- [x] **Phase 3: Web Presence** - Marketing site at aeorank.dev and docs at docs.aeorank.dev
 - [ ] **Phase 4: GitHub Action** - Composite CI action posting AEO score as Check + PR comment with zero external credentials
 - [ ] **Phase 5: SaaS Dashboard** - Authenticated Next.js 16 dashboard with score history, file downloads, and Stripe billing
 
@@ -53,7 +53,7 @@ Decimal phases appear between their surrounding integers in numeric order.
   2. The marketing site renders with zero JavaScript by default (Lighthouse JS payload = 0 for non-interactive pages)
   3. docs.aeorank.dev serves a working Starlight site with getting-started guide, CLI reference, all 8 file format docs, and the 12-dimension scoring explainer
   4. A developer reading the docs can go from zero to a working `npx aeorank scan` in under 5 minutes following the quick-start guide
-**Plans**: TBD
+**Plans**: 4/4 complete (03-01, 03-02, 03-03, 03-04)
 
 ### Phase 4: GitHub Action
 **Goal**: Any GitHub repository can add AEOrank to CI and get AEO scores posted as a Check Run and PR comment using only the built-in `GITHUB_TOKEN` — no external credentials required
@@ -86,6 +86,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 |-------|----------------|--------|-----------|
 | 1. Core Engine | 0/TBD | Not started | - |
 | 2. CLI | 3/3 | Complete | 2026-03-14 |
-| 3. Web Presence | 0/TBD | Not started | - |
+| 3. Web Presence | 4/4 | Complete | 2026-03-14 |
 | 4. GitHub Action | 0/TBD | Not started | - |
 | 5. SaaS Dashboard | 0/TBD | Not started | - |
