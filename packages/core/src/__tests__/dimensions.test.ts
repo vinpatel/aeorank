@@ -65,7 +65,8 @@ describe("scoreLlmsTxt", () => {
 	});
 
 	it("returns 10 for well-structured llms.txt", () => {
-		const txt = "# My Site\n> A great site\n## Section One\n- [Page](url)\n## Section Two\n- [Page2](url2)\n## Section Three\n- [Page3](url3)";
+		const txt =
+			"# My Site\n> A great site\n## Section One\n- [Page](url)\n## Section Two\n- [Page2](url2)\n## Section Three\n- [Page3](url3)";
 		const result = scoreLlmsTxt([], makeMeta({ existingLlmsTxt: txt }));
 		expect(result.score).toBe(10);
 	});

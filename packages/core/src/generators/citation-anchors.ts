@@ -1,5 +1,5 @@
-import { slugify } from "../utils.js";
 import type { ScanResult } from "../types.js";
+import { slugify } from "../utils.js";
 
 /** Generate citation-anchors.html with heading anchor markup */
 export function generateCitationAnchors(result: ScanResult): string {
@@ -25,9 +25,7 @@ export function generateCitationAnchors(result: ScanResult): string {
 			const suggestedId = slugify(heading.text);
 			const tag = `h${heading.level}`;
 			lines.push(`<!-- Before: <${tag}>${escapeHtml(heading.text)}</${tag}> -->`);
-			lines.push(
-				`<${tag} id="${suggestedId}">${escapeHtml(heading.text)}</${tag}>`,
-			);
+			lines.push(`<${tag} id="${suggestedId}">${escapeHtml(heading.text)}</${tag}>`);
 			lines.push("");
 			missingCount++;
 		}
@@ -44,8 +42,5 @@ export function generateCitationAnchors(result: ScanResult): string {
 }
 
 function escapeHtml(text: string): string {
-	return text
-		.replace(/&/g, "&amp;")
-		.replace(/</g, "&lt;")
-		.replace(/>/g, "&gt;");
+	return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }

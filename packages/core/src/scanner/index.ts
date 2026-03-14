@@ -39,9 +39,7 @@ export async function scanUrl(
 
 	// Step 2: Create rate-limited fetcher (respecting Crawl-delay)
 	const crawlDelay =
-		mergedConfig.respectCrawlDelay && robotsInfo.crawlDelay
-			? robotsInfo.crawlDelay
-			: 0;
+		mergedConfig.respectCrawlDelay && robotsInfo.crawlDelay ? robotsInfo.crawlDelay : 0;
 	const scanFetcher = customFetcher ?? createFetcher(mergedConfig, crawlDelay);
 
 	// Step 3: Check for existing llms.txt

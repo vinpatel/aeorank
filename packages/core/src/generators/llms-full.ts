@@ -10,5 +10,5 @@ export function generateLlmsFullTxt(result: ScanResult): string {
 		return lines.join("\n");
 	});
 
-	return sections.join("\n\n---\n\n") + "\n";
+	return `${sections.join("\n\n---\n\n")}\n`;
 }

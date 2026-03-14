@@ -1,6 +1,6 @@
 import pLimit from "p-limit";
-import type { ScanConfig } from "../types.js";
 import { DEFAULT_CONFIG } from "../constants.js";
+import type { ScanConfig } from "../types.js";
 
 export interface FetchResult {
 	html: string;
@@ -15,10 +15,7 @@ const MAX_RETRIES = 3;
 const RETRY_CODES = new Set([429, 503]);
 
 /** Create a rate-limited fetcher function */
-export function createFetcher(
-	config: Partial<ScanConfig> = {},
-	crawlDelay = 0,
-): FetcherFn {
+export function createFetcher(config: Partial<ScanConfig> = {}, crawlDelay = 0): FetcherFn {
 	const mergedConfig = { ...DEFAULT_CONFIG, ...config };
 	const limit = pLimit(mergedConfig.concurrency);
 
