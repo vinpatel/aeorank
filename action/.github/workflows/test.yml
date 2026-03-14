@@ -1,0 +1,22 @@
+name: Test Action
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  checks: write
+  pull-requests: write
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run AEOrank Action
+        uses: ./
+        with:
+          url: https://example.com
+          fail-below: 0
