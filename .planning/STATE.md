@@ -3,12 +3,12 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: unknown
-last_updated: "2026-03-14T22:57:10.266Z"
+last_updated: "2026-03-14T23:37:02.137Z"
 progress:
-  total_phases: 4
+  total_phases: 5
   completed_phases: 3
-  total_plans: 14
-  completed_plans: 10
+  total_plans: 19
+  completed_plans: 11
 ---
 
 # Project State
@@ -18,16 +18,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-14)
 
 **Core value:** A developer runs `npx aeorank scan <url>` with zero config and gets an AEO score plus all 8 generated files needed for AI visibility — in under 30 seconds.
-**Current focus:** Phase 4 complete. Self-test workflow created; action/ directory ready to copy to aeorank/action repo.
+**Current focus:** Phase 5 in progress. Plan 01 complete — Next.js 16 foundation with Clerk auth, Supabase client, SSRF validation, and database schema.
 
 ## Current Position
 
-Phase: 4 of 5 (GitHub Action) — COMPLETE
-Plan: 2 of 2 in Phase 4 — COMPLETE
-Status: Phase 4 complete
-Last activity: 2026-03-14 — Self-test workflow (test.yml) created; action/ package ready for aeorank/action repo.
+Phase: 5 of 5 (SaaS Dashboard) — IN PROGRESS
+Plan: 1 of 5 in Phase 5 — COMPLETE (plan 1 done, plans 2-5 remaining)
+Status: Phase 5 in progress
+Last activity: 2026-03-14 — Next.js 16 foundation set up; Clerk auth wired, Supabase client factory created, SSRF validation implemented with 12 tests.
 
-Progress: [##########] 100% (Phase 4 Plan 2)
+Progress: [##########] (Phase 5 Plan 1 of 5)
 
 ## Performance Metrics
 
@@ -52,6 +52,7 @@ Progress: [##########] 100% (Phase 4 Plan 2)
 
 | Phase 04-github-action P01 | 78s | 2 tasks | 2 files |
 | Phase 04-github-action P02 | 27s | 2 tasks | 1 files |
+| Phase 05-saas-dashboard P01 | 306s | 2 tasks | 15 files |
 
 ## Phase 4 Deliverables
 
@@ -142,6 +143,9 @@ Recent decisions affecting current work:
 - [Phase 04-github-action]: Use context.payload.pull_request.head.sha on PR events, not context.sha (merge commit)
 - [Phase 04-github-action]: Check conclusion: failure(<40 or fail-below), neutral(40-69), success(70+)
 - [Phase 04-github-action]: Use fail-below: 0 in self-test so example.com scan never fails on score
+- [Phase 05-saas-dashboard]: Clerk v6 auth.protect() API: auth param in clerkMiddleware is AuthFn with protect() as direct property, not auth().protect()
+- [Phase 05-saas-dashboard]: proxy.ts confirmed for Next.js 16 middleware; PROXY_FILENAME constant exists alongside MIDDLEWARE_FILENAME in Next.js 16 constants
+- [Phase 05-saas-dashboard]: Supabase client uses Clerk native accessToken() integration (not deprecated JWT template)
 
 ### Pending Todos
 
@@ -150,12 +154,13 @@ Recent decisions affecting current work:
 ### Blockers/Concerns
 
 - [Phase 1]: Scoring model weights (12-dimension) based on MEDIUM-confidence third-party research — externalize into config object before SaaS launch
-- [Phase 5]: Clerk + Supabase JWT sync in Next.js 16 `proxy.ts` context has limited documentation — spike before Phase 5 planning
-- [Phase 5]: Async scan job queue mechanism (Supabase pg_cron, Upstash QStash, Vercel Background Functions) — defer decision to Phase 5 planning
-- [Phase 5]: SSRF prevention on scan API route is a launch blocker — validate all URLs before server-side fetch
+- [Phase 5]: RESOLVED — Clerk + Supabase native integration confirmed working; auth.protect() API updated from research pattern
+- [Phase 5]: RESOLVED — QStash chosen for async scan queue; pattern documented in RESEARCH.md
+- [Phase 5]: RESOLVED — SSRF prevention implemented as validateScanUrl() in apps/web/lib/validate-url.ts; 12 tests pass
+- [Phase 5]: User must configure Clerk and Supabase before running dev server (see apps/web/.env.example)
 
 ## Session Continuity
 
 Last session: 2026-03-14
-Stopped at: Completed 04-github-action-02-PLAN.md — self-test workflow created, action package ready for aeorank/action repo.
+Stopped at: Completed 05-saas-dashboard-01-PLAN.md — Next.js 16 foundation with Clerk auth, Supabase client factory (native Clerk integration), SSRF validation (12 tests), and database schema.
 Resume file: None
