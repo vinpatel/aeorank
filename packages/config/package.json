@@ -1,0 +1,10 @@
+{
+  "name": "@aeorank/config",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "echo 'Phase 2 stub'",
+    "test": "echo 'Phase 2 stub'"
+  }
+}
