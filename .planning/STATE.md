@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-03-14)
 
 **Core value:** A developer runs `npx aeorank scan <url>` with zero config and gets an AEO score plus all 8 generated files needed for AI visibility — in under 30 seconds.
-**Current focus:** Phase 2 complete. Ready for Phase 3.
+**Current focus:** Phase 3 complete. Ready for Phase 4.
 
 ## Current Position
 
-Phase: 2 of 5 (CLI) — COMPLETE
-Plan: 3 of 3 in Phase 2
-Status: Phase 2 complete
-Last activity: 2026-03-14 — All 3 plans executed across 2 waves. 55 CLI tests passing, build clean, lint clean.
+Phase: 3 of 5 (Web Presence) — COMPLETE
+Plan: 4 of 4 in Phase 3
+Status: Phase 3 complete
+Last activity: 2026-03-14 — All 4 plans executed across 2 waves. Marketing site builds, docs site builds (18 pages), GitHub Actions workflows created.
 
-Progress: [##########] 100% (Phase 2)
+Progress: [##########] 100% (Phase 3)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 8
-- Average duration: ~12 min per plan
-- Total execution time: ~2 hours
+- Total plans completed: 12
+- Average duration: ~10 min per plan
+- Total execution time: ~2.5 hours
 
 **By Phase:**
 
@@ -29,10 +29,11 @@ Progress: [##########] 100% (Phase 2)
 |-------|-------|-------|----------|
 | 1 — Core Engine | 5 | ~1.5h | ~18min |
 | 2 — CLI | 3 | ~35min | ~12min |
+| 3 — Web Presence | 4 | ~20min | ~5min |
 
 **Recent Trend:**
-- Last 3 plans: 02-01 through 02-03
-- Trend: improving (smaller plans, faster execution)
+- Last 4 plans: 03-01 through 03-04
+- Trend: accelerating (content/config plans faster than code plans)
 
 *Updated after each plan completion*
 
@@ -64,6 +65,30 @@ REQ-01, REQ-02, REQ-03, REQ-07, REQ-09, REQ-10, REQ-11, REQ-12, REQ-13, REQ-14, 
 ### Requirements covered
 CLI-01, CLI-02, CLI-03, CLI-04, CLI-05
 
+## Phase 3 Deliverables
+
+### @aeorank/marketing site
+- **Framework:** Astro 5 + Tailwind CSS 4 (via @tailwindcss/vite) + Preact
+- **Design:** 37signals aesthetic — #FAF9F7 bg, #111 text, Inter font, solid black buttons
+- **Homepage:** Hero, How It Works, Files List, Scoring Explainer, Pricing, FAQ, CTA
+- **Terminal demo:** Preact island with typing animation (client:visible, ~4KB gzipped)
+- **Zero JS:** No JavaScript in HTML output except the terminal demo island
+- **Deploy:** GitHub Pages via withastro/action@v5 (aeorank.dev)
+
+### @aeorank/docs site
+- **Framework:** Astro 5 + Starlight with Pagefind search
+- **Content:** 17 pages — getting started, CLI reference, 8 file docs, scoring explainer
+- **Search:** Pagefind indexed 1069 words across 17 pages
+- **Deploy:** GitHub Pages via peaceiris/actions-gh-pages to aeorank/docs repo (docs.aeorank.dev)
+
+### GitHub Actions
+- `deploy-marketing.yml` — builds + deploys marketing on push to main
+- `deploy-docs.yml` — builds + pushes docs to external repo on push to main
+- Path-based triggers prevent unnecessary builds
+
+### Requirements covered
+SITE-01, SITE-02, SITE-03, SITE-04, DOCS-01, DOCS-02, DOCS-03, DOCS-04, DOCS-05
+
 ## Accumulated Context
 
 ### Decisions
@@ -80,10 +105,13 @@ Recent decisions affecting current work:
 - [Phase 1]: tsup exports require "types" condition before "import"/"require" in package.json
 - [Phase 2]: chalk suppresses ANSI in non-TTY — tests verify content not color codes
 - [Phase 2]: @aeorank/core marked external in CLI tsup config (workspace dep, not bundled)
+- [Phase 3]: Used @tailwindcss/vite (not deprecated @astrojs/tailwind) for Tailwind CSS 4
+- [Phase 3]: GitHub Pages limits 1 custom domain per repo — docs deploys to separate aeorank/docs repo
+- [Phase 3]: Starlight uses default theme (not customized to match marketing site brand)
 
 ### Pending Todos
 
-None yet.
+- [Phase 3]: User must configure GitHub Pages, DNS, and deploy keys before sites go live (see 03-04-SUMMARY.md)
 
 ### Blockers/Concerns
 
@@ -95,5 +123,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-03-14
-Stopped at: Phase 2 complete. All 3 plans executed, committed. Ready for Phase 3 (Web Presence).
+Stopped at: Phase 3 complete. All 4 plans executed across 2 waves. Ready for Phase 4 (GitHub Action).
 Resume file: None
