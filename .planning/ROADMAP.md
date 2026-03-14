@@ -13,7 +13,7 @@ From a shared scan engine to a full SaaS product: Phase 1 builds the `@aeorank/c
 Decimal phases appear between their surrounding integers in numeric order.
 
 - [ ] **Phase 1: Core Engine** - Monorepo + shared scan/score/generate library that all other surfaces depend on
-- [ ] **Phase 2: CLI** - `npx aeorank scan <url>` published to npm as MIT; primary developer acquisition channel
+- [x] **Phase 2: CLI** - `npx aeorank scan <url>` published to npm as MIT; primary developer acquisition channel
 - [ ] **Phase 3: Web Presence** - Marketing site at aeorank.dev and docs at docs.aeorank.dev
 - [ ] **Phase 4: GitHub Action** - Composite CI action posting AEO score as Check + PR comment with zero external credentials
 - [ ] **Phase 5: SaaS Dashboard** - Authenticated Next.js 16 dashboard with score history, file downloads, and Stripe billing
@@ -42,7 +42,7 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. `npx aeorank init` creates an `aeorank.config.js` file in the current directory with sensible defaults
   4. Every error displayed in the terminal includes a specific next-action suggestion (not a generic error message)
   5. Failed checks in the output are ranked High/Medium/Low so developers know what to fix first
-**Plans**: TBD
+**Plans**: 3/3 complete (02-01, 02-02, 02-03)
 
 ### Phase 3: Web Presence
 **Goal**: aeorank.dev and docs.aeorank.dev are live, discoverable, and give developers and non-developers everything they need to understand and adopt AEOrank before the dashboard exists
@@ -85,7 +85,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Core Engine | 0/TBD | Not started | - |
-| 2. CLI | 0/TBD | Not started | - |
+| 2. CLI | 3/3 | Complete | 2026-03-14 |
 | 3. Web Presence | 0/TBD | Not started | - |
 | 4. GitHub Action | 0/TBD | Not started | - |
 | 5. SaaS Dashboard | 0/TBD | Not started | - |
