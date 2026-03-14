@@ -5,6 +5,7 @@ import { createServerSupabaseClient } from "@/lib/supabase";
 import { ScanStatus } from "@/components/ScanStatus";
 import { ScoreBreakdown } from "@/components/ScoreBreakdown";
 import { ScoreChart } from "@/components/ScoreChart";
+import { DownloadButton } from "@/components/DownloadButton";
 import type { DimensionScore } from "@aeorank/core";
 
 interface PageProps {
@@ -171,6 +172,9 @@ export default async function SiteDetailPage({ params }: PageProps) {
 							<ScoreChart data={scoreHistory} />
 						</div>
 					)}
+					<div style={{ marginBottom: "24px" }}>
+						<DownloadButton siteId={siteId} />
+					</div>
 					<ScoreBreakdown
 						score={scan.score as number}
 						grade={scan.grade as string}
