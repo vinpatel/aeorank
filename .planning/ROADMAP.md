@@ -15,7 +15,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [ ] **Phase 1: Core Engine** - Monorepo + shared scan/score/generate library that all other surfaces depend on
 - [x] **Phase 2: CLI** - `npx aeorank scan <url>` published to npm as MIT; primary developer acquisition channel
 - [x] **Phase 3: Web Presence** - Marketing site at aeorank.dev and docs at docs.aeorank.dev
-- [ ] **Phase 4: GitHub Action** - Composite CI action posting AEO score as Check + PR comment with zero external credentials
+- [x] **Phase 4: GitHub Action** - Composite CI action posting AEO score as Check + PR comment with zero external credentials (completed 2026-03-14)
 - [ ] **Phase 5: SaaS Dashboard** - Authenticated Next.js 16 dashboard with score history, file downloads, and Stripe billing
 
 ## Phase Details
@@ -89,5 +89,5 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | 1. Core Engine | 0/TBD | Not started | - |
 | 2. CLI | 3/3 | Complete | 2026-03-14 |
 | 3. Web Presence | 4/4 | Complete | 2026-03-14 |
-| 4. GitHub Action | 1/2 | In Progress|  |
+| 4. GitHub Action | 2/2 | Complete   | 2026-03-14 |
 | 5. SaaS Dashboard | 0/TBD | Not started | - |
