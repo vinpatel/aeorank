@@ -64,7 +64,9 @@ Decimal phases appear between their surrounding integers in numeric order.
   2. Opening a pull request that affects AEO score generates a PR comment with a score table; re-running never posts a second comment (upserts in place)
   3. Setting `fail-below: 70` causes the Check to fail when the AEO score drops below 70
   4. The action is installable from the GitHub Marketplace as `aeorank/action@v1`
-**Plans**: TBD
+**Plans**: 2 plans
+- [ ] 04-01-PLAN.md — Composite action.yml with scan, Check Run, and PR comment upsert + Marketplace README
+- [ ] 04-02-PLAN.md — Self-test workflow + human verification of action readiness
 
 ### Phase 5: SaaS Dashboard
 **Goal**: Users can sign in, add a site by URL, view their AEO score history, download all generated files in a ZIP, and subscribe to a paid plan — the complete SaaS product is live
@@ -87,5 +89,5 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | 1. Core Engine | 0/TBD | Not started | - |
 | 2. CLI | 3/3 | Complete | 2026-03-14 |
 | 3. Web Presence | 4/4 | Complete | 2026-03-14 |
-| 4. GitHub Action | 0/TBD | Not started | - |
+| 4. GitHub Action | 0/2 | Planned | - |
 | 5. SaaS Dashboard | 0/TBD | Not started | - |
