@@ -1,10 +1,10 @@
 {
-	"name": "@aeorank/cli",
-	"version": "0.0.1",
+	"name": "aeorank-cli",
+	"version": "0.1.1",
 	"private": false,
 	"type": "module",
 	"bin": {
-		"aeorank": "./dist/index.js"
+		"aeorank-cli": "dist/index.js"
 	},
 	"exports": {
 		".": {
@@ -20,7 +20,6 @@
 		"typecheck": "tsc --noEmit"
 	},
 	"dependencies": {
-		"@aeorank/core": "workspace:*",
 		"commander": "^13.0.0",
 		"chalk": "^5.4.0",
 		"ora": "^8.2.0"

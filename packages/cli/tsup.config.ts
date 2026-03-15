@@ -8,8 +8,7 @@ export default defineConfig({
 	clean: true,
 	splitting: false,
 	banner: {
-		js: "#!/usr/bin/env node",
+		js: '#!/usr/bin/env node\nimport{createRequire as __createRequire}from"module";const require=__createRequire(import.meta.url);',
 	},
-	// Keep @aeorank/core external — resolved at install time as workspace dep
-	external: ["@aeorank/core"],
+	noExternal: ["@aeorank/core"],
 });
