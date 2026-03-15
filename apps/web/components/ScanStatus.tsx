@@ -43,10 +43,10 @@ export function ScanStatus({ scanId, initialStatus }: ScanStatusProps) {
 		return (
 			<div style={{
 				padding: "16px",
-				background: "#fef2f2",
+				background: "var(--red-bg)",
 				border: "1px solid #fecaca",
-				borderRadius: "8px",
-				color: "#dc2626",
+				borderRadius: "var(--radius-md)",
+				color: "var(--red)",
 			}}>
 				<p style={{ margin: 0, fontWeight: 600 }}>Scan failed</p>
 				{errorMessage && (
@@ -61,9 +61,9 @@ export function ScanStatus({ scanId, initialStatus }: ScanStatusProps) {
 	return (
 		<div style={{
 			padding: "24px",
-			background: "#f9fafb",
-			border: "1px solid #e5e7eb",
-			borderRadius: "8px",
+			background: "var(--bg-surface)",
+			border: "1px solid var(--border)",
+			borderRadius: "var(--radius-md)",
 			display: "flex",
 			alignItems: "center",
 			gap: "12px",
@@ -72,19 +72,18 @@ export function ScanStatus({ scanId, initialStatus }: ScanStatusProps) {
 				style={{
 					width: "20px",
 					height: "20px",
-					border: "2px solid #d1d5db",
-					borderTopColor: "#111",
+					border: "2px solid var(--border)",
+					borderTopColor: "var(--bg-accent)",
 					borderRadius: "50%",
 					animation: "spin 0.8s linear infinite",
 				}}
 			/>
 			<div>
 				<p style={{ margin: 0, fontWeight: 600 }}>{label}</p>
-				<p style={{ margin: "2px 0 0", fontSize: "14px", color: "#6b7280" }}>
+				<p style={{ margin: "2px 0 0", fontSize: "14px", color: "var(--text-secondary)" }}>
 					This typically takes 10–30 seconds.
 				</p>
 			</div>
-			<style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
 		</div>
 	);
 }

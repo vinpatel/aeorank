@@ -62,34 +62,41 @@ export default async function SiteDetailPage({ params }: PageProps) {
 		}));
 
 	return (
-		<div style={{ maxWidth: "800px" }}>
+		<div style={{ maxWidth: "860px", animation: "fadeIn 0.3s ease" }}>
 			<div style={{ marginBottom: "24px" }}>
 				<Link
 					href="/dashboard"
 					style={{
-						fontSize: "14px",
-						color: "#6b7280",
+						fontSize: "13px",
+						color: "var(--text-muted)",
 						textDecoration: "none",
 						display: "inline-flex",
 						alignItems: "center",
-						gap: "4px",
+						gap: "6px",
+						fontWeight: 500,
+						transition: "color 0.15s",
 					}}
 				>
-					&larr; Back to dashboard
+					<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+						<path d="M19 12H5M12 19l-7-7 7-7"/>
+					</svg>
+					Back to dashboard
 				</Link>
 			</div>
 
 			<h1
 				style={{
-					fontSize: "22px",
+					fontFamily: "var(--font-display)",
+					fontSize: "24px",
 					fontWeight: 700,
 					marginBottom: "4px",
 					wordBreak: "break-all",
+					letterSpacing: "-0.02em",
 				}}
 			>
 				{site.url}
 			</h1>
-			<p style={{ color: "#9ca3af", fontSize: "13px", marginBottom: "32px" }}>
+			<p style={{ color: "var(--text-muted)", fontSize: "13px", marginBottom: "32px" }}>
 				Added{" "}
 				{new Date(site.created_at).toLocaleDateString("en-US", {
 					month: "long",
@@ -101,30 +108,35 @@ export default async function SiteDetailPage({ params }: PageProps) {
 			{!scan ? (
 				<div
 					style={{
-						padding: "32px",
+						padding: "48px 32px",
 						textAlign: "center",
-						border: "1px dashed #d1d5db",
-						borderRadius: "12px",
-						color: "#9ca3af",
+						border: "2px dashed var(--border)",
+						borderRadius: "var(--radius-lg)",
+						color: "var(--text-muted)",
+						background: "var(--bg-card)",
 					}}
 				>
-					<p style={{ margin: 0 }}>No scan results yet.</p>
+					<svg width="48" height="48" viewBox="0 0 48 48" fill="none" style={{ margin: "0 auto 16px", opacity: 0.3 }}>
+						<circle cx="24" cy="24" r="20" stroke="currentColor" strokeWidth="2" strokeDasharray="4 3"/>
+						<path d="M24 16v8l6 3" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+					</svg>
+					<p style={{ margin: 0, fontWeight: 500 }}>No scan results yet.</p>
 				</div>
 			) : scan.status === "pending" || scan.status === "running" ? (
 				<ScanStatus scanId={scan.id} initialStatus={scan.status} />
 			) : scan.status === "error" ? (
 				<div
 					style={{
-						padding: "16px",
-						background: "#fef2f2",
+						padding: "20px",
+						background: "var(--red-bg)",
 						border: "1px solid #fecaca",
-						borderRadius: "8px",
-						color: "#dc2626",
+						borderRadius: "var(--radius-md)",
+						color: "var(--red)",
 					}}
 				>
-					<p style={{ margin: 0, fontWeight: 600 }}>Scan failed</p>
+					<p style={{ margin: 0, fontWeight: 600, fontSize: "15px" }}>Scan failed</p>
 					{scan.error && (
-						<p style={{ margin: "4px 0 0", fontSize: "14px" }}>
+						<p style={{ margin: "6px 0 0", fontSize: "14px", opacity: 0.85 }}>
 							{scan.error as string}
 						</p>
 					)}
@@ -135,16 +147,26 @@ export default async function SiteDetailPage({ params }: PageProps) {
 						<div
 							style={{
 								display: "flex",
-								gap: "24px",
-								marginBottom: "24px",
+								gap: "20px",
+								marginBottom: "28px",
 								fontSize: "13px",
-								color: "#6b7280",
+								color: "var(--text-secondary)",
+								background: "var(--bg-surface)",
+								padding: "12px 16px",
+								borderRadius: "var(--radius-sm)",
 							}}
 						>
-							<span>{scan.pages_scanned as number} pages scanned</span>
-							<span>{Math.round((scan.duration_ms as number) / 1000)}s</span>
+							<span style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+								<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="2" y="3" width="20" height="18" rx="2"/><path d="M8 7v0M12 7v0M16 7v0"/><path d="M2 11h20"/></svg>
+								{scan.pages_scanned as number} pages scanned
+							</span>
+							<span style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+								<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+								{Math.round((scan.duration_ms as number) / 1000)}s
+							</span>
 							{scan.scanned_at && (
-								<span>
+								<span style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+									<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
 									{new Date(scan.scanned_at as string).toLocaleString("en-US", {
 										month: "short",
 										day: "numeric",
@@ -156,15 +178,22 @@ export default async function SiteDetailPage({ params }: PageProps) {
 						</div>
 					)}
 					{scoreHistory.length > 0 && (
-						<div style={{ marginBottom: "24px" }}>
+						<div style={{
+							marginBottom: "28px",
+							background: "var(--bg-card)",
+							border: "1px solid var(--border)",
+							borderRadius: "var(--radius-md)",
+							padding: "20px",
+							boxShadow: "var(--shadow-card)",
+						}}>
 							<p
 								style={{
 									fontSize: "12px",
 									fontWeight: 600,
-									color: "#6b7280",
+									color: "var(--text-muted)",
 									textTransform: "uppercase",
-									letterSpacing: "0.05em",
-									marginBottom: "8px",
+									letterSpacing: "0.06em",
+									marginBottom: "12px",
 								}}
 							>
 								Score History (30 days)
@@ -172,7 +201,7 @@ export default async function SiteDetailPage({ params }: PageProps) {
 							<ScoreChart data={scoreHistory} />
 						</div>
 					)}
-					<div style={{ marginBottom: "24px" }}>
+					<div style={{ marginBottom: "28px" }}>
 						<DownloadButton siteId={siteId} />
 					</div>
 					<ScoreBreakdown
@@ -182,7 +211,7 @@ export default async function SiteDetailPage({ params }: PageProps) {
 					/>
 				</>
 			) : (
-				<div style={{ color: "#6b7280", fontSize: "14px" }}>
+				<div style={{ color: "var(--text-secondary)", fontSize: "14px" }}>
 					Unexpected scan state: {scan.status}
 				</div>
 			)}

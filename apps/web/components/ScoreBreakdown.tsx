@@ -7,15 +7,15 @@ interface ScoreBreakdownProps {
 }
 
 function scoreColor(score: number): string {
-	if (score >= 70) return "#16a34a"; // green-600
-	if (score >= 40) return "#d97706"; // amber-600
-	return "#dc2626"; // red-600
+	if (score >= 70) return "var(--green)";
+	if (score >= 40) return "var(--amber)";
+	return "var(--red)";
 }
 
 function statusColor(status: "pass" | "warn" | "fail"): string {
-	if (status === "pass") return "#16a34a";
-	if (status === "warn") return "#d97706";
-	return "#dc2626";
+	if (status === "pass") return "var(--green)";
+	if (status === "warn") return "var(--amber)";
+	return "var(--red)";
 }
 
 function weightLabel(weight: "high" | "medium" | "low"): string {
@@ -25,15 +25,15 @@ function weightLabel(weight: "high" | "medium" | "low"): string {
 }
 
 function weightBg(weight: "high" | "medium" | "low"): string {
-	if (weight === "high") return "#fee2e2";
-	if (weight === "medium") return "#fef3c7";
-	return "#f0fdf4";
+	if (weight === "high") return "var(--red-bg)";
+	if (weight === "medium") return "var(--amber-bg)";
+	return "var(--green-bg)";
 }
 
 function weightTextColor(weight: "high" | "medium" | "low"): string {
-	if (weight === "high") return "#991b1b";
-	if (weight === "medium") return "#92400e";
-	return "#166534";
+	if (weight === "high") return "var(--red)";
+	if (weight === "medium") return "var(--amber)";
+	return "var(--green)";
 }
 
 export function ScoreBreakdown({ score, grade, dimensions }: ScoreBreakdownProps) {
@@ -46,181 +46,149 @@ export function ScoreBreakdown({ score, grade, dimensions }: ScoreBreakdownProps
 				style={{
 					display: "flex",
 					alignItems: "center",
-					gap: "16px",
+					gap: "20px",
 					marginBottom: "32px",
-					padding: "24px",
-					border: "1px solid #e5e7eb",
-					borderRadius: "12px",
-					background: "#f9fafb",
+					padding: "28px",
+					border: "1px solid var(--border)",
+					borderRadius: "var(--radius-lg)",
+					background: "linear-gradient(135deg, var(--bg-card) 0%, var(--bg-surface) 100%)",
+					boxShadow: "var(--shadow-md)",
 				}}
 			>
-				<div style={{ textAlign: "center", minWidth: "80px" }}>
-					<div style={{ fontSize: "56px", fontWeight: 800, color, lineHeight: 1 }}>
+				<div style={{ textAlign: "center", minWidth: "90px" }}>
+					<div style={{
+						fontFamily: "var(--font-display)",
+						fontSize: "60px",
+						fontWeight: 700,
+						color,
+						lineHeight: 1,
+						letterSpacing: "-0.03em",
+					}}>
 						{score}
 					</div>
-					<div style={{ fontSize: "13px", color: "#6b7280", marginTop: "2px" }}>
+					<div style={{ fontSize: "13px", color: "var(--text-muted)", marginTop: "4px" }}>
 						out of 100
 					</div>
 				</div>
 				<div
 					style={{
 						width: "1px",
-						height: "60px",
-						background: "#e5e7eb",
+						height: "64px",
+						background: "var(--border)",
 					}}
 				/>
 				<div>
 					<div
 						style={{
-							fontSize: "40px",
-							fontWeight: 800,
+							fontFamily: "var(--font-display)",
+							fontSize: "44px",
+							fontWeight: 700,
 							color,
 							lineHeight: 1,
+							letterSpacing: "-0.02em",
 						}}
 					>
 						{grade}
 					</div>
-					<div style={{ fontSize: "13px", color: "#6b7280", marginTop: "2px" }}>
+					<div style={{ fontSize: "13px", color: "var(--text-muted)", marginTop: "4px" }}>
 						AEO grade
 					</div>
 				</div>
 			</div>
 
 			{/* Dimension table */}
-			<table
-				style={{
-					width: "100%",
-					borderCollapse: "collapse",
-					fontSize: "14px",
-				}}
-			>
-				<thead>
-					<tr style={{ borderBottom: "1px solid #e5e7eb" }}>
-						<th
-							style={{
-								textAlign: "left",
-								padding: "8px 12px",
-								fontWeight: 600,
-								color: "#374151",
-								width: "40%",
-							}}
-						>
-							Dimension
-						</th>
-						<th
-							style={{
-								textAlign: "center",
-								padding: "8px 12px",
-								fontWeight: 600,
-								color: "#374151",
-								width: "15%",
-							}}
-						>
-							Score
-						</th>
-						<th
-							style={{
-								textAlign: "center",
-								padding: "8px 12px",
-								fontWeight: 600,
-								color: "#374151",
-								width: "12%",
-							}}
-						>
-							Weight
-						</th>
-						<th
-							style={{
-								textAlign: "center",
-								padding: "8px 12px",
-								fontWeight: 600,
-								color: "#374151",
-								width: "12%",
-							}}
-						>
-							Status
-						</th>
-						<th
-							style={{
-								textAlign: "left",
-								padding: "8px 12px",
-								fontWeight: 600,
-								color: "#374151",
-							}}
-						>
-							Hint
-						</th>
-					</tr>
-				</thead>
-				<tbody>
-					{dimensions.map((dim) => (
-						<tr
-							key={dim.id}
-							style={{ borderBottom: "1px solid #f3f4f6" }}
-						>
-							<td
+			<div style={{
+				border: "1px solid var(--border)",
+				borderRadius: "var(--radius-md)",
+				overflow: "hidden",
+				boxShadow: "var(--shadow-card)",
+			}}>
+				<table
+					style={{
+						width: "100%",
+						borderCollapse: "collapse",
+						fontSize: "14px",
+					}}
+				>
+					<thead>
+						<tr style={{ background: "var(--bg-surface)", borderBottom: "1px solid var(--border)" }}>
+							<th style={{ textAlign: "left", padding: "10px 16px", fontWeight: 600, color: "var(--text-secondary)", fontSize: "12px", textTransform: "uppercase", letterSpacing: "0.05em", width: "35%" }}>
+								Dimension
+							</th>
+							<th style={{ textAlign: "center", padding: "10px 12px", fontWeight: 600, color: "var(--text-secondary)", fontSize: "12px", textTransform: "uppercase", letterSpacing: "0.05em", width: "12%" }}>
+								Score
+							</th>
+							<th style={{ textAlign: "center", padding: "10px 12px", fontWeight: 600, color: "var(--text-secondary)", fontSize: "12px", textTransform: "uppercase", letterSpacing: "0.05em", width: "10%" }}>
+								Weight
+							</th>
+							<th style={{ textAlign: "center", padding: "10px 12px", fontWeight: 600, color: "var(--text-secondary)", fontSize: "12px", textTransform: "uppercase", letterSpacing: "0.05em", width: "10%" }}>
+								Status
+							</th>
+							<th style={{ textAlign: "left", padding: "10px 16px", fontWeight: 600, color: "var(--text-secondary)", fontSize: "12px", textTransform: "uppercase", letterSpacing: "0.05em" }}>
+								Hint
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						{dimensions.map((dim, index) => (
+							<tr
+								key={dim.id}
 								style={{
-									padding: "10px 12px",
-									fontWeight: 500,
-									color: "#111",
+									borderBottom: index < dimensions.length - 1 ? "1px solid var(--border-light)" : "none",
+									background: "var(--bg-card)",
 								}}
 							>
-								{dim.name}
-							</td>
-							<td
-								style={{
-									padding: "10px 12px",
+								<td style={{ padding: "12px 16px", fontWeight: 500, color: "var(--text)" }}>
+									{dim.name}
+								</td>
+								<td style={{
+									padding: "12px 12px",
 									textAlign: "center",
 									fontVariantNumeric: "tabular-nums",
 									color: scoreColor(Math.round((dim.score / dim.maxScore) * 100)),
 									fontWeight: 600,
-								}}
-							>
-								{dim.score}/{dim.maxScore}
-							</td>
-							<td style={{ padding: "10px 12px", textAlign: "center" }}>
-								<span
-									style={{
+								}}>
+									{dim.score}/{dim.maxScore}
+								</td>
+								<td style={{ padding: "12px 12px", textAlign: "center" }}>
+									<span style={{
 										display: "inline-block",
 										padding: "2px 8px",
 										borderRadius: "9999px",
-										fontSize: "12px",
+										fontSize: "11px",
 										fontWeight: 600,
 										background: weightBg(dim.weight),
 										color: weightTextColor(dim.weight),
-									}}
-								>
-									{weightLabel(dim.weight)}
-								</span>
-							</td>
-							<td style={{ padding: "10px 12px", textAlign: "center" }}>
-								<span
-									style={{
-										display: "inline-block",
-										width: "8px",
-										height: "8px",
-										borderRadius: "50%",
-										background: statusColor(dim.status),
-										marginRight: "4px",
-									}}
-								/>
-								<span style={{ color: statusColor(dim.status), fontWeight: 500 }}>
-									{dim.status.charAt(0).toUpperCase() + dim.status.slice(1)}
-								</span>
-							</td>
-							<td
-								style={{
-									padding: "10px 12px",
-									color: "#6b7280",
-									fontSize: "13px",
-								}}
-							>
-								{dim.hint}
-							</td>
-						</tr>
-					))}
-				</tbody>
-			</table>
+									}}>
+										{weightLabel(dim.weight)}
+									</span>
+								</td>
+								<td style={{ padding: "12px 12px", textAlign: "center" }}>
+									<span style={{
+										display: "inline-flex",
+										alignItems: "center",
+										gap: "5px",
+									}}>
+										<span style={{
+											display: "inline-block",
+											width: "8px",
+											height: "8px",
+											borderRadius: "50%",
+											background: statusColor(dim.status),
+										}} />
+										<span style={{ color: statusColor(dim.status), fontWeight: 500, fontSize: "13px" }}>
+											{dim.status.charAt(0).toUpperCase() + dim.status.slice(1)}
+										</span>
+									</span>
+								</td>
+								<td style={{ padding: "12px 16px", color: "var(--text-secondary)", fontSize: "13px" }}>
+									{dim.hint}
+								</td>
+							</tr>
+						))}
+					</tbody>
+				</table>
+			</div>
 		</div>
 	);
 }

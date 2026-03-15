@@ -3,109 +3,228 @@ const dimensions = {
 	high: [
 		{ name: "llms.txt Presence", desc: "Does your site have an llms.txt file?" },
 		{ name: "Schema.org Markup", desc: "Structured data for AI understanding" },
-		{ name: "Content Structure", desc: "Clean heading hierarchy and organization" },
+		{ name: "Content Structure", desc: "Clean heading hierarchy and semantic HTML" },
 	],
 	medium: [
-		{ name: "AI Crawler Access", desc: "Are AI crawlers allowed in robots.txt?" },
+		{ name: "AI Crawler Access", desc: "Are GPTBot, ClaudeBot, and friends allowed?" },
 		{ name: "Answer-First Formatting", desc: "Content that leads with direct answers" },
 		{ name: "FAQ & Speakable", desc: "FAQ markup with speakable schema" },
-		{ name: "E-E-A-T Signals", desc: "Author, dates, expertise indicators" },
+		{ name: "E-E-A-T Signals", desc: "Author, dates, and expertise indicators" },
 		{ name: "Meta Descriptions", desc: "Quality descriptions on every page" },
-		{ name: "Citation Anchors", desc: "Stable heading IDs for AI citations" },
+		{ name: "Citation Anchors", desc: "Stable heading IDs for direct linking" },
 	],
 	low: [
-		{ name: "Sitemap Presence", desc: "Valid sitemap.xml for crawlers" },
-		{ name: "HTTPS & Redirects", desc: "Secure site with clean URLs" },
+		{ name: "Sitemap Presence", desc: "Valid sitemap.xml for discovery" },
+		{ name: "HTTPS & Redirects", desc: "Secure site with clean URL structure" },
 		{ name: "Page Freshness", desc: "Recent publication and modification dates" },
 	],
 };
 
 const grades = [
-	{ grade: "A+", range: "95-100" },
-	{ grade: "A", range: "85-94" },
-	{ grade: "B", range: "70-84" },
-	{ grade: "C", range: "55-69" },
-	{ grade: "D", range: "40-54" },
-	{ grade: "F", range: "0-39" },
+	{ grade: "A+", range: "95\u2013100", color: "#16a34a" },
+	{ grade: "A", range: "85\u201394", color: "#22c55e" },
+	{ grade: "B", range: "70\u201384", color: "#84cc16" },
+	{ grade: "C", range: "55\u201369", color: "#eab308" },
+	{ grade: "D", range: "40\u201354", color: "#f97316" },
+	{ grade: "F", range: "0\u201339", color: "#ef4444" },
 ];
+
+// Radar chart data — 12 dimensions with sample "before" and "after" scores
+const radarLabels = [
+	"llms.txt", "Schema", "Structure", "Crawlers",
+	"Answers", "FAQ", "E-E-A-T", "Meta",
+	"Citations", "Sitemap", "HTTPS", "Freshness",
+];
+const beforeScores = [0, 6.5, 8, 3, 4, 2, 5, 7, 3, 8, 9, 4];
+const afterScores =  [9, 8.5, 9, 9, 7, 8, 6, 8, 8, 9, 9, 7];
+
+const cx = 200;
+const cy = 200;
+const maxR = 150;
+const rings = [0.25, 0.5, 0.75, 1.0];
+
+function polarToXY(index: number, value: number, total: number) {
+	const angle = (Math.PI * 2 * index) / total - Math.PI / 2;
+	const r = (value / 10) * maxR;
+	return { x: cx + r * Math.cos(angle), y: cy + r * Math.sin(angle) };
+}
+
+function makePolygon(scores: number[]) {
+	return scores.map((s, i) => {
+		const pt = polarToXY(i, s, scores.length);
+		return `${pt.x},${pt.y}`;
+	}).join(" ");
+}
+
+function labelPos(index: number, total: number) {
+	const angle = (Math.PI * 2 * index) / total - Math.PI / 2;
+	const r = maxR + 24;
+	return { x: cx + r * Math.cos(angle), y: cy + r * Math.sin(angle) };
+}
 ---
 
-<section id="scoring" class="border-t border-border px-6 py-24">
-	<div class="mx-auto max-w-6xl">
-		<h2 class="text-4xl font-bold md:text-5xl">12 Dimensions. One Score.</h2>
-		<p class="mt-4 text-lg text-text-muted">
-			AEOrank measures what actually matters for AI engine visibility.
+<section id="scoring" class="section-spacing border-t border-border px-6">
+	<div class="mx-auto max-w-5xl">
+		<h2 class="heading-lg">12 Dimensions. One Score.</h2>
+		<p class="body-lg mt-4 text-text-muted max-w-2xl">
+			We measure what actually matters for AI engine visibility. Not vanity metrics.
 		</p>
 
-		<div class="mt-12 space-y-8">
-			<div>
-				<h3 class="text-sm font-semibold uppercase tracking-wide text-text-muted">
-					High Weight (1.5x)
-				</h3>
-				<div class="mt-3 space-y-2">
-					{
-						dimensions.high.map((d) => (
-							<div class="flex items-baseline gap-3 border-b border-border py-3">
-								<span class="font-medium">{d.name}</span>
-								<span class="text-sm text-text-muted">{d.desc}</span>
-							</div>
-						))
-					}
+		<!-- Radar Chart Visual -->
+		<div class="mt-14 flex flex-col items-center lg:flex-row lg:items-start lg:gap-16">
+			<div class="w-full max-w-md shrink-0 rounded-xl border border-border-light bg-bg p-6">
+				<svg viewBox="0 0 400 400" class="w-full" xmlns="http://www.w3.org/2000/svg">
+					<!-- Grid rings -->
+					{rings.map((ring) => (
+						<circle cx={cx} cy={cy} r={maxR * ring} fill="none" stroke="#E0DFDC" stroke-width="1" />
+					))}
+					<!-- Axis lines -->
+					{radarLabels.map((_, i) => {
+						const pt = polarToXY(i, 10, radarLabels.length);
+						return <line x1={cx} y1={cy} x2={pt.x} y2={pt.y} stroke="#EEEDEB" stroke-width="1" />;
+					})}
+					<!-- "Before" polygon -->
+					<polygon
+						points={makePolygon(beforeScores)}
+						fill="rgba(249, 115, 22, 0.12)"
+						stroke="#f97316"
+						stroke-width="1.5"
+						stroke-dasharray="6 3"
+					/>
+					<!-- "After" polygon -->
+					<polygon
+						points={makePolygon(afterScores)}
+						fill="rgba(232, 89, 12, 0.15)"
+						stroke="#E8590C"
+						stroke-width="2.5"
+					/>
+					<!-- "After" score dots -->
+					{afterScores.map((s, i) => {
+						const pt = polarToXY(i, s, afterScores.length);
+						return <circle cx={pt.x} cy={pt.y} r="4" fill="#E8590C" />;
+					})}
+					<!-- "Before" score dots -->
+					{beforeScores.map((s, i) => {
+						const pt = polarToXY(i, s, beforeScores.length);
+						return <circle cx={pt.x} cy={pt.y} r="3" fill="#f97316" opacity="0.6" />;
+					})}
+					<!-- Labels -->
+					{radarLabels.map((label, i) => {
+						const pos = labelPos(i, radarLabels.length);
+						const angle = (360 * i) / radarLabels.length;
+						const anchor = angle > 90 && angle < 270 ? "end" : angle === 90 || angle === 270 ? "middle" : "start";
+						return (
+							<text
+								x={pos.x}
+								y={pos.y}
+								text-anchor={anchor}
+								dominant-baseline="central"
+								fill="#6B6B6B"
+								font-size="11"
+								font-family="Inter, sans-serif"
+								font-weight="500"
+							>
+								{label}
+							</text>
+						);
+					})}
+					<!-- Center score -->
+					<text x={cx} y={cy - 10} text-anchor="middle" fill="#111" font-size="28" font-weight="800" font-family="Space Grotesk, sans-serif">
+						42 → 85
+					</text>
+					<text x={cx} y={cy + 14} text-anchor="middle" fill="#6B6B6B" font-size="12" font-family="Inter, sans-serif">
+						before → after AEOrank
+					</text>
+				</svg>
+				<!-- Legend -->
+				<div class="flex items-center justify-center gap-6 mt-2 text-sm">
+					<span class="flex items-center gap-2">
+						<span class="inline-block w-5 h-0.5 bg-[#f97316]" style="border-top: 1.5px dashed #f97316;"></span>
+						<span class="text-text-muted">Before</span>
+					</span>
+					<span class="flex items-center gap-2">
+						<span class="inline-block w-5 h-0.5 bg-accent-warm rounded"></span>
+						<span class="text-text-muted">After AEOrank</span>
+					</span>
 				</div>
 			</div>
 
-			<div>
-				<h3 class="text-sm font-semibold uppercase tracking-wide text-text-muted">
-					Medium Weight (1.0x)
-				</h3>
-				<div class="mt-3 space-y-2">
-					{
-						dimensions.medium.map((d) => (
-							<div class="flex items-baseline gap-3 border-b border-border py-3">
-								<span class="font-medium">{d.name}</span>
-								<span class="text-sm text-text-muted">{d.desc}</span>
-							</div>
-						))
-					}
+			<!-- Dimension list -->
+			<div class="w-full mt-12 lg:mt-0 space-y-10">
+				<!-- High Weight -->
+				<div>
+					<div class="flex items-center gap-3 mb-4">
+						<span class="inline-flex items-center px-2.5 py-1 bg-accent-warm text-white text-xs font-semibold rounded tracking-wide font-display">1.5x</span>
+						<span class="text-sm font-semibold uppercase tracking-wide text-text-muted">High Weight</span>
+					</div>
+					<div class="space-y-0 divide-y divide-border-light">
+						{
+							dimensions.high.map((d) => (
+								<div class="flex items-baseline justify-between py-4">
+									<span class="font-medium text-text">{d.name}</span>
+									<span class="text-sm text-text-muted ml-4 text-right">{d.desc}</span>
+								</div>
+							))
+						}
+					</div>
 				</div>
-			</div>
 
-			<div>
-				<h3 class="text-sm font-semibold uppercase tracking-wide text-text-muted">
-					Low Weight (0.5x)
-				</h3>
-				<div class="mt-3 space-y-2">
-					{
-						dimensions.low.map((d) => (
-							<div class="flex items-baseline gap-3 border-b border-border py-3">
-								<span class="font-medium">{d.name}</span>
-								<span class="text-sm text-text-muted">{d.desc}</span>
-							</div>
-						))
-					}
+				<!-- Medium Weight -->
+				<div>
+					<div class="flex items-center gap-3 mb-4">
+						<span class="inline-flex items-center px-2.5 py-1 bg-bg-dark border border-border text-text text-xs font-semibold rounded tracking-wide font-display">1.0x</span>
+						<span class="text-sm font-semibold uppercase tracking-wide text-text-muted">Medium Weight</span>
+					</div>
+					<div class="space-y-0 divide-y divide-border-light">
+						{
+							dimensions.medium.map((d) => (
+								<div class="flex items-baseline justify-between py-4">
+									<span class="font-medium text-text">{d.name}</span>
+									<span class="text-sm text-text-muted ml-4 text-right">{d.desc}</span>
+								</div>
+							))
+						}
+					</div>
+				</div>
+
+				<!-- Low Weight -->
+				<div>
+					<div class="flex items-center gap-3 mb-4">
+						<span class="inline-flex items-center px-2.5 py-1 bg-bg-dark border border-border text-text-muted text-xs font-semibold rounded tracking-wide font-display">0.5x</span>
+						<span class="text-sm font-semibold uppercase tracking-wide text-text-muted">Low Weight</span>
+					</div>
+					<div class="space-y-0 divide-y divide-border-light">
+						{
+							dimensions.low.map((d) => (
+								<div class="flex items-baseline justify-between py-4">
+									<span class="font-medium text-text">{d.name}</span>
+									<span class="text-sm text-text-muted ml-4 text-right">{d.desc}</span>
+								</div>
+							))
+						}
+					</div>
 				</div>
 			</div>
 		</div>
 
-		<div class="mt-12">
-			<h3 class="text-lg font-semibold">Grade Scale</h3>
-			<div class="mt-4 flex flex-wrap gap-4">
+		<!-- Grade Scale -->
+		<div class="mt-14">
+			<h3 class="heading-md">Grade Scale</h3>
+			<div class="mt-6 flex flex-wrap gap-3">
 				{
 					grades.map((g) => (
-						<div class="border border-border px-4 py-2 text-center">
-							<div class="text-lg font-bold">{g.grade}</div>
-							<div class="text-xs text-text-muted">{g.range}</div>
+						<div class="flex items-center gap-3 rounded-lg border border-border-light bg-bg-dark px-5 py-3">
+							<span class="text-xl font-bold" style={`color: ${g.color}`}>{g.grade}</span>
+							<span class="text-sm text-text-muted">{g.range}</span>
 						</div>
 					))
 				}
 			</div>
 		</div>
 
-		<a
-			href="https://docs.aeorank.dev/scoring/dimensions/"
-			class="mt-8 inline-block text-text-muted hover:text-text"
-		>
-			Read the full scoring methodology &rarr;
+		<a href="https://docs.aeorank.dev/scoring/dimensions/" class="inline-flex items-center gap-1.5 mt-10 text-base font-medium text-accent-warm hover:text-accent-warm-dark transition-colors">
+			Read the full scoring methodology
+			<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
 		</a>
 	</div>
 </section>

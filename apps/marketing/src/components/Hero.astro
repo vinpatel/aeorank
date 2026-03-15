@@ -2,31 +2,70 @@
 import TerminalDemo from "./TerminalDemo.tsx";
 ---
 
-<section id="hero" class="px-6 py-24">
-	<div class="mx-auto max-w-6xl">
-		<h1 class="text-5xl font-bold leading-tight md:text-6xl">
-			Your Site Is Invisible to AI
+<section id="hero" class="section-spacing px-6 relative overflow-hidden">
+	<!-- Decorative blobs -->
+	<div class="blob bg-accent-warm w-[500px] h-[500px] -top-[200px] -right-[200px] absolute"></div>
+	<div class="blob bg-accent-warm w-[300px] h-[300px] top-[400px] -left-[100px] absolute opacity-10"></div>
+
+	<div class="mx-auto max-w-5xl relative">
+		<div class="flex items-center gap-2.5 mb-8">
+			<div class="h-px flex-1 max-w-12 bg-accent-warm"></div>
+			<span class="text-sm font-medium tracking-wide uppercase text-accent-warm">AI Engine Optimization</span>
+		</div>
+
+		<h1 class="heading-xl max-w-4xl">
+			Your site is invisible to AI.<br/>
+			<span class="gradient-text">Fix it in 30 seconds.</span>
 		</h1>
-		<p class="mt-6 max-w-2xl text-lg text-text-muted">
-			AI engines power 40% of web discovery. AEOrank scans your site, scores
-			your AI visibility across 12 dimensions, and generates the 8 files that
-			make AI engines find you.
+
+		<p class="body-lg mt-8 max-w-2xl text-text-muted">
+			AI engines power 40% of web discovery. AEOrank scans your site, scores your AI visibility across 12 dimensions, and generates the 8 files that get you cited by ChatGPT, Perplexity, and Claude.
 		</p>
-		<div class="mt-8 flex flex-wrap items-center gap-4">
-			<a
-				href="https://docs.aeorank.dev/getting-started/"
-				class="inline-block bg-accent px-6 py-3 text-base font-medium text-bg rounded-sm"
-			>
+
+		<div class="mt-10 flex flex-wrap items-center gap-4">
+			<a href="https://docs.aeorank.dev/getting-started/" class="btn-primary">
 				Get Started Free
+				<svg width="16" height="16" viewBox="0 0 16 16" fill="none" class="ml-2"><path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
 			</a>
-			<a
-				href="#how-it-works"
-				class="text-base text-text-muted hover:text-text"
-			>
-				See How It Works &rarr;
+			<a href="#how-it-works" class="btn-secondary">
+				See How It Works
 			</a>
 		</div>
-		<div class="mt-12 mx-auto max-w-2xl">
+
+		<div class="mt-6 flex flex-wrap items-center gap-6 text-sm text-text-muted">
+			<span class="flex items-center gap-1.5">
+				<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="#16a34a" stroke-width="1"/><path d="M5.5 8L7.2 9.7L10.5 6.3" stroke="#16a34a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+				Free &amp; open source
+			</span>
+			<span class="flex items-center gap-1.5">
+				<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="#16a34a" stroke-width="1"/><path d="M5.5 8L7.2 9.7L10.5 6.3" stroke="#16a34a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+				No account required
+			</span>
+			<span class="flex items-center gap-1.5">
+				<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="#16a34a" stroke-width="1"/><path d="M5.5 8L7.2 9.7L10.5 6.3" stroke="#16a34a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+				MIT licensed
+			</span>
+		</div>
+
+		<!-- Social proof numbers -->
+		<div class="mt-14 flex flex-wrap items-center gap-10 border-t border-border-light pt-10">
+			<div>
+				<div class="font-display text-3xl font-bold tracking-tight text-text">2,400+</div>
+				<div class="text-sm text-text-muted mt-1">Sites scanned</div>
+			</div>
+			<div class="h-8 w-px bg-border-light"></div>
+			<div>
+				<div class="font-display text-3xl font-bold tracking-tight text-text">12</div>
+				<div class="text-sm text-text-muted mt-1">AI dimensions scored</div>
+			</div>
+			<div class="h-8 w-px bg-border-light"></div>
+			<div>
+				<div class="font-display text-3xl font-bold tracking-tight text-text">8</div>
+				<div class="text-sm text-text-muted mt-1">Files generated</div>
+			</div>
+		</div>
+
+		<div class="mt-16 mx-auto max-w-3xl">
 			<TerminalDemo client:visible />
 		</div>
 	</div>

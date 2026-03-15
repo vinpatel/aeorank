@@ -56,21 +56,23 @@ export function CheckoutButton({ priceId, plan, label = "Upgrade" }: CheckoutBut
 				disabled={isLoading}
 				style={{
 					width: "100%",
-					padding: "10px 20px",
-					backgroundColor: "#111",
+					padding: "11px 20px",
+					backgroundColor: "var(--bg-accent)",
 					color: "#fff",
 					border: "none",
-					borderRadius: "6px",
+					borderRadius: "var(--radius-sm)",
 					fontSize: "14px",
 					fontWeight: 600,
+					fontFamily: "inherit",
 					cursor: isLoading ? "not-allowed" : "pointer",
 					opacity: isLoading ? 0.7 : 1,
+					transition: "background 0.15s ease, opacity 0.15s ease",
 				}}
 			>
 				{isLoading ? "Loading..." : label}
 			</button>
 			{error && (
-				<p style={{ color: "#dc2626", fontSize: "13px", marginTop: "8px" }}>
+				<p style={{ color: "var(--red)", fontSize: "13px", marginTop: "8px" }}>
 					{error}
 				</p>
 			)}
