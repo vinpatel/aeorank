@@ -2,56 +2,49 @@
 const faqs = [
 	{
 		question: "What is AEO?",
-		answer:
-			"AI Engine Optimization. The practice of making your website visible and citable by AI engines like ChatGPT, Perplexity, and Claude. As AI-powered search grows, sites optimized for AI engines get cited — sites that aren't get ignored.",
+		answer: "Answer Engine Optimization. The practice of making your website visible and citable by AI engines like ChatGPT, Perplexity, and Claude. As AI-powered search grows, optimized sites get cited \u2014 the rest get ignored.",
 	},
 	{
 		question: "Is AEOrank free?",
-		answer:
-			"The CLI is free and MIT-licensed. Run unlimited scans, generate all 8 files, pipe JSON to CI — no account needed. The web dashboard (coming soon) will have paid tiers starting at $29/month.",
+		answer: "The CLI is free and MIT-licensed. Run unlimited scans, generate all 8 files, pipe JSON to CI \u2014 no account needed. The web dashboard has paid tiers starting at $29/month for score history, charts, and file downloads.",
 	},
 	{
 		question: "What are the 8 generated files?",
-		answer:
-			"llms.txt (site overview for AI), llms-full.txt (full content), CLAUDE.md (repo context), schema.json (structured data), robots-patch.txt (AI crawler rules), faq-blocks.html (FAQ markup), citation-anchors.html (heading anchors), and sitemap-ai.xml (AI-optimized sitemap).",
+		answer: "llms.txt, llms-full.txt, CLAUDE.md, schema.json, robots-patch.txt, faq-blocks.html, citation-anchors.html, and sitemap-ai.xml. Each one targets a different aspect of AI visibility.",
 	},
 	{
 		question: "How is the AEO score calculated?",
-		answer:
-			"12 dimensions, each scored 0-10 and weighted by importance (high 1.5x, medium 1.0x, low 0.5x). The weighted sum is normalized to a 0-100 score. Grades range from A+ (95+) to F (below 40). Read the full methodology in the docs.",
+		answer: "12 dimensions, each scored 0\u201310 and weighted by importance (high 1.5x, medium 1.0x, low 0.5x). The weighted sum normalizes to 0\u2013100. Grades from A+ (95+) to F (below 40).",
 	},
 	{
 		question: "Does this replace SEO?",
-		answer:
-			"No. AEO complements SEO. Traditional search engines still matter. AEOrank focuses specifically on AI engine visibility — the signals that ChatGPT, Perplexity, and Claude use to find and cite your content.",
+		answer: "No. AEO complements SEO. Traditional search engines still matter. AEOrank focuses on the signals that AI engines use to find and cite your content \u2014 a different surface entirely.",
 	},
 	{
 		question: "Can I use this in CI?",
-		answer:
-			"Yes. Run `npx aeorank scan --format json` in any CI pipeline. A dedicated GitHub Action is coming soon that posts AEO scores as Check Runs and PR comments.",
+		answer: "Yes. Run npx aeorank scan --format json in any CI pipeline. You can also use the official GitHub Action (aeorank/action@v1) to post scores as Check Runs and PR comments automatically.",
 	},
 	{
 		question: "How long does a scan take?",
-		answer:
-			"Under 30 seconds for most sites. AEOrank crawls up to 50 pages with 3 concurrent requests by default. You can adjust limits with --max-pages and --concurrency flags.",
+		answer: "Under 30 seconds for most sites. AEOrank crawls up to 50 pages with 3 concurrent requests by default. Adjustable with --max-pages and --concurrency flags.",
 	},
 ];
 ---
 
-<section id="faq" class="border-t border-border px-6 py-24">
+<section id="faq" class="section-spacing border-t border-border px-6">
 	<div class="mx-auto max-w-3xl">
-		<h2 class="text-4xl font-bold md:text-5xl">Questions & Answers</h2>
+		<h2 class="heading-lg">Frequently Asked Questions</h2>
 		<div class="mt-12 space-y-0 divide-y divide-border">
 			{
 				faqs.map((faq) => (
-					<details class="group py-4">
-						<summary class="flex cursor-pointer items-center justify-between text-lg font-medium">
+					<details class="group">
+						<summary class="flex cursor-pointer items-center justify-between py-6 text-lg font-medium text-text select-none">
 							{faq.question}
-							<span class="ml-4 text-text-muted group-open:rotate-45 transition-transform">
-								+
-							</span>
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" class="ml-4 shrink-0 text-text-muted transition-transform duration-200 group-open:rotate-45">
+								<path d="M10 4v12m-6-6h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+							</svg>
 						</summary>
-						<p class="mt-3 text-text-muted">{faq.answer}</p>
+						<p class="pb-6 text-text-muted body-md leading-relaxed -mt-1">{faq.answer}</p>
 					</details>
 				))
 			}
