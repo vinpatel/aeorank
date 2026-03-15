@@ -40,6 +40,6 @@ jobs:
         uses: peaceiris/actions-gh-pages@v4
         with:
           deploy_key: ${{ secrets.DOCS_DEPLOY_KEY }}
-          external_repository: aeorank/docs
+          external_repository: vinpatel/aeorank-docs
           publish_dir: apps/docs/dist
           cname: docs.aeorank.dev
