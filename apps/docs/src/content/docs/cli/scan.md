@@ -33,37 +33,37 @@ aeorank scan <url> [options]
 ### Basic scan
 
 ```bash
-npx aeorank scan https://example.com
+npx aeorank-cli scan https://example.com
 ```
 
 ### JSON output for CI
 
 ```bash
-npx aeorank scan https://example.com --format json
+npx aeorank-cli scan https://example.com --format json
 ```
 
 The JSON output can be piped to other tools:
 
 ```bash
-npx aeorank scan https://example.com --format json | jq '.score'
+npx aeorank-cli scan https://example.com --format json | jq '.score'
 ```
 
 ### Custom output directory
 
 ```bash
-npx aeorank scan https://example.com --output ./my-aeo-files
+npx aeorank-cli scan https://example.com --output ./my-aeo-files
 ```
 
 ### Scan fewer pages (faster)
 
 ```bash
-npx aeorank scan https://example.com --max-pages 10
+npx aeorank-cli scan https://example.com --max-pages 10
 ```
 
 ### Use a config file
 
 ```bash
-npx aeorank scan https://example.com --config ./aeorank.config.js
+npx aeorank-cli scan https://example.com --config ./aeorank.config.js
 ```
 
 ## Output

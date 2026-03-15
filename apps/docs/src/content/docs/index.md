@@ -23,7 +23,7 @@ AEOrank is an open-source CLI tool that scans your website and measures how visi
 Run a single command to scan any website:
 
 ```bash
-npx aeorank scan https://your-site.com
+npx aeorank-cli scan https://your-site.com
 ```
 
 You'll get an AEO score from 0-100 and 8 generated files ready to deploy. [Read the quick start guide](/getting-started/) to learn more.
