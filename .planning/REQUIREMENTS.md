@@ -9,43 +9,43 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Monorepo & Infrastructure
 
-- [ ] **INFRA-01**: pnpm + Turborepo monorepo with packages/ (core, cli) and apps/ (web, marketing, docs)
-- [ ] **INFRA-02**: Shared TypeScript types and constants in @aeorank/core
-- [ ] **INFRA-03**: Biome for linting and formatting across all packages
+- [x] **INFRA-01**: pnpm + Turborepo monorepo with packages/ (core, cli) and apps/ (web, marketing, docs)
+- [x] **INFRA-02**: Shared TypeScript types and constants in @aeorank/core
+- [x] **INFRA-03**: Biome for linting and formatting across all packages
 
 ### Scanning Engine
 
-- [ ] **SCAN-01**: User can scan a live URL with `npx aeorank scan <url>` with zero config
-- [ ] **SCAN-02**: Scanner crawls up to 50 pages with rate limiting (3 req/sec default) and respectful User-Agent
-- [ ] **SCAN-03**: Scan completes in under 30 seconds for a 50-page site
-- [ ] **SCAN-04**: Scanner extracts page content, schema markup, robots.txt, llms.txt, heading hierarchy, and E-E-A-T signals
+- [x] **SCAN-01**: User can scan a live URL with `npx aeorank scan <url>` with zero config
+- [x] **SCAN-02**: Scanner crawls up to 50 pages with rate limiting (3 req/sec default) and respectful User-Agent
+- [x] **SCAN-03**: Scan completes in under 30 seconds for a 50-page site
+- [x] **SCAN-04**: Scanner extracts page content, schema markup, robots.txt, llms.txt, heading hierarchy, and E-E-A-T signals
 
 ### AEO Scoring
 
-- [ ] **SCORE-01**: AEO score 0-100 computed from 12 weighted dimensions (80%+ structural/deterministic signals)
-- [ ] **SCORE-02**: Letter grade A+/A/B/C/D/F computed from score
-- [ ] **SCORE-03**: Each dimension reports score, weight, status (pass/warn/fail), and fix hint
-- [ ] **SCORE-04**: Thresholds: ≥70 = pass (green), 40-69 = warn (amber), <40 = fail (red)
-- [ ] **SCORE-05**: Scoring is deterministic — same URL produces same score across CLI and dashboard
+- [x] **SCORE-01**: AEO score 0-100 computed from 12 weighted dimensions (80%+ structural/deterministic signals)
+- [x] **SCORE-02**: Letter grade A+/A/B/C/D/F computed from score
+- [x] **SCORE-03**: Each dimension reports score, weight, status (pass/warn/fail), and fix hint
+- [x] **SCORE-04**: Thresholds: ≥70 = pass (green), 40-69 = warn (amber), <40 = fail (red)
+- [x] **SCORE-05**: Scoring is deterministic — same URL produces same score across CLI and dashboard
 
 ### File Generation
 
-- [ ] **GEN-01**: llms.txt generated per llmstxt.org spec, grouped by section
-- [ ] **GEN-02**: llms-full.txt contains full text of all crawled pages
-- [ ] **GEN-03**: CLAUDE.md generated for repo context (tech stack, dirs, commands)
-- [ ] **GEN-04**: schema.json contains Organization + WebSite + FAQPage JSON-LD
-- [ ] **GEN-05**: robots-patch.txt contains directives for GPTBot, ClaudeBot, PerplexityBot, Google-Extended
-- [ ] **GEN-06**: faq-blocks.html contains speakable FAQ schema snippets
-- [ ] **GEN-07**: citation-anchors.html contains heading anchor markup
-- [ ] **GEN-08**: sitemap-ai.xml is an AI-optimized sitemap
+- [x] **GEN-01**: llms.txt generated per llmstxt.org spec, grouped by section
+- [x] **GEN-02**: llms-full.txt contains full text of all crawled pages
+- [x] **GEN-03**: CLAUDE.md generated for repo context (tech stack, dirs, commands)
+- [x] **GEN-04**: schema.json contains Organization + WebSite + FAQPage JSON-LD
+- [x] **GEN-05**: robots-patch.txt contains directives for GPTBot, ClaudeBot, PerplexityBot, Google-Extended
+- [x] **GEN-06**: faq-blocks.html contains speakable FAQ schema snippets
+- [x] **GEN-07**: citation-anchors.html contains heading anchor markup
+- [x] **GEN-08**: sitemap-ai.xml is an AI-optimized sitemap
 
 ### CLI
 
-- [ ] **CLI-01**: Colored terminal output with spinner, score, dimension table, and next steps
-- [ ] **CLI-02**: JSON output via --format json flag
-- [ ] **CLI-03**: `npx aeorank init` creates aeorank.config.js with sensible defaults
-- [ ] **CLI-04**: Every error message suggests a specific next action
-- [ ] **CLI-05**: Actionable fix recommendations ranked High/Medium/Low per failed check
+- [x] **CLI-01**: Colored terminal output with spinner, score, dimension table, and next steps
+- [x] **CLI-02**: JSON output via --format json flag
+- [x] **CLI-03**: `npx aeorank init` creates aeorank.config.js with sensible defaults
+- [x] **CLI-04**: Every error message suggests a specific next action
+- [x] **CLI-05**: Actionable fix recommendations ranked High/Medium/Low per failed check
 
 ### GitHub Action
 
@@ -57,18 +57,18 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Marketing Site
 
-- [ ] **SITE-01**: Astro 5 static site deployed to GitHub Pages at aeorank.dev
-- [ ] **SITE-02**: Homepage with hero, terminal demo, how-it-works, generated files list, scoring explainer, pricing, FAQ, CTA
-- [ ] **SITE-03**: Design matches 37signals/Gumroad aesthetic (off-white #FAF9F7, near-black #111, Inter font, solid buttons)
-- [ ] **SITE-04**: Zero JS by default; Astro islands only for interactive terminal demo
+- [x] **SITE-01**: Astro 5 static site deployed to GitHub Pages at aeorank.dev
+- [x] **SITE-02**: Homepage with hero, terminal demo, how-it-works, generated files list, scoring explainer, pricing, FAQ, CTA
+- [x] **SITE-03**: Design matches 37signals/Gumroad aesthetic (off-white #FAF9F7, near-black #111, Inter font, solid buttons)
+- [x] **SITE-04**: Zero JS by default; Astro islands only for interactive terminal demo
 
 ### Documentation Site
 
-- [ ] **DOCS-01**: Astro + Starlight deployed to docs.aeorank.dev via GitHub Pages
-- [ ] **DOCS-02**: Getting started + 5-minute quick start guide
-- [ ] **DOCS-03**: CLI reference (all commands, flags, config options)
-- [ ] **DOCS-04**: Reference docs for all 8 generated files
-- [ ] **DOCS-05**: AEO scoring explainer (12 dimensions, calculation, grades)
+- [x] **DOCS-01**: Astro + Starlight deployed to docs.aeorank.dev via GitHub Pages
+- [x] **DOCS-02**: Getting started + 5-minute quick start guide
+- [x] **DOCS-03**: CLI reference (all commands, flags, config options)
+- [x] **DOCS-04**: Reference docs for all 8 generated files
+- [x] **DOCS-05**: AEO scoring explainer (12 dimensions, calculation, grades)
 
 ### Web Dashboard
 

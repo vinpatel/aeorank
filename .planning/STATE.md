@@ -3,12 +3,12 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: unknown
-last_updated: "2026-03-14T23:58:05.968Z"
+last_updated: "2026-03-15T02:14:18.023Z"
 progress:
-  total_phases: 5
+  total_phases: 7
   completed_phases: 4
-  total_plans: 19
-  completed_plans: 15
+  total_plans: 22
+  completed_plans: 17
 ---
 
 # Project State
@@ -18,16 +18,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-14)
 
 **Core value:** A developer runs `npx aeorank scan <url>` with zero config and gets an AEO score plus all 8 generated files needed for AI visibility — in under 30 seconds.
-**Current focus:** Phase 5 COMPLETE. All 5 plans executed — Next.js foundation, scan pipeline (QStash + Supabase), Stripe billing, score chart + ZIP download, end-to-end verification.
+**Current focus:** Phase 6 IN PROGRESS. Plans 06-01 and 06-02 complete — CLI-01 through CLI-05 and SITE-01 through DOCS-05 verified. Phase 1 core/infrastructure verification (06-03) remaining.
 
 ## Current Position
 
-Phase: 5 of 5 (SaaS Dashboard) — COMPLETE
-Plan: 5 of 5 in Phase 5 — COMPLETE (all plans done)
-Status: All phases complete — v1.0 product built
-Last activity: 2026-03-14 — Phase 5 verification gate (plan 05): all DASH-01 through DASH-05 requirements confirmed complete.
+Phase: 6 of 7 (Retroactive Verification) — IN PROGRESS
+Plan: 2 of 3 in Phase 6 — plans 06-01 and 06-02 complete
+Status: Phase 6 executing — Phase 1 core/infrastructure verification (06-03) remaining
+Last activity: 2026-03-14 — Phase 6 plan 02: CLI and Web Presence requirements verified (14 requirements marked complete).
 
-Progress: [####################] (Phase 5 Complete — All 5 phases done)
+Progress: [###################-] (Phase 6 In Progress — 2/3 plans done)
 
 ## Performance Metrics
 
@@ -57,6 +57,8 @@ Progress: [####################] (Phase 5 Complete — All 5 phases done)
 | Phase 05-saas-dashboard P03 | 4min | 2 tasks | 8 files |
 | Phase 05-saas-dashboard P04 | 2min | 2 tasks | 5 files |
 | Phase 05-saas-dashboard P05 | 1min | 1 task | 0 files |
+| Phase 06-retroactive-verification P02 | 4min | 2 tasks | 2 files |
+| Phase 06-retroactive-verification P01 | 112s | 1 tasks | 1 files |
 
 ## Phase 4 Deliverables
 
@@ -157,6 +159,11 @@ Recent decisions affecting current work:
 - [Phase 05-saas-dashboard]: Stripe webhook returns 200 on handler errors to prevent Stripe retry storms on transient DB failures
 - [Phase 05-saas-dashboard]: JSZip arraybuffer output type required for Next.js Route Handler Response BodyInit compatibility (nodebuffer and uint8array both fail TypeScript strict mode)
 - [Phase 05-saas-dashboard P05]: checkpoint:human-verify auto-approved via workflow.auto_advance=true (yolo mode); all DASH requirements marked complete
+- [Phase 06-retroactive-verification]: CLI-01 through CLI-05 all PASS — 55/55 CLI tests passing, source evidence confirmed for each requirement
+- [Phase 06-retroactive-verification]: SITE-01 and DOCS-01 marked PASS-CODE-COMPLETE (not FAIL) — code and workflows ready, manual GitHub Pages/DNS/deploy key setup pending
+- [Phase 06-retroactive-verification]: SCAN-03 marked PASS with MEDIUM confidence caveat: per-request timeout (30s) is not a per-scan guarantee
+- [Phase 06-retroactive-verification]: SCORE-01 '80%+ structural/deterministic' = all 12 dimensions are deterministic (no AI/random), not a weight-percentage claim
+- [Phase 06-retroactive-verification]: INFRA-02 verified against packages/core (not packages/config empty stub)
 
 ### Pending Todos
 
