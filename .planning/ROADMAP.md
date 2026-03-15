@@ -18,7 +18,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 4: GitHub Action** - Composite CI action posting AEO score as Check + PR comment with zero external credentials (completed 2026-03-14)
 - [x] **Phase 5: SaaS Dashboard** - Authenticated Next.js 16 dashboard with score history, file downloads, and Stripe billing (completed 2026-03-14)
 - [ ] **Phase 6: Retroactive Verification** - Verify Phases 1-3 code against requirements; fix roadmap/requirements state (gap closure)
-- [ ] **Phase 7: Marketing Content & Deployment** - Update stale marketing copy, add dashboard links, prepare GitHub Action Marketplace publication (gap closure)
+- [x] **Phase 7: Marketing Content & Deployment** - Update stale marketing copy, add dashboard links, prepare GitHub Action Marketplace publication (gap closure) (completed 2026-03-15)
 
 ## Phase Details
 
@@ -121,4 +121,4 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7
 | 4. GitHub Action | 2/2 | Complete | 2026-03-14 |
 | 5. SaaS Dashboard | 5/5 | Complete | 2026-03-14 |
 | 6. Retroactive Verification | 2/3 | In Progress|  |
-| 7. Marketing Content & Deployment | 0/TBD | Not started | - |
+| 7. Marketing Content & Deployment | 2/2 | Complete   | 2026-03-15 |

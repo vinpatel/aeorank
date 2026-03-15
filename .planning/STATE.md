@@ -3,12 +3,12 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: unknown
-last_updated: "2026-03-15T02:21:25.891Z"
+last_updated: "2026-03-15T02:48:20.841Z"
 progress:
   total_phases: 7
-  completed_phases: 5
-  total_plans: 22
-  completed_plans: 18
+  completed_phases: 6
+  total_plans: 24
+  completed_plans: 20
 ---
 
 # Project State
@@ -18,16 +18,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-14)
 
 **Core value:** A developer runs `npx aeorank scan <url>` with zero config and gets an AEO score plus all 8 generated files needed for AI visibility — in under 30 seconds.
-**Current focus:** Phase 6 COMPLETE. All 34 Phase 1-3 requirements verified. REQUIREMENTS.md traceability table updated with verified status. Moving to Phase 7 (Marketplace + Deploy).
+**Current focus:** Phase 7 IN PROGRESS. Plan 02 complete — action/PUBLISHING.md Marketplace checklist created. Plan 03 (deploy) remaining.
 
 ## Current Position
 
-Phase: 6 of 7 (Retroactive Verification) — COMPLETE
-Plan: 3 of 3 in Phase 6 — all plans complete
-Status: Phase 6 complete — REQUIREMENTS.md updated with verified status for all 34 Phase 1-3 requirements
-Last activity: 2026-03-15 — Phase 6 plan 03: REQUIREMENTS.md traceability updated; verified count 9/40 → 39/40.
+Phase: 7 of 7 (Marketing Content Deployment) — IN PROGRESS
+Plan: 2 of 3 in Phase 7 — plan 02 complete
+Status: Phase 7 plan 02 complete — action/PUBLISHING.md created; GHA-01 Marketplace publication path documented
+Last activity: 2026-03-15 — Phase 7 plan 02: action/PUBLISHING.md Marketplace publication checklist created; v1.0.0 release steps, v1 tag, and post-publish verification documented
 
-Progress: [####################] (Phase 6 Complete — 3/3 plans done)
+Progress: [####################] (Phase 7 — 2/3 plans done)
 
 ## Performance Metrics
 
@@ -60,6 +60,8 @@ Progress: [####################] (Phase 6 Complete — 3/3 plans done)
 | Phase 06-retroactive-verification P02 | 4min | 2 tasks | 2 files |
 | Phase 06-retroactive-verification P01 | 112s | 1 tasks | 1 files |
 | Phase 06-retroactive-verification P03 | 120 | 1 tasks | 2 files |
+| Phase 07 P01 | 64s | 2 tasks | 5 files |
+| Phase 07 P02 | 59s | 1 task | 1 file |
 
 ## Phase 4 Deliverables
 
@@ -179,6 +181,7 @@ Recent decisions affecting current work:
 - [Phase 06-retroactive-verification]: INFRA-02 verified against packages/core (not packages/config empty stub)
 - [Phase 06-retroactive-verification]: 34 Phase 1-3 requirements updated in REQUIREMENTS.md traceability — no further mapping needed for Phase 6
 - [Phase 06-retroactive-verification]: SITE-01 and DOCS-01 marked 'Complete (code; deploy pending)' — consistent with PASS-CODE-COMPLETE in 03-VERIFICATION.md
+- [Phase 07-01]: Dashboard links use https://app.aeorank.dev across all five updated components
 
 ### Pending Todos
 
