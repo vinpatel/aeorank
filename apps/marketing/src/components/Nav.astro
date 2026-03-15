@@ -2,27 +2,33 @@
 ---
 
 <nav class="sticky top-0 z-50 border-b border-border bg-bg/95 backdrop-blur-sm">
-	<div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-		<a href="/" class="text-xl font-bold text-text">AEOrank</a>
-		<div class="flex items-center gap-6">
-			<a
-				href="https://docs.aeorank.dev"
-				class="text-sm text-text-muted hover:text-text hover:underline"
-			>
+	<div class="mx-auto grid max-w-5xl grid-cols-3 items-center px-6 py-4">
+		<!-- Left: Logo -->
+		<a href="/" class="flex items-center gap-2.5 group justify-self-start">
+			<svg width="28" height="28" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="transition-transform group-hover:scale-105">
+				<rect width="32" height="32" rx="7" fill="#111"/>
+				<path d="M8 22L13.5 10H18.5L24 22" stroke="#FAF9F7" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+				<path d="M10.5 18H21.5" stroke="#FAF9F7" stroke-width="2.5" stroke-linecap="round"/>
+				<circle cx="16" cy="10" r="2" fill="#E8590C"/>
+			</svg>
+			<span class="text-lg font-bold tracking-tight text-text">AEOrank</span>
+		</a>
+		<!-- Center: Nav links -->
+		<div class="flex items-center justify-center gap-8">
+			<a href="https://docs.aeorank.dev" class="text-sm font-medium text-text-muted transition-colors hover:text-text">
 				Docs
 			</a>
-			<a
-				href="https://github.com/aeorank/aeorank"
-				class="text-sm text-text-muted hover:text-text hover:underline"
-			>
+			<a href="https://github.com/aeorank/aeorank" class="text-sm font-medium text-text-muted transition-colors hover:text-text">
 				GitHub
 			</a>
-			<a
-				href="https://docs.aeorank.dev/getting-started/"
-				class="inline-block bg-accent px-4 py-2 text-sm font-medium text-bg rounded-sm"
-			>
-				Get Started
+			<a href="#pricing" class="text-sm font-medium text-text-muted transition-colors hover:text-text">
+				Pricing
 			</a>
+			<a href="https://app.aeorank.dev" class="text-sm font-medium text-text-muted transition-colors hover:text-text">Dashboard</a>
 		</div>
+		<!-- Right: CTA -->
+		<a href="https://docs.aeorank.dev/getting-started/" class="btn-primary !py-2 !px-4 !text-sm justify-self-end">
+			Get Started
+		</a>
 	</div>
 </nav>
