@@ -182,6 +182,8 @@ Recent decisions affecting current work:
 - [Phase 06-retroactive-verification]: 34 Phase 1-3 requirements updated in REQUIREMENTS.md traceability — no further mapping needed for Phase 6
 - [Phase 06-retroactive-verification]: SITE-01 and DOCS-01 marked 'Complete (code; deploy pending)' — consistent with PASS-CODE-COMPLETE in 03-VERIFICATION.md
 - [Phase 07-01]: Dashboard links use https://app.aeorank.dev across all five updated components
+- [Phase 07-02]: GitHub Marketplace requires action.yml at repo root — aeorank/action must be a separate repository (not monorepo subdirectory); Option A is standard and recommended
+- [Phase 07-02]: v1 major version tag must be manually force-pushed after v1.0.0 release to enable uses: aeorank/action@v1 pinning
 
 ### Pending Todos
 
@@ -197,6 +199,6 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-03-14
-Stopped at: Completed 05-saas-dashboard-05-PLAN.md — End-to-end verification gate auto-approved; all DASH-01 through DASH-05 complete; Phase 5 and all v1.0 phases complete.
+Last session: 2026-03-15
+Stopped at: Completed 07-02-PLAN.md — action/PUBLISHING.md Marketplace publication checklist created; GHA-01 documented.
 Resume file: None
