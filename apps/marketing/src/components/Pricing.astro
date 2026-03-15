@@ -53,14 +53,14 @@ const tiers = [
 		<p class="body-lg mt-4 text-text-muted max-w-2xl">
 			The CLI is free forever. Pay when you need the dashboard.
 		</p>
-		<div class="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+		<div class="mt-14 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
 			{
 				tiers.map((tier) => (
 					<div
 						class:list={[
-							"relative flex flex-col rounded-lg p-7",
+							"relative flex flex-col rounded-xl p-7 card-hover",
 							tier.highlighted
-								? "border-2 border-accent bg-bg"
+								? "border-2 border-accent-warm bg-accent-warm-light"
 								: "border border-border bg-bg",
 							!tier.available && "opacity-60",
 						]}
@@ -70,9 +70,9 @@ const tiers = [
 								Available now
 							</span>
 						)}
-						<h3 class="text-lg font-bold text-text">{tier.name}</h3>
+						<h3 class="text-lg font-bold text-text font-display">{tier.name}</h3>
 						<div class="mt-3 flex items-baseline gap-1">
-							<span class="text-4xl font-extrabold tracking-tight">{tier.price}</span>
+							<span class="text-4xl font-bold tracking-tight font-display">{tier.price}</span>
 							<span class="text-sm text-text-muted">{tier.period}</span>
 						</div>
 						<p class="mt-3 text-sm text-text-muted">{tier.description}</p>
@@ -80,14 +80,18 @@ const tiers = [
 							{tier.features.map((f) => (
 								<li class="flex items-start gap-2.5 text-sm text-text">
 									<svg width="16" height="16" viewBox="0 0 16 16" fill="none" class="mt-0.5 shrink-0">
-										<path d="M13.5 4.5L6.5 11.5L2.5 7.5" stroke={tier.available ? "#111" : "#aaa"} stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+										<circle cx="8" cy="8" r="7" fill={tier.available ? "#F0FDF4" : "#f5f5f4"}/>
+										<path d="M5.5 8L7.2 9.7L10.5 6.3" stroke={tier.available ? "#16a34a" : "#aaa"} stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
 									</svg>
 									{f}
 								</li>
 							))}
 						</ul>
 						{tier.available ? (
-							<a href={tier.ctaLink} class="btn-primary mt-7 text-center">
+							<a href={tier.ctaLink} class:list={[
+								"mt-7 text-center",
+								tier.highlighted ? "btn-primary" : "btn-secondary"
+							]}>
 								{tier.cta}
 							</a>
 						) : (

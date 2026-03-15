@@ -84,34 +84,47 @@ export default async function DashboardPage() {
 	}
 
 	return (
-		<div style={{ maxWidth: "800px" }}>
-			<h1 style={{ fontSize: "24px", fontWeight: 700, marginBottom: "8px" }}>
-				Your sites
-			</h1>
-			<p style={{ color: "#6b7280", marginBottom: "24px", fontSize: "15px" }}>
-				Add a site URL to scan its AEO score.
-			</p>
+		<div style={{ maxWidth: "860px", animation: "fadeIn 0.3s ease" }}>
+			<div style={{ marginBottom: "8px" }}>
+				<h1 style={{
+					fontFamily: "var(--font-display)",
+					fontSize: "28px",
+					fontWeight: 700,
+					letterSpacing: "-0.02em",
+					marginBottom: "6px",
+				}}>
+					Your sites
+				</h1>
+				<p style={{ color: "var(--text-secondary)", fontSize: "15px" }}>
+					Add a site URL to scan its AEO score.
+				</p>
+			</div>
 
-			<div style={{ marginBottom: "32px" }}>
+			<div style={{ margin: "24px 0 36px" }}>
 				<AddSiteForm />
 			</div>
 
 			{sites.length === 0 ? (
 				<div
 					style={{
-						padding: "40px",
+						padding: "60px 40px",
 						textAlign: "center",
-						border: "1px dashed #d1d5db",
-						borderRadius: "12px",
-						color: "#9ca3af",
+						border: "2px dashed var(--border)",
+						borderRadius: "var(--radius-lg)",
+						color: "var(--text-muted)",
+						background: "var(--bg-card)",
 					}}
 				>
-					<p style={{ margin: 0, fontSize: "15px" }}>
+					<svg width="48" height="48" viewBox="0 0 48 48" fill="none" style={{ margin: "0 auto 16px", opacity: 0.4 }}>
+						<rect x="4" y="4" width="40" height="40" rx="12" stroke="currentColor" strokeWidth="2" strokeDasharray="4 3"/>
+						<path d="M24 16v16m-8-8h16" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+					</svg>
+					<p style={{ margin: 0, fontSize: "15px", fontWeight: 500 }}>
 						No sites yet. Add your first site above.
 					</p>
 				</div>
 			) : (
-				<div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+				<div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
 					{sites.map((site) => (
 						<Link
 							key={site.id}
@@ -119,52 +132,103 @@ export default async function DashboardPage() {
 							style={{ textDecoration: "none" }}
 						>
 							<div
+								className="site-card"
 								style={{
-									padding: "16px 20px",
-									border: "1px solid #e5e7eb",
-									borderRadius: "10px",
-									background: "#fff",
+									padding: "18px 22px",
+									border: "1px solid var(--border)",
+									borderRadius: "var(--radius-md)",
+									background: "var(--bg-card)",
 									display: "flex",
 									justifyContent: "space-between",
 									alignItems: "center",
 									cursor: "pointer",
-									transition: "border-color 0.15s",
+									boxShadow: "var(--shadow-card)",
 								}}
 							>
-								<div>
-									<div style={{ fontWeight: 600, color: "#111", fontSize: "15px" }}>
-										{site.url}
+								<div style={{ display: "flex", alignItems: "center", gap: "14px" }}>
+									<div style={{
+										width: "40px",
+										height: "40px",
+										borderRadius: "var(--radius-sm)",
+										background: "var(--bg-accent-light)",
+										display: "flex",
+										alignItems: "center",
+										justifyContent: "center",
+										flexShrink: 0,
+									}}>
+										<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--text-accent)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+											<circle cx="12" cy="12" r="10"/>
+											<path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+										</svg>
 									</div>
-									{site.latest_scan?.scanned_at && (
-										<div style={{ fontSize: "13px", color: "#9ca3af", marginTop: "2px" }}>
-											Scanned{" "}
-											{new Date(site.latest_scan.scanned_at).toLocaleDateString("en-US", {
-												month: "short",
-												day: "numeric",
-												year: "numeric",
-											})}
+									<div>
+										<div style={{ fontWeight: 600, color: "var(--text)", fontSize: "15px" }}>
+											{site.url}
 										</div>
-									)}
+										{site.latest_scan?.scanned_at && (
+											<div style={{ fontSize: "13px", color: "var(--text-muted)", marginTop: "2px" }}>
+												Scanned{" "}
+												{new Date(site.latest_scan.scanned_at).toLocaleDateString("en-US", {
+													month: "short",
+													day: "numeric",
+													year: "numeric",
+												})}
+											</div>
+										)}
+									</div>
 								</div>
-								<div style={{ textAlign: "right" }}>
+								<div style={{ textAlign: "right", display: "flex", alignItems: "center", gap: "12px" }}>
 									{site.latest_scan?.score != null ? (
 										<>
-											<div
-												style={{
-													fontSize: "24px",
-													fontWeight: 800,
-													color: scoreColor(site.latest_scan.score),
-													lineHeight: 1,
-												}}
-											>
-												{site.latest_scan.score}
+											<div>
+												<div
+													style={{
+														fontFamily: "var(--font-display)",
+														fontSize: "28px",
+														fontWeight: 700,
+														color: scoreColor(site.latest_scan.score),
+														lineHeight: 1,
+														letterSpacing: "-0.02em",
+													}}
+												>
+													{site.latest_scan.score}
+												</div>
+												<div style={{ fontSize: "12px", color: "var(--text-muted)", marginTop: "2px" }}>
+													/100
+												</div>
 											</div>
-											<div style={{ fontSize: "13px", color: "#9ca3af" }}>
+											<div style={{
+												width: "36px",
+												height: "36px",
+												borderRadius: "var(--radius-sm)",
+												background: scoreColor(site.latest_scan.score),
+												color: "white",
+												display: "flex",
+												alignItems: "center",
+												justifyContent: "center",
+												fontFamily: "var(--font-display)",
+												fontWeight: 700,
+												fontSize: "16px",
+											}}>
 												{site.latest_scan.grade}
 											</div>
 										</>
 									) : (
-										<div style={{ fontSize: "13px", color: "#9ca3af" }}>
+										<div style={{
+											fontSize: "13px",
+											color: "var(--text-muted)",
+											display: "flex",
+											alignItems: "center",
+											gap: "6px",
+										}}>
+											<div style={{
+												width: "14px",
+												height: "14px",
+												border: "2px solid var(--border)",
+												borderTopColor: "var(--text-accent)",
+												borderRadius: "50%",
+												animation: "spin 0.8s linear infinite",
+											}} />
 											Scanning...
 										</div>
 									)}

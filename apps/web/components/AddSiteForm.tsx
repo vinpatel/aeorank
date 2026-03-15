@@ -50,32 +50,37 @@ export function AddSiteForm() {
 				style={{
 					flex: "1",
 					minWidth: "240px",
-					padding: "8px 12px",
-					border: "1px solid #d1d5db",
-					borderRadius: "6px",
+					padding: "10px 14px",
+					border: "1px solid var(--border)",
+					borderRadius: "var(--radius-sm)",
 					fontSize: "14px",
 					outline: "none",
+					background: "var(--bg-card)",
+					fontFamily: "inherit",
+					transition: "border-color 0.15s ease",
 				}}
 			/>
 			<button
 				type="submit"
 				disabled={loading}
 				style={{
-					padding: "8px 20px",
-					background: loading ? "#6b7280" : "#111",
+					padding: "10px 24px",
+					background: loading ? "var(--text-secondary)" : "var(--bg-accent)",
 					color: "#fff",
 					border: "none",
-					borderRadius: "6px",
+					borderRadius: "var(--radius-sm)",
 					fontSize: "14px",
 					fontWeight: 600,
+					fontFamily: "inherit",
 					cursor: loading ? "not-allowed" : "pointer",
 					whiteSpace: "nowrap",
+					transition: "background 0.15s ease",
 				}}
 			>
 				{loading ? "Scanning..." : "Scan site"}
 			</button>
 			{error && (
-				<p style={{ width: "100%", color: "#dc2626", fontSize: "14px", margin: 0 }}>
+				<p style={{ width: "100%", color: "var(--red)", fontSize: "14px", margin: 0 }}>
 					{error}
 				</p>
 			)}

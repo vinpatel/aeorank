@@ -60,10 +60,10 @@ export function DownloadButton({ siteId, disabled = false }: DownloadButtonProps
 					alignItems: "center",
 					gap: "8px",
 					padding: "10px 20px",
-					background: disabled ? "#9ca3af" : "#111",
+					background: disabled ? "var(--text-muted)" : "var(--bg-accent)",
 					color: "#fff",
 					border: "none",
-					borderRadius: "6px",
+					borderRadius: "var(--radius-sm)",
 					fontSize: "14px",
 					fontWeight: 600,
 					cursor: disabled || loading ? "not-allowed" : "pointer",
@@ -95,17 +95,12 @@ export function DownloadButton({ siteId, disabled = false }: DownloadButtonProps
 					style={{
 						marginTop: "8px",
 						fontSize: "13px",
-						color: "#dc2626",
+						color: "var(--red)",
 					}}
 				>
 					{error}
 				</p>
 			)}
-			<style>{`
-				@keyframes spin {
-					to { transform: rotate(360deg); }
-				}
-			`}</style>
 		</div>
 	);
 }

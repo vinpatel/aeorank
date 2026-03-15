@@ -72,12 +72,18 @@ export default async function UpgradePage() {
 	];
 
 	return (
-		<div>
-			<div style={{ marginBottom: "32px" }}>
-				<h1 style={{ fontSize: "24px", fontWeight: 700, margin: "0 0 8px" }}>
-					Plans &amp; Pricing
+		<div style={{ animation: "fadeIn 0.3s ease" }}>
+			<div style={{ marginBottom: "40px" }}>
+				<h1 style={{
+					fontFamily: "var(--font-display)",
+					fontSize: "28px",
+					fontWeight: 700,
+					margin: "0 0 8px",
+					letterSpacing: "-0.02em",
+				}}>
+					Plans & Pricing
 				</h1>
-				<p style={{ color: "#6b7280", margin: 0 }}>
+				<p style={{ color: "var(--text-secondary)", margin: 0, fontSize: "15px" }}>
 					Choose the plan that fits your AEO workflow.
 				</p>
 			</div>
@@ -86,7 +92,7 @@ export default async function UpgradePage() {
 				style={{
 					display: "grid",
 					gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
-					gap: "24px",
+					gap: "20px",
 					maxWidth: "900px",
 				}}
 			>
@@ -98,14 +104,16 @@ export default async function UpgradePage() {
 						<div
 							key={tier.key}
 							style={{
-								border: isPro ? "2px solid #111" : "1px solid #e5e7eb",
-								borderRadius: "8px",
+								border: isPro ? "2px solid var(--bg-accent)" : "1px solid var(--border)",
+								borderRadius: "var(--radius-lg)",
 								padding: "28px",
 								display: "flex",
 								flexDirection: "column",
 								gap: "20px",
-								backgroundColor: "#fff",
+								backgroundColor: "var(--bg-card)",
 								position: "relative",
+								boxShadow: isPro ? "var(--shadow-lg)" : "var(--shadow-card)",
+								transition: "box-shadow 0.2s ease, transform 0.2s ease",
 							}}
 						>
 							{isPro && (
@@ -115,13 +123,13 @@ export default async function UpgradePage() {
 										top: "-12px",
 										left: "50%",
 										transform: "translateX(-50%)",
-										backgroundColor: "#111",
+										background: "var(--bg-accent)",
 										color: "#fff",
 										fontSize: "11px",
 										fontWeight: 700,
 										letterSpacing: "0.08em",
 										textTransform: "uppercase",
-										padding: "3px 12px",
+										padding: "4px 14px",
 										borderRadius: "999px",
 									}}
 								>
@@ -135,10 +143,10 @@ export default async function UpgradePage() {
 										display: "flex",
 										alignItems: "center",
 										gap: "8px",
-										marginBottom: "8px",
+										marginBottom: "10px",
 									}}
 								>
-									<span style={{ fontSize: "16px", fontWeight: 700 }}>
+									<span style={{ fontSize: "17px", fontWeight: 700, fontFamily: "var(--font-display)" }}>
 										{tier.name}
 									</span>
 									{isCurrentPlan && (
@@ -147,9 +155,9 @@ export default async function UpgradePage() {
 												fontSize: "11px",
 												fontWeight: 600,
 												padding: "2px 8px",
-												borderRadius: "4px",
-												backgroundColor: "#dcfce7",
-												color: "#166534",
+												borderRadius: "999px",
+												backgroundColor: "var(--green-bg)",
+												color: "var(--green)",
 											}}
 										>
 											Current plan
@@ -157,10 +165,10 @@ export default async function UpgradePage() {
 									)}
 								</div>
 								<div style={{ display: "flex", alignItems: "baseline", gap: "4px" }}>
-									<span style={{ fontSize: "32px", fontWeight: 800 }}>
+									<span style={{ fontFamily: "var(--font-display)", fontSize: "36px", fontWeight: 700, letterSpacing: "-0.02em" }}>
 										{tier.price}
 									</span>
-									<span style={{ color: "#6b7280", fontSize: "14px" }}>
+									<span style={{ color: "var(--text-muted)", fontSize: "14px" }}>
 										/ {tier.period}
 									</span>
 								</div>
@@ -173,7 +181,7 @@ export default async function UpgradePage() {
 									margin: 0,
 									display: "flex",
 									flexDirection: "column",
-									gap: "8px",
+									gap: "10px",
 									flex: 1,
 								}}
 							>
@@ -182,15 +190,16 @@ export default async function UpgradePage() {
 										key={feature}
 										style={{
 											fontSize: "14px",
-											color: "#374151",
+											color: "var(--text-secondary)",
 											display: "flex",
 											alignItems: "flex-start",
-											gap: "8px",
+											gap: "10px",
 										}}
 									>
-										<span style={{ color: "#16a34a", flexShrink: 0, marginTop: "1px" }}>
-											&#10003;
-										</span>
+										<svg width="16" height="16" viewBox="0 0 16 16" fill="none" style={{ flexShrink: 0, marginTop: "2px" }}>
+											<circle cx="8" cy="8" r="7" fill="var(--green-bg)"/>
+											<path d="M5.5 8L7.2 9.7L10.5 6.3" stroke="var(--green)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+										</svg>
 										{feature}
 									</li>
 								))}
@@ -201,11 +210,12 @@ export default async function UpgradePage() {
 									<div
 										style={{
 											textAlign: "center",
-											padding: "10px",
-											border: "1px solid #e5e7eb",
-											borderRadius: "6px",
+											padding: "11px",
+											border: "1px solid var(--border)",
+											borderRadius: "var(--radius-sm)",
 											fontSize: "14px",
-											color: "#6b7280",
+											color: "var(--text-muted)",
+											fontWeight: 500,
 										}}
 									>
 										Active plan
@@ -220,11 +230,12 @@ export default async function UpgradePage() {
 									<div
 										style={{
 											textAlign: "center",
-											padding: "10px",
-											border: "1px solid #e5e7eb",
-											borderRadius: "6px",
+											padding: "11px",
+											border: "1px solid var(--border)",
+											borderRadius: "var(--radius-sm)",
 											fontSize: "14px",
-											color: "#6b7280",
+											color: "var(--text-muted)",
+											fontWeight: 500,
 										}}
 									>
 										Free forever

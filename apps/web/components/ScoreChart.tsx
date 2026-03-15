@@ -34,10 +34,10 @@ export function ScoreChart({ data }: ScoreChartProps) {
 					display: "flex",
 					alignItems: "center",
 					justifyContent: "center",
-					color: "#9ca3af",
+					color: "var(--text-muted)",
 					fontSize: "13px",
-					border: "1px dashed #e5e7eb",
-					borderRadius: "6px",
+					border: "1px dashed var(--border)",
+					borderRadius: "var(--radius-sm)",
 				}}
 			>
 				No history yet
@@ -63,7 +63,7 @@ export function ScoreChart({ data }: ScoreChartProps) {
 									return (
 										<div
 											style={{
-												background: "#111",
+												background: "#1a1a1a",
 												color: "#fff",
 												padding: "6px 10px",
 												borderRadius: "4px",
@@ -83,11 +83,11 @@ export function ScoreChart({ data }: ScoreChartProps) {
 						<Area
 							type="monotone"
 							dataKey="score"
-							stroke="#111"
-							fill="#111"
+							stroke="#E8590C"
+							fill="#E8590C"
 							fillOpacity={0.1}
-							dot={<Dot r={4} fill="#111" stroke="#111" />}
-							activeDot={{ r: 5, fill: "#111" }}
+							dot={<Dot r={4} fill="#E8590C" stroke="#E8590C" />}
+							activeDot={{ r: 5, fill: "#E8590C" }}
 						/>
 					</AreaChart>
 				</ResponsiveContainer>
@@ -111,7 +111,7 @@ export function ScoreChart({ data }: ScoreChartProps) {
 							return (
 								<div
 									style={{
-										background: "#111",
+										background: "#1a1a1a",
 										color: "#fff",
 										padding: "6px 10px",
 										borderRadius: "4px",
@@ -129,11 +129,11 @@ export function ScoreChart({ data }: ScoreChartProps) {
 				<Area
 					type="monotone"
 					dataKey="score"
-					stroke="#111"
-					fill="#111"
+					stroke="#E8590C"
+					fill="#E8590C"
 					fillOpacity={0.1}
 					dot={false}
-					activeDot={{ r: 4, fill: "#111" }}
+					activeDot={{ r: 4, fill: "#E8590C" }}
 				/>
 			</AreaChart>
 		</ResponsiveContainer>

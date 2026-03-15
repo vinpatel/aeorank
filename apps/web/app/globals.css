@@ -1,3 +1,44 @@
+:root {
+	--font-body: var(--font-inter), "Inter", system-ui, sans-serif;
+	--font-display: var(--font-display), "Space Grotesk", system-ui, sans-serif;
+
+	--bg: #FAFAF9;
+	--bg-card: #FFFFFF;
+	--bg-sidebar: #111111;
+	--bg-sidebar-hover: #1a1a1a;
+	--bg-surface: #F5F5F4;
+	--bg-surface-hover: #EFEFED;
+	--bg-accent: #E8590C;
+	--bg-accent-hover: #D14D0A;
+	--bg-accent-light: #FFF7ED;
+
+	--text: #111111;
+	--text-secondary: #57534E;
+	--text-muted: #A8A29E;
+	--text-inverse: #FAFAF9;
+	--text-accent: #E8590C;
+
+	--border: #E7E5E4;
+	--border-light: #F5F5F4;
+
+	--green: #16a34a;
+	--green-bg: #F0FDF4;
+	--amber: #d97706;
+	--amber-bg: #FFFBEB;
+	--red: #dc2626;
+	--red-bg: #FEF2F2;
+
+	--radius-sm: 6px;
+	--radius-md: 10px;
+	--radius-lg: 16px;
+	--radius-xl: 20px;
+
+	--shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+	--shadow-md: 0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -2px rgba(0,0,0,0.05);
+	--shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -4px rgba(0,0,0,0.04);
+	--shadow-card: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+}
+
 * {
 	box-sizing: border-box;
 	margin: 0;
@@ -5,7 +46,56 @@
 }
 
 body {
-	font-family: var(--font-inter), system-ui, sans-serif;
-	background: #ffffff;
-	color: #111111;
+	font-family: var(--font-body);
+	background: var(--bg);
+	color: var(--text);
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+	background-color: var(--bg-accent);
+	color: white;
+}
+
+@keyframes spin {
+	to { transform: rotate(360deg); }
+}
+
+@keyframes fadeIn {
+	from { opacity: 0; transform: translateY(4px); }
+	to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+	0%, 100% { opacity: 1; }
+	50% { opacity: 0.6; }
+}
+
+.site-card {
+	transition: all 0.15s ease;
+}
+.site-card:hover {
+	border-color: var(--bg-accent) !important;
+	box-shadow: var(--shadow-md) !important;
+	transform: translateY(-1px);
+}
+
+/* Mobile sidebar toggle */
+@media (max-width: 768px) {
+	.sidebar-desktop {
+		display: none !important;
+	}
+	.mobile-header {
+		display: flex !important;
+	}
+	.main-content {
+		margin-left: 0 !important;
+	}
+}
+
+@media (min-width: 769px) {
+	.mobile-header {
+		display: none !important;
+	}
 }

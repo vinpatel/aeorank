@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Space_Grotesk } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+const spaceGrotesk = Space_Grotesk({ subsets: ["latin"], variable: "--font-display" });
 
 export const metadata: Metadata = {
 	title: "AEOrank Dashboard",
@@ -18,7 +19,7 @@ export default function RootLayout({
 	return (
 		<ClerkProvider>
 			<html lang="en">
-				<body className={inter.className}>{children}</body>
+				<body className={`${inter.variable} ${spaceGrotesk.variable}`}>{children}</body>
 			</html>
 		</ClerkProvider>
 	);
