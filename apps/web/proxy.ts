@@ -6,7 +6,13 @@ const isProtectedRoute = createRouteMatcher([
 	"/upgrade(.*)",
 ]);
 
+const isPublicApiRoute = createRouteMatcher([
+	"/api/scan/process",
+	"/api/webhooks/(.*)",
+]);
+
 export default clerkMiddleware((auth, req) => {
+	if (isPublicApiRoute(req)) return;
 	if (isProtectedRoute(req)) auth.protect();
 });
 
