@@ -3,7 +3,8 @@ import tailwindcss from "@tailwindcss/vite";
 import preact from "@astrojs/preact";
 
 export default defineConfig({
-	site: "https://aeorank.dev",
+	site: "https://vinpatel.github.io",
+	base: "/aeorank",
 	integrations: [preact()],
 	vite: {
 		plugins: [tailwindcss()],
