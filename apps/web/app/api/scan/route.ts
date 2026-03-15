@@ -1,17 +1,18 @@
 import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 import { createServerSupabaseClient } from "@/lib/supabase";
+import { createServiceSupabaseClient } from "@/lib/supabase";
 import { validateScanUrl } from "@/lib/validate-url";
-import { getQStashClient } from "@/lib/qstash";
+import { scan } from "@aeorank/core";
+
+export const maxDuration = 60;
 
 export async function POST(request: Request) {
-	// Auth check
 	const { userId } = await auth();
 	if (!userId) {
 		return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 	}
 
-	// Parse body
 	let body: unknown;
 	try {
 		body = await request.json();
@@ -30,7 +31,6 @@ export async function POST(request: Request) {
 
 	const rawUrl = (body as { url: string }).url;
 
-	// Validate URL (SSRF-safe)
 	let validatedUrl: string;
 	try {
 		validatedUrl = validateScanUrl(rawUrl);
@@ -41,7 +41,6 @@ export async function POST(request: Request) {
 
 	const supabase = createServerSupabaseClient();
 
-	// Upsert site record (user_id + url must be unique)
 	const { data: site, error: siteError } = await supabase
 		.from("sites")
 		.upsert(
@@ -59,14 +58,15 @@ export async function POST(request: Request) {
 		);
 	}
 
-	// Insert pending scan record
-	const { data: scan, error: scanError } = await supabase
+	// Insert scan record as running
+	const serviceSupabase = createServiceSupabaseClient();
+	const { data: scanRecord, error: scanError } = await supabase
 		.from("scans")
-		.insert({ user_id: userId, site_id: site.id, status: "pending" })
+		.insert({ user_id: userId, site_id: site.id, status: "running" })
 		.select("id")
 		.single();
 
-	if (scanError || !scan) {
+	if (scanError || !scanRecord) {
 		console.error("Error inserting scan:", scanError);
 		return NextResponse.json(
 			{ error: "Failed to create scan record" },
@@ -74,35 +74,38 @@ export async function POST(request: Request) {
 		);
 	}
 
-	// Enqueue QStash job pointing to /api/scan/process
-	const appUrl = process.env.NEXT_PUBLIC_APP_URL;
-	if (!appUrl) {
-		return NextResponse.json(
-			{ error: "NEXT_PUBLIC_APP_URL is not configured" },
-			{ status: 500 },
-		);
-	}
-
+	// Run scan inline
 	try {
-		await getQStashClient().publishJSON({
-			url: `${appUrl}/api/scan/process`,
-			body: { scanId: scan.id, url: validatedUrl },
-		});
-	} catch (err) {
-		console.error("Error enqueuing QStash job:", err);
-		// Mark scan as error since we couldn't enqueue it
-		await supabase
+		const result = await scan(validatedUrl);
+
+		await serviceSupabase
 			.from("scans")
-			.update({ status: "error", error: "Failed to enqueue scan job" })
-			.eq("id", scan.id);
+			.update({
+				status: "complete",
+				score: result.score,
+				grade: result.grade,
+				dimensions: result.dimensions,
+				files: result.files.map((f) => ({ name: f.name, content: f.content })),
+				pages_scanned: result.pagesScanned,
+				duration_ms: result.duration,
+				scanned_at: result.scannedAt,
+			})
+			.eq("id", scanRecord.id);
+
 		return NextResponse.json(
-			{ error: "Failed to enqueue scan job" },
+			{ scanId: scanRecord.id, siteId: site.id },
+			{ status: 200 },
+		);
+	} catch (err) {
+		const message = err instanceof Error ? err.message : "Scan failed";
+		console.error("Scan error:", err);
+		await serviceSupabase
+			.from("scans")
+			.update({ status: "error", error: message })
+			.eq("id", scanRecord.id);
+		return NextResponse.json(
+			{ error: message },
 			{ status: 500 },
 		);
 	}
-
-	return NextResponse.json(
-		{ scanId: scan.id, siteId: site.id },
-		{ status: 202 },
-	);
 }
