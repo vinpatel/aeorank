@@ -116,58 +116,61 @@ Deferred to future release. Tracked but not in current roadmap.
 
 Which phases cover which requirements. Updated during roadmap creation.
 
-| Requirement | Phase | Status |
-|-------------|-------|--------|
-| INFRA-01 | Phase 1 | Pending |
-| INFRA-02 | Phase 1 | Pending |
-| INFRA-03 | Phase 1 | Pending |
-| SCAN-01 | Phase 1 | Pending |
-| SCAN-02 | Phase 1 | Pending |
-| SCAN-03 | Phase 1 | Pending |
-| SCAN-04 | Phase 1 | Pending |
-| SCORE-01 | Phase 1 | Pending |
-| SCORE-02 | Phase 1 | Pending |
-| SCORE-03 | Phase 1 | Pending |
-| SCORE-04 | Phase 1 | Pending |
-| SCORE-05 | Phase 1 | Pending |
-| GEN-01 | Phase 1 | Pending |
-| GEN-02 | Phase 1 | Pending |
-| GEN-03 | Phase 1 | Pending |
-| GEN-04 | Phase 1 | Pending |
-| GEN-05 | Phase 1 | Pending |
-| GEN-06 | Phase 1 | Pending |
-| GEN-07 | Phase 1 | Pending |
-| GEN-08 | Phase 1 | Pending |
-| CLI-01 | Phase 2 | Pending |
-| CLI-02 | Phase 2 | Pending |
-| CLI-03 | Phase 2 | Pending |
-| CLI-04 | Phase 2 | Pending |
-| CLI-05 | Phase 2 | Pending |
-| SITE-01 | Phase 3 | Pending |
-| SITE-02 | Phase 3 | Pending |
-| SITE-03 | Phase 3 | Pending |
-| SITE-04 | Phase 3 | Pending |
-| DOCS-01 | Phase 3 | Pending |
-| DOCS-02 | Phase 3 | Pending |
-| DOCS-03 | Phase 3 | Pending |
-| DOCS-04 | Phase 3 | Pending |
-| DOCS-05 | Phase 3 | Pending |
-| GHA-01 | Phase 4 | Complete |
-| GHA-02 | Phase 4 | Complete |
-| GHA-03 | Phase 4 | Complete |
-| GHA-04 | Phase 4 | Complete |
-| GHA-05 | Phase 4 | Complete |
-| DASH-01 | Phase 5 | Complete |
-| DASH-02 | Phase 5 | Complete |
-| DASH-03 | Phase 5 | Complete |
-| DASH-04 | Phase 5 | Complete |
-| DASH-05 | Phase 5 | Complete |
+| Requirement | Phase | Verified By | Status |
+|-------------|-------|-------------|--------|
+| INFRA-01 | Phase 1 | Phase 6 | Pending verification |
+| INFRA-02 | Phase 1 | Phase 6 | Pending verification |
+| INFRA-03 | Phase 1 | Phase 6 | Pending verification |
+| SCAN-01 | Phase 1 | Phase 6 | Pending verification |
+| SCAN-02 | Phase 1 | Phase 6 | Pending verification |
+| SCAN-03 | Phase 1 | Phase 6 | Pending verification |
+| SCAN-04 | Phase 1 | Phase 6 | Pending verification |
+| SCORE-01 | Phase 1 | Phase 6 | Pending verification |
+| SCORE-02 | Phase 1 | Phase 6 | Pending verification |
+| SCORE-03 | Phase 1 | Phase 6 | Pending verification |
+| SCORE-04 | Phase 1 | Phase 6 | Pending verification |
+| SCORE-05 | Phase 1 | Phase 6 | Pending verification |
+| GEN-01 | Phase 1 | Phase 6 | Pending verification |
+| GEN-02 | Phase 1 | Phase 6 | Pending verification |
+| GEN-03 | Phase 1 | Phase 6 | Pending verification |
+| GEN-04 | Phase 1 | Phase 6 | Pending verification |
+| GEN-05 | Phase 1 | Phase 6 | Pending verification |
+| GEN-06 | Phase 1 | Phase 6 | Pending verification |
+| GEN-07 | Phase 1 | Phase 6 | Pending verification |
+| GEN-08 | Phase 1 | Phase 6 | Pending verification |
+| CLI-01 | Phase 2 | Phase 6 | Pending verification |
+| CLI-02 | Phase 2 | Phase 6 | Pending verification |
+| CLI-03 | Phase 2 | Phase 6 | Pending verification |
+| CLI-04 | Phase 2 | Phase 6 | Pending verification |
+| CLI-05 | Phase 2 | Phase 6 | Pending verification |
+| SITE-01 | Phase 3 | Phase 6 | Pending verification |
+| SITE-02 | Phase 3 | Phase 6, Phase 7 | Pending verification |
+| SITE-03 | Phase 3 | Phase 6 | Pending verification |
+| SITE-04 | Phase 3 | Phase 6 | Pending verification |
+| DOCS-01 | Phase 3 | Phase 6 | Pending verification |
+| DOCS-02 | Phase 3 | Phase 6 | Pending verification |
+| DOCS-03 | Phase 3 | Phase 6 | Pending verification |
+| DOCS-04 | Phase 3 | Phase 6 | Pending verification |
+| DOCS-05 | Phase 3 | Phase 6 | Pending verification |
+| GHA-01 | Phase 4 | Phase 7 | Partial (code complete, Marketplace pending) |
+| GHA-02 | Phase 4 | Phase 4 | Complete |
+| GHA-03 | Phase 4 | Phase 4 | Complete |
+| GHA-04 | Phase 4 | Phase 4 | Complete |
+| GHA-05 | Phase 4 | Phase 4 | Complete |
+| DASH-01 | Phase 5 | Phase 5 | Complete |
+| DASH-02 | Phase 5 | Phase 5 | Complete |
+| DASH-03 | Phase 5 | Phase 5 | Complete |
+| DASH-04 | Phase 5 | Phase 5 | Complete |
+| DASH-05 | Phase 5 | Phase 5 | Complete |
 
 **Coverage:**
 - v1 requirements: 40 total
 - Mapped to phases: 40
 - Unmapped: 0 ✓
+- Verified: 9/40 (Phase 4: 4, Phase 5: 5)
+- Pending verification: 30 (Phase 6)
+- Partial: 1 (GHA-01 → Phase 7)
 
 ---
 *Requirements defined: 2026-03-14*
-*Last updated: 2026-03-14 after initial definition*
+*Last updated: 2026-03-14 — gap closure phases 6-7 added after v1.0 audit*
