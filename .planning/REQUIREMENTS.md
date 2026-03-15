@@ -118,40 +118,40 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Verified By | Status |
 |-------------|-------|-------------|--------|
-| INFRA-01 | Phase 1 | Phase 6 | Pending verification |
-| INFRA-02 | Phase 1 | Phase 6 | Pending verification |
-| INFRA-03 | Phase 1 | Phase 6 | Pending verification |
-| SCAN-01 | Phase 1 | Phase 6 | Pending verification |
-| SCAN-02 | Phase 1 | Phase 6 | Pending verification |
-| SCAN-03 | Phase 1 | Phase 6 | Pending verification |
-| SCAN-04 | Phase 1 | Phase 6 | Pending verification |
-| SCORE-01 | Phase 1 | Phase 6 | Pending verification |
-| SCORE-02 | Phase 1 | Phase 6 | Pending verification |
-| SCORE-03 | Phase 1 | Phase 6 | Pending verification |
-| SCORE-04 | Phase 1 | Phase 6 | Pending verification |
-| SCORE-05 | Phase 1 | Phase 6 | Pending verification |
-| GEN-01 | Phase 1 | Phase 6 | Pending verification |
-| GEN-02 | Phase 1 | Phase 6 | Pending verification |
-| GEN-03 | Phase 1 | Phase 6 | Pending verification |
-| GEN-04 | Phase 1 | Phase 6 | Pending verification |
-| GEN-05 | Phase 1 | Phase 6 | Pending verification |
-| GEN-06 | Phase 1 | Phase 6 | Pending verification |
-| GEN-07 | Phase 1 | Phase 6 | Pending verification |
-| GEN-08 | Phase 1 | Phase 6 | Pending verification |
-| CLI-01 | Phase 2 | Phase 6 | Pending verification |
-| CLI-02 | Phase 2 | Phase 6 | Pending verification |
-| CLI-03 | Phase 2 | Phase 6 | Pending verification |
-| CLI-04 | Phase 2 | Phase 6 | Pending verification |
-| CLI-05 | Phase 2 | Phase 6 | Pending verification |
-| SITE-01 | Phase 3 | Phase 6 | Pending verification |
-| SITE-02 | Phase 3 | Phase 6, Phase 7 | Pending verification |
-| SITE-03 | Phase 3 | Phase 6 | Pending verification |
-| SITE-04 | Phase 3 | Phase 6 | Pending verification |
-| DOCS-01 | Phase 3 | Phase 6 | Pending verification |
-| DOCS-02 | Phase 3 | Phase 6 | Pending verification |
-| DOCS-03 | Phase 3 | Phase 6 | Pending verification |
-| DOCS-04 | Phase 3 | Phase 6 | Pending verification |
-| DOCS-05 | Phase 3 | Phase 6 | Pending verification |
+| INFRA-01 | Phase 1 | 01-VERIFICATION.md | Complete |
+| INFRA-02 | Phase 1 | 01-VERIFICATION.md | Complete |
+| INFRA-03 | Phase 1 | 01-VERIFICATION.md | Complete |
+| SCAN-01 | Phase 1 | 01-VERIFICATION.md | Complete |
+| SCAN-02 | Phase 1 | 01-VERIFICATION.md | Complete |
+| SCAN-03 | Phase 1 | 01-VERIFICATION.md | Complete |
+| SCAN-04 | Phase 1 | 01-VERIFICATION.md | Complete |
+| SCORE-01 | Phase 1 | 01-VERIFICATION.md | Complete |
+| SCORE-02 | Phase 1 | 01-VERIFICATION.md | Complete |
+| SCORE-03 | Phase 1 | 01-VERIFICATION.md | Complete |
+| SCORE-04 | Phase 1 | 01-VERIFICATION.md | Complete |
+| SCORE-05 | Phase 1 | 01-VERIFICATION.md | Complete |
+| GEN-01 | Phase 1 | 01-VERIFICATION.md | Complete |
+| GEN-02 | Phase 1 | 01-VERIFICATION.md | Complete |
+| GEN-03 | Phase 1 | 01-VERIFICATION.md | Complete |
+| GEN-04 | Phase 1 | 01-VERIFICATION.md | Complete |
+| GEN-05 | Phase 1 | 01-VERIFICATION.md | Complete |
+| GEN-06 | Phase 1 | 01-VERIFICATION.md | Complete |
+| GEN-07 | Phase 1 | 01-VERIFICATION.md | Complete |
+| GEN-08 | Phase 1 | 01-VERIFICATION.md | Complete |
+| CLI-01 | Phase 2 | 02-VERIFICATION.md | Complete |
+| CLI-02 | Phase 2 | 02-VERIFICATION.md | Complete |
+| CLI-03 | Phase 2 | 02-VERIFICATION.md | Complete |
+| CLI-04 | Phase 2 | 02-VERIFICATION.md | Complete |
+| CLI-05 | Phase 2 | 02-VERIFICATION.md | Complete |
+| SITE-01 | Phase 3 | 03-VERIFICATION.md | Complete (code; deploy pending) |
+| SITE-02 | Phase 3 | 03-VERIFICATION.md | Complete |
+| SITE-03 | Phase 3 | 03-VERIFICATION.md | Complete |
+| SITE-04 | Phase 3 | 03-VERIFICATION.md | Complete |
+| DOCS-01 | Phase 3 | 03-VERIFICATION.md | Complete (code; deploy pending) |
+| DOCS-02 | Phase 3 | 03-VERIFICATION.md | Complete |
+| DOCS-03 | Phase 3 | 03-VERIFICATION.md | Complete |
+| DOCS-04 | Phase 3 | 03-VERIFICATION.md | Complete |
+| DOCS-05 | Phase 3 | 03-VERIFICATION.md | Complete |
 | GHA-01 | Phase 4 | Phase 7 | Partial (code complete, Marketplace pending) |
 | GHA-02 | Phase 4 | Phase 4 | Complete |
 | GHA-03 | Phase 4 | Phase 4 | Complete |
@@ -167,10 +167,11 @@ Which phases cover which requirements. Updated during roadmap creation.
 - v1 requirements: 40 total
 - Mapped to phases: 40
 - Unmapped: 0 ✓
-- Verified: 9/40 (Phase 4: 4, Phase 5: 5)
-- Pending verification: 30 (Phase 6)
-- Partial: 1 (GHA-01 → Phase 7)
+- Verified: 39/40 (Phase 1: 20, Phase 2: 5, Phase 3: 9, Phase 4: 4, Phase 5: 5)
+- Pending verification: 0
+- Partial: 1 (GHA-01 → Phase 7 — code complete, Marketplace publish pending)
+- Note: SITE-01 and DOCS-01 are `Complete (code; deploy pending)` — GitHub Pages and DNS setup required before sites go live
 
 ---
 *Requirements defined: 2026-03-14*
-*Last updated: 2026-03-14 — gap closure phases 6-7 added after v1.0 audit*
+*Last updated: 2026-03-15 — Phase 6 retroactive verification complete; 34 Phase 1-3 requirements verified*
