@@ -103,7 +103,10 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. Pricing CTAs for paid tiers link to the dashboard app URL (not `#`)
   4. action/ directory publication checklist is documented with step-by-step instructions
   5. Marketing site builds with zero errors after content updates
-**Plans**: TBD
+**Plans**: 2/2
+Plans:
+- [ ] 07-01-PLAN.md — Update marketing site copy (Pricing, FAQ, Nav, Footer, CTASection)
+- [ ] 07-02-PLAN.md — Create GitHub Action Marketplace publication checklist
 
 ## Progress
 
