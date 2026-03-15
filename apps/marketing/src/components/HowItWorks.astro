@@ -3,47 +3,43 @@ const steps = [
 	{
 		number: "01",
 		title: "Scan",
-		code: "npx aeorank scan https://your-site.com",
-		description:
-			"Point AEOrank at any URL. It crawls up to 50 pages, analyzes structure, schema markup, and AI readiness signals. Takes under 30 seconds.",
+		description: "Point AEOrank at any URL. It crawls up to 50 pages, analyzes structure, schema markup, and AI readiness signals.",
+		detail: "Under 30 seconds. Zero config.",
 	},
 	{
 		number: "02",
 		title: "Score",
-		code: null,
-		description:
-			"Get an AEO score from 0-100 across 12 weighted dimensions. See exactly which signals are strong, which need work, and what to fix first.",
+		description: "Get an AEO score from 0 to 100 across 12 weighted dimensions. See exactly what's strong, what's weak, and what to fix first.",
+		detail: "Grades from A+ to F.",
 	},
 	{
 		number: "03",
 		title: "Generate",
-		code: null,
-		description:
-			"Get 8 files tailored to your site: llms.txt, schema.json, robots directives, FAQ markup, and more. Deploy them and watch your AI visibility improve.",
+		description: "Get 8 files tailored to your site \u2014 llms.txt, schema.json, robots directives, FAQ markup, and more. Deploy them and watch your AI visibility climb.",
+		detail: "All 8 files, ready to deploy.",
 	},
 ];
 ---
 
-<section id="how-it-works" class="border-t border-border px-6 py-24">
-	<div class="mx-auto max-w-6xl">
-		<h2 class="text-4xl font-bold md:text-5xl">
-			Three Commands. Eight Files. Zero Config.
-		</h2>
-		<p class="mt-4 text-lg text-text-muted">
-			From scan to deployment-ready files in under 30 seconds.
+<section id="how-it-works" class="section-spacing border-t border-border px-6">
+	<div class="mx-auto max-w-5xl">
+		<h2 class="heading-lg">How It Works</h2>
+		<p class="body-lg mt-4 text-text-muted max-w-2xl">
+			One command. Three steps. Eight deployment-ready files.
 		</p>
-		<div class="mt-16 grid grid-cols-1 gap-12 md:grid-cols-3">
+
+		<div class="mt-10 rounded-lg bg-bg-dark border border-border-light px-6 py-4">
+			<code class="font-mono text-base text-text">$ npx aeorank-cli scan https://your-site.com</code>
+		</div>
+
+		<div class="mt-16 grid grid-cols-1 gap-16 md:grid-cols-3 md:gap-12">
 			{
 				steps.map((step) => (
-					<div>
-						<div class="text-5xl font-bold text-border">{step.number}</div>
-						<h3 class="mt-4 text-2xl font-bold">{step.title}</h3>
-						{step.code && (
-							<div class="mt-4 rounded-sm bg-accent p-3">
-								<code class="font-mono text-sm text-bg">{step.code}</code>
-							</div>
-						)}
-						<p class="mt-4 text-text-muted">{step.description}</p>
+					<div class="relative">
+						<span class="text-6xl font-extrabold text-border-light leading-none">{step.number}</span>
+						<h3 class="heading-md mt-3">{step.title}</h3>
+						<p class="mt-3 body-md text-text-muted">{step.description}</p>
+						<p class="mt-2 text-sm font-medium text-accent-warm">{step.detail}</p>
 					</div>
 				))
 			}

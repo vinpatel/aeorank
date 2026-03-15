@@ -15,7 +15,7 @@ Get your AEO score and generated files in four steps.
 No installation needed. Run this command in your terminal:
 
 ```bash
-npx aeorank scan https://your-site.com
+npx aeorank-cli scan https://your-site.com
 ```
 
 AEOrank will crawl up to 50 pages, analyze your site's structure, and generate your score.
@@ -88,5 +88,5 @@ Run the scan again after deploying to see your score improve.
 - [Learn about each generated file](/files/llms-txt/) in detail
 
 :::tip
-Re-run `npx aeorank scan` after deploying your files to track your improvement. Most sites see a 20-40 point increase.
+Re-run `npx aeorank-cli scan` after deploying your files to track your improvement. Most sites see a 20-40 point increase.
 :::
