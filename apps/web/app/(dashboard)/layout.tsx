@@ -147,7 +147,7 @@ export default async function DashboardLayout({
 
 				<div style={{ marginTop: "auto", padding: "12px 8px", borderTop: "1px solid rgba(255,255,255,0.1)", display: "flex", flexDirection: "column", gap: "12px" }}>
 					<PlanBadge plan={currentPlan} />
-					<SignOutButton>
+					<SignOutButton redirectUrl="https://aeorank.dev">
 						<button
 							type="button"
 							style={{
