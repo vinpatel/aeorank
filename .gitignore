@@ -5,3 +5,5 @@ dist
 aeorank-output
 *.tsbuildinfo
 .vercel
+.next
+.astro

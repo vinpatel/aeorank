@@ -1,0 +1,39 @@
+{
+	"name": "@aeorank/sveltekit",
+	"version": "0.0.1",
+	"type": "module",
+	"private": false,
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.js",
+			"require": "./dist/index.cjs"
+		}
+	},
+	"main": "./dist/index.cjs",
+	"module": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"files": [
+		"dist"
+	],
+	"scripts": {
+		"build": "tsup",
+		"dev": "tsup --watch",
+		"typecheck": "tsc --noEmit"
+	},
+	"peerDependencies": {
+		"@sveltejs/kit": ">=2"
+	},
+	"peerDependenciesMeta": {
+		"@sveltejs/kit": {
+			"optional": false
+		}
+	},
+	"devDependencies": {
+		"@sveltejs/kit": "^2.0.0",
+		"@types/node": "^22.19.15",
+		"svelte": "^5.0.0",
+		"tsup": "^8.4.0",
+		"typescript": "^5.7.0"
+	}
+}

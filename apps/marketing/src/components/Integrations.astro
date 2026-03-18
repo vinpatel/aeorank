@@ -1,0 +1,75 @@
+---
+const frameworks = [
+	{ name: "Next.js", slug: "next", icon: "N" },
+	{ name: "Astro", slug: "astro", icon: "A" },
+	{ name: "Nuxt", slug: "nuxt", icon: "N" },
+	{ name: "Remix", slug: "remix", icon: "R" },
+	{ name: "SvelteKit", slug: "sveltekit", icon: "S" },
+	{ name: "Gatsby", slug: "gatsby", icon: "G" },
+	{ name: "Shopify Hydrogen", slug: "shopify", icon: "H" },
+];
+
+const manual = [
+	{ name: "Webflow", slug: "webflow" },
+	{ name: "Squarespace", slug: "squarespace" },
+	{ name: "WordPress", slug: null },
+];
+---
+
+<section id="integrations" class="relative py-28 px-6 overflow-hidden">
+	<div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+		<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-accent-warm/[0.02] blur-[100px]"></div>
+	</div>
+
+	<div class="relative mx-auto max-w-5xl">
+		<div class="text-center">
+			<span class="inline-block text-xs font-semibold tracking-[0.2em] uppercase text-accent-warm mb-4">Integrations</span>
+			<h2 class="text-4xl font-bold tracking-tight text-text sm:text-5xl">
+				Works With Your Stack
+			</h2>
+			<p class="mt-4 text-lg text-text-muted max-w-2xl mx-auto leading-relaxed">
+				Drop-in plugins for popular frameworks. One config, 8 AEO files, zero maintenance.
+			</p>
+		</div>
+
+		<!-- Framework plugins grid -->
+		<div class="mt-16 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+			{frameworks.map((fw) => (
+				<a
+					href={`https://docs.aeorank.dev/frameworks/${fw.slug}/`}
+					class="group relative flex flex-col items-center gap-3 rounded-2xl border border-border/50 bg-bg-card/60 backdrop-blur-sm px-6 py-7 transition-all duration-300 hover:border-accent-warm/20 hover:bg-bg-card/90 hover:shadow-[0_4px_30px_-10px_rgba(232,89,12,0.08)] hover:-translate-y-0.5"
+				>
+					<div class="flex items-center justify-center w-12 h-12 rounded-xl bg-accent-warm/10 border border-accent-warm/15 text-accent-warm font-mono font-bold text-lg transition-all duration-300 group-hover:bg-accent-warm/15 group-hover:border-accent-warm/25 group-hover:shadow-[0_0_16px_-4px_rgba(232,89,12,0.2)]">
+						{fw.icon}
+					</div>
+					<span class="text-sm font-semibold text-text text-center">{fw.name}</span>
+					<span class="text-xs text-accent-warm/70 font-mono">@aeorank/{fw.slug}</span>
+				</a>
+			))}
+
+			<!-- CLI / manual card -->
+			<div class="group relative flex flex-col items-center gap-3 rounded-2xl border border-dashed border-border/50 bg-bg-card/30 px-6 py-7">
+				<div class="flex items-center justify-center w-12 h-12 rounded-xl bg-white/[0.03] border border-border/30 text-text-muted font-mono text-lg">
+					&gt;_
+				</div>
+				<span class="text-sm font-semibold text-text-muted text-center">Any site via CLI</span>
+				<span class="text-xs text-text-muted/50 font-mono">npx aeorank-cli</span>
+			</div>
+		</div>
+
+		<!-- Manual platform note -->
+		<p class="mt-8 text-center text-sm text-text-muted">
+			Guides also available for
+			{manual.map((m, i) => (
+				<>
+					{i > 0 && (i === manual.length - 1 ? ", and " : ", ")}
+					{m.slug ? (
+						<a href={`https://docs.aeorank.dev/frameworks/${m.slug}/`} class="text-accent-warm hover:underline">{m.name}</a>
+					) : (
+						<span class="text-text-muted">{m.name} (coming soon)</span>
+					)}
+				</>
+			))}.
+		</p>
+	</div>
+</section>
