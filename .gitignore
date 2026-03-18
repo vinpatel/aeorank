@@ -4,3 +4,4 @@ dist
 .env*
 aeorank-output
 *.tsbuildinfo
+.vercel
