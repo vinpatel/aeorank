@@ -1,33 +1,33 @@
 {
-  "name": "@aeorank/core",
-  "version": "0.0.1",
-  "type": "module",
-  "private": false,
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
-    }
-  },
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "files": ["dist"],
-  "scripts": {
-    "build": "tsup",
-    "test": "vitest run",
-    "dev": "tsup --watch",
-    "typecheck": "tsc --noEmit"
-  },
-  "dependencies": {
-    "cheerio": "^1.2.0",
-    "p-limit": "^6.2.0",
-    "robots-parser": "^3.0.1"
-  },
-  "devDependencies": {
-    "tsup": "^8.4.0",
-    "vitest": "^3.2.0",
-    "typescript": "^5.7.0"
-  }
+	"name": "@aeorank/core",
+	"version": "0.0.1",
+	"type": "module",
+	"private": false,
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.js",
+			"require": "./dist/index.cjs"
+		}
+	},
+	"main": "./dist/index.cjs",
+	"module": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"files": ["dist"],
+	"scripts": {
+		"build": "tsup",
+		"test": "vitest run",
+		"dev": "tsup --watch",
+		"typecheck": "tsc --noEmit"
+	},
+	"dependencies": {
+		"cheerio": "^1.2.0",
+		"p-limit": "^6.2.0",
+		"robots-parser": "^3.0.1"
+	},
+	"devDependencies": {
+		"tsup": "^8.4.0",
+		"vitest": "^3.2.0",
+		"typescript": "^5.7.0"
+	}
 }
