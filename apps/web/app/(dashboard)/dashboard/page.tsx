@@ -2,6 +2,7 @@ import { auth } from "@clerk/nextjs/server";
 import Link from "next/link";
 import { createServerSupabaseClient } from "@/lib/supabase";
 import { AddSiteForm } from "@/components/AddSiteForm";
+import { DeleteSiteButton } from "@/components/DeleteSiteButton";
 
 interface LatestScan {
 	score: number | null;
@@ -232,6 +233,7 @@ export default async function DashboardPage() {
 											Scanning...
 										</div>
 									)}
+								<DeleteSiteButton siteId={site.id} siteUrl={site.url} />
 								</div>
 							</div>
 						</Link>
