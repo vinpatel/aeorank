@@ -21,16 +21,19 @@ export const PLANS = {
 	free: {
 		name: "Free",
 		scansPerMonth: 3,
+		maxSites: 1,
 		priceId: null,
 	},
 	pro: {
 		name: "Pro",
 		scansPerMonth: 50,
+		maxSites: 5,
 		priceId: process.env.STRIPE_PRO_PRICE_ID,
 	},
 	api: {
 		name: "API",
 		scansPerMonth: 500,
+		maxSites: 50,
 		priceId: process.env.STRIPE_API_PRICE_ID,
 	},
 } as const;

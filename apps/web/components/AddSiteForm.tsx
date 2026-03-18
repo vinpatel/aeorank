@@ -7,11 +7,13 @@ export function AddSiteForm() {
 	const router = useRouter();
 	const [url, setUrl] = useState("");
 	const [error, setError] = useState<string | null>(null);
+	const [isLimitError, setIsLimitError] = useState(false);
 	const [loading, setLoading] = useState(false);
 
 	async function handleSubmit(e: React.FormEvent) {
 		e.preventDefault();
 		setError(null);
+		setIsLimitError(false);
 		setLoading(true);
 
 		try {
@@ -21,10 +23,13 @@ export function AddSiteForm() {
 				body: JSON.stringify({ url }),
 			});
 
-			const data = (await res.json()) as { siteId?: string; error?: string };
+			const data = (await res.json()) as { siteId?: string; error?: string; code?: string };
 
 			if (!res.ok) {
 				setError(data.error ?? "Something went wrong. Please try again.");
+				if (data.code === "SCAN_LIMIT" || data.code === "SITE_LIMIT") {
+					setIsLimitError(true);
+				}
 				return;
 			}
 
@@ -80,9 +85,14 @@ export function AddSiteForm() {
 				{loading ? "Scanning..." : "Scan site"}
 			</button>
 			{error && (
-				<p style={{ width: "100%", color: "var(--red)", fontSize: "14px", margin: 0 }}>
-					{error}
-				</p>
+				<div style={{ width: "100%", color: "var(--red)", fontSize: "14px", margin: 0 }}>
+					<p style={{ margin: 0 }}>{error}</p>
+					{isLimitError && (
+						<a href="/upgrade" style={{ color: "var(--text-accent)", fontWeight: 600, fontSize: "13px" }}>
+							View upgrade options &rarr;
+						</a>
+					)}
+				</div>
 			)}
 		</form>
 	);
