@@ -8,8 +8,7 @@ const tiers = [
 		features: ["1 site", "3 scans per month", "All 8 generated files", "Community support"],
 		cta: "Get Started Free",
 		ctaLink: "https://app.aeorank.dev/sign-up",
-		highlighted: true,
-		available: true,
+		highlighted: false,
 	},
 	{
 		name: "Pro",
@@ -19,8 +18,7 @@ const tiers = [
 		features: ["Up to 5 sites", "50 scans per month", "Score history charts", "Priority support"],
 		cta: "Start Free Trial",
 		ctaLink: "https://app.aeorank.dev/sign-up",
-		highlighted: false,
-		available: true,
+		highlighted: true,
 	},
 	{
 		name: "API",
@@ -31,26 +29,24 @@ const tiers = [
 		cta: "Start Free Trial",
 		ctaLink: "https://app.aeorank.dev/sign-up",
 		highlighted: false,
-		available: true,
 	},
 	{
 		name: "Agency",
 		price: "$499",
 		period: "/mo",
 		description: "White-label reports for your clients.",
-		features: ["Everything in API", "Unlimited sites", "White-label PDF reports", "Priority support"],
+		features: ["Unlimited sites", "Unlimited scans", "White-label PDF reports", "Priority support"],
 		cta: "Start Free Trial",
 		ctaLink: "https://app.aeorank.dev/sign-up",
 		highlighted: false,
-		available: true,
 	},
 ];
 ---
 
-<section id="pricing" class="section-spacing border-t border-border px-6">
+<section id="pricing" class="py-24 sm:py-32 border-t border-[--color-border] px-6">
 	<div class="mx-auto max-w-5xl">
-		<h2 class="heading-lg">Simple, Honest Pricing</h2>
-		<p class="body-lg mt-4 text-text-muted max-w-2xl">
+		<h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-[--color-text] font-[family-name:var(--font-display)]">Simple, Honest Pricing</h2>
+		<p class="mt-4 text-lg text-[--color-text-muted] max-w-2xl leading-relaxed">
 			The CLI is free forever. Pay when you need the dashboard.
 		</p>
 		<div class="mt-14 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
@@ -58,47 +54,45 @@ const tiers = [
 				tiers.map((tier) => (
 					<div
 						class:list={[
-							"relative flex flex-col rounded-xl p-7 card-hover",
+							"relative flex flex-col rounded-2xl p-7 transition-all duration-200",
 							tier.highlighted
-								? "border-2 border-accent-warm bg-accent-warm-light"
-								: "border border-border bg-bg",
-							!tier.available && "opacity-60",
+								? "border-2 border-[--color-accent-warm] bg-[--color-bg-card] shadow-[0_0_40px_-8px_rgba(232,89,12,0.3)] scale-[1.02]"
+								: "border border-[--color-border] bg-[--color-bg-card] hover:border-[--color-border]/80 hover:shadow-lg hover:shadow-black/20",
 						]}
 					>
 						{tier.highlighted && (
-							<span class="absolute -top-3 left-6 bg-accent-warm text-white text-xs font-semibold px-3 py-1 rounded-full">
-								Available now
+							<span class="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-[--color-accent-warm] text-white text-xs font-semibold px-4 py-1 rounded-full shadow-lg shadow-[--color-accent-warm]/25">
+								Recommended
 							</span>
 						)}
-						<h3 class="text-lg font-bold text-text font-display">{tier.name}</h3>
+						<h3 class="text-lg font-bold text-[--color-text] font-[family-name:var(--font-display)]">{tier.name}</h3>
 						<div class="mt-3 flex items-baseline gap-1">
-							<span class="text-4xl font-bold tracking-tight font-display">{tier.price}</span>
-							<span class="text-sm text-text-muted">{tier.period}</span>
+							<span class="text-4xl font-bold tracking-tight text-[--color-text] font-[family-name:var(--font-display)]">{tier.price}</span>
+							<span class="text-sm text-[--color-text-muted]">{tier.period}</span>
 						</div>
-						<p class="mt-3 text-sm text-text-muted">{tier.description}</p>
+						<p class="mt-3 text-sm text-[--color-text-muted]">{tier.description}</p>
 						<ul class="mt-6 flex-1 space-y-3">
 							{tier.features.map((f) => (
-								<li class="flex items-start gap-2.5 text-sm text-text">
+								<li class="flex items-start gap-2.5 text-sm text-[--color-text]">
 									<svg width="16" height="16" viewBox="0 0 16 16" fill="none" class="mt-0.5 shrink-0">
-										<circle cx="8" cy="8" r="7" fill={tier.available ? "#F0FDF4" : "#f5f5f4"}/>
-										<path d="M5.5 8L7.2 9.7L10.5 6.3" stroke={tier.available ? "#16a34a" : "#aaa"} stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+										<circle cx="8" cy="8" r="7" fill="rgba(22, 163, 74, 0.12)"/>
+										<path d="M5.5 8L7.2 9.7L10.5 6.3" stroke="#22c55e" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
 									</svg>
 									{f}
 								</li>
 							))}
 						</ul>
-						{tier.available ? (
-							<a href={tier.ctaLink} class:list={[
-								"mt-7 text-center",
-								tier.highlighted ? "btn-primary" : "btn-secondary"
-							]}>
-								{tier.cta}
-							</a>
-						) : (
-							<span class="btn-secondary mt-7 text-center cursor-not-allowed opacity-50">
-								{tier.cta}
-							</span>
-						)}
+						<a
+							href={tier.ctaLink}
+							class:list={[
+								"mt-7 block text-center rounded-lg px-4 py-2.5 text-sm font-semibold transition-all duration-200",
+								tier.highlighted
+									? "bg-[--color-accent-warm] text-white hover:brightness-110 shadow-lg shadow-[--color-accent-warm]/20"
+									: "bg-[--color-bg-elevated] text-[--color-text] border border-[--color-border] hover:bg-[--color-border] hover:border-[--color-border]",
+							]}
+						>
+							{tier.cta}
+						</a>
 					</div>
 				))
 			}

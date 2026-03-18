@@ -2,11 +2,11 @@
 const faqs = [
 	{
 		question: "What is AEO?",
-		answer: "Answer Engine Optimization. The practice of making your website visible and citable by AI engines like ChatGPT, Perplexity, and Claude. As AI-powered search grows, optimized sites get cited \u2014 the rest get ignored.",
+		answer: "Answer Engine Optimization. The practice of making your website visible and citable by AI engines like ChatGPT, Perplexity, and Claude. As AI-powered search grows, optimized sites get cited — the rest get ignored.",
 	},
 	{
 		question: "Is AEOrank free?",
-		answer: "The CLI is free and MIT-licensed. Run unlimited scans, generate all 8 files, pipe JSON to CI \u2014 no account needed. The web dashboard has paid tiers starting at $29/month for score history, charts, and file downloads.",
+		answer: "The CLI is free and MIT-licensed. Run unlimited scans, generate all 8 files, pipe JSON to CI — no account needed. The web dashboard has paid tiers starting at $29/month for score history, charts, and file downloads.",
 	},
 	{
 		question: "What are the 8 generated files?",
@@ -14,11 +14,11 @@ const faqs = [
 	},
 	{
 		question: "How is the AEO score calculated?",
-		answer: "12 dimensions, each scored 0\u201310 and weighted by importance (high 1.5x, medium 1.0x, low 0.5x). The weighted sum normalizes to 0\u2013100. Grades from A+ (95+) to F (below 40).",
+		answer: "12 dimensions, each scored 0–10 and weighted by importance (high 1.5x, medium 1.0x, low 0.5x). The weighted sum normalizes to 0–100. Grades from A+ (95+) to F (below 40).",
 	},
 	{
 		question: "Does this replace SEO?",
-		answer: "No. AEO complements SEO. Traditional search engines still matter. AEOrank focuses on the signals that AI engines use to find and cite your content \u2014 a different surface entirely.",
+		answer: "No. AEO complements SEO. Traditional search engines still matter. AEOrank focuses on the signals that AI engines use to find and cite your content — a different surface entirely.",
 	},
 	{
 		question: "Can I use this in CI?",
@@ -31,23 +31,54 @@ const faqs = [
 ];
 ---
 
-<section id="faq" class="section-spacing border-t border-border px-6">
+<section id="faq" class="py-24 sm:py-32 border-t border-[--color-border] px-6">
 	<div class="mx-auto max-w-3xl">
-		<h2 class="heading-lg">Frequently Asked Questions</h2>
-		<div class="mt-12 space-y-0 divide-y divide-border">
+		<h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-[--color-text] font-[family-name:var(--font-display)]">Frequently Asked Questions</h2>
+		<div class="mt-12 space-y-0 divide-y divide-[--color-border]">
 			{
 				faqs.map((faq) => (
 					<details class="group">
-						<summary class="flex cursor-pointer items-center justify-between py-6 text-lg font-medium text-text select-none">
+						<summary class="flex cursor-pointer items-center justify-between py-6 text-lg font-medium text-[--color-text] select-none list-none [&::-webkit-details-marker]:hidden">
 							{faq.question}
-							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" class="ml-4 shrink-0 text-text-muted transition-transform duration-200 group-open:rotate-45">
+							<svg
+								width="20"
+								height="20"
+								viewBox="0 0 20 20"
+								fill="none"
+								class="ml-4 shrink-0 text-[--color-text-muted] transition-transform duration-300 ease-out group-open:rotate-45"
+							>
 								<path d="M10 4v12m-6-6h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
 							</svg>
 						</summary>
-						<p class="pb-6 text-text-muted body-md leading-relaxed -mt-1">{faq.answer}</p>
+						<div class="overflow-hidden">
+							<p class="pb-6 text-[--color-text-muted] text-base leading-relaxed -mt-1">{faq.answer}</p>
+						</div>
 					</details>
 				))
 			}
 		</div>
 	</div>
 </section>
+
+<style>
+	details summary {
+		list-style: none;
+	}
+
+	details[open] > div {
+		animation: faq-slide-down 0.25s ease-out;
+	}
+
+	@keyframes faq-slide-down {
+		from {
+			opacity: 0;
+			max-height: 0;
+			transform: translateY(-4px);
+		}
+		to {
+			opacity: 1;
+			max-height: 200px;
+			transform: translateY(0);
+		}
+	}
+</style>

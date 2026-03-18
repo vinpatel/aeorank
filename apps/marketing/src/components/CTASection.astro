@@ -1,24 +1,39 @@
 ---
 ---
 
-<section id="get-started" class="section-spacing border-t border-border px-6 relative overflow-hidden">
-	<div class="blob bg-accent-warm w-[400px] h-[400px] -bottom-[200px] right-[10%] absolute"></div>
+<section id="get-started" class="relative overflow-hidden py-32 px-6">
+	<!-- Gradient orb decorations -->
+	<div class="absolute -bottom-40 right-[10%] h-[500px] w-[500px] rounded-full bg-[#E8590C]/15 blur-[120px] pointer-events-none"></div>
+	<div class="absolute -top-40 left-[5%] h-[300px] w-[300px] rounded-full bg-[#E8590C]/8 blur-[100px] pointer-events-none"></div>
 
-	<div class="mx-auto max-w-3xl text-center relative">
-		<h2 class="heading-lg">Ready to See Your Score?</h2>
-		<p class="body-lg mt-4 text-text-muted">
+	<!-- Subtle top border -->
+	<div class="absolute top-0 left-1/2 -translate-x-1/2 h-px w-2/3 bg-gradient-to-r from-transparent via-[#27272A] to-transparent"></div>
+
+	<div class="mx-auto max-w-3xl text-center relative z-10">
+		<h2 class="text-4xl font-bold tracking-tight text-[#FAFAFA] sm:text-5xl font-display">
+			Ready to See Your Score?
+		</h2>
+		<p class="mt-5 text-lg leading-relaxed text-[#A1A1AA] max-w-xl mx-auto">
 			Sign up free. Scan your site. Get your AI visibility score in 30 seconds.
 		</p>
-		<div class="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-			<a href="https://app.aeorank.dev/sign-up" class="btn-primary">
+		<div class="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+			<a
+				href="https://app.aeorank.dev/sign-up"
+				class="inline-flex items-center justify-center gap-2 rounded-lg bg-[#E8590C] px-7 py-3.5 text-sm font-semibold text-white shadow-lg shadow-[#E8590C]/20 transition-all duration-200 hover:bg-[#d14e0a] hover:shadow-xl hover:shadow-[#E8590C]/30 hover:-translate-y-0.5 active:translate-y-0"
+			>
 				Get Started Free
-				<svg width="16" height="16" viewBox="0 0 16 16" fill="none" class="ml-2"><path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+				<svg width="16" height="16" viewBox="0 0 16 16" fill="none" class="ml-0.5">
+					<path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+				</svg>
 			</a>
-			<a href="https://app.aeorank.dev/sign-in" class="btn-secondary">
+			<a
+				href="https://app.aeorank.dev/sign-in"
+				class="inline-flex items-center justify-center rounded-lg border border-[#27272A] bg-[#111113] px-7 py-3.5 text-sm font-semibold text-[#FAFAFA] transition-all duration-200 hover:bg-[#1A1A1E] hover:border-[#3f3f46] hover:-translate-y-0.5 active:translate-y-0"
+			>
 				Log in to Dashboard
 			</a>
 		</div>
-		<p class="mt-6 text-sm text-text-muted">
+		<p class="mt-8 text-sm text-[#A1A1AA]/70">
 			No credit card required. Free plan includes 1 site and 3 scans per month.
 		</p>
 	</div>

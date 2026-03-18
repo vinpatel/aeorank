@@ -1,50 +1,62 @@
 ---
 ---
 
-<footer class="border-t border-border bg-bg-dark">
-	<div class="mx-auto max-w-5xl px-6 py-16">
-		<div class="grid grid-cols-2 gap-8 md:grid-cols-4">
+<footer class="relative bg-[#09090B]">
+	<!-- Top separator -->
+	<div class="absolute top-0 left-1/2 -translate-x-1/2 h-px w-full max-w-5xl bg-gradient-to-r from-transparent via-[#27272A] to-transparent"></div>
+
+	<div class="mx-auto max-w-5xl px-6 pt-16 pb-12">
+		<div class="grid grid-cols-2 gap-10 md:grid-cols-4">
+			<!-- Brand -->
 			<div class="col-span-2 md:col-span-1">
-				<a href="/" class="flex items-center gap-2.5">
+				<a href="/" class="flex items-center gap-2.5 group">
 					<svg width="24" height="24" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<rect width="32" height="32" rx="7" fill="#E8590C"/>
 						<path d="M8 22L13.5 10H18.5L24 22" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
 						<path d="M10.5 18H21.5" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/>
 					</svg>
-					<span class="text-base font-bold tracking-tight text-text font-display">AEOrank</span>
+					<span class="text-base font-bold tracking-tight text-[#FAFAFA] font-display">AEOrank</span>
 				</a>
-				<p class="mt-3 text-sm text-text-muted leading-relaxed">
+				<p class="mt-3 text-sm text-[#A1A1AA] leading-relaxed">
 					AI engine optimization for every website.
 				</p>
 			</div>
+
+			<!-- Product -->
 			<div>
-				<h3 class="text-xs font-semibold uppercase tracking-wider text-text-muted mb-4">Product</h3>
+				<h3 class="text-xs font-semibold uppercase tracking-wider text-[#A1A1AA]/60 mb-4">Product</h3>
 				<ul class="space-y-2.5">
-					<li><a href="https://docs.aeorank.dev" class="text-sm text-text-muted hover:text-text transition-colors">Documentation</a></li>
-					<li><a href="https://docs.aeorank.dev/cli/scan/" class="text-sm text-text-muted hover:text-text transition-colors">CLI Reference</a></li>
-					<li><a href="#pricing" class="text-sm text-text-muted hover:text-text transition-colors">Pricing</a></li>
-					<li><a href="https://app.aeorank.dev/sign-in" class="text-sm text-text-muted hover:text-text transition-colors">Dashboard</a></li>
+					<li><a href="https://docs.aeorank.dev" class="text-sm text-[#A1A1AA] hover:text-[#FAFAFA] transition-colors duration-150">Documentation</a></li>
+					<li><a href="https://docs.aeorank.dev/cli/scan/" class="text-sm text-[#A1A1AA] hover:text-[#FAFAFA] transition-colors duration-150">CLI Reference</a></li>
+					<li><a href="#pricing" class="text-sm text-[#A1A1AA] hover:text-[#FAFAFA] transition-colors duration-150">Pricing</a></li>
+					<li><a href="https://app.aeorank.dev/sign-in" class="text-sm text-[#A1A1AA] hover:text-[#FAFAFA] transition-colors duration-150">Dashboard</a></li>
 				</ul>
 			</div>
+
+			<!-- Resources -->
 			<div>
-				<h3 class="text-xs font-semibold uppercase tracking-wider text-text-muted mb-4">Resources</h3>
+				<h3 class="text-xs font-semibold uppercase tracking-wider text-[#A1A1AA]/60 mb-4">Resources</h3>
 				<ul class="space-y-2.5">
-					<li><a href="https://github.com/vinpatel/aeorank" class="text-sm text-text-muted hover:text-text transition-colors">GitHub</a></li>
-					<li><a href="#" class="text-sm text-text-muted hover:text-text transition-colors">Blog</a></li>
-					<li><a href="#" class="text-sm text-text-muted hover:text-text transition-colors">About AEO</a></li>
+					<li><a href="https://github.com/vinpatel/aeorank" class="text-sm text-[#A1A1AA] hover:text-[#FAFAFA] transition-colors duration-150">GitHub</a></li>
+					<li><a href="#" class="text-sm text-[#A1A1AA] hover:text-[#FAFAFA] transition-colors duration-150">Blog</a></li>
+					<li><a href="#" class="text-sm text-[#A1A1AA] hover:text-[#FAFAFA] transition-colors duration-150">About AEO</a></li>
 				</ul>
 			</div>
+
+			<!-- Legal -->
 			<div>
-				<h3 class="text-xs font-semibold uppercase tracking-wider text-text-muted mb-4">Legal</h3>
+				<h3 class="text-xs font-semibold uppercase tracking-wider text-[#A1A1AA]/60 mb-4">Legal</h3>
 				<ul class="space-y-2.5">
-					<li><a href="#" class="text-sm text-text-muted hover:text-text transition-colors">Privacy</a></li>
-					<li><a href="#" class="text-sm text-text-muted hover:text-text transition-colors">Terms</a></li>
+					<li><a href="#" class="text-sm text-[#A1A1AA] hover:text-[#FAFAFA] transition-colors duration-150">Privacy</a></li>
+					<li><a href="#" class="text-sm text-[#A1A1AA] hover:text-[#FAFAFA] transition-colors duration-150">Terms</a></li>
 				</ul>
 			</div>
 		</div>
-		<div class="mt-14 flex flex-col items-center justify-between gap-3 border-t border-border pt-8 md:flex-row">
-			<p class="text-sm text-text-muted">&copy; 2026 AEOrank</p>
-			<p class="text-sm text-text-muted">Built for developers who care about AI visibility.</p>
+
+		<!-- Bottom bar -->
+		<div class="mt-14 flex flex-col items-center justify-between gap-3 border-t border-[#27272A]/60 pt-8 md:flex-row">
+			<p class="text-sm text-[#A1A1AA]/50">&copy; 2026 AEOrank</p>
+			<p class="text-sm text-[#A1A1AA]/50">Built for developers who care about AI visibility.</p>
 		</div>
 	</div>
 </footer>

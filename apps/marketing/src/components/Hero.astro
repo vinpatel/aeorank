@@ -2,71 +2,264 @@
 import TerminalDemo from "./TerminalDemo.tsx";
 ---
 
-<section id="hero" class="section-spacing px-6 relative overflow-hidden">
-	<!-- Decorative blobs -->
-	<div class="blob bg-accent-warm w-[500px] h-[500px] -top-[200px] -right-[200px] absolute"></div>
-	<div class="blob bg-accent-warm w-[300px] h-[300px] top-[400px] -left-[100px] absolute opacity-10"></div>
+<section id="hero" class="relative overflow-hidden pt-20 pb-24 md:pt-32 md:pb-32 px-6">
+	<!-- === Background decorative elements === -->
 
-	<div class="mx-auto max-w-5xl relative">
-		<div class="flex items-center gap-2.5 mb-8">
-			<div class="h-px flex-1 max-w-12 bg-accent-warm"></div>
-			<span class="text-sm font-medium tracking-wide uppercase text-accent-warm">AI Engine Optimization</span>
+	<!-- Grid pattern overlay -->
+	<div
+		class="pointer-events-none absolute inset-0 opacity-[0.03]"
+		style="background-image: url('data:image/svg+xml,%3Csvg%20width%3D%2260%22%20height%3D%2260%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M60%200H0v60%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%220.5%22%2F%3E%3C%2Fsvg%3E'); background-size: 60px 60px;"
+	>
+	</div>
+
+	<!-- Gradient orbs -->
+	<div
+		class="pointer-events-none absolute -top-[300px] left-1/2 -translate-x-1/2 h-[600px] w-[900px] rounded-full opacity-[0.07]"
+		style="background: radial-gradient(ellipse, #E8590C 0%, transparent 70%);"
+	>
+	</div>
+	<div
+		class="pointer-events-none absolute top-[60%] -right-[200px] h-[500px] w-[500px] rounded-full opacity-[0.05]"
+		style="background: radial-gradient(circle, #E8590C 0%, transparent 70%);"
+	>
+	</div>
+	<div
+		class="pointer-events-none absolute top-[30%] -left-[150px] h-[400px] w-[400px] rounded-full opacity-[0.04]"
+		style="background: radial-gradient(circle, #FF7A3D 0%, transparent 70%);"
+	>
+	</div>
+
+	<!-- Floating decorative dots -->
+	<div class="pointer-events-none absolute top-32 left-[15%] h-1 w-1 rounded-full bg-accent-warm/30 animate-pulse"></div>
+	<div class="pointer-events-none absolute top-48 right-[20%] h-1.5 w-1.5 rounded-full bg-accent-warm/20 animate-pulse" style="animation-delay: 1s;"></div>
+	<div class="pointer-events-none absolute top-[60%] left-[10%] h-1 w-1 rounded-full bg-accent-warm/25 animate-pulse" style="animation-delay: 2s;"></div>
+	<div class="pointer-events-none absolute top-[45%] right-[12%] h-0.5 w-0.5 rounded-full bg-white/20 animate-pulse" style="animation-delay: 0.5s;"></div>
+
+	<div class="relative mx-auto max-w-6xl">
+		<!-- Eyebrow badge -->
+		<div class="flex justify-center mb-8 animate-fade-in">
+			<div
+				class="inline-flex items-center gap-2 rounded-full border border-accent-warm/20 bg-accent-warm/[0.06] px-4 py-1.5 backdrop-blur-sm"
+			>
+				<span class="relative flex h-2 w-2">
+					<span
+						class="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent-warm opacity-75"
+					></span>
+					<span class="relative inline-flex h-2 w-2 rounded-full bg-accent-warm"></span>
+				</span>
+				<span class="text-sm font-medium tracking-wide text-accent-warm">
+					AI Engine Optimization
+				</span>
+			</div>
 		</div>
 
-		<h1 class="heading-xl max-w-4xl">
-			Your site is invisible to AI.<br/>
-			<span class="gradient-text">Fix it in 30 seconds.</span>
-		</h1>
+		<!-- Headline -->
+		<div class="text-center animate-fade-in-up">
+			<h1 class="heading-xl mx-auto max-w-4xl text-text">
+				Your site is invisible to AI.
+				<br />
+				<span class="gradient-text">Fix it in 30 seconds.</span>
+			</h1>
+		</div>
 
-		<p class="body-lg mt-8 max-w-2xl text-text-muted">
-			AI engines power 40% of web discovery. AEOrank scans your site, scores your AI visibility across 12 dimensions, and generates the 8 files that get you cited by ChatGPT, Perplexity, and Claude.
+		<!-- Subheadline -->
+		<p
+			class="body-lg mt-8 mx-auto max-w-2xl text-center text-text-muted animate-fade-in-up"
+			style="animation-delay: 0.1s;"
+		>
+			AI engines power 40% of web discovery. AEOrank scans your site, scores
+			your AI visibility across 12 dimensions, and generates the 8 files that
+			get you cited by ChatGPT, Perplexity, and Claude.
 		</p>
 
-		<div class="mt-10 flex flex-wrap items-center gap-4">
-			<a href="https://app.aeorank.dev/sign-up" class="btn-primary">
+		<!-- CTAs -->
+		<div
+			class="mt-10 flex flex-wrap items-center justify-center gap-4 animate-fade-in-up"
+			style="animation-delay: 0.2s;"
+		>
+			<a
+				href="https://app.aeorank.dev/sign-up"
+				class="btn-primary group"
+			>
 				Get Started Free
-				<svg width="16" height="16" viewBox="0 0 16 16" fill="none" class="ml-2"><path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+				<svg
+					width="16"
+					height="16"
+					viewBox="0 0 16 16"
+					fill="none"
+					class="ml-2 transition-transform duration-200 group-hover:translate-x-0.5"
+				>
+					<path
+						d="M3 8h10m0 0L9 4m4 4L9 12"
+						stroke="currentColor"
+						stroke-width="1.5"
+						stroke-linecap="round"
+						stroke-linejoin="round"></path>
+				</svg>
 			</a>
-			<a href="#how-it-works" class="btn-secondary">
+			<a
+				href="#how-it-works"
+				class="btn-secondary group"
+			>
 				See How It Works
+				<svg
+					width="16"
+					height="16"
+					viewBox="0 0 16 16"
+					fill="none"
+					class="ml-2 transition-transform duration-200 group-hover:translate-y-0.5"
+				>
+					<path
+						d="M8 3v10m0 0l-4-4m4 4l4-4"
+						stroke="currentColor"
+						stroke-width="1.5"
+						stroke-linecap="round"
+						stroke-linejoin="round"></path>
+				</svg>
 			</a>
 		</div>
 
-		<div class="mt-6 flex flex-wrap items-center gap-6 text-sm text-text-muted">
-			<span class="flex items-center gap-1.5">
-				<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="#16a34a" stroke-width="1"/><path d="M5.5 8L7.2 9.7L10.5 6.3" stroke="#16a34a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+		<!-- Trust badges -->
+		<div
+			class="mt-8 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-sm text-text-muted animate-fade-in-up"
+			style="animation-delay: 0.3s;"
+		>
+			<span class="flex items-center gap-2">
+				<svg
+					width="16"
+					height="16"
+					viewBox="0 0 16 16"
+					fill="none"
+					class="text-green"
+				>
+					<circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1"></circle>
+					<path
+						d="M5.5 8L7.2 9.7L10.5 6.3"
+						stroke="currentColor"
+						stroke-width="1.5"
+						stroke-linecap="round"
+						stroke-linejoin="round"></path>
+				</svg>
 				Free plan available
 			</span>
-			<span class="flex items-center gap-1.5">
-				<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="#16a34a" stroke-width="1"/><path d="M5.5 8L7.2 9.7L10.5 6.3" stroke="#16a34a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+			<span class="flex items-center gap-2">
+				<svg
+					width="16"
+					height="16"
+					viewBox="0 0 16 16"
+					fill="none"
+					class="text-green"
+				>
+					<circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1"></circle>
+					<path
+						d="M5.5 8L7.2 9.7L10.5 6.3"
+						stroke="currentColor"
+						stroke-width="1.5"
+						stroke-linecap="round"
+						stroke-linejoin="round"></path>
+				</svg>
 				No credit card required
 			</span>
-			<span class="flex items-center gap-1.5">
-				<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="#16a34a" stroke-width="1"/><path d="M5.5 8L7.2 9.7L10.5 6.3" stroke="#16a34a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+			<span class="flex items-center gap-2">
+				<svg
+					width="16"
+					height="16"
+					viewBox="0 0 16 16"
+					fill="none"
+					class="text-green"
+				>
+					<circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1"></circle>
+					<path
+						d="M5.5 8L7.2 9.7L10.5 6.3"
+						stroke="currentColor"
+						stroke-width="1.5"
+						stroke-linecap="round"
+						stroke-linejoin="round"></path>
+				</svg>
 				Results in 30 seconds
 			</span>
 		</div>
 
-		<!-- Social proof numbers -->
-		<div class="mt-14 flex flex-wrap items-center gap-10 border-t border-border-light pt-10">
-			<div>
-				<div class="font-display text-3xl font-bold tracking-tight text-text">2,400+</div>
-				<div class="text-sm text-text-muted mt-1">Sites scanned</div>
+		<!-- Social proof stats -->
+		<div
+			class="mt-16 flex flex-wrap items-center justify-center gap-8 md:gap-12 animate-fade-in-up"
+			style="animation-delay: 0.4s;"
+		>
+			<div class="text-center">
+				<div class="font-display text-4xl font-bold tracking-tight text-text">
+					2,400<span class="text-accent-warm">+</span>
+				</div>
+				<div class="mt-1 text-sm text-text-muted">Sites scanned</div>
 			</div>
-			<div class="h-8 w-px bg-border-light"></div>
-			<div>
-				<div class="font-display text-3xl font-bold tracking-tight text-text">12</div>
-				<div class="text-sm text-text-muted mt-1">AI dimensions scored</div>
+			<div class="hidden sm:block h-10 w-px bg-border"></div>
+			<div class="text-center">
+				<div class="font-display text-4xl font-bold tracking-tight text-text">
+					12
+				</div>
+				<div class="mt-1 text-sm text-text-muted">AI dimensions scored</div>
 			</div>
-			<div class="h-8 w-px bg-border-light"></div>
-			<div>
-				<div class="font-display text-3xl font-bold tracking-tight text-text">8</div>
-				<div class="text-sm text-text-muted mt-1">Files generated</div>
+			<div class="hidden sm:block h-10 w-px bg-border"></div>
+			<div class="text-center">
+				<div class="font-display text-4xl font-bold tracking-tight text-text">
+					8
+				</div>
+				<div class="mt-1 text-sm text-text-muted">Files generated</div>
 			</div>
 		</div>
 
-		<div class="mt-16 mx-auto max-w-3xl">
-			<TerminalDemo client:visible />
+		<!-- Terminal demo -->
+		<div
+			class="mt-20 mx-auto max-w-4xl animate-fade-in-up"
+			style="animation-delay: 0.5s;"
+		>
+			<!-- Glow behind terminal -->
+			<div
+				class="pointer-events-none absolute left-1/2 -translate-x-1/2 bottom-[10%] h-[300px] w-[600px] rounded-full opacity-[0.06]"
+				style="background: radial-gradient(ellipse, #E8590C 0%, transparent 70%);"
+			>
+			</div>
+			<div
+				class="relative rounded-xl border border-border bg-bg-card/80 p-1 shadow-2xl shadow-black/40 backdrop-blur-sm"
+			>
+				<div
+					class="absolute -inset-px rounded-xl opacity-30"
+					style="background: linear-gradient(135deg, rgba(232,89,12,0.15) 0%, transparent 50%, rgba(232,89,12,0.08) 100%);"
+				>
+				</div>
+				<div class="relative">
+					<TerminalDemo client:visible />
+				</div>
+			</div>
 		</div>
 	</div>
 </section>
+
+<style>
+	@keyframes fade-in {
+		from {
+			opacity: 0;
+		}
+		to {
+			opacity: 1;
+		}
+	}
+
+	@keyframes fade-in-up {
+		from {
+			opacity: 0;
+			transform: translateY(16px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+
+	.animate-fade-in {
+		animation: fade-in 0.6s ease-out both;
+	}
+
+	.animate-fade-in-up {
+		animation: fade-in-up 0.7s ease-out both;
+	}
+</style>
