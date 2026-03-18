@@ -4,6 +4,7 @@ import { createServerSupabaseClient } from "@/lib/supabase";
 import { createServiceSupabaseClient } from "@/lib/supabase";
 import { validateScanUrl } from "@/lib/validate-url";
 import { scan } from "@aeorank/core";
+import { getCurrentPlan, canAddSite, canRunScan } from "@/lib/plan";
 
 export const maxDuration = 60;
 
@@ -37,6 +38,36 @@ export async function POST(request: Request) {
 	} catch (err) {
 		const message = err instanceof Error ? err.message : "Invalid URL";
 		return NextResponse.json({ error: message }, { status: 400 });
+	}
+
+	// Enforce plan limits
+	const plan = await getCurrentPlan();
+
+	const scanCheck = await canRunScan(userId, plan);
+	if (!scanCheck.allowed) {
+		return NextResponse.json(
+			{ error: `Monthly scan limit reached (${scanCheck.used}/${scanCheck.limit}). Upgrade your plan for more scans.`, code: "SCAN_LIMIT" },
+			{ status: 403 },
+		);
+	}
+
+	const siteCheck = await canAddSite(userId, plan);
+	if (!siteCheck.allowed) {
+		// Check if user already has this URL — re-scanning an existing site is OK
+		const supabaseCheck = createServiceSupabaseClient();
+		const { data: existingSite } = await supabaseCheck
+			.from("sites")
+			.select("id")
+			.eq("user_id", userId)
+			.eq("url", validatedUrl)
+			.maybeSingle();
+
+		if (!existingSite) {
+			return NextResponse.json(
+				{ error: `Site limit reached (${siteCheck.current}/${siteCheck.limit}). Upgrade your plan to add more sites.`, code: "SITE_LIMIT" },
+				{ status: 403 },
+			);
+		}
 	}
 
 	const supabase = createServerSupabaseClient();

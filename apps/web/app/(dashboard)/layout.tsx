@@ -3,29 +3,19 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import { SignOutButton } from "@clerk/nextjs";
 import { PlanBadge } from "@/components/PlanBadge";
-import type { PlanKey } from "@/lib/stripe";
+import { getCurrentPlan } from "@/lib/plan";
 
 export default async function DashboardLayout({
 	children,
 }: {
 	children: React.ReactNode;
 }) {
-	const { userId, has } = await auth();
+	const { userId } = await auth();
 	if (!userId) {
 		redirect("/sign-in");
 	}
 
-	// Detect plan from Clerk billing (configure plans in Clerk Dashboard)
-	let currentPlan: PlanKey = "free";
-	try {
-		if (has({ plan: "api" })) {
-			currentPlan = "api";
-		} else if (has({ plan: "pro" })) {
-			currentPlan = "pro";
-		}
-	} catch {
-		// Clerk billing not yet configured — default to "free"
-	}
+	const currentPlan = await getCurrentPlan();
 
 	return (
 		<div style={{ display: "flex", minHeight: "100vh", background: "var(--bg)" }}>
