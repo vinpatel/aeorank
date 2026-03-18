@@ -1,7 +1,6 @@
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import Link from "next/link";
-import { createServerSupabaseClient } from "@/lib/supabase";
 import { SignOutButton } from "@clerk/nextjs";
 import { PlanBadge } from "@/components/PlanBadge";
 import type { PlanKey } from "@/lib/stripe";
@@ -11,26 +10,21 @@ export default async function DashboardLayout({
 }: {
 	children: React.ReactNode;
 }) {
-	const { userId } = await auth();
+	const { userId, has } = await auth();
 	if (!userId) {
 		redirect("/sign-in");
 	}
 
+	// Detect plan from Clerk billing (configure plans in Clerk Dashboard)
 	let currentPlan: PlanKey = "free";
 	try {
-		const supabase = createServerSupabaseClient();
-		const { data } = await supabase
-			.from("subscriptions")
-			.select("plan")
-			.eq("user_id", userId)
-			.eq("status", "active")
-			.maybeSingle();
-
-		if (data?.plan && ["free", "pro", "api"].includes(data.plan)) {
-			currentPlan = data.plan as PlanKey;
+		if (has({ plan: "api" })) {
+			currentPlan = "api";
+		} else if (has({ plan: "pro" })) {
+			currentPlan = "pro";
 		}
 	} catch {
-		// Supabase not yet configured — default to "free" silently
+		// Clerk billing not yet configured — default to "free"
 	}
 
 	return (
