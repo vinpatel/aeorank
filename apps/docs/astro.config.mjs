@@ -48,6 +48,20 @@ export default defineConfig({
 					],
 				},
 				{
+					label: "Framework Guides",
+					items: [
+						{ label: "Next.js", slug: "frameworks/next" },
+						{ label: "Astro", slug: "frameworks/astro" },
+						{ label: "Nuxt", slug: "frameworks/nuxt" },
+						{ label: "Remix", slug: "frameworks/remix" },
+						{ label: "SvelteKit", slug: "frameworks/sveltekit" },
+						{ label: "Gatsby", slug: "frameworks/gatsby" },
+						{ label: "Shopify Hydrogen", slug: "frameworks/shopify" },
+						{ label: "Webflow", slug: "frameworks/webflow" },
+						{ label: "Squarespace", slug: "frameworks/squarespace" },
+					],
+				},
+				{
 					label: "Scoring",
 					items: [
 						{ label: "12 Dimensions", slug: "scoring/dimensions" },
