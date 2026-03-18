@@ -2,6 +2,7 @@ import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { createServerSupabaseClient } from "@/lib/supabase";
+import { SignOutButton } from "@clerk/nextjs";
 import { PlanBadge } from "@/components/PlanBadge";
 import type { PlanKey } from "@/lib/stripe";
 
@@ -144,8 +145,36 @@ export default async function DashboardLayout({
 					</Link>
 				</div>
 
-				<div style={{ marginTop: "auto", padding: "12px 8px", borderTop: "1px solid rgba(255,255,255,0.1)" }}>
+				<div style={{ marginTop: "auto", padding: "12px 8px", borderTop: "1px solid rgba(255,255,255,0.1)", display: "flex", flexDirection: "column", gap: "12px" }}>
 					<PlanBadge plan={currentPlan} />
+					<SignOutButton>
+						<button
+							type="button"
+							style={{
+								display: "flex",
+								alignItems: "center",
+								gap: "8px",
+								padding: "8px 12px",
+								background: "transparent",
+								border: "none",
+								color: "rgba(255,255,255,0.5)",
+								fontSize: "13px",
+								fontWeight: 500,
+								fontFamily: "inherit",
+								cursor: "pointer",
+								borderRadius: "var(--radius-sm)",
+								transition: "color 0.15s ease",
+								width: "100%",
+							}}
+						>
+							<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+								<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+								<polyline points="16 17 21 12 16 7" />
+								<line x1="21" y1="12" x2="9" y2="12" />
+							</svg>
+							Sign out
+						</button>
+					</SignOutButton>
 				</div>
 			</nav>
 
