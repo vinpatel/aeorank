@@ -105,46 +105,55 @@ export default function TerminalDemo() {
 
 	return (
 		<div style={{
-			borderRadius: "12px",
+			borderRadius: "14px",
 			overflow: "hidden",
-			boxShadow: "0 8px 40px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.08)",
-			border: "1px solid rgba(0,0,0,0.06)",
+			boxShadow: "0 0 0 1px rgba(232, 89, 12, 0.08), 0 12px 50px rgba(0,0,0,0.5), 0 4px 16px rgba(0,0,0,0.3), 0 0 80px rgba(232, 89, 12, 0.06)",
+			border: "1px solid rgba(255,255,255,0.06)",
 		}}>
-			{/* Title bar */}
+			{/* Title bar - macOS style */}
 			<div style={{
-				background: "#1e1e1e",
-				padding: "12px 16px",
+				background: "linear-gradient(180deg, #1e1e22 0%, #1a1a1e 100%)",
+				padding: "13px 16px",
 				display: "flex",
 				alignItems: "center",
 				gap: "8px",
+				borderBottom: "1px solid rgba(255,255,255,0.04)",
 			}}>
-				<div style={{ width: 12, height: 12, borderRadius: "50%", background: "#ff5f57" }} />
-				<div style={{ width: 12, height: 12, borderRadius: "50%", background: "#febc2e" }} />
-				<div style={{ width: 12, height: 12, borderRadius: "50%", background: "#28c840" }} />
+				<div style={{
+					display: "flex",
+					alignItems: "center",
+					gap: "7px",
+				}}>
+					<div style={{ width: 12, height: 12, borderRadius: "50%", background: "#ff5f57", boxShadow: "inset 0 -1px 1px rgba(0,0,0,0.15)" }} />
+					<div style={{ width: 12, height: 12, borderRadius: "50%", background: "#febc2e", boxShadow: "inset 0 -1px 1px rgba(0,0,0,0.15)" }} />
+					<div style={{ width: 12, height: 12, borderRadius: "50%", background: "#28c840", boxShadow: "inset 0 -1px 1px rgba(0,0,0,0.15)" }} />
+				</div>
 				<span style={{
 					marginLeft: "auto",
 					marginRight: "auto",
-					color: "#666",
+					color: "#555",
 					fontSize: "12px",
-					fontFamily: "'JetBrains Mono', monospace",
-					letterSpacing: "0.02em",
+					fontFamily: "'JetBrains Mono', ui-monospace, monospace",
+					letterSpacing: "0.05em",
+					fontWeight: 500,
 				}}>
 					aeorank
 				</span>
+				<div style={{ width: 52 }} />
 			</div>
 			{/* Terminal body */}
 			<div style={{
-				background: "#0f0f0f",
+				background: "linear-gradient(180deg, #0c0c0e 0%, #09090b 100%)",
 				padding: "24px",
 				fontFamily: "'JetBrains Mono', ui-monospace, monospace",
 				fontSize: "13px",
 				lineHeight: "1.7",
-				color: "#d4d4d4",
+				color: "#d4d4d8",
 				minHeight: "380px",
 			}}>
 				<div>
-					<span style={{ color: "#E8590C" }}>$</span>{" "}
-					<span style={{ color: "#e0e0e0" }}>{typedCommand}</span>
+					<span style={{ color: "#E8590C", fontWeight: 600 }}>$</span>{" "}
+					<span style={{ color: "#e4e4e7" }}>{typedCommand}</span>
 					{phase === "typing" && (
 						<span style={{
 							display: "inline-block",
@@ -152,6 +161,7 @@ export default function TerminalDemo() {
 							height: "16px",
 							background: "#E8590C",
 							marginLeft: "2px",
+							verticalAlign: "text-bottom",
 							animation: "blink 1s step-end infinite",
 						}} />
 					)}
@@ -182,13 +192,15 @@ function colorize(line: string) {
 		return (
 			<span>
 				{"  AEO Score: "}
-				<span style={{ color: "#fbbf24", fontWeight: "bold", fontSize: "14px" }}>42/100</span>
-				<span style={{ color: "#888" }}>{" (D)"}</span>
+				<span style={{ color: "#fbbf24", fontWeight: "bold", fontSize: "15px" }}>42/100</span>
+				<span style={{ color: "#71717a" }}>{" (D)"}</span>
 			</span>
 		);
 	if (line.includes("\u2192"))
 		return <span style={{ color: "#93c5fd" }}>{line}</span>;
 	if (line.includes("\u2500\u2500\u2500\u2500"))
-		return <span style={{ color: "#333" }}>{line}</span>;
+		return <span style={{ color: "#27272a" }}>{line}</span>;
+	if (line.includes("Dimension"))
+		return <span style={{ color: "#71717a" }}>{line}</span>;
 	return <span>{line}</span>;
 }

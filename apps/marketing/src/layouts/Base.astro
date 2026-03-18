@@ -6,31 +6,92 @@ import Footer from "../components/Footer.astro";
 interface Props {
 	title: string;
 	description?: string;
+	ogImage?: string;
 }
 
-const { title, description = "Scan your site, get an AEO score, and generate all 8 files AI engines need to find you. Free CLI tool." } = Astro.props;
+const {
+	title,
+	description = "Scan your site, get an AEO score, and generate all 8 files AI engines need to find you. Free CLI tool.",
+	ogImage = "/og-image.png",
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? "https://aeorank.dev");
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" class="dark">
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="description" content={description} />
+		<meta name="theme-color" content="#09090B" />
+
+		<!-- Canonical -->
+		<link rel="canonical" href={canonicalURL.toString()} />
+
+		<!-- Favicon -->
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+		<!-- Open Graph -->
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content={canonicalURL.toString()} />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:image" content={new URL(ogImage, canonicalURL).toString()} />
+		<meta property="og:site_name" content="AEOrank" />
+
+		<!-- Twitter / X -->
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content={new URL(ogImage, canonicalURL).toString()} />
+
+		<!-- Fonts — preconnect then load -->
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link
 			href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
 			rel="stylesheet"
 		/>
+
 		<title>{title}</title>
 	</head>
-	<body class="bg-bg text-text font-sans antialiased">
-		<Nav />
-		<main>
-			<slot />
-		</main>
-		<Footer />
+	<body class="bg-bg text-text font-sans antialiased overflow-x-hidden">
+		<!-- Background grid pattern — spans full page -->
+		<div class="fixed inset-0 bg-grid pointer-events-none z-0" aria-hidden="true"></div>
+
+		<!-- Ambient glow orbs -->
+		<div class="fixed top-[-20%] left-[-10%] w-[600px] h-[600px] glow-orb bg-accent animate-pulse-glow z-0" aria-hidden="true"></div>
+		<div class="fixed bottom-[-10%] right-[-10%] w-[500px] h-[500px] glow-orb bg-accent-hover animate-pulse-glow z-0" style="animation-delay: 2s;" aria-hidden="true"></div>
+
+		<!-- Page content -->
+		<div class="relative z-10">
+			<Nav />
+			<main>
+				<slot />
+			</main>
+			<Footer />
+		</div>
+
+		<!-- Scroll animation observer -->
+		<script>
+			const observer = new IntersectionObserver(
+				(entries) => {
+					entries.forEach((entry) => {
+						if (entry.isIntersecting) {
+							entry.target.classList.add("is-visible");
+						}
+					});
+				},
+				{
+					threshold: 0.1,
+					rootMargin: "0px 0px -40px 0px",
+				}
+			);
+
+			document.querySelectorAll(".animate-on-scroll").forEach((el) => {
+				observer.observe(el);
+			});
+		</script>
 	</body>
 </html>
