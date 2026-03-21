@@ -38,6 +38,12 @@ export const WEIGHT_MULTIPLIER = {
 	low: 0.5,
 } as const;
 
+/** Maximum crawl delay (in seconds) we'll respect — anything higher gets capped */
+export const MAX_CRAWL_DELAY = 2;
+
+/** Maximum total scan time budget in milliseconds (4 minutes, leaving buffer for 5-min serverless limit) */
+export const SCAN_TIME_BUDGET_MS = 240_000;
+
 /** Default scanner configuration */
 export const DEFAULT_CONFIG: ScanConfig = {
 	maxPages: 200,
