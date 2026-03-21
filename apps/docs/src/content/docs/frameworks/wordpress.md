@@ -5,9 +5,10 @@ description: Add AEO files to your WordPress site with the AEOrank plugin.
 
 ## Installation
 
-1. Download the `aeorank` plugin folder
-2. Upload it to `/wp-content/plugins/aeorank/`
-3. Activate the plugin in **Settings > Plugins**
+1. [Download the plugin from GitHub](https://github.com/vinpatel/aeorank/releases/latest/download/aeorank-wordpress.zip)
+2. In your WordPress admin, go to **Plugins > Add New > Upload Plugin**
+3. Upload the zip file and click **Install Now**
+4. Activate the plugin
 
 ## Configuration
 
