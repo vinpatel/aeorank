@@ -8,13 +8,28 @@ export default defineConfig({
 			title: "AEOrank",
 			description:
 				"Documentation for AEOrank — the open-source AEO scoring and file generation tool.",
+			logo: {
+				light: "./src/assets/logo-light.svg",
+				dark: "./src/assets/logo-dark.svg",
+				replacesTitle: false,
+			},
 			social: [
 				{
 					icon: "github",
 					label: "GitHub",
-					href: "https://github.com/aeorank/aeorank",
+					href: "https://github.com/vinpatel/aeorank",
+				},
+				{
+					icon: "external",
+					label: "aeorank.dev",
+					href: "https://aeorank.dev",
 				},
 			],
+			editLink: {
+				baseUrl: "https://github.com/vinpatel/aeorank/edit/main/apps/docs/",
+			},
+			lastUpdated: true,
+			customCss: ["./src/styles/custom.css"],
 			sidebar: [
 				{
 					label: "Getting Started",
