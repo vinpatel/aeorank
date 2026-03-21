@@ -21,6 +21,7 @@ export function AddSiteForm() {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify({ url }),
+				signal: AbortSignal.timeout(290_000),
 			});
 
 			const data = (await res.json()) as { siteId?: string; error?: string; code?: string };
@@ -36,8 +37,12 @@ export function AddSiteForm() {
 			if (data.siteId) {
 				router.push(`/sites/${data.siteId}`);
 			}
-		} catch {
-			setError("Network error. Please check your connection and try again.");
+		} catch (err) {
+			if (err instanceof DOMException && err.name === "TimeoutError") {
+				setError("This site is taking too long to scan. Try again or contact support if the issue persists.");
+			} else {
+				setError("Network error. Please check your connection and try again.");
+			}
 		} finally {
 			setLoading(false);
 		}
