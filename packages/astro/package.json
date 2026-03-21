@@ -17,6 +17,7 @@
 	"scripts": {
 		"build": "tsup",
 		"dev": "tsup --watch",
+		"test": "vitest run",
 		"typecheck": "tsc --noEmit"
 	},
 	"peerDependencies": {
@@ -25,6 +26,7 @@
 	"devDependencies": {
 		"astro": "^4.0.0",
 		"tsup": "^8.4.0",
-		"typescript": "^5.7.0"
+		"typescript": "^5.7.0",
+		"vitest": "^3.2.0"
 	}
 }
