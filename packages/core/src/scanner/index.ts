@@ -1,5 +1,5 @@
 import pLimit from "p-limit";
-import { DEFAULT_CONFIG } from "../constants.js";
+import { DEFAULT_CONFIG, MAX_CRAWL_DELAY, SCAN_TIME_BUDGET_MS } from "../constants.js";
 import type { ScanConfig, ScanMeta, ScanResult, ScannedPage } from "../types.js";
 import { discoverUrls } from "./discovery.js";
 import { type FetcherFn, createFetcher } from "./fetcher.js";
@@ -38,9 +38,10 @@ export async function scanUrl(
 
 	const robotsInfo = parseRobotsTxt(url, robotsContent);
 
-	// Step 2: Create rate-limited fetcher (respecting Crawl-delay)
-	const crawlDelay =
+	// Step 2: Create rate-limited fetcher (respecting Crawl-delay, capped)
+	const rawCrawlDelay =
 		mergedConfig.respectCrawlDelay && robotsInfo.crawlDelay ? robotsInfo.crawlDelay : 0;
+	const crawlDelay = Math.min(rawCrawlDelay, MAX_CRAWL_DELAY);
 	const scanFetcher = customFetcher ?? createFetcher(mergedConfig, crawlDelay);
 
 	// Step 3: Check for existing llms.txt
@@ -55,7 +56,16 @@ export async function scanUrl(
 	}
 
 	// Step 4: Discover URLs (returns cached pages from BFS crawl)
-	const { urls, cachedPages } = await discoverUrls(url, scanFetcher, mergedConfig.maxPages);
+	// Cap maxPages based on time budget when crawl delay is active
+	let effectiveMaxPages = mergedConfig.maxPages;
+	if (crawlDelay > 0) {
+		const avgFetchMs = (mergedConfig.timeout / 2) + (crawlDelay * 1000);
+		const pagesPerBatch = mergedConfig.concurrency;
+		const batchTime = avgFetchMs;
+		const maxBatches = Math.floor(SCAN_TIME_BUDGET_MS / batchTime);
+		effectiveMaxPages = Math.min(effectiveMaxPages, Math.max(maxBatches * pagesPerBatch, 10));
+	}
+	const { urls, cachedPages } = await discoverUrls(url, scanFetcher, effectiveMaxPages);
 
 	// Step 5: Fetch remaining pages concurrently (skip already-cached ones)
 	const pages: ScannedPage[] = [...cachedPages.values()];
