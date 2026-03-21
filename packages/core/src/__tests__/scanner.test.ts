@@ -83,7 +83,7 @@ describe("discoverUrls", () => {
 			"https://example.com": { html: sampleHtml },
 		});
 
-		const urls = await discoverUrls("https://example.com", mockFetcher, 10);
+		const { urls } = await discoverUrls("https://example.com", mockFetcher, 10);
 		expect(urls.length).toBeGreaterThan(1);
 		expect(urls).toContain("https://example.com/about");
 	});
@@ -94,7 +94,7 @@ describe("discoverUrls", () => {
 			"https://example.com": { html: sampleHtml },
 		});
 
-		const urls = await discoverUrls("https://example.com", mockFetcher, 3);
+		const { urls } = await discoverUrls("https://example.com", mockFetcher, 3);
 		expect(urls.length).toBeLessThanOrEqual(3);
 	});
 
@@ -105,7 +105,7 @@ describe("discoverUrls", () => {
 			"https://example.com/about": { html: sampleHtml },
 		});
 
-		const urls = await discoverUrls("https://example.com", mockFetcher, 20);
+		const { urls } = await discoverUrls("https://example.com", mockFetcher, 20);
 		const unique = new Set(urls);
 		expect(urls.length).toBe(unique.size);
 	});

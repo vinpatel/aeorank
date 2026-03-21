@@ -1,6 +1,7 @@
 import { normalizeUrl } from "../utils.js";
 import type { FetcherFn } from "./fetcher.js";
 import { parsePage } from "./parser.js";
+import type { ScannedPage } from "../types.js";
 
 const SKIP_EXTENSIONS = new Set([
 	".xml",
@@ -22,27 +23,53 @@ const SKIP_EXTENSIONS = new Set([
 
 const SKIP_PATHS = ["/wp-admin", "/cdn-cgi", "/api/", "/_next/", "/__nuxt/", "/admin/"];
 
+export interface DiscoveryResult {
+	urls: string[];
+	/** Pages already fetched and parsed during discovery (avoids double-fetching) */
+	cachedPages: Map<string, ScannedPage>;
+}
+
 /** Discover URLs from a starting URL using sitemap and internal links */
 export async function discoverUrls(
 	startUrl: string,
 	fetcher: FetcherFn,
 	maxPages: number,
-): Promise<string[]> {
+): Promise<DiscoveryResult> {
 	const origin = new URL(startUrl).origin;
 	const discovered = new Set<string>();
 	const queue: string[] = [];
+	const cachedPages = new Map<string, ScannedPage>();
 
 	discovered.add(normalizeUrl(startUrl));
 
-	// Step 1: Try to parse sitemap.xml
+	// Step 1: Try to parse sitemap.xml (with sitemap index support)
 	try {
 		const sitemapUrl = `${origin}/sitemap.xml`;
 		const result = await fetcher(sitemapUrl);
-		if (result.status === 200 && result.html.includes("<urlset")) {
-			const urls = extractSitemapUrls(result.html);
-			for (const url of urls) {
+		if (result.status === 200) {
+			let sitemapUrls: string[] = [];
+
+			if (result.html.includes("<sitemapindex")) {
+				// Sitemap index — fetch each sub-sitemap
+				const subSitemapUrls = extractSitemapUrls(result.html);
+				for (const subUrl of subSitemapUrls) {
+					if (discovered.size >= maxPages) break;
+					try {
+						const subResult = await fetcher(subUrl);
+						if (subResult.status === 200 && subResult.html.includes("<urlset")) {
+							sitemapUrls.push(...extractSitemapUrls(subResult.html));
+						}
+					} catch {
+						// Skip failed sub-sitemaps
+					}
+				}
+			} else if (result.html.includes("<urlset")) {
+				sitemapUrls = extractSitemapUrls(result.html);
+			}
+
+			for (const url of sitemapUrls) {
 				const normalized = normalizeUrl(url);
-				if (normalized.startsWith(origin) && !discovered.has(normalized)) {
+				if (normalized.startsWith(origin) && !discovered.has(normalized) && shouldCrawl(normalized)) {
 					discovered.add(normalized);
 					if (discovered.size >= maxPages) break;
 				}
@@ -52,8 +79,10 @@ export async function discoverUrls(
 		// Sitemap not available, continue with crawl
 	}
 
-	// Step 2: Start BFS from start URL
-	queue.push(normalizeUrl(startUrl));
+	// Step 2: Start BFS from start URL (only if sitemap didn't fill quota)
+	if (discovered.size < maxPages) {
+		queue.push(normalizeUrl(startUrl));
+	}
 
 	while (queue.length > 0 && discovered.size < maxPages) {
 		const url = queue.shift();
@@ -64,6 +93,9 @@ export async function discoverUrls(
 			if (result.status !== 200 || !result.html) continue;
 
 			const page = parsePage(url, result.html, origin);
+			// Cache the parsed page so scanUrl doesn't re-fetch it
+			cachedPages.set(url, page);
+
 			for (const link of page.links) {
 				if (!link.internal) continue;
 				const normalized = normalizeUrl(link.href);
@@ -79,7 +111,7 @@ export async function discoverUrls(
 		}
 	}
 
-	return [...discovered].sort();
+	return { urls: [...discovered].sort(), cachedPages };
 }
 
 function shouldCrawl(url: string): boolean {

@@ -40,8 +40,8 @@ export const WEIGHT_MULTIPLIER = {
 
 /** Default scanner configuration */
 export const DEFAULT_CONFIG: ScanConfig = {
-	maxPages: 50,
-	concurrency: 3,
+	maxPages: 200,
+	concurrency: 5,
 	timeout: 30_000,
 	userAgent: "AEOrank/1.0 (+https://aeorank.dev)",
 	respectCrawlDelay: true,
