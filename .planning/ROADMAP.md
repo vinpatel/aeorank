@@ -108,10 +108,24 @@ Plans:
 - [ ] 07-01-PLAN.md — Update marketing site copy (Pricing, FAQ, Nav, Footer, CTASection)
 - [ ] 07-02-PLAN.md — Create GitHub Action Marketplace publication checklist
 
+## Milestone 2: Competitive Parity (36 Criteria)
+
+See `SCORING_ROADMAP.md` for full details. Expands scoring from 12 dimensions to 36 criteria across 5 pillars, matching AEO Content Inc's coverage while keeping our plugin generation advantage.
+
+- [ ] **Phase 8: Answer Readiness** — +7 dimensions (topic coherence, original data, fact density, duplicate content, evidence packaging, citation-ready writing)
+- [ ] **Phase 9: Content Structure Expansion** — +6 dimensions (Q&A format, direct answer density, tables & lists, definition patterns, entity disambiguation)
+- [ ] **Phase 10: Trust & Authority Expansion** — +2 dimensions (internal linking, author schema)
+- [ ] **Phase 11: Technical Foundation Expansion** — +5 dimensions (semantic HTML, extraction friction, image context, schema coverage, speakable)
+- [ ] **Phase 12: AI Discovery Expansion** — +6 dimensions (content cannibalization, publishing velocity, content licensing, canonical URLs, RSS feed, visible dates)
+- [ ] **Phase 13: Weight Migration & Score Gates** — Migrate to percentage weights, merge overlapping dimensions, add coherence + duplication gates
+- [ ] **Phase 14: New File Generators** — ai.txt generator, llms-full.txt improvements, plugin updates
+- [ ] **Phase 15: Dashboard & Docs Updates** — Update all surfaces for 36 criteria
+- [ ] **Phase 16: Per-Page Scoring** — Page-level scoring (0-75 scale), CLI `--page` flag, API per-page results
+
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7
+Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 → ... → 16
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
@@ -122,3 +136,12 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7
 | 5. SaaS Dashboard | 5/5 | Complete | 2026-03-14 |
 | 6. Retroactive Verification | 2/3 | In Progress|  |
 | 7. Marketing Content & Deployment | 2/2 | Complete   | 2026-03-15 |
+| 8. Answer Readiness | 0/? | Not Started |  |
+| 9. Content Structure Expansion | 0/? | Not Started |  |
+| 10. Trust & Authority Expansion | 0/? | Not Started |  |
+| 11. Technical Foundation Expansion | 0/? | Not Started |  |
+| 12. AI Discovery Expansion | 0/? | Not Started |  |
+| 13. Weight Migration & Score Gates | 0/? | Not Started |  |
+| 14. New File Generators | 0/? | Not Started |  |
+| 15. Dashboard & Docs Updates | 0/? | Not Started |  |
+| 16. Per-Page Scoring | 0/? | Not Started |  |
