@@ -1,3 +1,4 @@
+import pLimit from "p-limit";
 import { DEFAULT_CONFIG } from "../constants.js";
 import type { ScanConfig, ScanMeta, ScanResult, ScannedPage } from "../types.js";
 import { discoverUrls } from "./discovery.js";
@@ -53,23 +54,35 @@ export async function scanUrl(
 		// No llms.txt
 	}
 
-	// Step 4: Discover URLs
-	const urls = await discoverUrls(url, scanFetcher, mergedConfig.maxPages);
+	// Step 4: Discover URLs (returns cached pages from BFS crawl)
+	const { urls, cachedPages } = await discoverUrls(url, scanFetcher, mergedConfig.maxPages);
 
-	// Step 5: Fetch and parse each page
-	const pages: ScannedPage[] = [];
+	// Step 5: Fetch remaining pages concurrently (skip already-cached ones)
+	const pages: ScannedPage[] = [...cachedPages.values()];
 	let totalResponseTime = 0;
 
-	for (const pageUrl of urls) {
-		try {
-			const result = await scanFetcher(pageUrl);
-			totalResponseTime += result.responseTimeMs;
-			if (result.status === 200 && result.html) {
-				pages.push(parsePage(pageUrl, result.html, origin));
-			}
-		} catch {
-			// Skip failed pages
-		}
+	const uncachedUrls = urls.filter((u) => !cachedPages.has(u));
+	const limit = pLimit(mergedConfig.concurrency);
+
+	const fetchResults = await Promise.all(
+		uncachedUrls.map((pageUrl) =>
+			limit(async () => {
+				try {
+					const result = await scanFetcher(pageUrl);
+					totalResponseTime += result.responseTimeMs;
+					if (result.status === 200 && result.html) {
+						return parsePage(pageUrl, result.html, origin);
+					}
+				} catch {
+					// Skip failed pages
+				}
+				return null;
+			}),
+		),
+	);
+
+	for (const page of fetchResults) {
+		if (page) pages.push(page);
 	}
 
 	// Sort pages by URL for deterministic output
@@ -85,7 +98,7 @@ export async function scanUrl(
 			crawlerAccess: robotsInfo.crawlerAccess,
 			crawlDelay: robotsInfo.crawlDelay,
 		},
-		sitemapXml: null, // Could store sitemap content if needed
+		sitemapXml: null,
 		existingLlmsTxt,
 		platform,
 		responseTimeMs: totalResponseTime,
