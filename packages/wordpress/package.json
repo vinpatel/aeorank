@@ -1,0 +1,9 @@
+{
+	"name": "@aeorank/wordpress",
+	"version": "0.0.1",
+	"private": true,
+	"description": "AEOrank WordPress plugin — generates AEO files for AI engine visibility",
+	"scripts": {
+		"zip": "cd plugin && zip -r ../aeorank-wordpress.zip . -x '*.DS_Store'"
+	}
+}

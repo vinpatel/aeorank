@@ -1,0 +1,40 @@
+{
+	"name": "@aeorank/11ty",
+	"version": "0.0.1",
+	"type": "module",
+	"private": false,
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.js",
+			"require": "./dist/index.cjs"
+		}
+	},
+	"main": "./dist/index.cjs",
+	"module": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"files": [
+		"dist"
+	],
+	"scripts": {
+		"build": "tsup",
+		"dev": "tsup --watch",
+		"test": "vitest run",
+		"typecheck": "tsc --noEmit"
+	},
+	"peerDependencies": {
+		"@11ty/eleventy": ">=2"
+	},
+	"peerDependenciesMeta": {
+		"@11ty/eleventy": {
+			"optional": false
+		}
+	},
+	"devDependencies": {
+		"@11ty/eleventy": "^2.0.0",
+		"@types/node": "^22.19.15",
+		"tsup": "^8.4.0",
+		"typescript": "^5.7.0",
+		"vitest": "^3.2.0"
+	}
+}
