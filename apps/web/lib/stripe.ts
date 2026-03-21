@@ -36,6 +36,12 @@ export const PLANS = {
 		maxSites: 50,
 		priceId: process.env.STRIPE_API_PRICE_ID,
 	},
+	admin: {
+		name: "Admin",
+		scansPerMonth: Infinity,
+		maxSites: Infinity,
+		priceId: null,
+	},
 } as const;
 
 export type PlanKey = keyof typeof PLANS;
