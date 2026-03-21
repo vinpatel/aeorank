@@ -2,7 +2,7 @@ import { auth, currentUser } from "@clerk/nextjs/server";
 import { PLANS, type PlanKey } from "@/lib/stripe";
 import { createServiceSupabaseClient } from "@/lib/supabase";
 
-const ADMIN_EMAILS = ["vin@vinpatel.pro"];
+const ADMIN_EMAILS = ["vin@vinpatel.pro", "vinpatel.pro@gmail.com"];
 
 /**
  * Get the current user's plan from Clerk billing.
@@ -12,7 +12,7 @@ const ADMIN_EMAILS = ["vin@vinpatel.pro"];
 export async function getCurrentPlan(): Promise<PlanKey> {
 	const user = await currentUser();
 	if (user?.emailAddresses.some((e) => ADMIN_EMAILS.includes(e.emailAddress))) {
-		return "api";
+		return "admin";
 	}
 
 	const { has } = await auth();
