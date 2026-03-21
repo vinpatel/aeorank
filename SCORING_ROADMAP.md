@@ -180,4 +180,17 @@ New weight system: migrate from high/medium/low to percentage weights (matching 
 | 15 | — | 36 | Dashboard/docs/marketing |
 | 16 | — | 36 | Per-page scoring |
 
-After Phase 16, AEOrank will have **36 criteria matching aeocontent's coverage** PLUS the generation + plugin advantage they don't have.
+## Phase 17: Large Site Scanning
+
+**Goal**: Handle sites with 1000+ pages gracefully with smart sampling, configurable limits, and plan-tiered caps.
+
+**Changes:**
+- **Configurable maxPages** — CLI flag `--max-pages` and config option
+- **Transparent sampling** — Show "Scored based on 200 of ~1,247 pages" in CLI output and dashboard
+- **Smart sampling** — Instead of first-N from sitemap, sample across site sections (homepage, blog, docs, product) for representative scoring
+- **Plan-tiered caps** — Free: 200 pages, Pro: 500 pages, API: unlimited
+- **Sitemap counting** — Parse full sitemap to report total page count even if not all are scanned
+
+---
+
+After Phase 17, AEOrank will have **36 criteria matching aeocontent's coverage**, smart large-site handling, PLUS the generation + plugin advantage they don't have.
