@@ -1,0 +1,35 @@
+/* Brand colors matching aeorank.dev marketing site */
+:root {
+	--sl-color-accent-low: #2a1508;
+	--sl-color-accent: #e8590c;
+	--sl-color-accent-high: #f9c9a8;
+	--sl-color-white: #faf9f7;
+	--sl-color-gray-1: #e0ddd8;
+	--sl-color-gray-2: #bbb6ad;
+	--sl-color-gray-3: #858079;
+	--sl-color-gray-4: #56524d;
+	--sl-color-gray-5: #383531;
+	--sl-color-gray-6: #242220;
+	--sl-color-black: #09090b;
+}
+
+[data-theme="light"] {
+	--sl-color-accent-low: #fde8d8;
+	--sl-color-accent: #d14e0a;
+	--sl-color-accent-high: #3d1a06;
+}
+
+/* Homepage card grid */
+.sl-link-card {
+	border-color: var(--sl-color-gray-5);
+	transition: border-color 0.2s, box-shadow 0.2s;
+}
+.sl-link-card:hover {
+	border-color: var(--sl-color-accent);
+	box-shadow: 0 0 20px -6px rgba(232, 89, 12, 0.15);
+}
+
+/* Hero adjustments */
+.hero {
+	padding-block: 3rem !important;
+}
