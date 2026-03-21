@@ -1,0 +1,49 @@
+<svg width="1280" height="320" viewBox="0 0 1280 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1280" height="320" fill="#09090B"/>
+
+  <!-- Subtle grid pattern -->
+  <defs>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#ffffff" stroke-opacity="0.03" stroke-width="1"/>
+    </pattern>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#E8590C" stop-opacity="0.08"/>
+      <stop offset="100%" stop-color="#E8590C" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1280" height="320" fill="url(#grid)"/>
+  <ellipse cx="640" cy="160" rx="500" ry="200" fill="url(#glow)"/>
+
+  <!-- Logo icon -->
+  <rect x="440" y="47" width="56" height="56" rx="12" fill="#E8590C"/>
+  <path d="M454 79L463.75 58H474.25L484 79" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M457.5 71H480.5" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
+
+  <!-- Title -->
+  <text x="510" y="90" fill="#FAF9F7" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif" font-size="48" font-weight="800" letter-spacing="-1">AEOrank</text>
+
+  <!-- Tagline -->
+  <text x="640" y="155" fill="#A1A1AA" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif" font-size="20" font-weight="400" text-anchor="middle">See how AI search engines perceive your website</text>
+
+  <!-- Command preview -->
+  <rect x="370" y="185" width="540" height="44" rx="8" fill="#18181B" stroke="#27272A" stroke-width="1"/>
+  <text x="390" y="213" fill="#71717A" font-family="'JetBrains Mono', 'Fira Code', monospace" font-size="15">$</text>
+  <text x="410" y="213" fill="#E8590C" font-family="'JetBrains Mono', 'Fira Code', monospace" font-size="15">npx aeorank-cli scan</text>
+  <text x="658" y="213" fill="#A1A1AA" font-family="'JetBrains Mono', 'Fira Code', monospace" font-size="15">https://your-site.com</text>
+
+  <!-- Feature pills -->
+  <rect x="310" y="255" width="90" height="28" rx="14" fill="#18181B" stroke="#27272A" stroke-width="1"/>
+  <text x="355" y="274" fill="#A1A1AA" font-family="Inter, -apple-system, sans-serif" font-size="12" font-weight="500" text-anchor="middle">CLI</text>
+
+  <rect x="415" y="255" width="130" height="28" rx="14" fill="#18181B" stroke="#27272A" stroke-width="1"/>
+  <text x="480" y="274" fill="#A1A1AA" font-family="Inter, -apple-system, sans-serif" font-size="12" font-weight="500" text-anchor="middle">13 Plugins</text>
+
+  <rect x="560" y="255" width="155" height="28" rx="14" fill="#18181B" stroke="#27272A" stroke-width="1"/>
+  <text x="637.5" y="274" fill="#A1A1AA" font-family="Inter, -apple-system, sans-serif" font-size="12" font-weight="500" text-anchor="middle">GitHub Action</text>
+
+  <rect x="730" y="255" width="130" height="28" rx="14" fill="#18181B" stroke="#27272A" stroke-width="1"/>
+  <text x="795" y="274" fill="#A1A1AA" font-family="Inter, -apple-system, sans-serif" font-size="12" font-weight="500" text-anchor="middle">Dashboard</text>
+
+  <rect x="875" y="255" width="100" height="28" rx="14" fill="#18181B" stroke="#27272A" stroke-width="1"/>
+  <text x="925" y="274" fill="#A1A1AA" font-family="Inter, -apple-system, sans-serif" font-size="12" font-weight="500" text-anchor="middle">MIT</text>
+</svg>
