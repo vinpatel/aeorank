@@ -6,7 +6,7 @@ import { validateScanUrl } from "@/lib/validate-url";
 import { scan } from "@aeorank/core";
 import { getCurrentPlan, canAddSite, canRunScan } from "@/lib/plan";
 
-export const maxDuration = 60;
+export const maxDuration = 300;
 
 export async function POST(request: Request) {
 	const { userId } = await auth();
