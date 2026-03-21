@@ -17,6 +17,7 @@
 	"scripts": {
 		"build": "tsup",
 		"dev": "tsup --watch",
+		"test": "vitest run",
 		"typecheck": "tsc --noEmit"
 	},
 	"peerDependencies": {
@@ -26,7 +27,8 @@
 		"@nuxt/kit": "^3.16.0",
 		"nuxt": "^3.16.0",
 		"tsup": "^8.4.0",
-		"typescript": "^5.7.0"
+		"typescript": "^5.7.0",
+		"vitest": "^3.2.0"
 	},
 	"dependencies": {
 		"@nuxt/kit": "^3.16.0"
