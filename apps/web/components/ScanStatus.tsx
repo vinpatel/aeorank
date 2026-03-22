@@ -11,6 +11,7 @@ interface ScanStatusProps {
 export function ScanStatus({ scanId, initialStatus }: ScanStatusProps) {
 	const router = useRouter();
 	const [status, setStatus] = useState(initialStatus);
+	const [progress, setProgress] = useState(0);
 	const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
 	useEffect(() => {
@@ -21,8 +22,9 @@ export function ScanStatus({ scanId, initialStatus }: ScanStatusProps) {
 				const res = await fetch(`/api/scan/status?id=${encodeURIComponent(scanId)}`);
 				if (!res.ok) return;
 
-				const data = (await res.json()) as { status: string; error?: string };
+				const data = (await res.json()) as { status: string; error?: string; progress?: number };
 				setStatus(data.status);
+				if (data.progress != null) setProgress(data.progress);
 
 				if (data.status === "complete") {
 					clearInterval(interval);
@@ -56,7 +58,9 @@ export function ScanStatus({ scanId, initialStatus }: ScanStatusProps) {
 		);
 	}
 
-	const label = status === "running" ? "Scanning your site..." : "Queued — scan starting soon...";
+	const label = status === "running"
+		? progress > 0 ? `Scanning your site... ${progress}%` : "Scanning your site..."
+		: "Queued — scan starting soon...";
 
 	return (
 		<div style={{
@@ -64,26 +68,41 @@ export function ScanStatus({ scanId, initialStatus }: ScanStatusProps) {
 			background: "var(--bg-surface)",
 			border: "1px solid var(--border)",
 			borderRadius: "var(--radius-md)",
-			display: "flex",
-			alignItems: "center",
-			gap: "12px",
 		}}>
-			<div
-				style={{
-					width: "20px",
-					height: "20px",
-					border: "2px solid var(--border)",
-					borderTopColor: "var(--bg-accent)",
-					borderRadius: "50%",
-					animation: "spin 0.8s linear infinite",
-				}}
-			/>
-			<div>
-				<p style={{ margin: 0, fontWeight: 600 }}>{label}</p>
-				<p style={{ margin: "2px 0 0", fontSize: "14px", color: "var(--text-secondary)" }}>
-					This typically takes 10–30 seconds.
-				</p>
+			<div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: progress > 0 ? "16px" : 0 }}>
+				<div
+					style={{
+						width: "20px",
+						height: "20px",
+						border: "2px solid var(--border)",
+						borderTopColor: "var(--bg-accent)",
+						borderRadius: "50%",
+						animation: "spin 0.8s linear infinite",
+					}}
+				/>
+				<div>
+					<p style={{ margin: 0, fontWeight: 600 }}>{label}</p>
+					<p style={{ margin: "2px 0 0", fontSize: "14px", color: "var(--text-secondary)" }}>
+						This typically takes 10–60 seconds.
+					</p>
+				</div>
 			</div>
+			{progress > 0 && (
+				<div style={{
+					height: "6px",
+					background: "var(--border)",
+					borderRadius: "3px",
+					overflow: "hidden",
+				}}>
+					<div style={{
+						height: "100%",
+						width: `${progress}%`,
+						background: "var(--bg-accent)",
+						borderRadius: "3px",
+						transition: "width 0.5s ease",
+					}} />
+				</div>
+			)}
 		</div>
 	);
 }

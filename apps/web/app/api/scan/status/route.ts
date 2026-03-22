@@ -19,7 +19,7 @@ export async function GET(request: Request) {
 
 	const { data: scan, error } = await supabase
 		.from("scans")
-		.select("status, error")
+		.select("status, error, progress")
 		.eq("id", id)
 		.eq("user_id", userId)
 		.single();
@@ -31,5 +31,6 @@ export async function GET(request: Request) {
 	return NextResponse.json({
 		status: scan.status,
 		...(scan.error ? { error: scan.error as string } : {}),
+		...(scan.progress != null ? { progress: scan.progress as number } : {}),
 	});
 }

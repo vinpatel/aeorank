@@ -6,6 +6,7 @@ import { ScanStatus } from "@/components/ScanStatus";
 import { ScoreBreakdown } from "@/components/ScoreBreakdown";
 import { ScoreChart } from "@/components/ScoreChart";
 import { DownloadButton } from "@/components/DownloadButton";
+import { RetryScanButton } from "@/components/RetryScanButton";
 import type { DimensionScore } from "@aeorank/core";
 
 interface PageProps {
@@ -140,6 +141,7 @@ export default async function SiteDetailPage({ params }: PageProps) {
 							{scan.error as string}
 						</p>
 					)}
+					<RetryScanButton url={site.url} />
 				</div>
 			) : scan.status === "complete" && scan.score != null && scan.dimensions ? (
 				<>

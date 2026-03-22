@@ -1,3 +1,4 @@
+import * as Sentry from "@sentry/nextjs";
 import { Receiver } from "@upstash/qstash";
 import { NextResponse } from "next/server";
 import { createServiceSupabaseClient } from "@/lib/supabase";
@@ -5,6 +6,8 @@ import { scan } from "@aeorank/core";
 
 // Public route — excluded from Clerk in proxy.ts
 // Must be added to clerkMiddleware public routes
+
+export const maxDuration = 300;
 
 export async function POST(request: Request) {
 	// Verify QStash signature
@@ -59,9 +62,21 @@ export async function POST(request: Request) {
 		// Continue anyway — best effort
 	}
 
-	// Run the scan
+	// Run the scan with progress reporting
+	let lastProgress = 0;
+	const onProgress = async (percent: number, message: string) => {
+		// Throttle DB writes — only update when progress changes by >= 5%
+		if (percent - lastProgress >= 5 || percent === 100) {
+			lastProgress = percent;
+			await supabase
+				.from("scans")
+				.update({ progress: percent })
+				.eq("id", scanId);
+		}
+	};
+
 	try {
-		const result = await scan(url);
+		const result = await scan(url, { onProgress });
 
 		// Write results back to Supabase
 		const { error: resultError } = await supabase
@@ -86,6 +101,7 @@ export async function POST(request: Request) {
 				.eq("id", scanId);
 		}
 	} catch (err) {
+		Sentry.captureException(err);
 		const message = err instanceof Error ? err.message : "Scan failed";
 		console.error("Scan error:", err);
 		await supabase

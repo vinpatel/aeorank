@@ -73,6 +73,10 @@ export async function scanUrl(
 
 	const uncachedUrls = urls.filter((u) => !cachedPages.has(u));
 	const limit = pLimit(mergedConfig.concurrency);
+	const totalPages = uncachedUrls.length + cachedPages.size;
+	let fetchedCount = cachedPages.size;
+
+	mergedConfig.onProgress?.(5, `Discovered ${totalPages} pages`);
 
 	const fetchResults = await Promise.all(
 		uncachedUrls.map((pageUrl) =>
@@ -80,10 +84,14 @@ export async function scanUrl(
 				try {
 					const result = await scanFetcher(pageUrl);
 					totalResponseTime += result.responseTimeMs;
+					fetchedCount++;
+					const pct = Math.round((fetchedCount / totalPages) * 75) + 5;
+					mergedConfig.onProgress?.(pct, `Scanning page ${fetchedCount}/${totalPages}`);
 					if (result.status === 200 && result.html) {
 						return parsePage(pageUrl, result.html, origin);
 					}
 				} catch {
+					fetchedCount++;
 					// Skip failed pages
 				}
 				return null;
