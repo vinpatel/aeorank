@@ -111,7 +111,54 @@ export async function discoverUrls(
 		}
 	}
 
-	return { urls: [...discovered].sort(), cachedPages };
+	const allUrls = [...discovered].sort();
+
+	// Smart sampling: if we have more URLs than maxPages, stratify by path segment
+	const sampled = allUrls.length > maxPages ? smartSample(allUrls, maxPages, startUrl) : allUrls;
+
+	return { urls: sampled, cachedPages };
+}
+
+/**
+ * Stratified page sampling — picks a representative subset across URL path segments.
+ * Always includes the homepage, then distributes slots proportionally across path buckets.
+ */
+function smartSample(urls: string[], limit: number, startUrl: string): string[] {
+	const origin = new URL(startUrl).origin;
+	const homepage = normalizeUrl(origin);
+
+	// Group URLs by their first path segment (e.g., /blog, /products, /)
+	const buckets = new Map<string, string[]>();
+	for (const url of urls) {
+		const path = new URL(url).pathname;
+		const segment = path === "/" ? "/" : `/${path.split("/").filter(Boolean)[0]}`;
+		if (!buckets.has(segment)) buckets.set(segment, []);
+		buckets.get(segment)!.push(url);
+	}
+
+	const selected = new Set<string>();
+
+	// Always include homepage
+	if (urls.includes(homepage)) {
+		selected.add(homepage);
+	}
+
+	// Distribute remaining slots proportionally across buckets
+	const remaining = limit - selected.size;
+	const bucketEntries = [...buckets.entries()];
+	const totalUrls = urls.length;
+
+	for (const [, bucketUrls] of bucketEntries) {
+		// Proportional allocation (at least 1 per bucket)
+		const share = Math.max(1, Math.round((bucketUrls.length / totalUrls) * remaining));
+		// Pick evenly spaced URLs from this bucket
+		const step = Math.max(1, Math.floor(bucketUrls.length / share));
+		for (let i = 0; i < bucketUrls.length && selected.size < limit; i += step) {
+			selected.add(bucketUrls[i]);
+		}
+	}
+
+	return [...selected].sort();
 }
 
 function shouldCrawl(url: string): boolean {
