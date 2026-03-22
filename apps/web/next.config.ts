@@ -1,4 +1,5 @@
 import path from "path";
+import { withSentryConfig } from "@sentry/nextjs";
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
@@ -7,4 +8,7 @@ const nextConfig: NextConfig = {
 	// Turbopack is default in Next.js 16
 };
 
-export default nextConfig;
+export default withSentryConfig(nextConfig, {
+	silent: true,
+	disableLogger: true,
+});

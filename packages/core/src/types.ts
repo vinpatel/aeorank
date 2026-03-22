@@ -74,6 +74,9 @@ export interface GeneratedFile {
 	content: string;
 }
 
+/** Progress callback — receives percentage (0-100) and human-readable message */
+export type OnProgressFn = (percent: number, message: string) => void;
+
 /** Scanner configuration */
 export interface ScanConfig {
 	maxPages: number;
@@ -81,6 +84,7 @@ export interface ScanConfig {
 	timeout: number;
 	userAgent: string;
 	respectCrawlDelay: boolean;
+	onProgress?: OnProgressFn;
 }
 
 /** Top-level AEOrank config */

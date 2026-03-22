@@ -10,6 +10,7 @@ export type {
 	ScanConfig,
 	AeorankConfig,
 	DimensionDef,
+	OnProgressFn,
 } from "./types.js";
 
 // Constants
@@ -68,6 +69,7 @@ export async function scan(
 	const { pages, meta } = await scanUrl(url, config, customFetcher);
 
 	// Step 2: Score
+	config?.onProgress?.(82, "Scoring dimensions");
 	const { score, grade, dimensions } = calculateAeoScore(pages, meta);
 
 	// Step 3: Build partial result for generators
@@ -90,8 +92,10 @@ export async function scan(
 	};
 
 	// Step 4: Generate files
+	config?.onProgress?.(90, "Generating files");
 	const files = _generateFiles(partialResult);
 
+	config?.onProgress?.(100, "Complete");
 	return { ...partialResult, files };
 }
 

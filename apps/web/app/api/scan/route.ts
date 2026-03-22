@@ -3,10 +3,8 @@ import { NextResponse } from "next/server";
 import { createServerSupabaseClient } from "@/lib/supabase";
 import { createServiceSupabaseClient } from "@/lib/supabase";
 import { validateScanUrl } from "@/lib/validate-url";
-import { scan } from "@aeorank/core";
+import { getQStashClient } from "@/lib/qstash";
 import { getCurrentPlan, canAddSite, canRunScan } from "@/lib/plan";
-
-export const maxDuration = 300;
 
 export async function POST(request: Request) {
 	const { userId } = await auth();
@@ -89,11 +87,11 @@ export async function POST(request: Request) {
 		);
 	}
 
-	// Insert scan record as running
+	// Insert scan record as pending
 	const serviceSupabase = createServiceSupabaseClient();
 	const { data: scanRecord, error: scanError } = await supabase
 		.from("scans")
-		.insert({ user_id: userId, site_id: site.id, status: "running" })
+		.insert({ user_id: userId, site_id: site.id, status: "pending" })
 		.select("id")
 		.single();
 
@@ -105,38 +103,27 @@ export async function POST(request: Request) {
 		);
 	}
 
-	// Run scan inline
+	// Enqueue scan via QStash
 	try {
-		const result = await scan(validatedUrl);
-
-		await serviceSupabase
-			.from("scans")
-			.update({
-				status: "complete",
-				score: result.score,
-				grade: result.grade,
-				dimensions: result.dimensions,
-				files: result.files.map((f) => ({ name: f.name, content: f.content })),
-				pages_scanned: result.pagesScanned,
-				duration_ms: result.duration,
-				scanned_at: result.scannedAt,
-			})
-			.eq("id", scanRecord.id);
-
-		return NextResponse.json(
-			{ scanId: scanRecord.id, siteId: site.id },
-			{ status: 200 },
-		);
+		const qstash = getQStashClient();
+		await qstash.publishJSON({
+			url: `${process.env.NEXT_PUBLIC_APP_URL}/api/scan/process`,
+			body: { scanId: scanRecord.id, url: validatedUrl },
+		});
 	} catch (err) {
-		const message = err instanceof Error ? err.message : "Scan failed";
-		console.error("Scan error:", err);
+		console.error("QStash publish error:", err);
 		await serviceSupabase
 			.from("scans")
-			.update({ status: "error", error: message })
+			.update({ status: "error", error: "Failed to enqueue scan" })
 			.eq("id", scanRecord.id);
 		return NextResponse.json(
-			{ error: message },
+			{ error: "Failed to enqueue scan" },
 			{ status: 500 },
 		);
 	}
+
+	return NextResponse.json(
+		{ scanId: scanRecord.id, siteId: site.id },
+		{ status: 202 },
+	);
 }
