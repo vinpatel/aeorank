@@ -8,6 +8,9 @@ import { ScoreChart } from "@/components/ScoreChart";
 import { DownloadButton } from "@/components/DownloadButton";
 import { RetryScanButton } from "@/components/RetryScanButton";
 import { DimensionTrends } from "@/components/DimensionTrends";
+import { PageScores } from "@/components/PageScores";
+import { RescanSchedule } from "@/components/RescanSchedule";
+import { ScanComparison } from "@/components/ScanComparison";
 import type { DimensionScore } from "@aeorank/core";
 
 interface PageProps {
@@ -26,7 +29,7 @@ export default async function SiteDetailPage({ params }: PageProps) {
 	// Fetch site and verify ownership
 	const { data: site, error: siteError } = await supabase
 		.from("sites")
-		.select("id, url, name, created_at")
+		.select("id, url, name, rescan_schedule, created_at")
 		.eq("id", siteId)
 		.eq("user_id", userId)
 		.single();
@@ -35,21 +38,21 @@ export default async function SiteDetailPage({ params }: PageProps) {
 		notFound();
 	}
 
-	// Fetch the most recent scan
+	// Fetch the most recent scan (including page_scores)
 	const { data: scan } = await supabase
 		.from("scans")
-		.select("id, status, score, grade, dimensions, error, scanned_at, pages_scanned, duration_ms")
+		.select("id, status, score, grade, dimensions, page_scores, error, scanned_at, pages_scanned, duration_ms")
 		.eq("site_id", siteId)
 		.eq("user_id", userId)
 		.order("scanned_at", { ascending: false })
 		.limit(1)
 		.maybeSingle();
 
-	// Fetch last 30 days of completed scans for score history chart
+	// Fetch last 30 days of completed scans for history + comparison
 	const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString();
 	const { data: historyScans } = await supabase
 		.from("scans")
-		.select("score, dimensions, scanned_at")
+		.select("id, score, grade, dimensions, scanned_at")
 		.eq("site_id", siteId)
 		.eq("user_id", userId)
 		.eq("status", "complete")
@@ -84,6 +87,20 @@ export default async function SiteDetailPage({ params }: PageProps) {
 			}))
 		: [];
 
+	// Build comparison data from all historical scans
+	const comparisonScans = (historyScans ?? [])
+		.filter((s) => s.dimensions != null && s.score != null)
+		.map((s) => ({
+			id: s.id as string,
+			score: s.score as number,
+			grade: s.grade as string,
+			scanned_at: s.scanned_at as string,
+			dimensions: s.dimensions as DimensionScore[],
+		}));
+
+	// Page scores from latest scan
+	const pageScores = (scan?.page_scores as { url: string; title: string; score: number; grade: string; dimensions: { id: string; score: number; status: "pass" | "warn" | "fail" }[] }[] | null) ?? [];
+
 	return (
 		<div style={{ maxWidth: "860px", animation: "fadeIn 0.3s ease" }}>
 			<div style={{ marginBottom: "24px" }}>
@@ -107,26 +124,31 @@ export default async function SiteDetailPage({ params }: PageProps) {
 				</Link>
 			</div>
 
-			<h1
-				style={{
-					fontFamily: "var(--font-display)",
-					fontSize: "24px",
-					fontWeight: 700,
-					marginBottom: "4px",
-					wordBreak: "break-all",
-					letterSpacing: "-0.02em",
-				}}
-			>
-				{site.url}
-			</h1>
-			<p style={{ color: "var(--text-muted)", fontSize: "13px", marginBottom: "32px" }}>
-				Added{" "}
-				{new Date(site.created_at).toLocaleDateString("en-US", {
-					month: "long",
-					day: "numeric",
-					year: "numeric",
-				})}
-			</p>
+			<div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: "12px", marginBottom: "32px" }}>
+				<div>
+					<h1
+						style={{
+							fontFamily: "var(--font-display)",
+							fontSize: "24px",
+							fontWeight: 700,
+							marginBottom: "4px",
+							wordBreak: "break-all",
+							letterSpacing: "-0.02em",
+						}}
+					>
+						{site.url}
+					</h1>
+					<p style={{ color: "var(--text-muted)", fontSize: "13px" }}>
+						Added{" "}
+						{new Date(site.created_at).toLocaleDateString("en-US", {
+							month: "long",
+							day: "numeric",
+							year: "numeric",
+						})}
+					</p>
+				</div>
+				<RescanSchedule siteId={siteId} currentSchedule={site.rescan_schedule as string | null} />
+			</div>
 
 			{!scan ? (
 				<div
@@ -249,14 +271,72 @@ export default async function SiteDetailPage({ params }: PageProps) {
 							<DimensionTrends data={dimensionTrendData} dimensions={dimensionMeta} />
 						</div>
 					)}
-					<div style={{ marginBottom: "28px" }}>
+					<div style={{ display: "flex", gap: "10px", marginBottom: "28px", flexWrap: "wrap" }}>
 						<DownloadButton siteId={siteId} />
+						<a
+							href={`/api/report/${siteId}`}
+							target="_blank"
+							rel="noopener noreferrer"
+							style={{
+								display: "inline-flex",
+								alignItems: "center",
+								gap: "8px",
+								padding: "10px 20px",
+								background: "var(--bg-surface)",
+								color: "var(--text)",
+								border: "1px solid var(--border)",
+								borderRadius: "var(--radius-sm)",
+								fontSize: "14px",
+								fontWeight: 600,
+								textDecoration: "none",
+								cursor: "pointer",
+							}}
+						>
+							<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+							Export report
+						</a>
 					</div>
 					<ScoreBreakdown
 						score={scan.score as number}
 						grade={scan.grade as string}
 						dimensions={scan.dimensions as DimensionScore[]}
 					/>
+					{pageScores.length > 0 && (
+						<div style={{
+							marginTop: "28px",
+							background: "var(--bg-card)",
+							border: "1px solid var(--border)",
+							borderRadius: "var(--radius-md)",
+							padding: "20px",
+							boxShadow: "var(--shadow-card)",
+						}}>
+							<PageScores pages={pageScores} />
+						</div>
+					)}
+					{comparisonScans.length >= 2 && (
+						<div style={{
+							marginTop: "28px",
+							background: "var(--bg-card)",
+							border: "1px solid var(--border)",
+							borderRadius: "var(--radius-md)",
+							padding: "20px",
+							boxShadow: "var(--shadow-card)",
+						}}>
+							<p
+								style={{
+									fontSize: "12px",
+									fontWeight: 600,
+									color: "var(--text-muted)",
+									textTransform: "uppercase",
+									letterSpacing: "0.06em",
+									marginBottom: "12px",
+								}}
+							>
+								Compare Scans
+							</p>
+							<ScanComparison scans={comparisonScans} />
+						</div>
+					)}
 				</>
 			) : (
 				<div style={{ color: "var(--text-secondary)", fontSize: "14px" }}>

@@ -49,12 +49,22 @@ export interface ScanResult {
 	score: number;
 	grade: string;
 	dimensions: DimensionScore[];
+	pageScores: PageScore[];
 	files: GeneratedFile[];
 	pages: ScannedPage[];
 	meta: ScanMeta;
 	pagesScanned: number;
 	duration: number;
 	scannedAt: string;
+}
+
+/** Per-page score summary */
+export interface PageScore {
+	url: string;
+	title: string;
+	score: number;
+	grade: string;
+	dimensions: Pick<DimensionScore, "id" | "score" | "status">[];
 }
 
 /** Score for a single dimension (0-10) */

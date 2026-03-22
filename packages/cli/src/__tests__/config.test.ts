@@ -7,8 +7,8 @@ import { mergeConfig } from "../config.js";
 describe("mergeConfig", () => {
 	it("returns defaults when userConfig is null", () => {
 		const result = mergeConfig(null, {});
-		expect(result.scanConfig.maxPages).toBe(50);
-		expect(result.scanConfig.concurrency).toBe(3);
+		expect(result.scanConfig.maxPages).toBe(200);
+		expect(result.scanConfig.concurrency).toBe(5);
 		expect(result.scanConfig.timeout).toBe(30000);
 		expect(result.outputDir).toBe("./aeorank-output");
 		expect(result.siteUrl).toBeUndefined();
@@ -22,7 +22,7 @@ describe("mergeConfig", () => {
 		};
 		const result = mergeConfig(userConfig, {});
 		expect(result.scanConfig.maxPages).toBe(20);
-		expect(result.scanConfig.concurrency).toBe(3); // kept from default
+		expect(result.scanConfig.concurrency).toBe(5); // kept from default
 		expect(result.outputDir).toBe("./custom-output");
 		expect(result.siteUrl).toBe("https://mysite.com");
 	});
@@ -51,7 +51,7 @@ describe("mergeConfig", () => {
 		};
 		const result = mergeConfig(userConfig, {});
 		expect(result.scanConfig.timeout).toBe(60000);
-		expect(result.scanConfig.maxPages).toBe(50); // from default
+		expect(result.scanConfig.maxPages).toBe(200); // from default
 		expect(result.scanConfig.respectCrawlDelay).toBe(true); // from default
 	});
 });
