@@ -42,8 +42,18 @@ export default defineConfig({
 					label: "CLI Reference",
 					items: [
 						{ label: "scan", slug: "cli/scan" },
+						{ label: "compare", slug: "cli/compare" },
 						{ label: "init", slug: "cli/init" },
 						{ label: "Configuration", slug: "cli/configuration" },
+					],
+				},
+				{
+					label: "Dashboard",
+					items: [
+						{ label: "Per-Page Scoring", slug: "dashboard/per-page-scoring" },
+						{ label: "Auto-Rescan", slug: "dashboard/auto-rescan" },
+						{ label: "Scan Comparison", slug: "dashboard/comparison" },
+						{ label: "Export & Reports", slug: "dashboard/export" },
 					],
 				},
 				{
