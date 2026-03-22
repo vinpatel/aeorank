@@ -86,6 +86,7 @@ export async function POST(request: Request) {
 				score: result.score,
 				grade: result.grade,
 				dimensions: result.dimensions,
+				page_scores: result.pageScores,
 				files: result.files.map((f) => ({ name: f.name, content: f.content })),
 				pages_scanned: result.pagesScanned,
 				duration_ms: result.duration,

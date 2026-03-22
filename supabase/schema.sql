@@ -11,11 +11,13 @@ create extension if not exists "uuid-ossp";
 
 -- Sites: one row per user-added site
 create table sites (
-  id          uuid primary key default uuid_generate_v4(),
-  user_id     text not null,  -- Clerk user ID (auth.jwt()->>'sub')
-  url         text not null,
-  name        text,
-  created_at  timestamptz default now()
+  id               uuid primary key default uuid_generate_v4(),
+  user_id          text not null,  -- Clerk user ID (auth.jwt()->>'sub')
+  url              text not null,
+  name             text,
+  rescan_schedule  text,           -- weekly | daily | monthly | null (off)
+  next_rescan_at   timestamptz,
+  created_at       timestamptz default now()
 );
 
 -- Scans: one row per scan run
@@ -27,9 +29,11 @@ create table scans (
   score         integer,
   grade         text,
   dimensions    jsonb,    -- DimensionScore[] from @aeorank/core
+  page_scores   jsonb,    -- PageScore[] — per-page scoring breakdown
   files         jsonb,    -- GeneratedFile[] from @aeorank/core (name + content)
   pages_scanned integer,
   duration_ms   integer,
+  progress      integer default 0,
   error         text,
   scanned_at    timestamptz default now()
 );
@@ -72,6 +76,7 @@ create policy "users_own_subscription" on subscriptions
 -- ============================================================
 
 create index sites_user_id_idx on sites(user_id);
+create index sites_next_rescan_idx on sites(next_rescan_at) where rescan_schedule is not null;
 create index scans_site_id_idx on scans(site_id);
 create index scans_user_id_idx on scans(user_id);
 create index scans_status_idx on scans(status);

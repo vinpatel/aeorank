@@ -11,6 +11,7 @@ export type {
 	AeorankConfig,
 	DimensionDef,
 	OnProgressFn,
+	PageScore,
 } from "./types.js";
 
 // Constants
@@ -45,7 +46,7 @@ export type { RobotsInfo } from "./scanner/index.js";
 export type { FetcherFn, FetchResult } from "./scanner/index.js";
 
 // Scorer
-export { calculateAeoScore } from "./scorer/index.js";
+export { calculateAeoScore, scorePerPage } from "./scorer/index.js";
 
 // Generators
 export { generateFiles } from "./generators/index.js";
@@ -54,7 +55,7 @@ import { generateFiles as _generateFiles } from "./generators/index.js";
 // Convenience API
 import type { FetcherFn } from "./scanner/index.js";
 import { scanUrl } from "./scanner/index.js";
-import { calculateAeoScore } from "./scorer/index.js";
+import { calculateAeoScore, scorePerPage } from "./scorer/index.js";
 import type { ScanConfig, ScanResult } from "./types.js";
 
 /** Full scan pipeline: fetch pages -> score -> generate files */
@@ -76,6 +77,10 @@ export async function scan(
 	const siteName = extractSiteName(pages, url);
 	const siteDescription = extractSiteDescription(pages);
 
+	// Step 3b: Per-page scoring
+	config?.onProgress?.(85, "Scoring individual pages");
+	const pageScores = scorePerPage(pages, meta);
+
 	const partialResult: ScanResult = {
 		url,
 		siteName,
@@ -83,6 +88,7 @@ export async function scan(
 		score,
 		grade,
 		dimensions,
+		pageScores,
 		files: [],
 		pages,
 		meta,
