@@ -7,6 +7,7 @@ import { ScoreBreakdown } from "@/components/ScoreBreakdown";
 import { ScoreChart } from "@/components/ScoreChart";
 import { DownloadButton } from "@/components/DownloadButton";
 import { RetryScanButton } from "@/components/RetryScanButton";
+import { DimensionTrends } from "@/components/DimensionTrends";
 import type { DimensionScore } from "@aeorank/core";
 
 interface PageProps {
@@ -48,7 +49,7 @@ export default async function SiteDetailPage({ params }: PageProps) {
 	const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString();
 	const { data: historyScans } = await supabase
 		.from("scans")
-		.select("score, scanned_at")
+		.select("score, dimensions, scanned_at")
 		.eq("site_id", siteId)
 		.eq("user_id", userId)
 		.eq("status", "complete")
@@ -61,6 +62,27 @@ export default async function SiteDetailPage({ params }: PageProps) {
 			date: s.scanned_at as string,
 			score: s.score as number,
 		}));
+
+	// Build per-dimension trend data from historical scans
+	const dimensionTrendData = (historyScans ?? [])
+		.filter((s) => s.dimensions != null)
+		.map((s) => {
+			const dims = s.dimensions as DimensionScore[];
+			const point: Record<string, string | number> = { date: s.scanned_at as string };
+			for (const dim of dims) {
+				point[dim.id] = dim.score;
+			}
+			return point;
+		});
+
+	// Extract dimension metadata from latest scan for legend
+	const dimensionMeta = scan?.dimensions
+		? (scan.dimensions as DimensionScore[]).map((d) => ({
+				id: d.id,
+				name: d.name,
+				weight: d.weight,
+			}))
+		: [];
 
 	return (
 		<div style={{ maxWidth: "860px", animation: "fadeIn 0.3s ease" }}>
@@ -201,6 +223,30 @@ export default async function SiteDetailPage({ params }: PageProps) {
 								Score History (30 days)
 							</p>
 							<ScoreChart data={scoreHistory} />
+						</div>
+					)}
+					{dimensionTrendData.length >= 2 && dimensionMeta.length > 0 && (
+						<div style={{
+							marginBottom: "28px",
+							background: "var(--bg-card)",
+							border: "1px solid var(--border)",
+							borderRadius: "var(--radius-md)",
+							padding: "20px",
+							boxShadow: "var(--shadow-card)",
+						}}>
+							<p
+								style={{
+									fontSize: "12px",
+									fontWeight: 600,
+									color: "var(--text-muted)",
+									textTransform: "uppercase",
+									letterSpacing: "0.06em",
+									marginBottom: "12px",
+								}}
+							>
+								Dimension Trends (30 days)
+							</p>
+							<DimensionTrends data={dimensionTrendData} dimensions={dimensionMeta} />
 						</div>
 					)}
 					<div style={{ marginBottom: "28px" }}>
