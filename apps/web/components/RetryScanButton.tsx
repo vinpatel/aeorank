@@ -34,18 +34,7 @@ export function RetryScanButton({ url }: RetryScanButtonProps) {
 			onClick={handleRetry}
 			disabled={loading}
 			type="button"
-			style={{
-				marginTop: "12px",
-				padding: "8px 20px",
-				background: loading ? "var(--text-secondary)" : "var(--bg-accent)",
-				color: "#fff",
-				border: "none",
-				borderRadius: "var(--radius-sm)",
-				fontSize: "14px",
-				fontWeight: 600,
-				fontFamily: "inherit",
-				cursor: loading ? "not-allowed" : "pointer",
-			}}
+			className="btn btn-primary mt-4"
 		>
 			{loading ? "Retrying..." : "Retry Scan"}
 		</button>

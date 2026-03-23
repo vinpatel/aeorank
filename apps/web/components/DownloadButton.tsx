@@ -55,35 +55,11 @@ export function DownloadButton({ siteId, disabled = false }: DownloadButtonProps
 				type="button"
 				onClick={handleDownload}
 				disabled={disabled || loading}
-				style={{
-					display: "inline-flex",
-					alignItems: "center",
-					gap: "8px",
-					padding: "10px 20px",
-					background: disabled ? "var(--text-muted)" : "var(--bg-accent)",
-					color: "#fff",
-					border: "none",
-					borderRadius: "var(--radius-sm)",
-					fontSize: "14px",
-					fontWeight: 600,
-					cursor: disabled || loading ? "not-allowed" : "pointer",
-					opacity: disabled ? 0.6 : 1,
-					transition: "opacity 0.15s",
-				}}
+				className="btn btn-primary"
 			>
 				{loading ? (
 					<>
-						<span
-							style={{
-								display: "inline-block",
-								width: "14px",
-								height: "14px",
-								border: "2px solid rgba(255,255,255,0.3)",
-								borderTopColor: "#fff",
-								borderRadius: "50%",
-								animation: "spin 0.7s linear infinite",
-							}}
-						/>
+						<span className="spinner spinner-sm spinner-white" />
 						Preparing download...
 					</>
 				) : (
@@ -91,15 +67,7 @@ export function DownloadButton({ siteId, disabled = false }: DownloadButtonProps
 				)}
 			</button>
 			{error && (
-				<p
-					style={{
-						marginTop: "8px",
-						fontSize: "13px",
-						color: "var(--red)",
-					}}
-				>
-					{error}
-				</p>
+				<p className="text-xs mt-4" style={{ color: "var(--red)" }}>{error}</p>
 			)}
 		</div>
 	);

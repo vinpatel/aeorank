@@ -30,50 +30,22 @@ export function DeleteSiteButton({ siteId, siteUrl }: DeleteSiteButtonProps) {
 
 	if (confirming) {
 		return (
-			<div
-				style={{
-					display: "flex",
-					alignItems: "center",
-					gap: "8px",
-				}}
-				onClick={(e) => e.preventDefault()}
-			>
-				<span style={{ fontSize: "12px", color: "var(--red)", fontWeight: 500 }}>
+			<div className="flex items-center gap-4 animate-slide-down" onClick={(e) => e.preventDefault()}>
+				<span className="text-xs font-medium" style={{ color: "var(--red)" }}>
 					Delete {siteUrl}?
 				</span>
 				<button
 					type="button"
 					onClick={handleDelete}
 					disabled={deleting}
-					style={{
-						padding: "4px 10px",
-						fontSize: "12px",
-						fontWeight: 600,
-						fontFamily: "inherit",
-						background: "var(--red)",
-						color: "#fff",
-						border: "none",
-						borderRadius: "var(--radius-sm)",
-						cursor: deleting ? "not-allowed" : "pointer",
-						opacity: deleting ? 0.7 : 1,
-					}}
+					className="btn btn-danger btn-sm"
 				>
 					{deleting ? "Deleting..." : "Confirm"}
 				</button>
 				<button
 					type="button"
 					onClick={() => setConfirming(false)}
-					style={{
-						padding: "4px 10px",
-						fontSize: "12px",
-						fontWeight: 500,
-						fontFamily: "inherit",
-						background: "var(--bg-surface)",
-						color: "var(--text-secondary)",
-						border: "1px solid var(--border)",
-						borderRadius: "var(--radius-sm)",
-						cursor: "pointer",
-					}}
+					className="btn btn-secondary btn-sm"
 				>
 					Cancel
 				</button>
@@ -89,30 +61,7 @@ export function DeleteSiteButton({ siteId, siteUrl }: DeleteSiteButtonProps) {
 				setConfirming(true);
 			}}
 			title="Delete site"
-			style={{
-				display: "flex",
-				alignItems: "center",
-				justifyContent: "center",
-				width: "32px",
-				height: "32px",
-				background: "transparent",
-				border: "1px solid transparent",
-				borderRadius: "var(--radius-sm)",
-				cursor: "pointer",
-				color: "var(--text-muted)",
-				transition: "all 0.15s ease",
-				flexShrink: 0,
-			}}
-			onMouseEnter={(e) => {
-				e.currentTarget.style.background = "var(--red-bg)";
-				e.currentTarget.style.borderColor = "#fecaca";
-				e.currentTarget.style.color = "var(--red)";
-			}}
-			onMouseLeave={(e) => {
-				e.currentTarget.style.background = "transparent";
-				e.currentTarget.style.borderColor = "transparent";
-				e.currentTarget.style.color = "var(--text-muted)";
-			}}
+			className="btn-icon btn-icon-danger"
 		>
 			<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
 				<polyline points="3 6 5 6 21 6" />

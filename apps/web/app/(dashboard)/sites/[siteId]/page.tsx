@@ -102,21 +102,9 @@ export default async function SiteDetailPage({ params }: PageProps) {
 	const pageScores = (scan?.page_scores as { url: string; title: string; score: number; grade: string; dimensions: { id: string; score: number; status: "pass" | "warn" | "fail" }[] }[] | null) ?? [];
 
 	return (
-		<div style={{ maxWidth: "860px", animation: "fadeIn 0.3s ease" }}>
-			<div style={{ marginBottom: "24px" }}>
-				<Link
-					href="/dashboard"
-					style={{
-						fontSize: "13px",
-						color: "var(--text-muted)",
-						textDecoration: "none",
-						display: "inline-flex",
-						alignItems: "center",
-						gap: "6px",
-						fontWeight: 500,
-						transition: "color 0.15s",
-					}}
-				>
+		<div className="page-container animate-fade-in">
+			<div className="mb-8">
+				<Link href="/dashboard" className="back-link">
 					<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
 						<path d="M19 12H5M12 19l-7-7 7-7"/>
 					</svg>
@@ -124,21 +112,10 @@ export default async function SiteDetailPage({ params }: PageProps) {
 				</Link>
 			</div>
 
-			<div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: "12px", marginBottom: "32px" }}>
+			<div className="flex justify-between items-start flex-wrap gap-8 mb-12">
 				<div>
-					<h1
-						style={{
-							fontFamily: "var(--font-display)",
-							fontSize: "24px",
-							fontWeight: 700,
-							marginBottom: "4px",
-							wordBreak: "break-all",
-							letterSpacing: "-0.02em",
-						}}
-					>
-						{site.url}
-					</h1>
-					<p style={{ color: "var(--text-muted)", fontSize: "13px" }}>
+					<h1 className="heading-lg mb-1 break-all">{site.url}</h1>
+					<p className="text-xs text-muted">
 						Added{" "}
 						{new Date(site.created_at).toLocaleDateString("en-US", {
 							month: "long",
@@ -151,37 +128,20 @@ export default async function SiteDetailPage({ params }: PageProps) {
 			</div>
 
 			{!scan ? (
-				<div
-					style={{
-						padding: "48px 32px",
-						textAlign: "center",
-						border: "2px dashed var(--border)",
-						borderRadius: "var(--radius-lg)",
-						color: "var(--text-muted)",
-						background: "var(--bg-card)",
-					}}
-				>
-					<svg width="48" height="48" viewBox="0 0 48 48" fill="none" style={{ margin: "0 auto 16px", opacity: 0.3 }}>
+				<div className="empty-state empty-state-compact">
+					<svg width="48" height="48" viewBox="0 0 48 48" fill="none" className="empty-state-icon">
 						<circle cx="24" cy="24" r="20" stroke="currentColor" strokeWidth="2" strokeDasharray="4 3"/>
 						<path d="M24 16v8l6 3" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
 					</svg>
-					<p style={{ margin: 0, fontWeight: 500 }}>No scan results yet.</p>
+					<p className="font-medium">No scan results yet.</p>
 				</div>
 			) : scan.status === "pending" || scan.status === "running" ? (
 				<ScanStatus scanId={scan.id} initialStatus={scan.status} />
 			) : scan.status === "error" ? (
-				<div
-					style={{
-						padding: "20px",
-						background: "var(--red-bg)",
-						border: "1px solid #fecaca",
-						borderRadius: "var(--radius-md)",
-						color: "var(--red)",
-					}}
-				>
-					<p style={{ margin: 0, fontWeight: 600, fontSize: "15px" }}>Scan failed</p>
+				<div className="alert alert-error">
+					<p className="font-semibold text-sm">Scan failed</p>
 					{scan.error && (
-						<p style={{ margin: "6px 0 0", fontSize: "14px", opacity: 0.85 }}>
+						<p className="text-sm" style={{ marginTop: "6px", opacity: 0.85 }}>
 							{scan.error as string}
 						</p>
 					)}
@@ -190,28 +150,17 @@ export default async function SiteDetailPage({ params }: PageProps) {
 			) : scan.status === "complete" && scan.score != null && scan.dimensions ? (
 				<>
 					{scan.pages_scanned != null && scan.duration_ms != null && (
-						<div
-							style={{
-								display: "flex",
-								gap: "20px",
-								marginBottom: "28px",
-								fontSize: "13px",
-								color: "var(--text-secondary)",
-								background: "var(--bg-surface)",
-								padding: "12px 16px",
-								borderRadius: "var(--radius-sm)",
-							}}
-						>
-							<span style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+						<div className="scan-meta mb-10">
+							<span className="scan-meta-item">
 								<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="2" y="3" width="20" height="18" rx="2"/><path d="M8 7v0M12 7v0M16 7v0"/><path d="M2 11h20"/></svg>
 								{scan.pages_scanned as number} pages scanned
 							</span>
-							<span style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+							<span className="scan-meta-item">
 								<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
 								{Math.round((scan.duration_ms as number) / 1000)}s
 							</span>
 							{scan.scanned_at && (
-								<span style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+								<span className="scan-meta-item">
 									<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
 									{new Date(scan.scanned_at as string).toLocaleString("en-US", {
 										month: "short",
@@ -224,73 +173,24 @@ export default async function SiteDetailPage({ params }: PageProps) {
 						</div>
 					)}
 					{scoreHistory.length > 0 && (
-						<div style={{
-							marginBottom: "28px",
-							background: "var(--bg-card)",
-							border: "1px solid var(--border)",
-							borderRadius: "var(--radius-md)",
-							padding: "20px",
-							boxShadow: "var(--shadow-card)",
-						}}>
-							<p
-								style={{
-									fontSize: "12px",
-									fontWeight: 600,
-									color: "var(--text-muted)",
-									textTransform: "uppercase",
-									letterSpacing: "0.06em",
-									marginBottom: "12px",
-								}}
-							>
-								Score History (30 days)
-							</p>
+						<div className="card mb-10">
+							<p className="section-label">Score History (30 days)</p>
 							<ScoreChart data={scoreHistory} />
 						</div>
 					)}
 					{dimensionTrendData.length >= 2 && dimensionMeta.length > 0 && (
-						<div style={{
-							marginBottom: "28px",
-							background: "var(--bg-card)",
-							border: "1px solid var(--border)",
-							borderRadius: "var(--radius-md)",
-							padding: "20px",
-							boxShadow: "var(--shadow-card)",
-						}}>
-							<p
-								style={{
-									fontSize: "12px",
-									fontWeight: 600,
-									color: "var(--text-muted)",
-									textTransform: "uppercase",
-									letterSpacing: "0.06em",
-									marginBottom: "12px",
-								}}
-							>
-								Dimension Trends (30 days)
-							</p>
+						<div className="card mb-10">
+							<p className="section-label">Dimension Trends (30 days)</p>
 							<DimensionTrends data={dimensionTrendData} dimensions={dimensionMeta} />
 						</div>
 					)}
-					<div style={{ display: "flex", gap: "10px", marginBottom: "28px", flexWrap: "wrap" }}>
+					<div className="flex gap-6 mb-10 flex-wrap">
 						<DownloadButton siteId={siteId} />
 						<a
 							href={`/api/report/${siteId}`}
 							target="_blank"
 							rel="noopener noreferrer"
-							style={{
-								display: "inline-flex",
-								alignItems: "center",
-								gap: "8px",
-								padding: "10px 20px",
-								background: "var(--bg-surface)",
-								color: "var(--text)",
-								border: "1px solid var(--border)",
-								borderRadius: "var(--radius-sm)",
-								fontSize: "14px",
-								fontWeight: 600,
-								textDecoration: "none",
-								cursor: "pointer",
-							}}
+							className="btn btn-secondary"
 						>
 							<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
 							Export report
@@ -302,46 +202,21 @@ export default async function SiteDetailPage({ params }: PageProps) {
 						dimensions={scan.dimensions as DimensionScore[]}
 					/>
 					{pageScores.length > 0 && (
-						<div style={{
-							marginTop: "28px",
-							background: "var(--bg-card)",
-							border: "1px solid var(--border)",
-							borderRadius: "var(--radius-md)",
-							padding: "20px",
-							boxShadow: "var(--shadow-card)",
-						}}>
+						<div className="card mt-10">
 							<PageScores pages={pageScores} />
 						</div>
 					)}
 					{comparisonScans.length >= 2 && (
-						<div style={{
-							marginTop: "28px",
-							background: "var(--bg-card)",
-							border: "1px solid var(--border)",
-							borderRadius: "var(--radius-md)",
-							padding: "20px",
-							boxShadow: "var(--shadow-card)",
-						}}>
-							<p
-								style={{
-									fontSize: "12px",
-									fontWeight: 600,
-									color: "var(--text-muted)",
-									textTransform: "uppercase",
-									letterSpacing: "0.06em",
-									marginBottom: "12px",
-								}}
-							>
-								Compare Scans
-							</p>
+						<div className="card mt-10">
+							<p className="section-label">Compare Scans</p>
 							<ScanComparison scans={comparisonScans} />
 						</div>
 					)}
 				</>
 			) : (
-				<div style={{ color: "var(--text-secondary)", fontSize: "14px" }}>
+				<p className="text-sm text-secondary">
 					Unexpected scan state: {scan.status}
-				</div>
+				</p>
 			)}
 		</div>
 	);
