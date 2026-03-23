@@ -19,6 +19,7 @@ export const scanCommand = new Command("scan")
 	.option("--overwrite", "Overwrite existing output files")
 	.option("--no-files", "Skip writing generated files")
 	.option("-c, --config <path>", "Path to config file")
+	.option("-b, --browser", "Use Playwright for JavaScript-rendered pages (SPAs)")
 	.action(async (url: string, options: ScanOptions) => {
 		const isJson = options.format === "json";
 		const spinner = createSpinner(`Scanning ${url}...`, isJson);
@@ -45,6 +46,7 @@ export const scanCommand = new Command("scan")
 			const { scanConfig, outputDir: configOutputDir } = mergeConfig(userConfig, {
 				maxPages: options.maxPages,
 				output: options.output !== "./aeorank-output" ? options.output : undefined,
+				browser: options.browser ?? false,
 			});
 
 			// Use config output dir if CLI didn't override
@@ -53,6 +55,9 @@ export const scanCommand = new Command("scan")
 			}
 
 			// Start scanning
+			if (options.browser) {
+				console.log("  Using browser mode (Playwright) for JavaScript rendering...\n");
+			}
 			spinner.start();
 
 			const result = await scan(url, scanConfig);
@@ -120,4 +125,5 @@ interface ScanOptions {
 	overwrite?: boolean;
 	files?: boolean;
 	config?: string;
+	browser?: boolean;
 }

@@ -13,7 +13,9 @@
 	"main": "./dist/index.cjs",
 	"module": "./dist/index.js",
 	"types": "./dist/index.d.ts",
-	"files": ["dist"],
+	"files": [
+		"dist"
+	],
 	"scripts": {
 		"build": "tsup",
 		"test": "vitest run",
@@ -25,9 +27,18 @@
 		"p-limit": "^6.2.0",
 		"robots-parser": "^3.0.1"
 	},
+	"peerDependencies": {
+		"playwright": ">=1.40.0"
+	},
+	"peerDependenciesMeta": {
+		"playwright": {
+			"optional": true
+		}
+	},
 	"devDependencies": {
+		"playwright": "^1.58.2",
 		"tsup": "^8.4.0",
-		"vitest": "^3.2.0",
-		"typescript": "^5.7.0"
+		"typescript": "^5.7.0",
+		"vitest": "^3.2.0"
 	}
 }

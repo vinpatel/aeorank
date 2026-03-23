@@ -288,4 +288,75 @@ describe("scan command", () => {
 		const allErrors = errorSpy.mock.calls.map((c) => String(c[0])).join("\n");
 		expect(allErrors).toContain("Could not reach");
 	});
+
+	describe("--browser flag", () => {
+		it("passes browser: true to scan config when --browser is set", async () => {
+			const { scan } = await import("@aeorank/core");
+			const scanFn = scan as ReturnType<typeof vi.fn>;
+			scanFn.mockResolvedValue(mockResult);
+
+			const { scanCommand } = await import("../commands/scan.js");
+
+			await scanCommand.parseAsync([
+				"node",
+				"scan",
+				"https://example.com",
+				"--browser",
+				"--no-files",
+			]);
+
+			expect(scanFn).toHaveBeenCalledWith(
+				"https://example.com",
+				expect.objectContaining({ browser: true }),
+			);
+		});
+
+		it("passes browser: false to scan config when --browser is not set", async () => {
+			const { scan } = await import("@aeorank/core");
+			const scanFn = scan as ReturnType<typeof vi.fn>;
+			scanFn.mockResolvedValue(mockResult);
+
+			const { scanCommand } = await import("../commands/scan.js");
+
+			await scanCommand.parseAsync(["node", "scan", "https://example.com", "--no-files"]);
+
+			expect(scanFn).toHaveBeenCalledWith(
+				"https://example.com",
+				expect.objectContaining({ browser: false }),
+			);
+		});
+
+		it("logs browser mode message when --browser is used", async () => {
+			const { scan } = await import("@aeorank/core");
+			(scan as ReturnType<typeof vi.fn>).mockResolvedValue(mockResult);
+
+			const { scanCommand } = await import("../commands/scan.js");
+
+			await scanCommand.parseAsync([
+				"node",
+				"scan",
+				"https://example.com",
+				"--browser",
+				"--no-files",
+			]);
+
+			const allOutput = logSpy.mock.calls.map((c) => String(c[0])).join("\n");
+			expect(allOutput).toContain("browser mode");
+		});
+
+		it("works with -b shorthand flag", async () => {
+			const { scan } = await import("@aeorank/core");
+			const scanFn = scan as ReturnType<typeof vi.fn>;
+			scanFn.mockResolvedValue(mockResult);
+
+			const { scanCommand } = await import("../commands/scan.js");
+
+			await scanCommand.parseAsync(["node", "scan", "https://example.com", "-b", "--no-files"]);
+
+			expect(scanFn).toHaveBeenCalledWith(
+				"https://example.com",
+				expect.objectContaining({ browser: true }),
+			);
+		});
+	});
 });
