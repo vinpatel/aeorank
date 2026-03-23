@@ -12,6 +12,7 @@ export type { RobotsInfo } from "./robots.js";
 export { createFetcher } from "./fetcher.js";
 export type { FetcherFn, FetchResult } from "./fetcher.js";
 export { discoverUrls } from "./discovery.js";
+export { createPlaywrightFetcher } from "./playwright-fetcher.js";
 
 /** Scan a URL and return raw pages + metadata (no scoring or file generation) */
 export async function scanUrl(

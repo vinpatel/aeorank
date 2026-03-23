@@ -95,6 +95,7 @@ export interface ScanConfig {
 	userAgent: string;
 	respectCrawlDelay: boolean;
 	onProgress?: OnProgressFn;
+	browser?: boolean; // Use Playwright for JS-rendered pages (SPAs)
 }
 
 /** Top-level AEOrank config */

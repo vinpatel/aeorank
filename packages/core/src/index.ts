@@ -40,6 +40,7 @@ export {
 	parsePage,
 	parseRobotsTxt,
 	createFetcher,
+	createPlaywrightFetcher,
 	discoverUrls,
 } from "./scanner/index.js";
 export type { RobotsInfo } from "./scanner/index.js";
@@ -65,6 +66,15 @@ export async function scan(
 	customFetcher?: FetcherFn,
 ): Promise<ScanResult> {
 	const startTime = performance.now();
+
+	// If browser mode requested and no custom fetcher, use Playwright
+	let cleanup: (() => Promise<void>) | null = null;
+	if (config?.browser && !customFetcher) {
+		const { createPlaywrightFetcher: createPwFetcher } = await import("./scanner/playwright-fetcher.js");
+		const pw = await createPwFetcher(config);
+		customFetcher = pw.fetcher;
+		cleanup = pw.cleanup;
+	}
 
 	// Step 1: Scan URL
 	const { pages, meta } = await scanUrl(url, config, customFetcher);
@@ -100,6 +110,8 @@ export async function scan(
 	// Step 4: Generate files
 	config?.onProgress?.(90, "Generating files");
 	const files = _generateFiles(partialResult);
+
+	if (cleanup) await cleanup();
 
 	config?.onProgress?.(100, "Complete");
 	return { ...partialResult, files };

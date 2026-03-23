@@ -11,4 +11,5 @@ export default defineConfig({
 		js: '#!/usr/bin/env node\nimport{createRequire as __createRequire}from"module";const require=__createRequire(import.meta.url);',
 	},
 	noExternal: ["@aeorank/core"],
+	external: ["playwright"],
 });
