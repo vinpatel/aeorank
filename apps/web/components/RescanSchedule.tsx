@@ -36,29 +36,16 @@ export function RescanSchedule({ siteId, currentSchedule }: RescanScheduleProps)
 	}
 
 	return (
-		<div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-			<span style={{ fontSize: "13px", color: "var(--text-secondary)", fontWeight: 500 }}>
-				Auto-rescan:
-			</span>
-			<div style={{ display: "flex", gap: "4px" }}>
+		<div className="flex items-center gap-4">
+			<span className="text-xs text-secondary font-medium">Auto-rescan:</span>
+			<div className="flex gap-2">
 				{SCHEDULES.map((s) => (
 					<button
 						key={s.label}
 						type="button"
 						disabled={saving}
 						onClick={() => handleChange(s.value)}
-						style={{
-							padding: "4px 10px",
-							fontSize: "12px",
-							fontWeight: 600,
-							borderRadius: "6px",
-							border: `1px solid ${schedule === s.value ? "var(--text-accent)" : "var(--border)"}`,
-							background: schedule === s.value ? "var(--bg-accent-light)" : "transparent",
-							color: schedule === s.value ? "var(--text-accent)" : "var(--text-muted)",
-							cursor: saving ? "wait" : "pointer",
-							transition: "all 0.15s",
-							fontFamily: "inherit",
-						}}
+						className={`btn-toggle ${saving ? "cursor-wait" : "cursor-pointer"} ${schedule === s.value ? "btn-toggle-active" : ""}`}
 					>
 						{s.label}
 					</button>

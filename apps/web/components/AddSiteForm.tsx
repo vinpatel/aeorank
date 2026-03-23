@@ -44,7 +44,7 @@ export function AddSiteForm() {
 	}
 
 	return (
-		<form onSubmit={handleSubmit} style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
+		<form onSubmit={handleSubmit} className="flex gap-4 flex-wrap">
 			<input
 				type="url"
 				value={url}
@@ -52,43 +52,20 @@ export function AddSiteForm() {
 				placeholder="https://example.com"
 				required
 				disabled={loading}
-				style={{
-					flex: "1",
-					minWidth: "240px",
-					padding: "10px 14px",
-					border: "1px solid var(--border)",
-					borderRadius: "var(--radius-sm)",
-					fontSize: "14px",
-					outline: "none",
-					background: "var(--bg-card)",
-					fontFamily: "inherit",
-					transition: "border-color 0.15s ease",
-				}}
+				className="input focus-ring"
 			/>
 			<button
 				type="submit"
 				disabled={loading}
-				style={{
-					padding: "10px 24px",
-					background: loading ? "var(--text-secondary)" : "var(--bg-accent)",
-					color: "#fff",
-					border: "none",
-					borderRadius: "var(--radius-sm)",
-					fontSize: "14px",
-					fontWeight: 600,
-					fontFamily: "inherit",
-					cursor: loading ? "not-allowed" : "pointer",
-					whiteSpace: "nowrap",
-					transition: "background 0.15s ease",
-				}}
+				className="btn btn-primary"
 			>
 				{loading ? "Scanning..." : "Scan site"}
 			</button>
 			{error && (
-				<div style={{ width: "100%", color: "var(--red)", fontSize: "14px", margin: 0 }}>
-					<p style={{ margin: 0 }}>{error}</p>
+				<div className="w-full text-error text-sm">
+					<p className="m-0">{error}</p>
 					{isLimitError && (
-						<a href="/upgrade" style={{ color: "var(--text-accent)", fontWeight: 600, fontSize: "13px" }}>
+						<a href="/upgrade" className="btn-link text-xs mt-1 inline-block">
 							View upgrade options &rarr;
 						</a>
 					)}

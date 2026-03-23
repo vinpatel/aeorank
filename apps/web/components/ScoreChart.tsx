@@ -24,22 +24,22 @@ function formatDate(dateStr: string): string {
 	return d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
 }
 
+function ChartTooltip({ active, payload }: { active?: boolean; payload?: { payload: ScoreDataPoint }[] }) {
+	if (!active || !payload || payload.length === 0) return null;
+	const point = payload[0].payload;
+	return (
+		<div className="chart-tooltip">
+			<div className="chart-tooltip-value">{point.score}/100</div>
+			<div className="chart-tooltip-label">{formatDate(point.date)}</div>
+		</div>
+	);
+}
+
 export function ScoreChart({ data }: ScoreChartProps) {
 	// Edge case: no data
 	if (data.length === 0) {
 		return (
-			<div
-				style={{
-					height: "80px",
-					display: "flex",
-					alignItems: "center",
-					justifyContent: "center",
-					color: "var(--text-muted)",
-					fontSize: "13px",
-					border: "1px dashed var(--border)",
-					borderRadius: "var(--radius-sm)",
-				}}
-			>
+			<div className="flex items-center justify-center text-xs text-muted score-chart-empty">
 				No history yet
 			</div>
 		);
@@ -48,38 +48,12 @@ export function ScoreChart({ data }: ScoreChartProps) {
 	// Edge case: single data point — render a dot with the score
 	if (data.length === 1) {
 		return (
-			<div style={{ height: "80px", position: "relative" }}>
+			<div className="score-chart-single">
 				<ResponsiveContainer width="100%" height={80}>
-					<AreaChart
-						data={data}
-						margin={{ top: 10, right: 10, left: 10, bottom: 10 }}
-					>
+					<AreaChart data={data} margin={{ top: 10, right: 10, left: 10, bottom: 10 }}>
 						<XAxis dataKey="date" hide />
 						<YAxis domain={[0, 100]} hide />
-						<Tooltip
-							content={({ active, payload }) => {
-								if (active && payload && payload.length > 0) {
-									const point = payload[0].payload as ScoreDataPoint;
-									return (
-										<div
-											style={{
-												background: "#1a1a1a",
-												color: "#fff",
-												padding: "6px 10px",
-												borderRadius: "4px",
-												fontSize: "12px",
-											}}
-										>
-											<div style={{ fontWeight: 600 }}>{point.score}/100</div>
-											<div style={{ color: "#9ca3af" }}>
-												{formatDate(point.date)}
-											</div>
-										</div>
-									);
-								}
-								return null;
-							}}
-						/>
+						<Tooltip content={<ChartTooltip />} />
 						<Area
 							type="monotone"
 							dataKey="score"
@@ -98,34 +72,10 @@ export function ScoreChart({ data }: ScoreChartProps) {
 	// Normal sparkline for multiple data points
 	return (
 		<ResponsiveContainer width="100%" height={80}>
-			<AreaChart
-				data={data}
-				margin={{ top: 10, right: 10, left: 10, bottom: 10 }}
-			>
+			<AreaChart data={data} margin={{ top: 10, right: 10, left: 10, bottom: 10 }}>
 				<XAxis dataKey="date" hide />
 				<YAxis domain={[0, 100]} hide />
-				<Tooltip
-					content={({ active, payload }) => {
-						if (active && payload && payload.length > 0) {
-							const point = payload[0].payload as ScoreDataPoint;
-							return (
-								<div
-									style={{
-										background: "#1a1a1a",
-										color: "#fff",
-										padding: "6px 10px",
-										borderRadius: "4px",
-										fontSize: "12px",
-									}}
-								>
-									<div style={{ fontWeight: 600 }}>{point.score}/100</div>
-									<div style={{ color: "#9ca3af" }}>{formatDate(point.date)}</div>
-								</div>
-							);
-						}
-						return null;
-					}}
-				/>
+				<Tooltip content={<ChartTooltip />} />
 				<Area
 					type="monotone"
 					dataKey="score"

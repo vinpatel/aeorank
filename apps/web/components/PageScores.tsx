@@ -26,6 +26,12 @@ function scoreColor(score: number): string {
 	return "var(--red)";
 }
 
+function gradeBgClass(score: number): string {
+	if (score >= 70) return "badge-green";
+	if (score >= 40) return "badge-amber";
+	return "badge-red";
+}
+
 export function PageScores({ pages }: PageScoresProps) {
 	const [expanded, setExpanded] = useState(false);
 	const [sortBy, setSortBy] = useState<"score" | "url">("score");
@@ -40,39 +46,17 @@ export function PageScores({ pages }: PageScoresProps) {
 
 	return (
 		<div>
-			<div style={{
-				display: "flex",
-				justifyContent: "space-between",
-				alignItems: "center",
-				marginBottom: "12px",
-			}}>
-				<p style={{
-					fontSize: "12px",
-					fontWeight: 600,
-					color: "var(--text-muted)",
-					textTransform: "uppercase",
-					letterSpacing: "0.06em",
-					margin: 0,
-				}}>
+			<div className="flex justify-between items-center mb-4">
+				<p className="section-label m-0">
 					Per-Page Scores ({pages.length} pages)
 				</p>
-				<div style={{ display: "flex", gap: "4px" }}>
+				<div className="flex gap-2">
 					{(["score", "url"] as const).map((key) => (
 						<button
 							key={key}
 							type="button"
 							onClick={() => setSortBy(key)}
-							style={{
-								padding: "3px 8px",
-								fontSize: "11px",
-								fontWeight: 600,
-								borderRadius: "4px",
-								border: `1px solid ${sortBy === key ? "var(--text-accent)" : "var(--border-light)"}`,
-								background: sortBy === key ? "var(--bg-accent-light)" : "transparent",
-								color: sortBy === key ? "var(--text-accent)" : "var(--text-muted)",
-								cursor: "pointer",
-								fontFamily: "inherit",
-							}}
+							className={`btn-toggle ${sortBy === key ? "btn-toggle-active" : ""}`}
 						>
 							{key === "score" ? "Worst first" : "By URL"}
 						</button>
@@ -80,55 +64,31 @@ export function PageScores({ pages }: PageScoresProps) {
 				</div>
 			</div>
 
-			<div style={{
-				border: "1px solid var(--border)",
-				borderRadius: "var(--radius-md)",
-				overflow: "hidden",
-			}}>
-				<table style={{ width: "100%", borderCollapse: "collapse", fontSize: "13px" }}>
+			<div className="table-wrap">
+				<table className="table table-sm">
 					<thead>
-						<tr style={{ background: "var(--bg-surface)", borderBottom: "1px solid var(--border)" }}>
-							<th style={{ textAlign: "left", padding: "8px 12px", fontWeight: 600, color: "var(--text-secondary)", fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.05em" }}>
-								Page
-							</th>
-							<th style={{ textAlign: "center", padding: "8px 12px", fontWeight: 600, color: "var(--text-secondary)", fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.05em", width: "80px" }}>
-								Score
-							</th>
-							<th style={{ textAlign: "center", padding: "8px 12px", fontWeight: 600, color: "var(--text-secondary)", fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.05em", width: "60px" }}>
-								Grade
-							</th>
+						<tr>
+							<th>Page</th>
+							<th className="text-center col-score">Score</th>
+							<th className="text-center col-grade">Grade</th>
 						</tr>
 					</thead>
 					<tbody>
-						{displayed.map((page, i) => (
-							<tr
-								key={page.url}
-								style={{
-									borderBottom: i < displayed.length - 1 ? "1px solid var(--border-light)" : "none",
-									background: "var(--bg-card)",
-								}}
-							>
-								<td style={{ padding: "10px 12px" }}>
-									<div style={{ fontWeight: 500, color: "var(--text)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "500px" }}>
+						{displayed.map((page) => (
+							<tr key={page.url}>
+								<td className="cell-padded">
+									<div className="font-medium truncate page-title">
 										{page.title}
 									</div>
-									<div style={{ fontSize: "11px", color: "var(--text-muted)", marginTop: "1px", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "500px" }}>
+									<div className="text-xs text-muted truncate page-path">
 										{new URL(page.url).pathname}
 									</div>
 								</td>
-								<td style={{ textAlign: "center", fontVariantNumeric: "tabular-nums", fontWeight: 600, color: scoreColor(page.score) }}>
+								<td className={`text-center tabular-nums font-semibold score-${page.score >= 70 ? "green" : page.score >= 40 ? "amber" : "red"}`}>
 									{page.score}
 								</td>
-								<td style={{ textAlign: "center" }}>
-									<span style={{
-										display: "inline-block",
-										padding: "2px 8px",
-										borderRadius: "4px",
-										fontSize: "12px",
-										fontWeight: 700,
-										color: scoreColor(page.score),
-										background: page.score >= 70 ? "var(--green-bg)" : page.score >= 40 ? "var(--amber-bg)" : "var(--red-bg)",
-									}}>
+								<td className="text-center">
+									<span className={`grade-badge-sm ${gradeBgClass(page.score)}`}>
 										{page.grade}
 									</span>
 								</td>
@@ -142,18 +102,7 @@ export function PageScores({ pages }: PageScoresProps) {
 				<button
 					type="button"
 					onClick={() => setExpanded(!expanded)}
-					style={{
-						marginTop: "8px",
-						padding: "6px 14px",
-						fontSize: "12px",
-						fontWeight: 600,
-						color: "var(--text-accent)",
-						background: "transparent",
-						border: "1px solid var(--border)",
-						borderRadius: "6px",
-						cursor: "pointer",
-						fontFamily: "inherit",
-					}}
+					className="btn btn-ghost btn-sm mt-4 btn-show-more"
 				>
 					{expanded ? "Show less" : `Show all ${pages.length} pages`}
 				</button>

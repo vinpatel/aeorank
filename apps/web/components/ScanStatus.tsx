@@ -43,16 +43,10 @@ export function ScanStatus({ scanId, initialStatus }: ScanStatusProps) {
 
 	if (status === "error") {
 		return (
-			<div style={{
-				padding: "16px",
-				background: "var(--red-bg)",
-				border: "1px solid #fecaca",
-				borderRadius: "var(--radius-md)",
-				color: "var(--red)",
-			}}>
-				<p style={{ margin: 0, fontWeight: 600 }}>Scan failed</p>
+			<div className="alert alert-error">
+				<p className="font-semibold">Scan failed</p>
 				{errorMessage && (
-					<p style={{ margin: "4px 0 0", fontSize: "14px" }}>{errorMessage}</p>
+					<p className="text-sm mt-1">{errorMessage}</p>
 				)}
 			</div>
 		);
@@ -63,44 +57,19 @@ export function ScanStatus({ scanId, initialStatus }: ScanStatusProps) {
 		: "Queued — scan starting soon...";
 
 	return (
-		<div style={{
-			padding: "24px",
-			background: "var(--bg-surface)",
-			border: "1px solid var(--border)",
-			borderRadius: "var(--radius-md)",
-		}}>
-			<div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: progress > 0 ? "16px" : 0 }}>
-				<div
-					style={{
-						width: "20px",
-						height: "20px",
-						border: "2px solid var(--border)",
-						borderTopColor: "var(--bg-accent)",
-						borderRadius: "50%",
-						animation: "spin 0.8s linear infinite",
-					}}
-				/>
+		<div className="card animate-fade-in bg-surface">
+			<div className={`flex items-center gap-3 ${progress > 0 ? "mb-4" : ""}`}>
+				<div className="spinner spinner-md" />
 				<div>
-					<p style={{ margin: 0, fontWeight: 600 }}>{label}</p>
-					<p style={{ margin: "2px 0 0", fontSize: "14px", color: "var(--text-secondary)" }}>
+					<p className="font-semibold">{label}</p>
+					<p className="text-sm text-secondary mt-0.5">
 						This typically takes 10–60 seconds.
 					</p>
 				</div>
 			</div>
 			{progress > 0 && (
-				<div style={{
-					height: "6px",
-					background: "var(--border)",
-					borderRadius: "3px",
-					overflow: "hidden",
-				}}>
-					<div style={{
-						height: "100%",
-						width: `${progress}%`,
-						background: "var(--bg-accent)",
-						borderRadius: "3px",
-						transition: "width 0.5s ease",
-					}} />
+				<div className="progress-bar progress-bar-animated">
+					<div className="progress-bar-fill" style={{ width: `${progress}%` }} />
 				</div>
 			)}
 		</div>

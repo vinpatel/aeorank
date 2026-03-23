@@ -79,26 +79,16 @@ export default async function DashboardPage() {
 	}
 
 	function scoreColor(score: number): string {
-		if (score >= 70) return "#16a34a";
-		if (score >= 40) return "#d97706";
-		return "#dc2626";
+		if (score >= 70) return "var(--green)";
+		if (score >= 40) return "var(--amber)";
+		return "var(--red)";
 	}
 
 	return (
-		<div style={{ maxWidth: "860px", animation: "fadeIn 0.3s ease" }}>
-			<div style={{ marginBottom: "8px" }}>
-				<h1 style={{
-					fontFamily: "var(--font-display)",
-					fontSize: "28px",
-					fontWeight: 700,
-					letterSpacing: "-0.02em",
-					marginBottom: "6px",
-				}}>
-					Your sites
-				</h1>
-				<p style={{ color: "var(--text-secondary)", fontSize: "15px" }}>
-					Add a site URL to scan its AEO score.
-				</p>
+		<div className="page-container animate-fade-in">
+			<div className="mb-2">
+				<h1 className="heading-xl mb-1">Your sites</h1>
+				<p className="text-sm text-secondary">Add a site URL to scan its AEO score.</p>
 			</div>
 
 			<div style={{ margin: "24px 0 36px" }}>
@@ -106,68 +96,35 @@ export default async function DashboardPage() {
 			</div>
 
 			{sites.length === 0 ? (
-				<div
-					style={{
-						padding: "60px 40px",
-						textAlign: "center",
-						border: "2px dashed var(--border)",
-						borderRadius: "var(--radius-lg)",
-						color: "var(--text-muted)",
-						background: "var(--bg-card)",
-					}}
-				>
-					<svg width="48" height="48" viewBox="0 0 48 48" fill="none" style={{ margin: "0 auto 16px", opacity: 0.4 }}>
+				<div className="empty-state">
+					<svg width="48" height="48" viewBox="0 0 48 48" fill="none" className="empty-state-icon">
 						<rect x="4" y="4" width="40" height="40" rx="12" stroke="currentColor" strokeWidth="2" strokeDasharray="4 3"/>
 						<path d="M24 16v16m-8-8h16" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
 					</svg>
-					<p style={{ margin: 0, fontSize: "15px", fontWeight: 500 }}>
-						No sites yet. Add your first site above.
-					</p>
+					<p className="text-sm font-medium">No sites yet. Add your first site above.</p>
 				</div>
 			) : (
-				<div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+				<div className="flex flex-col gap-6 stagger">
 					{sites.map((site) => (
 						<Link
 							key={site.id}
 							href={`/sites/${site.id}`}
 							style={{ textDecoration: "none" }}
 						>
-							<div
-								className="site-card"
-								style={{
-									padding: "18px 22px",
-									border: "1px solid var(--border)",
-									borderRadius: "var(--radius-md)",
-									background: "var(--bg-card)",
-									display: "flex",
-									justifyContent: "space-between",
-									alignItems: "center",
-									cursor: "pointer",
-									boxShadow: "var(--shadow-card)",
-								}}
-							>
-								<div style={{ display: "flex", alignItems: "center", gap: "14px" }}>
-									<div style={{
-										width: "40px",
-										height: "40px",
-										borderRadius: "var(--radius-sm)",
-										background: "var(--bg-accent-light)",
-										display: "flex",
-										alignItems: "center",
-										justifyContent: "center",
-										flexShrink: 0,
-									}}>
+							<div className="site-card animate-fade-in-up">
+								<div className="flex items-center gap-10">
+									<div className="site-icon">
 										<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--text-accent)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
 											<circle cx="12" cy="12" r="10"/>
 											<path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
 										</svg>
 									</div>
 									<div>
-										<div style={{ fontWeight: 600, color: "var(--text)", fontSize: "15px" }}>
+										<div className="font-semibold text-sm" style={{ color: "var(--text)" }}>
 											{site.url}
 										</div>
 										{site.latest_scan?.scanned_at && (
-											<div style={{ fontSize: "13px", color: "var(--text-muted)", marginTop: "2px" }}>
+											<div className="text-xs text-muted" style={{ marginTop: "2px" }}>
 												Scanned{" "}
 												{new Date(site.latest_scan.scanned_at).toLocaleDateString("en-US", {
 													month: "short",
@@ -178,62 +135,29 @@ export default async function DashboardPage() {
 										)}
 									</div>
 								</div>
-								<div style={{ textAlign: "right", display: "flex", alignItems: "center", gap: "12px" }}>
+								<div className="flex items-center gap-8">
 									{site.latest_scan?.score != null ? (
 										<>
-											<div>
-												<div
-													style={{
-														fontFamily: "var(--font-display)",
-														fontSize: "28px",
-														fontWeight: 700,
-														color: scoreColor(site.latest_scan.score),
-														lineHeight: 1,
-														letterSpacing: "-0.02em",
-													}}
-												>
+											<div className="text-right">
+												<div className="score-md animate-count-up" style={{ color: scoreColor(site.latest_scan.score) }}>
 													{site.latest_scan.score}
 												</div>
-												<div style={{ fontSize: "12px", color: "var(--text-muted)", marginTop: "2px" }}>
-													/100
-												</div>
+												<div className="text-xs text-muted" style={{ marginTop: "2px" }}>/100</div>
 											</div>
-											<div style={{
-												width: "36px",
-												height: "36px",
-												borderRadius: "var(--radius-sm)",
-												background: scoreColor(site.latest_scan.score),
-												color: "white",
-												display: "flex",
-												alignItems: "center",
-												justifyContent: "center",
-												fontFamily: "var(--font-display)",
-												fontWeight: 700,
-												fontSize: "16px",
-											}}>
+											<div
+												className="grade-badge animate-grade-bounce"
+												style={{ background: scoreColor(site.latest_scan.score) }}
+											>
 												{site.latest_scan.grade}
 											</div>
 										</>
 									) : (
-										<div style={{
-											fontSize: "13px",
-											color: "var(--text-muted)",
-											display: "flex",
-											alignItems: "center",
-											gap: "6px",
-										}}>
-											<div style={{
-												width: "14px",
-												height: "14px",
-												border: "2px solid var(--border)",
-												borderTopColor: "var(--text-accent)",
-												borderRadius: "50%",
-												animation: "spin 0.8s linear infinite",
-											}} />
+										<div className="flex items-center gap-3 text-xs text-muted">
+											<div className="spinner spinner-sm" />
 											Scanning...
 										</div>
 									)}
-								<DeleteSiteButton siteId={site.id} siteUrl={site.url} />
+									<DeleteSiteButton siteId={site.id} siteUrl={site.url} />
 								</div>
 							</div>
 						</Link>
