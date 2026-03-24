@@ -3,12 +3,12 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: unknown
-last_updated: "2026-03-15T02:55:18.864Z"
+last_updated: "2026-03-24T00:29:51.928Z"
 progress:
   total_phases: 7
   completed_phases: 6
   total_plans: 24
-  completed_plans: 20
+  completed_plans: 21
 ---
 
 # Project State
@@ -62,6 +62,7 @@ Progress: [####################] (Phase 7 — 2/3 plans done)
 | Phase 06-retroactive-verification P03 | 120 | 1 tasks | 2 files |
 | Phase 07 P01 | 64s | 2 tasks | 5 files |
 | Phase 07 P02 | 59s | 1 task | 1 file |
+| Phase 01-core-engine P01 | 15min | 2 tasks | 19 files |
 
 ## Phase 4 Deliverables
 
@@ -184,6 +185,9 @@ Recent decisions affecting current work:
 - [Phase 07-01]: Dashboard links use https://app.aeorank.dev across all five updated components
 - [Phase 07-02]: GitHub Marketplace requires action.yml at repo root — aeorank/action must be a separate repository (not monorepo subdirectory); Option A is standard and recommended
 - [Phase 07-02]: v1 major version tag must be manually force-pushed after v1.0.0 release to enable uses: aeorank/action@v1 pinning
+- [Phase 01-core-engine]: pnpm + Turborepo monorepo with NodeNext module resolution and Biome for lint/format
+- [Phase 01-core-engine]: tsup exports require types condition before import/require for NodeNext type resolution
+- [Phase 01-core-engine]: Weight multipliers (high=1.5, medium=1.0, low=0.5) externalized in WEIGHT_MULTIPLIER constant for recalibration
 
 ### Pending Todos
 
