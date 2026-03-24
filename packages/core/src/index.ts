@@ -69,15 +69,18 @@ export async function scan(
 
 	// If browser mode requested and no custom fetcher, use Playwright
 	let cleanup: (() => Promise<void>) | null = null;
-	if (config?.browser && !customFetcher) {
-		const { createPlaywrightFetcher: createPwFetcher } = await import("./scanner/playwright-fetcher.js");
+	let resolvedFetcher = customFetcher;
+	if (config?.browser && !resolvedFetcher) {
+		const { createPlaywrightFetcher: createPwFetcher } = await import(
+			"./scanner/playwright-fetcher.js"
+		);
 		const pw = await createPwFetcher(config);
-		customFetcher = pw.fetcher;
+		resolvedFetcher = pw.fetcher;
 		cleanup = pw.cleanup;
 	}
 
 	// Step 1: Scan URL
-	const { pages, meta } = await scanUrl(url, config, customFetcher);
+	const { pages, meta } = await scanUrl(url, config, resolvedFetcher);
 
 	// Step 2: Score
 	config?.onProgress?.(82, "Scoring dimensions");
