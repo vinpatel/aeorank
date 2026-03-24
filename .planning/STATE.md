@@ -3,12 +3,12 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: unknown
-last_updated: "2026-03-24T00:29:51.928Z"
+last_updated: "2026-03-24T00:33:19.938Z"
 progress:
   total_phases: 7
   completed_phases: 6
   total_plans: 24
-  completed_plans: 21
+  completed_plans: 23
 ---
 
 # Project State
@@ -18,7 +18,7 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-14)
 
 **Core value:** A developer runs `npx aeorank scan <url>` with zero config and gets an AEO score plus all 8 generated files needed for AI visibility — in under 30 seconds.
-**Current focus:** Phase 7 IN PROGRESS. Plan 02 complete — action/PUBLISHING.md Marketplace checklist created. Plan 03 (deploy) remaining.
+**Current focus:** Phase 01 Plan 03 complete — 12-dimension scoring engine formalized. Phase 7 IN PROGRESS. Plan 02 complete — action/PUBLISHING.md Marketplace checklist created. Plan 03 (deploy) remaining.
 
 ## Current Position
 
@@ -63,6 +63,8 @@ Progress: [####################] (Phase 7 — 2/3 plans done)
 | Phase 07 P01 | 64s | 2 tasks | 5 files |
 | Phase 07 P02 | 59s | 1 task | 1 file |
 | Phase 01-core-engine P01 | 15min | 2 tasks | 19 files |
+| Phase 01-core-engine P02 | 15min | 2 tasks | 11 files |
+| Phase 01-core-engine P03 | 20 | 2 tasks | 6 files |
 
 ## Phase 4 Deliverables
 
@@ -188,6 +190,11 @@ Recent decisions affecting current work:
 - [Phase 01-core-engine]: pnpm + Turborepo monorepo with NodeNext module resolution and Biome for lint/format
 - [Phase 01-core-engine]: tsup exports require types condition before import/require for NodeNext type resolution
 - [Phase 01-core-engine]: Weight multipliers (high=1.5, medium=1.0, low=0.5) externalized in WEIGHT_MULTIPLIER constant for recalibration
+- [Phase 01-core-engine]: Registry pattern (DIMENSION_SCORERS map) decouples orchestrator from individual scorers — future dimension additions require only adding one entry
+- [Phase 01-core-engine]: scorePerPage() added beyond plan spec — per-page dimension scoring needed by Phase 5 SaaS dashboard for per-page drill-down views
+- [Phase 01-core-engine]: parseRobotsTxt takes (url, content) not just content — robots-parser requires full URL for isAllowed checks
+- [Phase 01-core-engine]: scanUrl accepts optional customFetcher parameter for clean dependency injection in tests
+- [Phase 01-core-engine]: Discovery caches parsed pages in Map<string, ScannedPage> to avoid double-fetch in scanUrl orchestration
 
 ### Pending Todos
 
