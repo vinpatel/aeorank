@@ -3,12 +3,12 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: unknown
-last_updated: "2026-03-24T00:33:19.938Z"
+last_updated: "2026-03-24T00:36:51.255Z"
 progress:
   total_phases: 7
-  completed_phases: 6
+  completed_phases: 7
   total_plans: 24
-  completed_plans: 23
+  completed_plans: 24
 ---
 
 # Project State
@@ -65,6 +65,7 @@ Progress: [####################] (Phase 7 — 2/3 plans done)
 | Phase 01-core-engine P01 | 15min | 2 tasks | 19 files |
 | Phase 01-core-engine P02 | 15min | 2 tasks | 11 files |
 | Phase 01-core-engine P03 | 20 | 2 tasks | 6 files |
+| Phase 01-core-engine P04 | 20min | 2 tasks | 11 files |
 
 ## Phase 4 Deliverables
 
@@ -195,6 +196,7 @@ Recent decisions affecting current work:
 - [Phase 01-core-engine]: parseRobotsTxt takes (url, content) not just content — robots-parser requires full URL for isAllowed checks
 - [Phase 01-core-engine]: scanUrl accepts optional customFetcher parameter for clean dependency injection in tests
 - [Phase 01-core-engine]: Discovery caches parsed pages in Map<string, ScannedPage> to avoid double-fetch in scanUrl orchestration
+- [Phase 01-core-engine]: All 8 generators are pure functions (ScanResult in, string out) with no disk I/O — guarantees determinism across CLI, GHA, and dashboard
 
 ### Pending Todos
 
