@@ -91,7 +91,7 @@ export async function POST(request: Request) {
 	const serviceSupabase = createServiceSupabaseClient();
 	const { data: scanRecord, error: scanError } = await supabase
 		.from("scans")
-		.insert({ user_id: userId, site_id: site.id, status: "pending" })
+		.insert({ user_id: userId, site_id: site.id, status: "pending", scanned_at: new Date().toISOString() })
 		.select("id")
 		.single();
 

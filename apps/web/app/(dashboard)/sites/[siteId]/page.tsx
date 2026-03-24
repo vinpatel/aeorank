@@ -39,14 +39,29 @@ export default async function SiteDetailPage({ params }: PageProps) {
 	}
 
 	// Fetch the most recent scan (including page_scores)
-	const { data: scan } = await supabase
+	// First check for any pending/running scan — user needs to see scan progress
+	const { data: activeScan } = await supabase
 		.from("scans")
 		.select("id, status, score, grade, dimensions, page_scores, error, scanned_at, pages_scanned, duration_ms")
 		.eq("site_id", siteId)
 		.eq("user_id", userId)
+		.in("status", ["pending", "running"])
 		.order("scanned_at", { ascending: false })
 		.limit(1)
 		.maybeSingle();
+
+	const { data: latestCompletedScan } = await supabase
+		.from("scans")
+		.select("id, status, score, grade, dimensions, page_scores, error, scanned_at, pages_scanned, duration_ms")
+		.eq("site_id", siteId)
+		.eq("user_id", userId)
+		.in("status", ["complete", "error"])
+		.order("scanned_at", { ascending: false })
+		.limit(1)
+		.maybeSingle();
+
+	// Prefer showing active scan (pending/running) over completed — user needs to see progress
+	const scan = activeScan ?? latestCompletedScan;
 
 	// Fetch last 30 days of completed scans for history + comparison
 	const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString();
