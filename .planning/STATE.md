@@ -3,7 +3,7 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: unknown
-last_updated: "2026-03-24T00:36:51.255Z"
+last_updated: "2026-03-24T00:40:00Z"
 progress:
   total_phases: 7
   completed_phases: 7
@@ -18,14 +18,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-14)
 
 **Core value:** A developer runs `npx aeorank scan <url>` with zero config and gets an AEO score plus all 8 generated files needed for AI visibility — in under 30 seconds.
-**Current focus:** Phase 01 Plan 03 complete — 12-dimension scoring engine formalized. Phase 7 IN PROGRESS. Plan 02 complete — action/PUBLISHING.md Marketplace checklist created. Plan 03 (deploy) remaining.
+**Current focus:** Phase 01 all 5 plans complete — Core Engine (@aeorank/core) fully built and verified. Phase 7 IN PROGRESS. Plan 02 complete — action/PUBLISHING.md Marketplace checklist created. Plan 03 (deploy) remaining.
 
 ## Current Position
 
 Phase: 7 of 7 (Marketing Content Deployment) — IN PROGRESS
 Plan: 2 of 3 in Phase 7 — plan 02 complete
-Status: Phase 7 plan 02 complete — action/PUBLISHING.md created; GHA-01 Marketplace publication path documented
-Last activity: 2026-03-15 — Phase 7 plan 02: action/PUBLISHING.md Marketplace publication checklist created; v1.0.0 release steps, v1 tag, and post-publish verification documented
+Status: Phase 01 plan 05 complete — integration + determinism tests verified (120 tests pass), biome lint clean on core; Phase 7 plan 03 (deploy) remaining
+Last activity: 2026-03-24 — Phase 01 plan 05: scan() pipeline wired end-to-end, 11 integration + 3 determinism tests passing (10 identical runs), SCAN-03 + SCORE-05 verified
 
 Progress: [####################] (Phase 7 — 2/3 plans done)
 
@@ -197,6 +197,8 @@ Recent decisions affecting current work:
 - [Phase 01-core-engine]: scanUrl accepts optional customFetcher parameter for clean dependency injection in tests
 - [Phase 01-core-engine]: Discovery caches parsed pages in Map<string, ScannedPage> to avoid double-fetch in scanUrl orchestration
 - [Phase 01-core-engine]: All 8 generators are pure functions (ScanResult in, string out) with no disk I/O — guarantees determinism across CLI, GHA, and dashboard
+- [Phase 01-core-engine P05]: scan() convenience API wires scanner → scorer → generators in one call with optional customFetcher for hermetic test mocking
+- [Phase 01-core-engine P05]: Biome noParameterAssign: use resolvedFetcher local variable instead of reassigning customFetcher parameter in scan()
 
 ### Pending Todos
 
