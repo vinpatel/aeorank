@@ -53,7 +53,7 @@ Expands scoring from 12 dimensions to 36 criteria across 5 pillars, matching AEO
 **Plans:** 1/2 plans executed
 Plans:
 - [x] 08-01-PLAN.md — Parser extensions + first 4 scorers (topic-coherence, original-data, fact-density, duplicate-content)
-- [ ] 08-02-PLAN.md — Last 3 scorers (cross-page-duplication, evidence-packaging, citation-ready-writing) + determinism tests
+- [x] 08-02-PLAN.md — Last 3 scorers (cross-page-duplication, evidence-packaging, citation-ready-writing) + determinism tests
 
 ### Phase 9: Content Structure Expansion
 **Goal**: Add 6 Content Structure scoring dimensions checking Q&A format, answer density, tables/lists, definition patterns, and entity disambiguation. Parser detects question headings, table/list elements, and definition sentence patterns.

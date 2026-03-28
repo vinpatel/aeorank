@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: Competitive Parity
-status: executing
-stopped_at: Completed 08-01-PLAN.md — 4 Answer Readiness scorers implemented, DIMENSION_DEFS expanded from 12 to 16
-last_updated: "2026-03-28T18:40:37.965Z"
+status: verifying
+stopped_at: Completed 08-02-PLAN.md — 3 Answer Readiness scorers added, DIMENSION_DEFS at 19 entries, all 148 tests passing
+last_updated: "2026-03-28T18:46:36.051Z"
 last_activity: 2026-03-28
 progress:
   total_phases: 9
-  completed_phases: 0
+  completed_phases: 1
   total_plans: 2
-  completed_plans: 1
+  completed_plans: 2
 ---
 
 # Project State
@@ -27,7 +27,7 @@ See: .planning/PROJECT.md (updated 2026-03-28)
 Phase: 08 (answer-readiness) — EXECUTING
 Plan: 2 of 2
 Milestone: v2.0 Competitive Parity — Phases 8-16
-Status: Ready to execute
+Status: Phase complete — ready for verification
 Last activity: 2026-03-28
 
 Progress: [####################] (Phase 7 — 2/3 plans done)
@@ -72,6 +72,7 @@ Progress: [####################] (Phase 7 — 2/3 plans done)
 | Phase 01-core-engine P03 | 20 | 2 tasks | 6 files |
 | Phase 01-core-engine P04 | 20min | 2 tasks | 11 files |
 | Phase 08 P01 | 8min | 2 tasks | 8 files |
+| Phase 08 P02 | 5min | 2 tasks | 7 files |
 
 ## Phase 4 Deliverables
 
@@ -221,6 +222,10 @@ Recent decisions affecting current work:
 - [Phase 08]: Use djb2-style hash (not crypto) for contentHash to keep parser.ts pure with no I/O imports
 - [Phase 08]: scoreTopicCoherence returns score=5 with informative hint when fewer than 2 pages (not enough data)
 - [Phase 08]: fact-density and duplicate-content added to PAGE_LEVEL_DIMENSIONS; topic-coherence and original-data kept site-level
+- [Phase 08]: scoreCrossPageDuplication uses Map<normalized-para, Set<page-url>> to detect identical paragraphs appearing on 2+ distinct pages
+- [Phase 08]: scoreEvidencePackaging requires 2+ attribution/citation markers per page to count toward the scored percentage
+- [Phase 08]: scoreCitationReadyWriting uses negative lookahead to exclude question words from definition pattern — prevents 'What is' from matching as definition
+- [Phase 08]: cross-page-duplication kept site-level only; evidence-packaging and citation-ready-writing added to PAGE_LEVEL_DIMENSIONS
 
 ### Pending Todos
 
@@ -236,6 +241,6 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-03-28T18:40:37.961Z
-Stopped at: Completed 08-01-PLAN.md — 4 Answer Readiness scorers implemented, DIMENSION_DEFS expanded from 12 to 16
+Last session: 2026-03-28T18:46:36.036Z
+Stopped at: Completed 08-02-PLAN.md — 3 Answer Readiness scorers added, DIMENSION_DEFS at 19 entries, all 148 tests passing
 Resume file: None
