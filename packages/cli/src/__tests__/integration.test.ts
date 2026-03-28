@@ -5,16 +5,13 @@ import type { ScanResult } from "@aeorank/core";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 // Mock @aeorank/core
-vi.mock("@aeorank/core", () => ({
-	scan: vi.fn(),
-	DEFAULT_CONFIG: {
-		maxPages: 50,
-		concurrency: 3,
-		timeout: 30000,
-		userAgent: "AEOrank/1.0",
-		respectCrawlDelay: true,
-	},
-}));
+vi.mock("@aeorank/core", async (importOriginal) => {
+	const actual = await importOriginal<typeof import("@aeorank/core")>();
+	return {
+		...actual,
+		scan: vi.fn(),
+	};
+});
 
 // Mock ora
 vi.mock("ora", () => ({
