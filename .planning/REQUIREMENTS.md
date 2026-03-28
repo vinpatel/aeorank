@@ -57,8 +57,8 @@ Requirements for Competitive Parity milestone. Expands scoring from 12 to 36 cri
 
 ### File Generation
 
-- [ ] **FGEN-01**: ai.txt generator produces content licensing file for AI crawlers
-- [ ] **FGEN-02**: llms-full.txt improved with Q&A pairs, definition blocks, entity disambiguation
+- [x] **FGEN-01**: ai.txt generator produces content licensing file for AI crawlers
+- [x] **FGEN-02**: llms-full.txt improved with Q&A pairs, definition blocks, entity disambiguation
 
 ### Surface Updates
 
@@ -136,8 +136,8 @@ Deferred beyond v2.0.
 | WGHT-02 | Phase 13 | Pending |
 | WGHT-03 | Phase 13 | Complete |
 | WGHT-04 | Phase 13 | Complete |
-| FGEN-01 | Phase 14 | Pending |
-| FGEN-02 | Phase 14 | Pending |
+| FGEN-01 | Phase 14 | Complete |
+| FGEN-02 | Phase 14 | Complete |
 | SURF-01 | Phase 15 | Pending |
 | SURF-02 | Phase 15 | Pending |
 | SURF-03 | Phase 15 | Pending |

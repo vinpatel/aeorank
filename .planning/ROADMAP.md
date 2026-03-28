@@ -34,7 +34,7 @@ Expands scoring from 12 dimensions to 36 criteria across 5 pillars, matching AEO
 - [x] **Phase 11: Technical Foundation Expansion** — +5 dimensions (semantic HTML, extraction friction, image context, schema coverage, speakable) (completed 2026-03-28)
 - [x] **Phase 12: AI Discovery Expansion** — +6 dimensions (content cannibalization, publishing velocity, content licensing, canonical URLs, RSS feed, visible dates) (completed 2026-03-28)
 - [x] **Phase 13: Weight Migration & Score Gates** — Migrate to percentage weights, merge overlapping dimensions, add coherence + duplication gates (completed 2026-03-28)
-- [ ] **Phase 14: New File Generators** — ai.txt generator, llms-full.txt improvements, plugin updates
+- [x] **Phase 14: New File Generators** — ai.txt generator, llms-full.txt improvements, plugin updates (completed 2026-03-28)
 - [ ] **Phase 15: Dashboard & Docs Updates** — Update all surfaces for 36 criteria
 - [ ] **Phase 16: Per-Page Scoring** — Page-level scoring (0-75 scale), CLI `--page` flag, API per-page results
 
@@ -138,9 +138,9 @@ Plans:
   3. llms-full.txt includes extracted Q&A pairs and definition blocks from scan results
   4. Generator tests cover both new outputs
   5. All existing generator tests still pass
-**Plans:** 1 plan
+**Plans:** 1/1 plans complete
 Plans:
-- [ ] 14-01-PLAN.md — ai.txt generator + llms-full.txt Q&A/definitions/entities enrichment
+- [x] 14-01-PLAN.md — ai.txt generator + llms-full.txt Q&A/definitions/entities enrichment
 
 ### Phase 15: Dashboard & Docs Updates
 **Goal**: Update all user-facing surfaces for 36 criteria. Dashboard shows pillar-grouped breakdown, docs reference all criteria, marketing reflects "36 criteria across 5 pillars", CLI groups by pillar with --pillar filter.
@@ -183,6 +183,6 @@ Plans:
 | 11. Technical Foundation | v2.0 | 2/2 | Complete    | 2026-03-28 |
 | 12. AI Discovery | v2.0 | 2/2 | Complete    | 2026-03-28 |
 | 13. Weight Migration | v2.0 | 2/2 | Complete    | 2026-03-28 |
-| 14. New File Generators | v2.0 | 0/1 | Planning | — |
+| 14. New File Generators | v2.0 | 1/1 | Complete   | 2026-03-28 |
 | 15. Dashboard & Docs | v2.0 | 0/? | Not Started | — |
 | 16. Per-Page Scoring | v2.0 | 0/? | Not Started | — |

@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: Competitive Parity
 status: verifying
-stopped_at: Completed 13-02-PLAN.md
-last_updated: "2026-03-28T20:31:59.189Z"
+stopped_at: Completed 14-01-PLAN.md
+last_updated: "2026-03-28T20:41:47.546Z"
 last_activity: 2026-03-28
 progress:
   total_phases: 9
-  completed_phases: 6
-  total_plans: 11
-  completed_plans: 11
+  completed_phases: 7
+  total_plans: 12
+  completed_plans: 12
 ---
 
 # Project State
@@ -20,12 +20,12 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-28)
 
 **Core value:** A developer runs `npx aeorank-cli scan <url>` with zero config and gets an AEO score plus all 8 generated files needed for AI visibility — in under 30 seconds.
-**Current focus:** Phase 13 — weight-migration-score-gates
+**Current focus:** Phase 14 — new-file-generators
 
 ## Current Position
 
-Phase: 14
-Plan: Not started
+Phase: 14 (new-file-generators) — EXECUTING
+Plan: 1 of 1
 Milestone: v2.0 Competitive Parity — Phases 8-16
 Status: Phase complete — ready for verification
 Last activity: 2026-03-28
@@ -82,6 +82,7 @@ Progress: [####################] (Phase 7 — 2/3 plans done)
 | Phase 12-ai-discovery-expansion P02 | 232s | 2 tasks | 7 files |
 | Phase 13 P01 | 40m | 2 tasks | 12 files |
 | Phase 13 P02 | 361 | 2 tasks | 11 files |
+| Phase 14-new-file-generators P01 | 8m | 2 tasks | 6 files |
 
 ## Phase 4 Deliverables
 
@@ -262,6 +263,9 @@ Recent decisions affecting current work:
 - [Phase 13]: coherence gate caps at coherence_score * 10 (proportional penalty, not hard floor)
 - [Phase 13]: duplication gate threshold is 3+ duplicate paragraph occurrences per page, matching scoreDuplicateContent algorithm
 - [Phase 13]: weightPct thresholds for CLI/dashboard color: >=5% red, >=3% amber/yellow, <3% dim/green
+- [Phase 14-new-file-generators]: DEFINITION_PATTERNS and ENTITY_STOPWORDS duplicated in llms-full.ts to keep generators dependency-free
+- [Phase 14-new-file-generators]: Entity count uses split/join technique instead of indexOf loop to satisfy Biome noAssignInExpressions
+- [Phase 14-new-file-generators]: Q&A pairs question headings with paragraphs by index; Key Entities section only shows terms with 2+ bodyText occurrences
 
 ### Pending Todos
 
@@ -277,6 +281,6 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-03-28T20:31:22.799Z
-Stopped at: Completed 13-02-PLAN.md
+Last session: 2026-03-28T20:41:47.543Z
+Stopped at: Completed 14-01-PLAN.md
 Resume file: None
