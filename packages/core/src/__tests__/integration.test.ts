@@ -52,14 +52,14 @@ describe("scan() full pipeline", () => {
 		expect(result.scannedAt).toBeTruthy();
 	});
 
-	it("produces exactly 12 dimensions", async () => {
+	it("produces exactly 16 dimensions", async () => {
 		const result = await scan(
 			"https://example.com",
 			{ maxPages: 3 },
 			createMockFetcher(defaultResponses),
 		);
 
-		expect(result.dimensions).toHaveLength(12);
+		expect(result.dimensions).toHaveLength(16);
 		for (const dim of result.dimensions) {
 			expect(dim.score).toBeGreaterThanOrEqual(0);
 			expect(dim.score).toBeLessThanOrEqual(dim.maxScore);

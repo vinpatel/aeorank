@@ -316,24 +316,42 @@ describe("scoreTopicCoherence", () => {
 	});
 
 	it("returns low score for pages with unrelated headings", () => {
+		// 5 pages: top keywords come from page1 headings ("sourdough bread baking")
+		// but pages 2-5 have completely unrelated body text without those keywords
 		const pages = [
 			makePage({
 				url: "https://example.com/page1",
-				headings: [{ level: 1, text: "Cooking Recipes", id: null }],
-				bodyText: "delicious cooking recipes for home chefs",
+				headings: [
+					{ level: 1, text: "Sourdough Bread Baking", id: null },
+					{ level: 2, text: "Sourdough Starter Guide", id: null },
+					{ level: 2, text: "Baking Sourdough Bread", id: null },
+				],
+				bodyText: "sourdough bread baking requires starter culture and fermentation",
 			}),
 			makePage({
 				url: "https://example.com/page2",
-				headings: [{ level: 1, text: "Space Exploration Mission", id: null }],
-				bodyText: "nasa space exploration missions to mars",
+				headings: [{ level: 1, text: "Orbital Spacecraft Propulsion", id: null }],
+				bodyText: "orbital spacecraft propulsion uses ion thrusters for maneuvering in orbit",
 			}),
 			makePage({
 				url: "https://example.com/page3",
-				headings: [{ level: 1, text: "Quantum Physics Theory", id: null }],
-				bodyText: "quantum physics theory explained simply",
+				headings: [{ level: 1, text: "Quantum Wavefunction Theory", id: null }],
+				bodyText: "quantum wavefunction collapse measurement uncertainty principle explained",
+			}),
+			makePage({
+				url: "https://example.com/page4",
+				headings: [{ level: 1, text: "Machine Learning Neural Networks", id: null }],
+				bodyText: "neural networks machine learning deep learning gradient descent optimization",
+			}),
+			makePage({
+				url: "https://example.com/page5",
+				headings: [{ level: 1, text: "Microbiome Gut Health Bacteria", id: null }],
+				bodyText: "gut microbiome bacteria diversity health digestive system flora",
 			}),
 		];
 		const result = scoreTopicCoherence(pages, makeMeta());
+		// top keywords are "sourdough", "bread", "baking" (each appears 3x from page1 headings)
+		// only page1 contains those keywords in bodyText → 1/5 = 20% → score 0
 		expect(result.score).toBeLessThanOrEqual(4);
 	});
 });
