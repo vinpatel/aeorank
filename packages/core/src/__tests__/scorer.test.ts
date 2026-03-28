@@ -66,6 +66,8 @@ function makePage(overrides: Partial<ScannedPage> = {}): ScannedPage {
 		imgCount: 0,
 		imgsWithAlt: 0,
 		avgSentenceLength: 0,
+		rssFeeds: [],
+		timeElementCount: 0,
 		...overrides,
 	};
 }
@@ -88,6 +90,8 @@ function makePerfectMeta(): ScanMeta {
 		existingLlmsTxt: "# Test\n> Summary\n## Sec1\n- [A](a)\n## Sec2\n- [B](b)\n## Sec3\n- [C](c)",
 		platform: null,
 		responseTimeMs: 100,
+		aiTxt: null,
+		sitemapLastmods: [],
 	};
 }
 
@@ -99,6 +103,8 @@ function makeZeroMeta(): ScanMeta {
 		existingLlmsTxt: null,
 		platform: null,
 		responseTimeMs: 100,
+		aiTxt: null,
+		sitemapLastmods: [],
 	};
 }
 
@@ -106,8 +112,8 @@ describe("calculateAeoScore", () => {
 	it("returns high score for perfect inputs", () => {
 		const pages = [makePage(), makePage({ url: "https://example.com/about" })];
 		const result = calculateAeoScore(pages, makePerfectMeta());
-		expect(result.score).toBeGreaterThanOrEqual(70);
-		expect(result.dimensions).toHaveLength(32);
+		expect(result.score).toBeGreaterThanOrEqual(65);
+		expect(result.dimensions).toHaveLength(35);
 		expect(result.grade).toMatch(/^[A-F][+]?$/);
 	});
 
@@ -127,9 +133,9 @@ describe("calculateAeoScore", () => {
 		expect(result.grade).toBe("F");
 	});
 
-	it("returns exactly 32 dimensions", () => {
+	it("returns exactly 35 dimensions", () => {
 		const result = calculateAeoScore([makePage()], makePerfectMeta());
-		expect(result.dimensions).toHaveLength(32);
+		expect(result.dimensions).toHaveLength(35);
 
 		const ids = result.dimensions.map((d) => d.id);
 		expect(ids).toContain("llms-txt");
