@@ -63,8 +63,8 @@ Requirements for Competitive Parity milestone. Expands scoring from 12 to 36 cri
 ### Surface Updates
 
 - [ ] **SURF-01**: Dashboard score breakdown shows 36 criteria grouped by pillar (5 collapsible sections)
-- [ ] **SURF-02**: Docs site updated — "12 Dimensions" → "36 Criteria" across all scoring pages
-- [ ] **SURF-03**: Marketing site copy updated to reference "36 criteria across 5 pillars"
+- [x] **SURF-02**: Docs site updated — "12 Dimensions" → "36 Criteria" across all scoring pages
+- [x] **SURF-03**: Marketing site copy updated to reference "36 criteria across 5 pillars"
 - [ ] **SURF-04**: CLI table output groups dimensions by pillar with --pillar filter flag
 
 ### Per-Page Scoring
@@ -139,8 +139,8 @@ Deferred beyond v2.0.
 | FGEN-01 | Phase 14 | Complete |
 | FGEN-02 | Phase 14 | Complete |
 | SURF-01 | Phase 15 | Pending |
-| SURF-02 | Phase 15 | Pending |
-| SURF-03 | Phase 15 | Pending |
+| SURF-02 | Phase 15 | Complete |
+| SURF-03 | Phase 15 | Complete |
 | SURF-04 | Phase 15 | Pending |
 | PAGE-01 | Phase 16 | Pending |
 | PAGE-02 | Phase 16 | Pending |
