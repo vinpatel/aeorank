@@ -1,37 +1,38 @@
 ---
 gsd_state_version: 1.0
-milestone: v1.0
-milestone_name: milestone
-status: unknown
-last_updated: "2026-03-24T00:42:02.820Z"
+milestone: v2.0
+milestone_name: Competitive Parity
+status: planning
+last_updated: "2026-03-28T18:30:00.000Z"
+last_activity: 2026-03-28
 progress:
-  total_phases: 7
-  completed_phases: 7
-  total_plans: 24
-  completed_plans: 25
+  total_phases: 9
+  completed_phases: 0
+  total_plans: 0
+  completed_plans: 0
 ---
 
 # Project State
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-03-14)
+See: .planning/PROJECT.md (updated 2026-03-28)
 
-**Core value:** A developer runs `npx aeorank scan <url>` with zero config and gets an AEO score plus all 8 generated files needed for AI visibility — in under 30 seconds.
-**Current focus:** Phase 01 all 5 plans complete — Core Engine (@aeorank/core) fully built and verified. Phase 7 IN PROGRESS. Plan 02 complete — action/PUBLISHING.md Marketplace checklist created. Plan 03 (deploy) remaining.
+**Core value:** A developer runs `npx aeorank-cli scan <url>` with zero config and gets an AEO score plus all 8 generated files needed for AI visibility — in under 30 seconds.
+**Current focus:** v1.0 shipped. Planning v2.0 Competitive Parity — expand from 12 to 36 scoring criteria.
 
 ## Current Position
 
-Phase: 7 of 7 (Marketing Content Deployment) — IN PROGRESS
-Plan: 2 of 3 in Phase 7 — plan 02 complete
-Status: Phase 01 plan 05 complete — integration + determinism tests verified (120 tests pass), biome lint clean on core; Phase 7 plan 03 (deploy) remaining
-Last activity: 2026-03-24 — Phase 01 plan 05: scan() pipeline wired end-to-end, 11 integration + 3 determinism tests passing (10 identical runs), SCAN-03 + SCORE-05 verified
+Milestone: v2.0 Competitive Parity — Phases 8-16
+Status: Planning next milestone
+Last activity: 2026-03-28 — v1.0 milestone completed and archived
 
 Progress: [####################] (Phase 7 — 2/3 plans done)
 
 ## Performance Metrics
 
 **Velocity:**
+
 - Total plans completed: 12
 - Average duration: ~10 min per plan
 - Total execution time: ~2.5 hours
@@ -45,6 +46,7 @@ Progress: [####################] (Phase 7 — 2/3 plans done)
 | 3 — Web Presence | 4 | ~20min | ~5min |
 
 **Recent Trend:**
+
 - Last 4 plans: 03-01 through 03-04
 - Trend: accelerating (content/config plans faster than code plans)
 
@@ -70,6 +72,7 @@ Progress: [####################] (Phase 7 — 2/3 plans done)
 ## Phase 4 Deliverables
 
 ### Composite GitHub Action (`aeorank/action@v1`)
+
 - **action.yml:** Composite action with 4 steps — scan, Check Run, find-comment, upsert-comment
 - **Inputs:** url (required), token (default: github.token), fail-below (default: 0)
 - **Check Run:** Posts to GitHub Checks API via actions/github-script@v8; dimension table in output.text
@@ -78,11 +81,13 @@ Progress: [####################] (Phase 7 — 2/3 plans done)
 - **README.md:** 163-line Marketplace listing with quick start, permissions, full workflow, fork PR notes
 
 ### Requirements covered
+
 GHA-01, GHA-02, GHA-03, GHA-04, GHA-05
 
 ## Phase 1 Deliverables
 
 ### @aeorank/core package
+
 - **Scanner:** URL fetcher with rate limiting, HTML parser (cheerio), robots.txt parser, sitemap+BFS URL discovery
 - **Scorer:** 12 weighted dimensions, letter grades (A+ through F), pass/warn/fail status per dimension
 - **Generators:** All 8 output files (llms.txt, llms-full.txt, CLAUDE.md, schema.json, robots-patch.txt, faq-blocks.html, citation-anchors.html, sitemap-ai.xml)
@@ -91,11 +96,13 @@ GHA-01, GHA-02, GHA-03, GHA-04, GHA-05
 - **Build:** Dual ESM/CJS output with .d.ts via tsup. Biome lint/format clean.
 
 ### Requirements covered
+
 REQ-01, REQ-02, REQ-03, REQ-07, REQ-09, REQ-10, REQ-11, REQ-12, REQ-13, REQ-14, REQ-15, REQ-16, REQ-17, REQ-18, REQ-19, REQ-20
 
 ## Phase 2 Deliverables
 
 ### @aeorank/cli package
+
 - **Scan command:** `aeorank scan <url>` with colored score display, dimension table, next-steps recommendations
 - **JSON mode:** `--format json` for CI piping — clean JSON to stdout
 - **Init command:** `aeorank init` creates template aeorank.config.js
@@ -106,11 +113,13 @@ REQ-01, REQ-02, REQ-03, REQ-07, REQ-09, REQ-10, REQ-11, REQ-12, REQ-13, REQ-14, 
 - **Tests:** 55 tests across 6 test files (errors, score-display, scan, config, init, integration)
 
 ### Requirements covered
+
 CLI-01, CLI-02, CLI-03, CLI-04, CLI-05
 
 ## Phase 3 Deliverables
 
 ### @aeorank/marketing site
+
 - **Framework:** Astro 5 + Tailwind CSS 4 (via @tailwindcss/vite) + Preact
 - **Design:** 37signals aesthetic — #FAF9F7 bg, #111 text, Inter font, solid black buttons
 - **Homepage:** Hero, How It Works, Files List, Scoring Explainer, Pricing, FAQ, CTA
@@ -119,22 +128,26 @@ CLI-01, CLI-02, CLI-03, CLI-04, CLI-05
 - **Deploy:** GitHub Pages via withastro/action@v5 (aeorank.dev)
 
 ### @aeorank/docs site
+
 - **Framework:** Astro 5 + Starlight with Pagefind search
 - **Content:** 17 pages — getting started, CLI reference, 8 file docs, scoring explainer
 - **Search:** Pagefind indexed 1069 words across 17 pages
 - **Deploy:** GitHub Pages via peaceiris/actions-gh-pages to aeorank/docs repo (docs.aeorank.dev)
 
 ### GitHub Actions
+
 - `deploy-marketing.yml` — builds + deploys marketing on push to main
 - `deploy-docs.yml` — builds + pushes docs to external repo on push to main
 - Path-based triggers prevent unnecessary builds
 
 ### Requirements covered
+
 SITE-01, SITE-02, SITE-03, SITE-04, DOCS-01, DOCS-02, DOCS-03, DOCS-04, DOCS-05
 
 ## Phase 6 Deliverables
 
 ### Retroactive Verification
+
 - **01-VERIFICATION.md:** Phase 1 (Core Engine) — 20/20 requirements verified PASS
 - **02-VERIFICATION.md:** Phase 2 (CLI) — 5/5 requirements verified PASS
 - **03-VERIFICATION.md:** Phase 3 (Web Presence) — 9/9 requirements verified (7 PASS, 2 PASS-CODE-COMPLETE)
@@ -142,6 +155,7 @@ SITE-01, SITE-02, SITE-03, SITE-04, DOCS-01, DOCS-02, DOCS-03, DOCS-04, DOCS-05
 - **Coverage:** Verified count increased from 9/40 to 39/40
 
 ### Requirements covered
+
 INFRA-01, INFRA-02, INFRA-03, SCAN-01 through SCAN-04, SCORE-01 through SCORE-05, GEN-01 through GEN-08, CLI-01 through CLI-05, SITE-01 through SITE-04, DOCS-01 through DOCS-05
 
 ## Accumulated Context
