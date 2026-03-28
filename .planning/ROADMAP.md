@@ -93,7 +93,10 @@ Plans:
   3. A well-structured HTML5 site scores higher on semantic-html than a div-soup site
   4. All existing + new tests pass with zero failures
   5. Determinism test passes for all 5 new dimensions
-**Plans**: TBD
+**Plans:** 2 plans
+Plans:
+- [ ] 11-01-PLAN.md — Parser extensions (semantic elements, image context, sentence metrics) + first 3 scorers (semantic-html, extraction-friction, image-context)
+- [ ] 11-02-PLAN.md — Last 2 scorers (schema-coverage, speakable-schema) + determinism tests for all 32 dimensions
 
 ### Phase 12: AI Discovery Expansion
 **Goal**: Add 6 AI Discovery dimensions checking content cannibalization, publishing velocity, content licensing, canonical URLs, RSS feeds, and visible dates. Parser extracts canonical tags, RSS link tags, time elements, and ai.txt.
@@ -169,7 +172,7 @@ Plans:
 | 8. Answer Readiness | v2.0 | 2/2 | Complete |  |
 | 9. Content Structure | v2.0 | 2/2 | Complete   | 2026-03-28 |
 | 10. Trust & Authority | v2.0 | 1/1 | Complete    | 2026-03-28 |
-| 11. Technical Foundation | v2.0 | 0/? | Not Started | — |
+| 11. Technical Foundation | v2.0 | 0/2 | Not Started | — |
 | 12. AI Discovery | v2.0 | 0/? | Not Started | — |
 | 13. Weight Migration | v2.0 | 0/? | Not Started | — |
 | 14. New File Generators | v2.0 | 0/? | Not Started | — |
