@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: Competitive Parity
-status: executing
-stopped_at: Completed 13-01-PLAN.md
-last_updated: "2026-03-28T20:23:11.241Z"
+status: verifying
+stopped_at: Completed 13-02-PLAN.md
+last_updated: "2026-03-28T20:31:28.965Z"
 last_activity: 2026-03-28
 progress:
   total_phases: 9
-  completed_phases: 5
+  completed_phases: 6
   total_plans: 11
-  completed_plans: 10
+  completed_plans: 11
 ---
 
 # Project State
@@ -27,7 +27,7 @@ See: .planning/PROJECT.md (updated 2026-03-28)
 Phase: 13 (weight-migration-score-gates) — EXECUTING
 Plan: 2 of 2
 Milestone: v2.0 Competitive Parity — Phases 8-16
-Status: Ready to execute
+Status: Phase complete — ready for verification
 Last activity: 2026-03-28
 
 Progress: [####################] (Phase 7 — 2/3 plans done)
@@ -81,6 +81,7 @@ Progress: [####################] (Phase 7 — 2/3 plans done)
 | Phase 12 P01 | 346s | 2 tasks | 11 files |
 | Phase 12-ai-discovery-expansion P02 | 232s | 2 tasks | 7 files |
 | Phase 13 P01 | 40m | 2 tasks | 12 files |
+| Phase 13 P02 | 361 | 2 tasks | 11 files |
 
 ## Phase 4 Deliverables
 
@@ -258,6 +259,9 @@ Recent decisions affecting current work:
 - [Phase 12-02]: canonical-urls and visible-dates in PAGE_LEVEL_DIMENSIONS; rss-feed is site-level only (homepage check)
 - [Phase 13]: weightPct values must sum to exactly 100 across all 36 dimensions; publishing-velocity and content-licensing reduced to 1% each to correct sum
 - [Phase 13]: speakable-schema merged into faq-speakable; author-schema merged into eeat-signals; both old scorers removed
+- [Phase 13]: coherence gate caps at coherence_score * 10 (proportional penalty, not hard floor)
+- [Phase 13]: duplication gate threshold is 3+ duplicate paragraph occurrences per page, matching scoreDuplicateContent algorithm
+- [Phase 13]: weightPct thresholds for CLI/dashboard color: >=5% red, >=3% amber/yellow, <3% dim/green
 
 ### Pending Todos
 
@@ -273,6 +277,6 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-03-28T20:23:11.239Z
-Stopped at: Completed 13-01-PLAN.md
+Last session: 2026-03-28T20:31:22.799Z
+Stopped at: Completed 13-02-PLAN.md
 Resume file: None

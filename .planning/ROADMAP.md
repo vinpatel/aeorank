@@ -33,7 +33,7 @@ Expands scoring from 12 dimensions to 36 criteria across 5 pillars, matching AEO
 - [x] **Phase 10: Trust & Authority Expansion** — +2 dimensions (internal linking, author schema) (completed 2026-03-28)
 - [x] **Phase 11: Technical Foundation Expansion** — +5 dimensions (semantic HTML, extraction friction, image context, schema coverage, speakable) (completed 2026-03-28)
 - [x] **Phase 12: AI Discovery Expansion** — +6 dimensions (content cannibalization, publishing velocity, content licensing, canonical URLs, RSS feed, visible dates) (completed 2026-03-28)
-- [ ] **Phase 13: Weight Migration & Score Gates** — Migrate to percentage weights, merge overlapping dimensions, add coherence + duplication gates
+- [x] **Phase 13: Weight Migration & Score Gates** — Migrate to percentage weights, merge overlapping dimensions, add coherence + duplication gates (completed 2026-03-28)
 - [ ] **Phase 14: New File Generators** — ai.txt generator, llms-full.txt improvements, plugin updates
 - [ ] **Phase 15: Dashboard & Docs Updates** — Update all surfaces for 36 criteria
 - [ ] **Phase 16: Per-Page Scoring** — Page-level scoring (0-75 scale), CLI `--page` flag, API per-page results
@@ -123,10 +123,10 @@ Plans:
   3. Coherence gate: site with topic-coherence < 6/10 has score capped visibly in output
   4. Duplication gate: page with 3+ duplicate blocks capped at 35% in per-page score
   5. All existing tests updated and passing with zero failures
-**Plans:** 1/2 plans executed
+**Plans:** 2/2 plans complete
 Plans:
 - [x] 13-01-PLAN.md — Weight migration: types, constants, scorer to weightPct + merge speakable-schema and author-schema
-- [ ] 13-02-PLAN.md — Score gates (coherence + duplication) + CLI/dashboard weightPct display updates
+- [x] 13-02-PLAN.md — Score gates (coherence + duplication) + CLI/dashboard weightPct display updates
 
 ### Phase 14: New File Generators
 **Goal**: Add ai.txt generator and improve llms-full.txt with Q&A pairs, definition blocks, and entity disambiguation. Update generateFiles() to produce 10 files total.
@@ -180,7 +180,7 @@ Plans:
 | 10. Trust & Authority | v2.0 | 1/1 | Complete    | 2026-03-28 |
 | 11. Technical Foundation | v2.0 | 2/2 | Complete    | 2026-03-28 |
 | 12. AI Discovery | v2.0 | 2/2 | Complete    | 2026-03-28 |
-| 13. Weight Migration | v2.0 | 1/2 | In Progress|  |
+| 13. Weight Migration | v2.0 | 2/2 | Complete   | 2026-03-28 |
 | 14. New File Generators | v2.0 | 0/? | Not Started | — |
 | 15. Dashboard & Docs | v2.0 | 0/? | Not Started | — |
 | 16. Per-Page Scoring | v2.0 | 0/? | Not Started | — |
