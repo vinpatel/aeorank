@@ -47,6 +47,8 @@ const PAGE_LEVEL_DIMENSIONS = [
 	"eeat-signals",
 	"fact-density",
 	"duplicate-content",
+	"evidence-packaging",
+	"citation-ready-writing",
 ];
 
 /** Score each page individually across page-level dimensions */

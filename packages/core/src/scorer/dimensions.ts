@@ -669,6 +669,200 @@ export function scoreDuplicateContent(pages: ScannedPage[], _meta: ScanMeta): Di
 	);
 }
 
+/** Dimension 17: Cross-Page Duplication (low weight) */
+export function scoreCrossPageDuplication(pages: ScannedPage[], _meta: ScanMeta): DimensionScore {
+	if (pages.length < 2) {
+		return makeDimension(
+			"cross-page-duplication",
+			"Cross-Page Duplication",
+			10,
+			"low",
+			"Single page — cross-page duplication not applicable",
+		);
+	}
+
+	// Build a map from normalized paragraph text -> set of page URLs it appears on
+	const paraToPages = new Map<string, Set<string>>();
+
+	for (const page of pages) {
+		for (const para of page.paragraphs) {
+			const normalized = para.toLowerCase().replace(/\s+/g, " ").trim();
+			if (!paraToPages.has(normalized)) {
+				paraToPages.set(normalized, new Set());
+			}
+			paraToPages.get(normalized)!.add(page.url);
+		}
+	}
+
+	const totalUnique = paraToPages.size;
+	if (totalUnique === 0) {
+		return makeDimension(
+			"cross-page-duplication",
+			"Cross-Page Duplication",
+			10,
+			"low",
+			"Remove identical content blocks that appear across multiple pages",
+		);
+	}
+
+	// Count paragraphs that appear on 2+ different pages
+	let duplicatedCount = 0;
+	for (const pageSet of paraToPages.values()) {
+		if (pageSet.size >= 2) duplicatedCount++;
+	}
+
+	const ratio = duplicatedCount / totalUnique;
+	let score: number;
+	if (ratio === 0) score = 10;
+	else if (ratio < 0.05) score = 8;
+	else if (ratio < 0.1) score = 5;
+	else if (ratio < 0.2) score = 3;
+	else score = 0;
+
+	return makeDimension(
+		"cross-page-duplication",
+		"Cross-Page Duplication",
+		score,
+		"low",
+		score < 10
+			? "Remove identical content blocks that appear across multiple pages"
+			: "No cross-page content duplication detected",
+	);
+}
+
+/** Dimension 18: Evidence Packaging (low weight) */
+export function scoreEvidencePackaging(pages: ScannedPage[], _meta: ScanMeta): DimensionScore {
+	if (pages.length === 0) {
+		return makeDimension(
+			"evidence-packaging",
+			"Evidence Packaging",
+			0,
+			"low",
+			"Add inline citations, attribution phrases, and source references to support claims",
+		);
+	}
+
+	const ATTRIBUTION_PATTERNS = [
+		/according to/i,
+		/\bsource[s]?:/i,
+		/\bcited?\b/i,
+		/\breference[s]?:/i,
+	];
+	const CITATION_PATTERNS = [/\[\d+\]/, /\(.*?\d{4}.*?\)/];
+
+	let pagesWithEvidence = 0;
+
+	for (const page of pages) {
+		let markerCount = 0;
+
+		// Check sentences for attribution and inline citation patterns
+		const allText = page.sentences.join(" ");
+		for (const pattern of ATTRIBUTION_PATTERNS) {
+			if (pattern.test(allText)) markerCount++;
+		}
+		for (const pattern of CITATION_PATTERNS) {
+			if (pattern.test(allText)) markerCount++;
+		}
+
+		// Check headings for sources/references section
+		const hasSourcesHeading = page.headings.some((h) =>
+			/source|reference|bibliograph|citation/i.test(h.text),
+		);
+		if (hasSourcesHeading) markerCount++;
+
+		if (markerCount >= 2) pagesWithEvidence++;
+	}
+
+	const pct = pagesWithEvidence / pages.length;
+	let score: number;
+	if (pct > 0.5) score = 10;
+	else if (pct > 0.3) score = 7;
+	else if (pct > 0.15) score = 4;
+	else if (pct > 0) score = 2;
+	else score = 0;
+
+	return makeDimension(
+		"evidence-packaging",
+		"Evidence Packaging",
+		score,
+		"low",
+		score < 10
+			? "Add inline citations, attribution phrases, and source references to support claims"
+			: "Strong evidence packaging with citations and attribution",
+	);
+}
+
+const DEFINITION_PATTERN = /^(?!What |How |Why |When |Where |Who |Is |Are |Do |Does |Did |Can |Could |Should )[A-Z][^.?!]+\s+(is|are|refers to|means|describes|defines)\s+/;
+
+/** Dimension 19: Citation-Ready Writing (low weight) */
+export function scoreCitationReadyWriting(pages: ScannedPage[], _meta: ScanMeta): DimensionScore {
+	if (pages.length === 0) {
+		return makeDimension(
+			"citation-ready-writing",
+			"Citation-Ready Writing",
+			0,
+			"low",
+			"Write self-contained definition sentences and single-claim statements that AI can quote directly",
+		);
+	}
+
+	let totalRatio = 0;
+	let pageCount = 0;
+
+	for (const page of pages) {
+		const sentences = page.sentences;
+		if (sentences.length === 0) continue;
+
+		let citationReadyCount = 0;
+		for (const sentence of sentences) {
+			const isDefinition = DEFINITION_PATTERN.test(sentence);
+			const isSelfContained =
+				sentence.length >= 40 &&
+				sentence.length <= 200 &&
+				/^[A-Z]/.test(sentence) &&
+				sentence.endsWith(".") &&
+				!sentence.endsWith("?") &&
+				!sentence.endsWith("!");
+			const isSingleClaim = !(/, and /i.test(sentence) || /, but /i.test(sentence));
+
+			if ((isDefinition || isSelfContained) && isSingleClaim) {
+				citationReadyCount++;
+			}
+		}
+
+		totalRatio += citationReadyCount / sentences.length;
+		pageCount++;
+	}
+
+	if (pageCount === 0) {
+		return makeDimension(
+			"citation-ready-writing",
+			"Citation-Ready Writing",
+			0,
+			"low",
+			"Write self-contained definition sentences and single-claim statements that AI can quote directly",
+		);
+	}
+
+	const avgRatio = totalRatio / pageCount;
+	let score: number;
+	if (avgRatio > 0.4) score = 10;
+	else if (avgRatio > 0.25) score = 7;
+	else if (avgRatio > 0.15) score = 4;
+	else if (avgRatio > 0.05) score = 2;
+	else score = 0;
+
+	return makeDimension(
+		"citation-ready-writing",
+		"Citation-Ready Writing",
+		score,
+		"low",
+		score < 10
+			? "Write self-contained definition sentences and single-claim statements that AI can quote directly"
+			: "Excellent citation-ready writing style",
+	);
+}
+
 /** Registry mapping dimension IDs to scorer functions */
 export const DIMENSION_SCORERS: Record<string, DimensionScorer> = {
 	"llms-txt": scoreLlmsTxt,
@@ -687,6 +881,9 @@ export const DIMENSION_SCORERS: Record<string, DimensionScorer> = {
 	"original-data": scoreOriginalData,
 	"fact-density": scoreFactDensity,
 	"duplicate-content": scoreDuplicateContent,
+	"cross-page-duplication": scoreCrossPageDuplication,
+	"evidence-packaging": scoreEvidencePackaging,
+	"citation-ready-writing": scoreCitationReadyWriting,
 };
 
 function makeDimension(
