@@ -1,4 +1,4 @@
-import { DIMENSION_DEFS } from "../constants.js";
+import { DIMENSION_DEFS, PAGE_LEVEL_DIMENSIONS, PAGE_SCORE_MAX } from "../constants.js";
 import type { DimensionScore, PageScore, ScanMeta, ScannedPage } from "../types.js";
 import { DIMENSION_SCORERS } from "./dimensions.js";
 import { getGrade } from "./grades.js";
@@ -64,35 +64,6 @@ function countDuplicateBlocks(page: ScannedPage): number {
 	return dupeCount;
 }
 
-/** Dimensions that can be scored per-page (excludes site-level dimensions) */
-const PAGE_LEVEL_DIMENSIONS = [
-	"content-structure",
-	"answer-first",
-	"meta-descriptions",
-	"page-freshness",
-	"citation-anchors",
-	"schema-markup",
-	"eeat-signals",
-	"fact-density",
-	"duplicate-content",
-	"evidence-packaging",
-	"citation-ready-writing",
-	"qa-format",
-	"direct-answer-density",
-	"query-answer-alignment",
-	"tables-lists",
-	"definition-patterns",
-	"entity-disambiguation",
-	"internal-linking",
-	"semantic-html",
-	"extraction-friction",
-	"image-context",
-	"schema-coverage",
-	"content-cannibalization",
-	"canonical-urls",
-	"visible-dates",
-];
-
 /** Score each page individually across page-level dimensions */
 export function scorePerPage(pages: ScannedPage[], meta: ScanMeta): PageScore[] {
 	return pages.map((page) => {
@@ -112,20 +83,21 @@ export function scorePerPage(pages: ScannedPage[], meta: ScanMeta): PageScore[] 
 			totalPageWeight += def.weightPct;
 		}
 
-		// Normalize to 0-100 since page-level dims don't sum to 100
-		let score = totalPageWeight > 0 ? Math.round((weightedSum / totalPageWeight) * 100) : 0;
+		// Normalize to 0-75 since page-level dims don't sum to 100 and site-level dims are excluded
+		let score = totalPageWeight > 0 ? Math.round((weightedSum / totalPageWeight) * PAGE_SCORE_MAX) : 0;
 
-		// Duplication gate: 3+ duplicate blocks on a page caps the page score at 35
+		// Duplication gate: 3+ duplicate blocks on a page caps the page score at 35% of max (= 26)
 		const dupeCount = countDuplicateBlocks(page);
 		if (dupeCount >= 3) {
-			score = Math.min(score, 35);
+			score = Math.min(score, Math.round(PAGE_SCORE_MAX * 0.35));
 		}
 
 		return {
 			url: page.url,
 			title: page.title || page.url,
 			score,
-			grade: getGrade(score),
+			maxScore: PAGE_SCORE_MAX,
+			grade: getGrade(Math.round(score * (100 / PAGE_SCORE_MAX))),
 			dimensions: dims,
 		};
 	});

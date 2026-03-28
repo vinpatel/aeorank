@@ -95,6 +95,7 @@ export interface PageScore {
 	url: string;
 	title: string;
 	score: number;
+	maxScore: number;
 	grade: string;
 	dimensions: Pick<DimensionScore, "id" | "score" | "status">[];
 }
