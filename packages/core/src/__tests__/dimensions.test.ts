@@ -5,9 +5,11 @@ import {
 	scoreCitationReadyWriting,
 	scoreContentStructure,
 	scoreCrossPageDuplication,
+	scoreDefinitionPatterns,
 	scoreDirectAnswerDensity,
 	scoreDuplicateContent,
 	scoreEeatSignals,
+	scoreEntityDisambiguation,
 	scoreEvidencePackaging,
 	scoreFactDensity,
 	scoreFaqSpeakable,
@@ -17,6 +19,7 @@ import {
 	scoreQaFormat,
 	scoreQueryAnswerAlignment,
 	scoreSchemaMarkup,
+	scoreTablesLists,
 	scoreTopicCoherence,
 } from "../scorer/dimensions.js";
 import type { ScanMeta, ScannedPage } from "../types.js";
@@ -771,6 +774,115 @@ describe("scoreQueryAnswerAlignment", () => {
 	it("has id 'query-answer-alignment' and weight 'low'", () => {
 		const result = scoreQueryAnswerAlignment([makePage()], makeMeta());
 		expect(result.id).toBe("query-answer-alignment");
+		expect(result.weight).toBe("low");
+	});
+});
+
+describe("scoreTablesLists", () => {
+	it("returns 0 for empty pages array", () => {
+		const result = scoreTablesLists([], makeMeta());
+		expect(result.score).toBe(0);
+	});
+
+	it("returns 0 when pages have no tables or lists", () => {
+		const page = makePage({ tableCount: 0, listCount: 0 });
+		const result = scoreTablesLists([page], makeMeta());
+		expect(result.score).toBe(0);
+	});
+
+	it("returns >= 4 when pages have tableCount=1, listCount=0", () => {
+		const page = makePage({ tableCount: 1, listCount: 0 });
+		const result = scoreTablesLists([page], makeMeta());
+		expect(result.score).toBeGreaterThanOrEqual(4);
+	});
+
+	it("returns >= 8 when pages have tableCount=2, listCount=3", () => {
+		const page = makePage({ tableCount: 2, listCount: 3 });
+		const result = scoreTablesLists([page], makeMeta());
+		expect(result.score).toBeGreaterThanOrEqual(8);
+	});
+
+	it("has id 'tables-lists' and weight 'low'", () => {
+		const result = scoreTablesLists([makePage()], makeMeta());
+		expect(result.id).toBe("tables-lists");
+		expect(result.weight).toBe("low");
+	});
+});
+
+describe("scoreDefinitionPatterns", () => {
+	it("returns 0 for empty pages array", () => {
+		const result = scoreDefinitionPatterns([], makeMeta());
+		expect(result.score).toBe(0);
+	});
+
+	it("returns 0 when pages have no definition patterns in sentences", () => {
+		const page = makePage({
+			sentences: ["This is a random sentence.", "Another unrelated sentence here."],
+		});
+		const result = scoreDefinitionPatterns([page], makeMeta());
+		expect(result.score).toBe(0);
+	});
+
+	it("returns >= 8 when pages have clear definition sentences", () => {
+		const page1 = makePage({
+			sentences: [
+				"AEO is defined as the practice of optimizing content for AI extraction.",
+				"SEO refers to search engine optimization techniques.",
+				"Content marketing means creating and distributing valuable content.",
+			],
+		});
+		const page2 = makePage({
+			url: "https://example.com/guide",
+			sentences: [
+				"Structured data is defined as markup that helps search engines understand content.",
+				"Schema.org refers to a vocabulary for structured data markup.",
+			],
+		});
+		const result = scoreDefinitionPatterns([page1, page2], makeMeta());
+		expect(result.score).toBeGreaterThanOrEqual(8);
+	});
+
+	it("has id 'definition-patterns' and weight 'low'", () => {
+		const result = scoreDefinitionPatterns([makePage()], makeMeta());
+		expect(result.id).toBe("definition-patterns");
+		expect(result.weight).toBe("low");
+	});
+});
+
+describe("scoreEntityDisambiguation", () => {
+	it("returns 0 for empty pages array", () => {
+		const result = scoreEntityDisambiguation([], makeMeta());
+		expect(result.score).toBe(0);
+	});
+
+	it("returns <= 4 when pages have no clear entity in first paragraph", () => {
+		const page = makePage({
+			title: "AEOrank Platform Guide",
+			paragraphs: ["Some content here without mentioning anything relevant.", "More generic content."],
+			bodyText: "Some content here without mentioning anything relevant. More generic content.",
+		});
+		const result = scoreEntityDisambiguation([page], makeMeta());
+		expect(result.score).toBeLessThanOrEqual(4);
+	});
+
+	it("returns >= 8 when pages define primary entity early and use it consistently", () => {
+		const page = makePage({
+			title: "AEOrank Platform Guide",
+			paragraphs: [
+				"AEOrank is a platform for optimizing AI visibility. AEOrank helps businesses improve their AEO scores.",
+				"The AEOrank platform provides comprehensive scoring across 25 dimensions.",
+				"Using AEOrank, teams can identify gaps in their AI optimization strategy.",
+			],
+			bodyText:
+				"AEOrank is a platform for optimizing AI visibility. AEOrank helps businesses improve their AEO scores. The AEOrank platform provides comprehensive scoring across 25 dimensions. Using AEOrank, teams can identify gaps in their AI optimization strategy.",
+		});
+		const result = scoreEntityDisambiguation([page], makeMeta());
+		expect(result.score).toBeGreaterThanOrEqual(8);
+	});
+
+	it("has id 'entity-disambiguation' and weight 'low'", () => {
+		const result = scoreEntityDisambiguation([makePage()], makeMeta());
+		expect(result.id).toBe("entity-disambiguation");
 		expect(result.weight).toBe("low");
 	});
 });

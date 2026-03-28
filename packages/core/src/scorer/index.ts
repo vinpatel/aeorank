@@ -52,6 +52,9 @@ const PAGE_LEVEL_DIMENSIONS = [
 	"qa-format",
 	"direct-answer-density",
 	"query-answer-alignment",
+	"tables-lists",
+	"definition-patterns",
+	"entity-disambiguation",
 ];
 
 /** Score each page individually across page-level dimensions */
