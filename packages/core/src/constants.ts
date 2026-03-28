@@ -24,6 +24,9 @@ export const DIMENSION_DEFS: DimensionDef[] = [
 	{ id: "qa-format", name: "Q&A Content Format", weight: "medium", maxScore: 10 },
 	{ id: "direct-answer-density", name: "Direct Answer Density", weight: "medium", maxScore: 10 },
 	{ id: "query-answer-alignment", name: "Query-Answer Alignment", weight: "low", maxScore: 10 },
+	{ id: "tables-lists", name: "Tables & Lists", weight: "low", maxScore: 10 },
+	{ id: "definition-patterns", name: "Definition Patterns", weight: "low", maxScore: 10 },
+	{ id: "entity-disambiguation", name: "Entity Disambiguation", weight: "low", maxScore: 10 },
 ];
 
 /** Grade thresholds (score >= threshold = that grade) */

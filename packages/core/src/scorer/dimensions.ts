@@ -995,6 +995,162 @@ export function scoreQueryAnswerAlignment(pages: ScannedPage[], _meta: ScanMeta)
 	);
 }
 
+/** Patterns used to detect definition sentences */
+const DEFINITION_SENTENCE_PATTERNS = [
+	/\b\w+(?:\s+\w+){0,3}\s+is\s+defined\s+as\b/i,
+	/\b\w+(?:\s+\w+){0,3}\s+refers?\s+to\b/i,
+	/\b\w+(?:\s+\w+){0,3}\s+means?\s+(?:the|a|an)\b/i,
+	/\b\w+(?:\s+\w+){0,3}\s+describes?\s+(?:the|a|an)\b/i,
+	/\bdefined\s+as\s+the\b/i,
+];
+
+/** Common English stopwords to exclude from entity term extraction */
+const ENTITY_STOPWORDS = new Set([
+	"this", "that", "with", "from", "have", "will", "been", "were",
+	"they", "them", "their", "what", "when", "where", "which", "while",
+	"your", "more", "also", "than", "then", "into", "over", "some",
+	"such", "each", "very", "just", "about", "after", "before",
+	"page", "site", "blog", "post", "guide", "help", "info",
+]);
+
+/** Dimension 23: Tables & Lists (low weight) */
+export function scoreTablesLists(pages: ScannedPage[], _meta: ScanMeta): DimensionScore {
+	if (pages.length === 0) {
+		return makeDimension(
+			"tables-lists",
+			"Tables & Lists",
+			0,
+			"low",
+			"Add HTML tables with headers and ordered/unordered lists to present structured data",
+		);
+	}
+
+	let totalTables = 0;
+	let totalLists = 0;
+	for (const page of pages) {
+		totalTables += page.tableCount;
+		totalLists += page.listCount;
+	}
+
+	const avg = (totalTables + totalLists) / pages.length;
+	let score: number;
+	if (avg >= 3) score = 10;
+	else if (avg >= 2) score = 7;
+	else if (avg >= 1) score = 4;
+	else if (avg > 0) score = 2;
+	else score = 0;
+
+	return makeDimension(
+		"tables-lists",
+		"Tables & Lists",
+		score,
+		"low",
+		score < 10
+			? "Add HTML tables with headers and ordered/unordered lists to present structured data"
+			: "Strong use of tables and lists for structured content presentation",
+	);
+}
+
+/** Dimension 24: Definition Patterns (low weight) */
+export function scoreDefinitionPatterns(pages: ScannedPage[], _meta: ScanMeta): DimensionScore {
+	if (pages.length === 0) {
+		return makeDimension(
+			"definition-patterns",
+			"Definition Patterns",
+			0,
+			"low",
+			"Use definition patterns like 'X is defined as...' and 'X refers to...' for AI-extractable definitions",
+		);
+	}
+
+	let pagesWithDefinitions = 0;
+	for (const page of pages) {
+		const hasDefinition = page.sentences.some((sentence) =>
+			DEFINITION_SENTENCE_PATTERNS.some((pattern) => pattern.test(sentence)),
+		);
+		if (hasDefinition) pagesWithDefinitions++;
+	}
+
+	const ratio = pagesWithDefinitions / pages.length;
+	let score: number;
+	if (ratio > 0.5) score = 10;
+	else if (ratio > 0.3) score = 7;
+	else if (ratio > 0.15) score = 4;
+	else if (ratio > 0) score = 2;
+	else score = 0;
+
+	return makeDimension(
+		"definition-patterns",
+		"Definition Patterns",
+		score,
+		"low",
+		score < 10
+			? "Use definition patterns like 'X is defined as...' and 'X refers to...' for AI-extractable definitions"
+			: "Strong use of definition patterns for AI-extractable content",
+	);
+}
+
+/** Dimension 25: Entity Disambiguation (low weight) */
+export function scoreEntityDisambiguation(pages: ScannedPage[], _meta: ScanMeta): DimensionScore {
+	if (pages.length === 0) {
+		return makeDimension(
+			"entity-disambiguation",
+			"Entity Disambiguation",
+			0,
+			"low",
+			"Define the primary entity early in each page and use consistent terminology throughout",
+		);
+	}
+
+	let wellDisambiguatedPages = 0;
+
+	for (const page of pages) {
+		const title = page.title || "";
+		// Extract significant entity terms from title (>= 4 chars, not stopwords)
+		const entityTerms = title
+			.split(/\s+/)
+			.map((w) => w.toLowerCase().replace(/[^a-z0-9]/g, ""))
+			.filter((w) => w.length >= 4 && !ENTITY_STOPWORDS.has(w));
+
+		if (entityTerms.length === 0) continue;
+
+		const firstParagraph = (page.paragraphs[0] || "").toLowerCase();
+		const bodyTextLower = page.bodyText.toLowerCase();
+
+		// Check if first paragraph mentions at least one entity term
+		const firstParaMentionsEntity = entityTerms.some((term) => firstParagraph.includes(term));
+
+		// Count occurrences of entity terms in bodyText
+		const totalOccurrences = entityTerms.reduce((count, term) => {
+			const regex = new RegExp(`\\b${term}\\b`, "gi");
+			const matches = bodyTextLower.match(regex);
+			return count + (matches ? matches.length : 0);
+		}, 0);
+
+		if (firstParaMentionsEntity && totalOccurrences >= 3) {
+			wellDisambiguatedPages++;
+		}
+	}
+
+	const ratio = wellDisambiguatedPages / pages.length;
+	let score: number;
+	if (ratio > 0.6) score = 10;
+	else if (ratio > 0.4) score = 7;
+	else if (ratio > 0.2) score = 4;
+	else if (ratio > 0) score = 2;
+	else score = 0;
+
+	return makeDimension(
+		"entity-disambiguation",
+		"Entity Disambiguation",
+		score,
+		"low",
+		score < 10
+			? "Define the primary entity early in each page and use consistent terminology throughout"
+			: "Strong entity disambiguation with consistent terminology usage",
+	);
+}
+
 /** Registry mapping dimension IDs to scorer functions */
 export const DIMENSION_SCORERS: Record<string, DimensionScorer> = {
 	"llms-txt": scoreLlmsTxt,
@@ -1019,6 +1175,9 @@ export const DIMENSION_SCORERS: Record<string, DimensionScorer> = {
 	"qa-format": scoreQaFormat,
 	"direct-answer-density": scoreDirectAnswerDensity,
 	"query-answer-alignment": scoreQueryAnswerAlignment,
+	"tables-lists": scoreTablesLists,
+	"definition-patterns": scoreDefinitionPatterns,
+	"entity-disambiguation": scoreEntityDisambiguation,
 };
 
 function makeDimension(
