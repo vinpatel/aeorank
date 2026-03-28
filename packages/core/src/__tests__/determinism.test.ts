@@ -114,8 +114,8 @@ describe("determinism", () => {
 			status: d.status,
 		}));
 
-		// All 27 dimensions should be present
-		expect(results[0].dimensions).toHaveLength(27);
+		// All 30 dimensions should be present
+		expect(results[0].dimensions).toHaveLength(30);
 
 		// All new dimensions should appear in results
 		const newDimIds = [

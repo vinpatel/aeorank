@@ -60,6 +60,12 @@ function makePage(overrides: Partial<ScannedPage> = {}): ScannedPage {
 		],
 		tableCount: 0,
 		listCount: 0,
+		semanticElements: { main: 0, article: 0, nav: 0, aside: 0, section: 0, header: 0, footer: 0 },
+		ariaRoleCount: 0,
+		figureCount: 0,
+		imgCount: 0,
+		imgsWithAlt: 0,
+		avgSentenceLength: 0,
 		...overrides,
 	};
 }
@@ -101,7 +107,7 @@ describe("calculateAeoScore", () => {
 		const pages = [makePage(), makePage({ url: "https://example.com/about" })];
 		const result = calculateAeoScore(pages, makePerfectMeta());
 		expect(result.score).toBeGreaterThanOrEqual(70);
-		expect(result.dimensions).toHaveLength(27);
+		expect(result.dimensions).toHaveLength(30);
 		expect(result.grade).toMatch(/^[A-F][+]?$/);
 	});
 
@@ -121,9 +127,9 @@ describe("calculateAeoScore", () => {
 		expect(result.grade).toBe("F");
 	});
 
-	it("returns exactly 27 dimensions", () => {
+	it("returns exactly 30 dimensions", () => {
 		const result = calculateAeoScore([makePage()], makePerfectMeta());
-		expect(result.dimensions).toHaveLength(27);
+		expect(result.dimensions).toHaveLength(30);
 
 		const ids = result.dimensions.map((d) => d.id);
 		expect(ids).toContain("llms-txt");

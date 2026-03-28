@@ -12,8 +12,10 @@ import {
 	scoreEeatSignals,
 	scoreEntityDisambiguation,
 	scoreEvidencePackaging,
+	scoreExtractionFriction,
 	scoreFactDensity,
 	scoreFaqSpeakable,
+	scoreImageContext,
 	scoreInternalLinking,
 	scoreLlmsTxt,
 	scoreMetaDescriptions,
@@ -21,6 +23,7 @@ import {
 	scoreQaFormat,
 	scoreQueryAnswerAlignment,
 	scoreSchemaMarkup,
+	scoreSemanticHtml,
 	scoreTablesLists,
 	scoreTopicCoherence,
 } from "../scorer/dimensions.js";
@@ -1071,6 +1074,126 @@ describe("scoreAuthorSchema", () => {
 	it("has id 'author-schema' and weight 'low'", () => {
 		const result = scoreAuthorSchema([makePage()], makeMeta());
 		expect(result.id).toBe("author-schema");
+		expect(result.weight).toBe("low");
+	});
+});
+
+describe("scoreSemanticHtml", () => {
+	it("returns 0 for empty pages array", () => {
+		const result = scoreSemanticHtml([], makeMeta());
+		expect(result.score).toBe(0);
+		expect(result.id).toBe("semantic-html");
+		expect(result.weight).toBe("low");
+	});
+
+	it("returns score 10 for page with main+article+nav+aside+lang+ARIA", () => {
+		const page = makePage({
+			semanticElements: { main: 1, article: 1, nav: 1, aside: 1, section: 0, header: 1, footer: 1 },
+			ariaRoleCount: 2,
+			language: "en",
+		});
+		const result = scoreSemanticHtml([page], makeMeta());
+		expect(result.score).toBe(10);
+	});
+
+	it("returns score 5-6 for page with main+article but no nav/aside/lang", () => {
+		const page = makePage({
+			semanticElements: { main: 1, article: 1, nav: 0, aside: 0, section: 0, header: 0, footer: 0 },
+			ariaRoleCount: 0,
+			language: null,
+		});
+		const result = scoreSemanticHtml([page], makeMeta());
+		expect(result.score).toBeGreaterThanOrEqual(4);
+		expect(result.score).toBeLessThanOrEqual(6);
+	});
+
+	it("returns score 0 for page with zero semantic elements and no lang", () => {
+		const page = makePage({
+			semanticElements: { main: 0, article: 0, nav: 0, aside: 0, section: 0, header: 0, footer: 0 },
+			ariaRoleCount: 0,
+			language: null,
+		});
+		const result = scoreSemanticHtml([page], makeMeta());
+		expect(result.score).toBe(0);
+	});
+
+	it("has id 'semantic-html' and weight 'low'", () => {
+		const result = scoreSemanticHtml([makePage()], makeMeta());
+		expect(result.id).toBe("semantic-html");
+		expect(result.weight).toBe("low");
+	});
+});
+
+describe("scoreExtractionFriction", () => {
+	it("returns 0 for empty pages array", () => {
+		const result = scoreExtractionFriction([], makeMeta());
+		expect(result.score).toBe(0);
+		expect(result.id).toBe("extraction-friction");
+		expect(result.weight).toBe("low");
+	});
+
+	it("returns 9-10 for pages with avgSentenceLength ~15 words (easy to extract)", () => {
+		const page = makePage({ avgSentenceLength: 15 });
+		const result = scoreExtractionFriction([page], makeMeta());
+		expect(result.score).toBeGreaterThanOrEqual(9);
+	});
+
+	it("returns 5-7 for pages with avgSentenceLength ~25 words (moderate friction)", () => {
+		const page = makePage({ avgSentenceLength: 25 });
+		const result = scoreExtractionFriction([page], makeMeta());
+		expect(result.score).toBeGreaterThanOrEqual(4);
+		expect(result.score).toBeLessThanOrEqual(7);
+	});
+
+	it("returns 0-3 for pages with avgSentenceLength ~35+ words (high friction)", () => {
+		const page = makePage({ avgSentenceLength: 40 });
+		const result = scoreExtractionFriction([page], makeMeta());
+		expect(result.score).toBeLessThanOrEqual(3);
+	});
+
+	it("has id 'extraction-friction' and weight 'low'", () => {
+		const result = scoreExtractionFriction([makePage()], makeMeta());
+		expect(result.id).toBe("extraction-friction");
+		expect(result.weight).toBe("low");
+	});
+});
+
+describe("scoreImageContext", () => {
+	it("returns 0 for empty pages array", () => {
+		const result = scoreImageContext([], makeMeta());
+		expect(result.score).toBe(0);
+		expect(result.id).toBe("image-context");
+		expect(result.weight).toBe("low");
+	});
+
+	it("returns 10 for page with all images having alt text and figures with captions", () => {
+		const page = makePage({ imgCount: 3, imgsWithAlt: 3, figureCount: 2 });
+		const result = scoreImageContext([page], makeMeta());
+		expect(result.score).toBe(10);
+	});
+
+	it("returns 0-2 for page with images but no alt text and no figures", () => {
+		const page = makePage({ imgCount: 5, imgsWithAlt: 0, figureCount: 0 });
+		const result = scoreImageContext([page], makeMeta());
+		expect(result.score).toBeLessThanOrEqual(2);
+	});
+
+	it("returns 4-6 for page with some alt text but no figures", () => {
+		const page = makePage({ imgCount: 4, imgsWithAlt: 3, figureCount: 0 });
+		const result = scoreImageContext([page], makeMeta());
+		expect(result.score).toBeGreaterThanOrEqual(4);
+		expect(result.score).toBeLessThanOrEqual(7);
+	});
+
+	it("returns 10 for page with zero images (no friction from images)", () => {
+		const page = makePage({ imgCount: 0, imgsWithAlt: 0, figureCount: 0 });
+		const result = scoreImageContext([page], makeMeta());
+		expect(result.score).toBe(10);
+	});
+
+	it("has id 'image-context' and weight 'low'", () => {
+		const result = scoreImageContext([makePage()], makeMeta());
+		expect(result.id).toBe("image-context");
 		expect(result.weight).toBe("low");
 	});
 });
