@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: Competitive Parity
-status: executing
-stopped_at: Completed 11-01-PLAN.md — semantic-html, extraction-friction, image-context scorers added, DIMENSION_DEFS at 30, all 553 tests passing
-last_updated: "2026-03-28T19:27:38.594Z"
+status: verifying
+stopped_at: Completed 11-02-PLAN.md — schema-coverage and speakable-schema scorers added, DIMENSION_DEFS at 32, all 567 tests passing
+last_updated: "2026-03-28T19:32:32.785Z"
 last_activity: 2026-03-28
 progress:
   total_phases: 9
-  completed_phases: 3
+  completed_phases: 4
   total_plans: 7
-  completed_plans: 6
+  completed_plans: 7
 ---
 
 # Project State
@@ -27,7 +27,7 @@ See: .planning/PROJECT.md (updated 2026-03-28)
 Phase: 11 (technical-foundation-expansion) — EXECUTING
 Plan: 2 of 2
 Milestone: v2.0 Competitive Parity — Phases 8-16
-Status: Ready to execute
+Status: Phase complete — ready for verification
 Last activity: 2026-03-28
 
 Progress: [####################] (Phase 7 — 2/3 plans done)
@@ -77,6 +77,7 @@ Progress: [####################] (Phase 7 — 2/3 plans done)
 | Phase 09 P02 | 3min | 2 tasks | 7 files |
 | Phase 10 P01 | 6min | 2 tasks | 6 files |
 | Phase 11-technical-foundation-expansion P01 | 480s | 2 tasks | 9 files |
+| Phase 11-technical-foundation-expansion P02 | 178s | 2 tasks | 7 files |
 
 ## Phase 4 Deliverables
 
@@ -243,6 +244,9 @@ Recent decisions affecting current work:
 - [Phase 11-01]: scoreExtractionFriction uses avgSentenceLength pre-computed by parser for efficiency and consistency
 - [Phase 11-01]: scoreImageContext returns 10 for zero-image pages (no images = no friction from missing alt text)
 - [Phase 11-01]: All 3 Technical Foundation dimensions added to PAGE_LEVEL_DIMENSIONS (each page has own semantic elements and images)
+- [Phase 11-02]: scoreSchemaCoverage single-page special case returns score=5 (can't assess inner coverage with 1 page)
+- [Phase 11-02]: scoreSpeakableSchema detects SpeakableSpecification via direct @type, @graph traversal, and nested speakable property
+- [Phase 11-02]: Both schema-coverage and speakable-schema added to PAGE_LEVEL_DIMENSIONS — each page has its own schema, page-level scoring makes sense
 
 ### Pending Todos
 
@@ -258,6 +262,6 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-03-28T19:27:38.592Z
-Stopped at: Completed 11-01-PLAN.md — semantic-html, extraction-friction, image-context scorers added, DIMENSION_DEFS at 30, all 553 tests passing
+Last session: 2026-03-28T19:32:32.783Z
+Stopped at: Completed 11-02-PLAN.md — schema-coverage and speakable-schema scorers added, DIMENSION_DEFS at 32, all 567 tests passing
 Resume file: None
