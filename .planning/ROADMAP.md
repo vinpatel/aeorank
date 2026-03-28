@@ -152,7 +152,11 @@ Plans:
   3. Marketing site mentions "36 criteria across 5 pillars" (not "12 dimensions")
   4. CLI `aeorank scan <url>` output groups dimensions by pillar
   5. CLI `--pillar answer-readiness` filters output to show only that pillar's criteria
-**Plans**: TBD
+**Plans:** 3 plans
+Plans:
+- [ ] 15-01-PLAN.md — Core PILLAR_GROUPS constant + Dashboard pillar-grouped ScoreBreakdown
+- [ ] 15-02-PLAN.md — Docs + Marketing content updates (36 criteria, 5 pillars, percentage weights)
+- [ ] 15-03-PLAN.md — CLI pillar-grouped output + --pillar filter flag
 
 ### Phase 16: Per-Page Scoring
 **Goal**: Add per-page scoring (0-75 scale) for the 21 page-level criteria. Dashboard shows per-page breakdown, CLI supports --page flag, API returns per-page scores.
@@ -184,5 +188,5 @@ Plans:
 | 12. AI Discovery | v2.0 | 2/2 | Complete    | 2026-03-28 |
 | 13. Weight Migration | v2.0 | 2/2 | Complete    | 2026-03-28 |
 | 14. New File Generators | v2.0 | 1/1 | Complete    | 2026-03-28 |
-| 15. Dashboard & Docs | v2.0 | 0/? | Not Started | — |
+| 15. Dashboard & Docs | v2.0 | 0/3 | Planning | — |
 | 16. Per-Page Scoring | v2.0 | 0/? | Not Started | — |
