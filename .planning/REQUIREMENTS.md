@@ -13,9 +13,9 @@ Requirements for Competitive Parity milestone. Expands scoring from 12 to 36 cri
 - [x] **ANS-02**: Scanner detects original research and data (case studies, proprietary stats, unique data points) and scores 0-10
 - [x] **ANS-03**: Scanner measures fact and data density (numbers, percentages, statistics per page) and scores 0-10
 - [x] **ANS-04**: Scanner detects duplicate content blocks within a single page and scores 0-10
-- [ ] **ANS-05**: Scanner detects cross-page duplication (identical paragraphs across multiple pages) and scores 0-10
-- [ ] **ANS-06**: Scanner checks for evidence packaging (inline citations, attribution phrases, sources sections) and scores 0-10
-- [ ] **ANS-07**: Scanner detects citation-ready writing (self-contained definitions, single-claim statements) and scores 0-10
+- [x] **ANS-05**: Scanner detects cross-page duplication (identical paragraphs across multiple pages) and scores 0-10
+- [x] **ANS-06**: Scanner checks for evidence packaging (inline citations, attribution phrases, sources sections) and scores 0-10
+- [x] **ANS-07**: Scanner detects citation-ready writing (self-contained definitions, single-claim statements) and scores 0-10
 
 ### Content Structure
 
@@ -110,9 +110,9 @@ Deferred beyond v2.0.
 | ANS-02 | Phase 8 | Complete |
 | ANS-03 | Phase 8 | Complete |
 | ANS-04 | Phase 8 | Complete |
-| ANS-05 | Phase 8 | Pending |
-| ANS-06 | Phase 8 | Pending |
-| ANS-07 | Phase 8 | Pending |
+| ANS-05 | Phase 8 | Complete |
+| ANS-06 | Phase 8 | Complete |
+| ANS-07 | Phase 8 | Complete |
 | CSTR-01 | Phase 9 | Pending |
 | CSTR-02 | Phase 9 | Pending |
 | CSTR-03 | Phase 9 | Pending |
