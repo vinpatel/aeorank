@@ -4,6 +4,8 @@ import {
 	scoreAuthorSchema,
 	scoreCitationAnchors,
 	scoreCitationReadyWriting,
+	scoreContentCannibalization,
+	scoreContentLicensing,
 	scoreContentStructure,
 	scoreCrossPageDuplication,
 	scoreDefinitionPatterns,
@@ -20,6 +22,7 @@ import {
 	scoreLlmsTxt,
 	scoreMetaDescriptions,
 	scoreOriginalData,
+	scorePublishingVelocity,
 	scoreQaFormat,
 	scoreQueryAnswerAlignment,
 	scoreSchemaMarkup,
@@ -1335,5 +1338,148 @@ describe("scoreSpeakableSchema", () => {
 		const result = scoreSpeakableSchema(pages, makeMeta());
 		expect(result.score).toBeGreaterThanOrEqual(2);
 		expect(result.score).toBeLessThanOrEqual(5);
+	});
+});
+
+describe("scoreContentCannibalization", () => {
+	it("returns score 10, weight 'low', id 'content-cannibalization' for empty pages", () => {
+		const result = scoreContentCannibalization([], makeMeta());
+		expect(result.score).toBe(10);
+		expect(result.id).toBe("content-cannibalization");
+		expect(result.weight).toBe("low");
+	});
+
+	it("returns score 10 for a single page (no cannibalization possible)", () => {
+		const result = scoreContentCannibalization([makePage({ title: "Guide to SEO" })], makeMeta());
+		expect(result.score).toBe(10);
+	});
+
+	it("returns score 9-10 for 5 pages with unique titles and distinct headings", () => {
+		const pages = [
+			makePage({ url: "https://example.com/a", title: "JavaScript Fundamentals" }),
+			makePage({ url: "https://example.com/b", title: "Python Data Science" }),
+			makePage({ url: "https://example.com/c", title: "React Component Patterns" }),
+			makePage({ url: "https://example.com/d", title: "Database Indexing Strategies" }),
+			makePage({ url: "https://example.com/e", title: "Network Security Protocols" }),
+		];
+		const result = scoreContentCannibalization(pages, makeMeta());
+		expect(result.score).toBeGreaterThanOrEqual(9);
+		expect(result.score).toBeLessThanOrEqual(10);
+	});
+
+	it("returns score 3-5 for 5 pages with 3 nearly identical titles", () => {
+		const pages = [
+			makePage({ url: "https://example.com/a", title: "Guide to SEO" }),
+			makePage({ url: "https://example.com/b", title: "Guide to SEO Basics" }),
+			makePage({ url: "https://example.com/c", title: "Guide to SEO Tips" }),
+			makePage({ url: "https://example.com/d", title: "Python Data Science" }),
+			makePage({ url: "https://example.com/e", title: "React Component Patterns" }),
+		];
+		const result = scoreContentCannibalization(pages, makeMeta());
+		expect(result.score).toBeGreaterThanOrEqual(3);
+		expect(result.score).toBeLessThanOrEqual(5);
+	});
+
+	it("returns score 0-2 for 2 pages with identical titles", () => {
+		const pages = [
+			makePage({ url: "https://example.com/a", title: "Guide to SEO" }),
+			makePage({ url: "https://example.com/b", title: "Guide to SEO" }),
+		];
+		const result = scoreContentCannibalization(pages, makeMeta());
+		expect(result.score).toBeGreaterThanOrEqual(0);
+		expect(result.score).toBeLessThanOrEqual(2);
+	});
+});
+
+describe("scorePublishingVelocity", () => {
+	it("returns score 0, id 'publishing-velocity' for empty sitemapLastmods", () => {
+		const result = scorePublishingVelocity([], makeMeta({ sitemapLastmods: [] }));
+		expect(result.score).toBe(0);
+		expect(result.id).toBe("publishing-velocity");
+	});
+
+	it("returns score 9-10 for dates spread over 12 months at regular intervals", () => {
+		const now = new Date();
+		const dates: string[] = [];
+		for (let i = 0; i < 12; i++) {
+			const d = new Date(now);
+			d.setMonth(d.getMonth() - i);
+			dates.push(d.toISOString().slice(0, 10));
+		}
+		const result = scorePublishingVelocity([], makeMeta({ sitemapLastmods: dates }));
+		expect(result.score).toBeGreaterThanOrEqual(9);
+		expect(result.score).toBeLessThanOrEqual(10);
+	});
+
+	it("returns score 3-5 for all dates in the same week (burst, no cadence)", () => {
+		const now = new Date();
+		const dates: string[] = [];
+		for (let i = 0; i < 10; i++) {
+			const d = new Date(now);
+			d.setDate(d.getDate() - i % 3); // all within 3 days
+			dates.push(d.toISOString().slice(0, 10));
+		}
+		const result = scorePublishingVelocity([], makeMeta({ sitemapLastmods: dates }));
+		expect(result.score).toBeGreaterThanOrEqual(3);
+		expect(result.score).toBeLessThanOrEqual(5);
+	});
+
+	it("returns score 1-3 for dates only from 2+ years ago (stale)", () => {
+		const old = new Date("2020-01-01");
+		const dates: string[] = [];
+		for (let i = 0; i < 12; i++) {
+			const d = new Date(old);
+			d.setMonth(d.getMonth() + i);
+			dates.push(d.toISOString().slice(0, 10));
+		}
+		const result = scorePublishingVelocity([], makeMeta({ sitemapLastmods: dates }));
+		expect(result.score).toBeGreaterThanOrEqual(1);
+		expect(result.score).toBeLessThanOrEqual(3);
+	});
+
+	it("returns score 8-10 for 50+ dates spread evenly over 6 months", () => {
+		const now = new Date();
+		const dates: string[] = [];
+		for (let i = 0; i < 52; i++) {
+			const d = new Date(now);
+			d.setDate(d.getDate() - Math.round((i / 51) * 180));
+			dates.push(d.toISOString().slice(0, 10));
+		}
+		const result = scorePublishingVelocity([], makeMeta({ sitemapLastmods: dates }));
+		expect(result.score).toBeGreaterThanOrEqual(8);
+		expect(result.score).toBeLessThanOrEqual(10);
+	});
+});
+
+describe("scoreContentLicensing", () => {
+	it("returns score 0, id 'content-licensing' for no aiTxt and no license schema", () => {
+		const result = scoreContentLicensing([makePage()], makeMeta({ aiTxt: null }));
+		expect(result.score).toBe(0);
+		expect(result.id).toBe("content-licensing");
+	});
+
+	it("returns score 7-10 for substantial aiTxt present (>= 50 chars)", () => {
+		const aiTxt = "Allow: GPTBot\nAllow: ClaudeBot\nLicense: https://creativecommons.org/licenses/by/4.0/";
+		const result = scoreContentLicensing([makePage()], makeMeta({ aiTxt }));
+		expect(result.score).toBeGreaterThanOrEqual(7);
+		expect(result.score).toBeLessThanOrEqual(10);
+	});
+
+	it("returns score 5-7 for schema with license property (no aiTxt)", () => {
+		const page = makePage({
+			schemaOrg: [{ "@type": "Article", license: "https://creativecommons.org/licenses/by/4.0/" }],
+		});
+		const result = scoreContentLicensing([page], makeMeta({ aiTxt: null }));
+		expect(result.score).toBeGreaterThanOrEqual(4);
+		expect(result.score).toBeLessThanOrEqual(7);
+	});
+
+	it("returns score 10 for both substantial aiTxt and license schema", () => {
+		const aiTxt = "Allow: GPTBot\nAllow: ClaudeBot\nLicense: https://creativecommons.org/licenses/by/4.0/";
+		const page = makePage({
+			schemaOrg: [{ "@type": "Article", license: "https://creativecommons.org/licenses/by/4.0/" }],
+		});
+		const result = scoreContentLicensing([page], makeMeta({ aiTxt }));
+		expect(result.score).toBe(10);
 	});
 });
