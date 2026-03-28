@@ -13,6 +13,12 @@ export interface ScannedPage {
 	wordCount: number;
 	hasDatePublished: boolean;
 	authorName: string | null;
+	/** Paragraph text blocks extracted from main content */
+	paragraphs: string[];
+	/** Individual sentences extracted from paragraphs */
+	sentences: string[];
+	/** SHA-256-like hash of normalized paragraph text for cross-page dedup */
+	contentHash: string;
 }
 
 export interface Heading {
