@@ -1267,6 +1267,145 @@ export function scoreAuthorSchema(pages: ScannedPage[], _meta: ScanMeta): Dimens
 	);
 }
 
+/** Dimension 28: Semantic HTML (low weight) */
+export function scoreSemanticHtml(pages: ScannedPage[], _meta: ScanMeta): DimensionScore {
+	const hint = "Use semantic HTML5 elements (main, article, nav, aside) and add lang attribute to html tag";
+
+	if (pages.length === 0) {
+		return makeDimension("semantic-html", "Semantic HTML", 0, "low", hint);
+	}
+
+	// Sort pages by URL for determinism
+	const sorted = [...pages].sort((a, b) => a.url.localeCompare(b.url));
+
+	let totalSignal = 0;
+	for (const page of sorted) {
+		const el = page.semanticElements;
+		let signal = 0;
+		if (el.main > 0) signal += 1;
+		if (el.article > 0) signal += 1;
+		if (el.nav > 0) signal += 1;
+		if (el.aside > 0) signal += 0.5;
+		if (page.language !== null) signal += 1;
+		if (page.ariaRoleCount > 0) signal += 0.5;
+		if (el.header > 0) signal += 0.5;
+		if (el.footer > 0) signal += 0.5;
+		totalSignal += signal;
+	}
+
+	const avg = totalSignal / sorted.length;
+
+	let score: number;
+	if (avg >= 4.5) score = 10;
+	else if (avg >= 3.5) score = 8;
+	else if (avg >= 2.5) score = 6;
+	else if (avg >= 1.5) score = 4;
+	else if (avg >= 0.5) score = 2;
+	else score = 0;
+
+	return makeDimension(
+		"semantic-html",
+		"Semantic HTML",
+		score,
+		"low",
+		score < 10 ? hint : "Strong semantic HTML5 structure with proper landmark elements",
+	);
+}
+
+/** Dimension 29: Extraction Friction (low weight — INVERTED: low friction = high score) */
+export function scoreExtractionFriction(pages: ScannedPage[], _meta: ScanMeta): DimensionScore {
+	const hint = "Reduce average sentence length below 20 words and minimize passive voice for easier AI extraction";
+
+	if (pages.length === 0) {
+		return makeDimension("extraction-friction", "Extraction Friction", 0, "low", hint);
+	}
+
+	// Sort pages by URL for determinism
+	const sorted = [...pages].sort((a, b) => a.url.localeCompare(b.url));
+
+	let totalScore = 0;
+	for (const page of sorted) {
+		const avg = page.avgSentenceLength;
+
+		let sentenceLengthScore: number;
+		if (avg <= 18) sentenceLengthScore = 10;
+		else if (avg <= 22) sentenceLengthScore = 7;
+		else if (avg <= 26) sentenceLengthScore = 4;
+		else if (avg <= 30) sentenceLengthScore = 2;
+		else sentenceLengthScore = 0;
+
+		// Passive voice penalty
+		const totalSentences = page.sentences.length;
+		let passiveVoicePenalty = 0;
+		if (totalSentences > 0) {
+			const passivePattern = /\b(is|are|was|were|been|being)\s+\w+ed\b/i;
+			const passiveCount = page.sentences.filter((s) => passivePattern.test(s)).length;
+			const ratio = passiveCount / totalSentences;
+			if (ratio > 0.3) passiveVoicePenalty = -2;
+			else if (ratio > 0.2) passiveVoicePenalty = -1;
+		}
+
+		totalScore += Math.max(0, sentenceLengthScore + passiveVoicePenalty);
+	}
+
+	const score = Math.min(10, Math.round(totalScore / sorted.length));
+
+	return makeDimension(
+		"extraction-friction",
+		"Extraction Friction",
+		score,
+		"low",
+		score < 10 ? hint : "Excellent readability with short sentences and active voice",
+	);
+}
+
+/** Dimension 30: Image Context for AI (low weight) */
+export function scoreImageContext(pages: ScannedPage[], _meta: ScanMeta): DimensionScore {
+	const hint = "Add descriptive alt text to all images and wrap important images in figure/figcaption elements";
+
+	if (pages.length === 0) {
+		return makeDimension("image-context", "Image Context for AI", 0, "low", hint);
+	}
+
+	// Sort pages by URL for determinism
+	const sorted = [...pages].sort((a, b) => a.url.localeCompare(b.url));
+
+	let totalPageScore = 0;
+	for (const page of sorted) {
+		let pageScore: number;
+		if (page.imgCount === 0) {
+			pageScore = 10;
+		} else {
+			const altRatio = page.imgsWithAlt / page.imgCount;
+			const hasFigures = page.figureCount > 0;
+			if (altRatio >= 0.9 && hasFigures) pageScore = 10;
+			else if (altRatio >= 0.9) pageScore = 7;
+			else if (altRatio >= 0.7) pageScore = 5;
+			else if (altRatio >= 0.5) pageScore = 3;
+			else pageScore = 1;
+		}
+		totalPageScore += pageScore;
+	}
+
+	const avgPageScore = totalPageScore / sorted.length;
+
+	let score: number;
+	if (avgPageScore >= 8.5) score = 10;
+	else if (avgPageScore >= 6.5) score = 8;
+	else if (avgPageScore >= 4.5) score = 6;
+	else if (avgPageScore >= 2.5) score = 4;
+	else if (avgPageScore >= 1) score = 2;
+	else score = 0;
+
+	return makeDimension(
+		"image-context",
+		"Image Context for AI",
+		score,
+		"low",
+		score < 10 ? hint : "All images have descriptive alt text and are wrapped in figure/figcaption",
+	);
+}
+
 /** Registry mapping dimension IDs to scorer functions */
 export const DIMENSION_SCORERS: Record<string, DimensionScorer> = {
 	"llms-txt": scoreLlmsTxt,
@@ -1296,6 +1435,9 @@ export const DIMENSION_SCORERS: Record<string, DimensionScorer> = {
 	"entity-disambiguation": scoreEntityDisambiguation,
 	"internal-linking": scoreInternalLinking,
 	"author-schema": scoreAuthorSchema,
+	"semantic-html": scoreSemanticHtml,
+	"extraction-friction": scoreExtractionFriction,
+	"image-context": scoreImageContext,
 };
 
 function makeDimension(

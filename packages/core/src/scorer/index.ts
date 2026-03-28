@@ -57,6 +57,9 @@ const PAGE_LEVEL_DIMENSIONS = [
 	"entity-disambiguation",
 	"internal-linking",
 	"author-schema",
+	"semantic-html",
+	"extraction-friction",
+	"image-context",
 ];
 
 /** Score each page individually across page-level dimensions */

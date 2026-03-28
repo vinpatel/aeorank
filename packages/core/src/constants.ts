@@ -29,6 +29,9 @@ export const DIMENSION_DEFS: DimensionDef[] = [
 	{ id: "entity-disambiguation", name: "Entity Disambiguation", weight: "low", maxScore: 10 },
 	{ id: "internal-linking", name: "Internal Linking", weight: "medium", maxScore: 10 },
 	{ id: "author-schema", name: "Author & Expert Schema", weight: "low", maxScore: 10 },
+	{ id: "semantic-html", name: "Semantic HTML", weight: "low", maxScore: 10 },
+	{ id: "extraction-friction", name: "Extraction Friction", weight: "low", maxScore: 10 },
+	{ id: "image-context", name: "Image Context for AI", weight: "low", maxScore: 10 },
 ];
 
 /** Grade thresholds (score >= threshold = that grade) */
