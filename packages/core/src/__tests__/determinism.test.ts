@@ -30,6 +30,26 @@ const enhancedPageHtml = `<!DOCTYPE html>
 <head>
   <title>AEO Optimization Guide</title>
   <meta name="description" content="Comprehensive guide to AEO optimization.">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://example.com"},
+          {"@type": "ListItem", "position": 2, "name": "Guide", "item": "https://example.com/guide"}
+        ]
+      },
+      {
+        "@type": "Person",
+        "name": "Dr. Jane Smith",
+        "jobTitle": "Data Scientist",
+        "sameAs": ["https://twitter.com/janesmith", "https://linkedin.com/in/janesmith"]
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
   <h1>AEO Optimization Guide</h1>
@@ -47,8 +67,16 @@ const enhancedPageHtml = `<!DOCTYPE html>
     <li>Item two</li>
     <li>Item three</li>
   </ul>
-  <p>AEO optimization scores are calculated across 25 dimensions.</p>
+  <p>AEO optimization scores are calculated across 27 dimensions.</p>
   <p>The AEO optimization framework provides comprehensive analysis.</p>
+  <nav>
+    <a href="/about">About</a>
+    <a href="/blog">Blog</a>
+    <a href="/contact">Contact</a>
+    <a href="/pricing">Pricing</a>
+    <a href="/docs">Docs</a>
+    <a href="/faq">FAQ</a>
+  </nav>
 </body>
 </html>`;
 
@@ -86,8 +114,8 @@ describe("determinism", () => {
 			status: d.status,
 		}));
 
-		// All 25 dimensions should be present
-		expect(results[0].dimensions).toHaveLength(25);
+		// All 27 dimensions should be present
+		expect(results[0].dimensions).toHaveLength(27);
 
 		// All new dimensions should appear in results
 		const newDimIds = [
@@ -104,6 +132,8 @@ describe("determinism", () => {
 			"tables-lists",
 			"definition-patterns",
 			"entity-disambiguation",
+			"internal-linking",
+			"author-schema",
 		];
 		for (const id of newDimIds) {
 			const dim = results[0].dimensions.find((d) => d.id === id);
