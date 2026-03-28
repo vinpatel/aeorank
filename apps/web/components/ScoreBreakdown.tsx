@@ -1,4 +1,6 @@
+import { PILLAR_GROUPS } from "@aeorank/core";
 import type { DimensionScore } from "@aeorank/core";
+import { PillarSection } from "./PillarSection";
 
 interface ScoreBreakdownProps {
 	score: number;
@@ -12,27 +14,20 @@ function scoreColorClass(score: number): string {
 	return "text-red";
 }
 
-function statusDotClass(status: "pass" | "warn" | "fail"): string {
-	if (status === "pass") return "status-dot status-dot-green";
-	if (status === "warn") return "status-dot status-dot-amber";
-	return "status-dot status-dot-red";
-}
-
-function statusTextClass(status: "pass" | "warn" | "fail"): string {
-	if (status === "pass") return "font-medium text-xs text-green";
-	if (status === "warn") return "font-medium text-xs text-amber";
-	return "font-medium text-xs text-red";
-}
-
-function weightBadgeClass(weightPct: number): string {
-	if (weightPct >= 5) return "badge badge-red";
-	if (weightPct >= 3) return "badge badge-amber";
-	return "badge badge-green";
+function calcPillarScore(dims: DimensionScore[]): number {
+	let weightedSum = 0;
+	let weightedMax = 0;
+	for (const dim of dims) {
+		weightedSum += dim.score * dim.weightPct;
+		weightedMax += dim.maxScore * dim.weightPct;
+	}
+	if (weightedMax === 0) return 0;
+	return Math.round((weightedSum / weightedMax) * 100);
 }
 
 export function ScoreBreakdown({ score, grade, dimensions }: ScoreBreakdownProps) {
-	// Sort dimensions by weightPct descending
-	const sorted = [...dimensions].sort((a, b) => b.weightPct - a.weightPct);
+	// Build a lookup map for fast access
+	const dimMap = new Map(dimensions.map((d) => [d.id, d]));
 
 	return (
 		<div>
@@ -49,44 +44,25 @@ export function ScoreBreakdown({ score, grade, dimensions }: ScoreBreakdownProps
 				</div>
 			</div>
 
-			{/* Dimension table */}
-			<div className="table-wrap">
-				<table className="table">
-					<thead>
-						<tr>
-							<th className="col-dimension">Dimension</th>
-							<th className="text-center col-score">Score</th>
-							<th className="text-center col-weight">Weight</th>
-							<th className="text-center col-status">Status</th>
-							<th>Hint</th>
-						</tr>
-					</thead>
-					<tbody>
-						{sorted.map((dim) => (
-							<tr key={dim.id}>
-								<td className="font-medium">{dim.name}</td>
-								<td className={`text-center tabular-nums font-semibold ${scoreColorClass(Math.round((dim.score / dim.maxScore) * 100))}`}>
-									{dim.score}/{dim.maxScore}
-								</td>
-								<td className="text-center">
-									<span className={weightBadgeClass(dim.weightPct)}>
-										{dim.weightPct}%
-									</span>
-								</td>
-								<td className="text-center">
-									<span className="flex items-center justify-center gap-3">
-										<span className={statusDotClass(dim.status)} />
-										<span className={statusTextClass(dim.status)}>
-											{dim.status.charAt(0).toUpperCase() + dim.status.slice(1)}
-										</span>
-									</span>
-								</td>
-								<td className="text-xs text-secondary">{dim.hint}</td>
-							</tr>
-						))}
-					</tbody>
-				</table>
-			</div>
+			{/* Pillar sections — Answer Readiness, Content Structure, Trust & Authority, Technical Foundation, AI Discovery */}
+			{PILLAR_GROUPS.map((pillar) => {
+				// Collect dimensions for this pillar (skip missing for backwards compat)
+				const pillarDims = pillar.dimensionIds
+					.map((id) => dimMap.get(id))
+					.filter((d): d is DimensionScore => d !== undefined)
+					.sort((a, b) => b.weightPct - a.weightPct);
+
+				const pillarScore = calcPillarScore(pillarDims);
+
+				return (
+					<PillarSection
+						key={pillar.id}
+						name={pillar.name}
+						pillarScore={pillarScore}
+						dimensions={pillarDims}
+					/>
+				);
+			})}
 		</div>
 	);
 }
