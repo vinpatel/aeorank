@@ -48,7 +48,7 @@ function makeMockResult(): ScanResult {
 		},
 		{
 			url: "https://example.com/blog/first-post",
-			title: "First Post - Example Blog",
+			title: "AEO Optimization Guide - Example Blog",
 			metaDescription: "Our first blog post about AEO",
 			headings: [
 				{ level: 1, text: "First Post", id: null },
@@ -56,7 +56,7 @@ function makeMockResult(): ScanResult {
 				{ level: 2, text: "How does it work?", id: null },
 			],
 			bodyText:
-				"AEO stands for AI Engine Optimization. It helps your site get cited by AI. AEO is defined as the practice of optimizing content for AI answer engines. AEO refers to a set of techniques. AEO describes the process of structured content creation.",
+				"AEO stands for AI Engine Optimization. AEO helps your site get cited by AI. AEO is defined as the practice of optimizing content for AI answer engines. AEO refers to a set of techniques. AEO describes the process of structured content creation. This post covers AEO optimization tips.",
 			schemaOrg: [],
 			links: [],
 			canonical: "https://example.com/blog/first-post",
