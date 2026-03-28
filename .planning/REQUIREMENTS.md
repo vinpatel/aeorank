@@ -41,9 +41,9 @@ Requirements for Competitive Parity milestone. Expands scoring from 12 to 36 cri
 
 ### AI Discovery
 
-- [ ] **DISC-01**: Scanner detects content cannibalization (overlapping pages competing for same topic) and scores 0-10
-- [ ] **DISC-02**: Scanner checks publishing velocity (regular cadence from sitemap lastmod dates) and scores 0-10
-- [ ] **DISC-03**: Scanner checks for content licensing (ai.txt file, license schema for AI usage) and scores 0-10
+- [x] **DISC-01**: Scanner detects content cannibalization (overlapping pages competing for same topic) and scores 0-10
+- [x] **DISC-02**: Scanner checks publishing velocity (regular cadence from sitemap lastmod dates) and scores 0-10
+- [x] **DISC-03**: Scanner checks for content licensing (ai.txt file, license schema for AI usage) and scores 0-10
 - [ ] **DISC-04**: Scanner verifies canonical URLs (self-referencing canonical tags on all pages) and scores 0-10
 - [ ] **DISC-05**: Scanner detects RSS/Atom feed linked from homepage and scores 0-10
 - [ ] **DISC-06**: Scanner checks for visible date signals (time elements with datetime attributes) and scores 0-10
@@ -126,9 +126,9 @@ Deferred beyond v2.0.
 | TECH-03 | Phase 11 | Complete |
 | TECH-04 | Phase 11 | Complete |
 | TECH-05 | Phase 11 | Complete |
-| DISC-01 | Phase 12 | Pending |
-| DISC-02 | Phase 12 | Pending |
-| DISC-03 | Phase 12 | Pending |
+| DISC-01 | Phase 12 | Complete |
+| DISC-02 | Phase 12 | Complete |
+| DISC-03 | Phase 12 | Complete |
 | DISC-04 | Phase 12 | Pending |
 | DISC-05 | Phase 12 | Pending |
 | DISC-06 | Phase 12 | Pending |
