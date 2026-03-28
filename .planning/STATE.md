@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: Competitive Parity
-status: executing
-stopped_at: Completed 16-01-PLAN.md
-last_updated: "2026-03-28T21:10:09.394Z"
+status: verifying
+stopped_at: Completed 16-02-PLAN.md
+last_updated: "2026-03-28T21:14:51.833Z"
 last_activity: 2026-03-28
 progress:
   total_phases: 9
-  completed_phases: 8
+  completed_phases: 9
   total_plans: 17
-  completed_plans: 16
+  completed_plans: 17
 ---
 
 # Project State
@@ -27,7 +27,7 @@ See: .planning/PROJECT.md (updated 2026-03-28)
 Phase: 16 (per-page-scoring) — EXECUTING
 Plan: 2 of 2
 Milestone: v2.0 Competitive Parity — Phases 8-16
-Status: Ready to execute
+Status: Phase complete — ready for verification
 Last activity: 2026-03-28
 
 Progress: [####################] (Phase 7 — 2/3 plans done)
@@ -87,6 +87,7 @@ Progress: [####################] (Phase 7 — 2/3 plans done)
 | Phase 15-dashboard-docs-updates P01 | 1min | 2 tasks | 4 files |
 | Phase 15-dashboard-docs-updates P03 | 194s | 2 tasks | 5 files |
 | Phase 16-per-page-scoring P01 | 139 | 2 tasks | 5 files |
+| Phase 16-per-page-scoring P02 | 2 | 2 tasks | 5 files |
 
 ## Phase 4 Deliverables
 
@@ -278,6 +279,7 @@ Recent decisions affecting current work:
 - [Phase 16-per-page-scoring]: PAGE_LEVEL_DIMENSIONS moved to constants.ts as exported const — single source of truth for CLI/dashboard consumers
 - [Phase 16-per-page-scoring]: PAGE_SCORE_MAX = 75 constant used throughout scorer to eliminate magic numbers and stay proportional (duplication gate = round(75*0.35) = 26)
 - [Phase 16-per-page-scoring]: getGrade() called with score*(100/75) to keep letter grade thresholds on 0-100 scale when computing grades for 0-75 page scores
+- [Phase 16-per-page-scoring]: Hardcode 25 page-level dimension id->name pairs in PageScores.tsx to avoid @aeorank/core browser bundle import
 
 ### Pending Todos
 
@@ -293,6 +295,6 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-03-28T21:10:09.392Z
-Stopped at: Completed 16-01-PLAN.md
+Last session: 2026-03-28T21:14:51.830Z
+Stopped at: Completed 16-02-PLAN.md
 Resume file: None

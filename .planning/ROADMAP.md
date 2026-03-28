@@ -36,7 +36,7 @@ Expands scoring from 12 dimensions to 36 criteria across 5 pillars, matching AEO
 - [x] **Phase 13: Weight Migration & Score Gates** — Migrate to percentage weights, merge overlapping dimensions, add coherence + duplication gates (completed 2026-03-28)
 - [x] **Phase 14: New File Generators** — ai.txt generator, llms-full.txt improvements, plugin updates (completed 2026-03-28)
 - [x] **Phase 15: Dashboard & Docs Updates** — Update all surfaces for 36 criteria (completed 2026-03-28)
-- [ ] **Phase 16: Per-Page Scoring** — Page-level scoring (0-75 scale), CLI `--page` flag, API per-page results
+- [x] **Phase 16: Per-Page Scoring** — Page-level scoring (0-75 scale), CLI `--page` flag, API per-page results (completed 2026-03-28)
 
 ## Phase Details
 
@@ -168,10 +168,10 @@ Plans:
   3. `aeorank scan <url> --page /about` outputs score for a single page
   4. API scan result JSON includes `pages[]` array with per-page dimension scores
   5. All existing + new tests pass
-**Plans:** 1/2 plans executed
+**Plans:** 2/2 plans complete
 Plans:
 - [x] 16-01-PLAN.md — Core scoring 0-75 scale + export PAGE_LEVEL_DIMENSIONS + tests
-- [ ] 16-02-PLAN.md — CLI --page flag + Dashboard expandable per-page dimensions
+- [x] 16-02-PLAN.md — CLI --page flag + Dashboard expandable per-page dimensions
 
 ## Progress
 
@@ -192,4 +192,4 @@ Plans:
 | 13. Weight Migration | v2.0 | 2/2 | Complete    | 2026-03-28 |
 | 14. New File Generators | v2.0 | 1/1 | Complete    | 2026-03-28 |
 | 15. Dashboard & Docs | v2.0 | 3/3 | Complete    | 2026-03-28 |
-| 16. Per-Page Scoring | v2.0 | 1/2 | In Progress|  |
+| 16. Per-Page Scoring | v2.0 | 2/2 | Complete   | 2026-03-28 |
