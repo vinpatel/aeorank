@@ -35,7 +35,7 @@ Expands scoring from 12 dimensions to 36 criteria across 5 pillars, matching AEO
 - [x] **Phase 12: AI Discovery Expansion** — +6 dimensions (content cannibalization, publishing velocity, content licensing, canonical URLs, RSS feed, visible dates) (completed 2026-03-28)
 - [x] **Phase 13: Weight Migration & Score Gates** — Migrate to percentage weights, merge overlapping dimensions, add coherence + duplication gates (completed 2026-03-28)
 - [x] **Phase 14: New File Generators** — ai.txt generator, llms-full.txt improvements, plugin updates (completed 2026-03-28)
-- [ ] **Phase 15: Dashboard & Docs Updates** — Update all surfaces for 36 criteria
+- [x] **Phase 15: Dashboard & Docs Updates** — Update all surfaces for 36 criteria (completed 2026-03-28)
 - [ ] **Phase 16: Per-Page Scoring** — Page-level scoring (0-75 scale), CLI `--page` flag, API per-page results
 
 ## Phase Details
@@ -152,11 +152,11 @@ Plans:
   3. Marketing site mentions "36 criteria across 5 pillars" (not "12 dimensions")
   4. CLI `aeorank scan <url>` output groups dimensions by pillar
   5. CLI `--pillar answer-readiness` filters output to show only that pillar's criteria
-**Plans:** 2/3 plans executed
+**Plans:** 3/3 plans complete
 Plans:
 - [x] 15-01-PLAN.md — Core PILLAR_GROUPS constant + Dashboard pillar-grouped ScoreBreakdown
 - [x] 15-02-PLAN.md — Docs + Marketing content updates (36 criteria, 5 pillars, percentage weights)
-- [ ] 15-03-PLAN.md — CLI pillar-grouped output + --pillar filter flag
+- [x] 15-03-PLAN.md — CLI pillar-grouped output + --pillar filter flag
 
 ### Phase 16: Per-Page Scoring
 **Goal**: Add per-page scoring (0-75 scale) for the 21 page-level criteria. Dashboard shows per-page breakdown, CLI supports --page flag, API returns per-page scores.
@@ -188,5 +188,5 @@ Plans:
 | 12. AI Discovery | v2.0 | 2/2 | Complete    | 2026-03-28 |
 | 13. Weight Migration | v2.0 | 2/2 | Complete    | 2026-03-28 |
 | 14. New File Generators | v2.0 | 1/1 | Complete    | 2026-03-28 |
-| 15. Dashboard & Docs | v2.0 | 2/3 | In Progress|  |
+| 15. Dashboard & Docs | v2.0 | 3/3 | Complete   | 2026-03-28 |
 | 16. Per-Page Scoring | v2.0 | 0/? | Not Started | — |

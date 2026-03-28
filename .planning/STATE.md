@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: Competitive Parity
-status: executing
-stopped_at: Completed 15-01-PLAN.md
-last_updated: "2026-03-28T20:56:19.892Z"
+status: verifying
+stopped_at: Completed 15-03-PLAN.md
+last_updated: "2026-03-28T21:01:06.820Z"
 last_activity: 2026-03-28
 progress:
   total_phases: 9
-  completed_phases: 7
+  completed_phases: 8
   total_plans: 15
-  completed_plans: 14
+  completed_plans: 15
 ---
 
 # Project State
@@ -27,7 +27,7 @@ See: .planning/PROJECT.md (updated 2026-03-28)
 Phase: 15 (dashboard-docs-updates) — EXECUTING
 Plan: 3 of 3
 Milestone: v2.0 Competitive Parity — Phases 8-16
-Status: Ready to execute
+Status: Phase complete — ready for verification
 Last activity: 2026-03-28
 
 Progress: [####################] (Phase 7 — 2/3 plans done)
@@ -85,6 +85,7 @@ Progress: [####################] (Phase 7 — 2/3 plans done)
 | Phase 14-new-file-generators P01 | 8m | 2 tasks | 6 files |
 | Phase 15-dashboard-docs-updates P02 | 10 | 2 tasks | 10 files |
 | Phase 15-dashboard-docs-updates P01 | 1min | 2 tasks | 4 files |
+| Phase 15-dashboard-docs-updates P03 | 194s | 2 tasks | 5 files |
 
 ## Phase 4 Deliverables
 
@@ -272,6 +273,7 @@ Recent decisions affecting current work:
 - [Phase 15-dashboard-docs-updates]: Grouped all 36 criteria into pillar sections in dimensions.md for navigability and added Score Gates section to calculation.md
 - [Phase 15-dashboard-docs-updates]: Split ScoreBreakdown server/client: PILLAR_GROUPS imported server-side to avoid bundling playwright in browser via @aeorank/core chunk
 - [Phase 15-dashboard-docs-updates]: PILLAR_GROUPS in @aeorank/core/constants.ts as single source of truth for 5-pillar grouping of 36 dimensions
+- [Phase 15-dashboard-docs-updates]: Use real dimension IDs in tests so pillar grouping works; fix vi.mock to use importOriginal to preserve PILLAR_GROUPS
 
 ### Pending Todos
 
@@ -287,6 +289,6 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-03-28T20:56:19.889Z
-Stopped at: Completed 15-01-PLAN.md
+Last session: 2026-03-28T21:01:06.818Z
+Stopped at: Completed 15-03-PLAN.md
 Resume file: None
