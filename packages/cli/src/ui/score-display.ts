@@ -1,5 +1,5 @@
-import type { DimensionScore, ScanResult } from "@aeorank/core";
-import { PILLAR_GROUPS } from "@aeorank/core";
+import type { DimensionScore, DimensionDef, PageScore, ScanResult } from "@aeorank/core";
+import { DIMENSION_DEFS, PAGE_SCORE_MAX, PILLAR_GROUPS } from "@aeorank/core";
 import chalk from "chalk";
 
 const STATUS_ICON: Record<string, string> = {
@@ -90,6 +90,34 @@ export function renderDimensionTable(dimensions: DimensionScore[], pillarFilter?
 		lines.push("");
 	}
 
+	return lines.join("\n");
+}
+
+/** Render per-page score with dimension breakdown — score shown as X/75 */
+export function renderPageScore(page: PageScore, allDefs: DimensionDef[] = DIMENSION_DEFS): string {
+	const color = colorForScore((page.score / PAGE_SCORE_MAX) * 100);
+	const lines: string[] = [
+		"",
+		color.bold(`  Page Score: ${page.score}/${PAGE_SCORE_MAX} (${page.grade})`),
+		"",
+		chalk.dim(`  ${page.title} — ${page.url}`),
+		"",
+		chalk.bold("  Dimensions"),
+		"",
+	];
+
+	// Sort dimensions ascending by score (worst first) for actionability
+	const sorted = [...page.dimensions].sort((a, b) => a.score - b.score);
+
+	for (const dim of sorted) {
+		const def = allDefs.find((d) => d.id === dim.id);
+		const name = (def?.name ?? dim.id).padEnd(30);
+		const score = `${dim.score}/10`.padEnd(7);
+		const icon = STATUS_ICON[dim.status] ?? chalk.dim("?");
+		lines.push(`    ${icon} ${name} ${score}`);
+	}
+
+	lines.push("");
 	return lines.join("\n");
 }
 

@@ -1,12 +1,12 @@
 import { existsSync, mkdirSync, readdirSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
-import { PILLAR_GROUPS, scan } from "@aeorank/core";
+import { DIMENSION_DEFS, PILLAR_GROUPS, scan } from "@aeorank/core";
 import type { ScanConfig } from "@aeorank/core";
 import chalk from "chalk";
 import { Command } from "commander";
 import { loadConfig, mergeConfig } from "../config.js";
 import { handleError } from "../errors.js";
-import { renderDimensionTable, renderNextSteps, renderScore } from "../ui/score-display.js";
+import { renderDimensionTable, renderNextSteps, renderPageScore, renderScore } from "../ui/score-display.js";
 import { createSpinner } from "../ui/spinner.js";
 
 export const scanCommand = new Command("scan")
@@ -24,6 +24,7 @@ export const scanCommand = new Command("scan")
 		"--pillar <name>",
 		"Filter dimensions to a specific pillar (answer-readiness, content-structure, trust-authority, technical-foundation, ai-discovery)",
 	)
+	.option("--page <path>", "Show score for a specific page path (e.g. /about)")
 	.action(async (url: string, options: ScanOptions) => {
 		const isJson = options.format === "json";
 		const spinner = createSpinner(`Scanning ${url}...`, isJson);
@@ -68,8 +69,49 @@ export const scanCommand = new Command("scan")
 
 			spinner.stop();
 
-			// JSON output mode
-			if (isJson) {
+			// --page flag: filter to single page output
+			if (options.page) {
+				// Normalize: ensure leading slash
+				const pagePath = options.page.startsWith("/") ? options.page : `/${options.page}`;
+				const matchedPage = result.pageScores.find((p) => {
+					try {
+						return new URL(p.url).pathname === pagePath;
+					} catch {
+						return false;
+					}
+				});
+
+				if (!matchedPage) {
+					const availablePaths = result.pageScores
+						.map((p) => {
+							try {
+								return new URL(p.url).pathname;
+							} catch {
+								return p.url;
+							}
+						})
+						.join(", ");
+					if (isJson) {
+						console.log(
+							JSON.stringify({
+								error: `No page found matching ${pagePath}.`,
+								availablePages: result.pageScores.map((p) => p.url),
+							}),
+						);
+					} else {
+						console.error(chalk.red(`Error: No page found matching ${pagePath}.`));
+						console.error(`Scanned pages: ${availablePaths}`);
+					}
+					process.exit(1);
+				}
+
+				if (isJson) {
+					console.log(JSON.stringify(matchedPage, null, 2));
+				} else {
+					console.log(renderPageScore(matchedPage, DIMENSION_DEFS));
+				}
+			} else if (isJson) {
+				// JSON output mode (no --page)
 				// Filter dimensions by pillar if --pillar is set
 				if (options.pillar) {
 					const pillar = PILLAR_GROUPS.find((p) => p.id === options.pillar);
@@ -140,4 +182,5 @@ interface ScanOptions {
 	config?: string;
 	browser?: boolean;
 	pillar?: string;
+	page?: string;
 }
