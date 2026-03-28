@@ -62,6 +62,7 @@ const PAGE_LEVEL_DIMENSIONS = [
 	"image-context",
 	"schema-coverage",
 	"speakable-schema",
+	"content-cannibalization",
 ];
 
 /** Score each page individually across page-level dimensions */
