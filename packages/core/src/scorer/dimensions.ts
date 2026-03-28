@@ -1151,6 +1151,122 @@ export function scoreEntityDisambiguation(pages: ScannedPage[], _meta: ScanMeta)
 	);
 }
 
+/** Dimension 26: Internal Linking (medium weight) */
+export function scoreInternalLinking(pages: ScannedPage[], _meta: ScanMeta): DimensionScore {
+	if (pages.length === 0) {
+		return makeDimension(
+			"internal-linking",
+			"Internal Linking",
+			0,
+			"medium",
+			"Add internal links between related content pages and implement breadcrumb navigation",
+		);
+	}
+
+	// Sort pages by URL for determinism
+	const sorted = [...pages].sort((a, b) => a.url.localeCompare(b.url));
+
+	// Calculate average internal links per page
+	const totalInternal = sorted.reduce(
+		(sum, page) => sum + page.links.filter((l) => l.internal).length,
+		0,
+	);
+	const avgInternal = totalInternal / sorted.length;
+
+	// Check for BreadcrumbList schema on any page
+	let hasBreadcrumbs = false;
+	for (const page of sorted) {
+		for (const schema of page.schemaOrg) {
+			const s = schema as Record<string, unknown>;
+			if (s["@type"] === "BreadcrumbList") {
+				hasBreadcrumbs = true;
+				break;
+			}
+			if (Array.isArray(s["@graph"])) {
+				for (const item of s["@graph"] as Record<string, unknown>[]) {
+					if (item["@type"] === "BreadcrumbList") {
+						hasBreadcrumbs = true;
+						break;
+					}
+				}
+			}
+			if (hasBreadcrumbs) break;
+		}
+		if (hasBreadcrumbs) break;
+	}
+
+	let score: number;
+	if (avgInternal >= 5 && hasBreadcrumbs) score = 10;
+	else if (avgInternal >= 5) score = 8;
+	else if (avgInternal >= 3) score = 6;
+	else if (avgInternal >= 1) score = 3;
+	else score = 0;
+
+	return makeDimension(
+		"internal-linking",
+		"Internal Linking",
+		score,
+		"medium",
+		score < 10
+			? "Add internal links between related content pages and implement breadcrumb navigation"
+			: "Strong internal link structure with breadcrumb navigation",
+	);
+}
+
+/** Dimension 27: Author & Expert Schema (low weight) */
+export function scoreAuthorSchema(pages: ScannedPage[], _meta: ScanMeta): DimensionScore {
+	if (pages.length === 0) {
+		return makeDimension(
+			"author-schema",
+			"Author & Expert Schema",
+			0,
+			"low",
+			"Add Person schema with jobTitle/credentials and sameAs links to author profiles",
+		);
+	}
+
+	let hasPersonSchema = false;
+	let hasCredentials = false;
+	let hasSameAs = false;
+
+	for (const page of pages) {
+		for (const schema of page.schemaOrg) {
+			const s = schema as Record<string, unknown>;
+
+			const checkPerson = (obj: Record<string, unknown>) => {
+				if (obj["@type"] !== "Person") return;
+				hasPersonSchema = true;
+				if (obj["jobTitle"] || obj["hasCredential"]) hasCredentials = true;
+				if (Array.isArray(obj["sameAs"]) && (obj["sameAs"] as unknown[]).length > 0)
+					hasSameAs = true;
+			};
+
+			checkPerson(s);
+			if (Array.isArray(s["@graph"])) {
+				for (const item of s["@graph"] as Record<string, unknown>[]) {
+					checkPerson(item);
+				}
+			}
+		}
+	}
+
+	let score: number;
+	if (hasPersonSchema && hasCredentials && hasSameAs) score = 10;
+	else if (hasPersonSchema && hasCredentials) score = 6;
+	else if (hasPersonSchema) score = 3;
+	else score = 0;
+
+	return makeDimension(
+		"author-schema",
+		"Author & Expert Schema",
+		score,
+		"low",
+		score < 10
+			? "Add Person schema with jobTitle/credentials and sameAs links to author profiles"
+			: "Strong author schema with credentials and authority links",
+	);
+}
+
 /** Registry mapping dimension IDs to scorer functions */
 export const DIMENSION_SCORERS: Record<string, DimensionScorer> = {
 	"llms-txt": scoreLlmsTxt,
@@ -1178,6 +1294,8 @@ export const DIMENSION_SCORERS: Record<string, DimensionScorer> = {
 	"tables-lists": scoreTablesLists,
 	"definition-patterns": scoreDefinitionPatterns,
 	"entity-disambiguation": scoreEntityDisambiguation,
+	"internal-linking": scoreInternalLinking,
+	"author-schema": scoreAuthorSchema,
 };
 
 function makeDimension(
