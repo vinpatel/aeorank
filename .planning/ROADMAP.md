@@ -188,5 +188,5 @@ Plans:
 | 12. AI Discovery | v2.0 | 2/2 | Complete    | 2026-03-28 |
 | 13. Weight Migration | v2.0 | 2/2 | Complete    | 2026-03-28 |
 | 14. New File Generators | v2.0 | 1/1 | Complete    | 2026-03-28 |
-| 15. Dashboard & Docs | v2.0 | 3/3 | Complete   | 2026-03-28 |
+| 15. Dashboard & Docs | v2.0 | 3/3 | Complete    | 2026-03-28 |
 | 16. Per-Page Scoring | v2.0 | 0/? | Not Started | — |
