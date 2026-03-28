@@ -35,12 +35,27 @@ A developer runs `npx aeorank-cli scan <url>` with zero config and gets an AEO s
 - ✓ Documentation site (Astro 5 + Starlight) at docs.aeorank.dev — v1.0
 - ✓ Web dashboard (Next.js 16) with Clerk auth, Stripe subscriptions, score history — v1.0
 
-### Active
+### Active (v2.0 Competitive Parity)
 
-- [ ] Expand scoring from 12 dimensions to 36 criteria across 5 pillars (Milestone 2)
-- [ ] Per-page scoring (0-75 scale) with CLI --page flag
-- [ ] ai.txt generator and improved llms-full.txt
-- [ ] Weight migration to percentage-based system with coherence + duplication gates
+- [ ] +26 new scoring dimensions across 5 pillars (Answer Readiness, Content Structure, Trust & Authority, Technical Foundation, AI Discovery)
+- [ ] Percentage-based weight migration with coherence + duplication score gates
+- [ ] ai.txt generator + llms-full.txt improvements
+- [ ] Dashboard/docs/marketing updates for 36 criteria
+- [ ] Per-page scoring (0-75 scale) with CLI --page flag and API support
+
+## Current Milestone: v2.0 Competitive Parity
+
+**Goal:** Expand AEOrank scoring from 12 dimensions to 36 criteria across 5 pillars, matching AEO Content Inc's coverage.
+
+**Target features:**
+- 7 Answer Readiness dimensions (topic coherence, original data, fact density, duplicate content, evidence packaging, citation-ready writing)
+- 6 Content Structure dimensions (Q&A format, answer density, tables/lists, definitions, entity disambiguation)
+- 2 Trust & Authority dimensions (internal linking, author schema)
+- 5 Technical Foundation dimensions (semantic HTML, extraction friction, image context, schema coverage, speakable)
+- 6 AI Discovery dimensions (cannibalization, publishing velocity, licensing, canonical, RSS, dates)
+- Weight migration to percentages with score gates
+- ai.txt generator, llms-full.txt improvements
+- All surfaces updated, per-page scoring added
 
 ### Out of Scope
 
