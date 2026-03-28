@@ -2,9 +2,12 @@ import { describe, expect, it } from "vitest";
 import {
 	scoreAiCrawlerAccess,
 	scoreCitationAnchors,
+	scoreCitationReadyWriting,
 	scoreContentStructure,
+	scoreCrossPageDuplication,
 	scoreDuplicateContent,
 	scoreEeatSignals,
+	scoreEvidencePackaging,
 	scoreFactDensity,
 	scoreFaqSpeakable,
 	scoreLlmsTxt,
@@ -476,5 +479,162 @@ describe("scoreDuplicateContent", () => {
 		const result = scoreDuplicateContent([page], makeMeta());
 		expect(result.score).toBeLessThan(10);
 		expect(result.score).toBeGreaterThan(0);
+	});
+});
+
+describe("scoreCrossPageDuplication", () => {
+	it("returns 10 for single page (not applicable)", () => {
+		const page = makePage({
+			paragraphs: ["This paragraph only appears on one page and is unique content here."],
+		});
+		const result = scoreCrossPageDuplication([page], makeMeta());
+		expect(result.score).toBe(10);
+		expect(result.hint).toContain("Single page");
+	});
+
+	it("returns 10 when pages have unique paragraphs", () => {
+		const pages = [
+			makePage({
+				url: "https://example.com/page1",
+				paragraphs: [
+					"Page one has completely unique content that nobody else has.",
+					"The first page discusses topics exclusive to this document.",
+				],
+			}),
+			makePage({
+				url: "https://example.com/page2",
+				paragraphs: [
+					"Page two discusses entirely different subjects and topics.",
+					"This second page has its own original content blocks.",
+				],
+			}),
+			makePage({
+				url: "https://example.com/page3",
+				paragraphs: [
+					"Page three covers yet another distinct subject matter entirely.",
+					"Third page content is original and different from all others.",
+				],
+			}),
+		];
+		const result = scoreCrossPageDuplication(pages, makeMeta());
+		expect(result.score).toBe(10);
+	});
+
+	it("returns low score (0-3) when 3 pages share identical paragraphs", () => {
+		const sharedPara = "This is duplicated content that appears on multiple pages across the entire site.";
+		const pages = [
+			makePage({
+				url: "https://example.com/page1",
+				paragraphs: [sharedPara, "Unique content for page one only here."],
+			}),
+			makePage({
+				url: "https://example.com/page2",
+				paragraphs: [sharedPara, "Unique content for page two only here."],
+			}),
+			makePage({
+				url: "https://example.com/page3",
+				paragraphs: [sharedPara, "Unique content for page three only here."],
+			}),
+		];
+		const result = scoreCrossPageDuplication(pages, makeMeta());
+		expect(result.score).toBeLessThanOrEqual(3);
+	});
+
+	it("returns 0 when empty pages array", () => {
+		const result = scoreCrossPageDuplication([], makeMeta());
+		expect(result.score).toBe(10);
+	});
+});
+
+describe("scoreEvidencePackaging", () => {
+	it("returns 0 when no pages", () => {
+		const result = scoreEvidencePackaging([], makeMeta());
+		expect(result.score).toBe(0);
+	});
+
+	it("returns 0 for page with no attribution or citations", () => {
+		const page = makePage({
+			sentences: ["Generic content without any citations.", "Just plain text with no sources mentioned."],
+			headings: [],
+		});
+		const result = scoreEvidencePackaging([page], makeMeta());
+		expect(result.score).toBe(0);
+	});
+
+	it("returns 7-10 for page with attribution phrases and inline citations", () => {
+		const page = makePage({
+			sentences: [
+				"According to Smith (2024), the data shows significant improvements.",
+				"The study cited evidence from multiple peer-reviewed sources.",
+				"Referenced research confirms these results in the field.",
+			],
+			headings: [{ level: 2, text: "References", id: "references" }],
+		});
+		const result = scoreEvidencePackaging([page], makeMeta());
+		expect(result.score).toBeGreaterThanOrEqual(7);
+	});
+
+	it("returns 2 for a small fraction of pages with evidence", () => {
+		const richPage = makePage({
+			url: "https://example.com/research",
+			sentences: ["According to experts, source: National Institute, cited studies confirm."],
+			headings: [],
+		});
+		const genericPages = Array.from({ length: 9 }, (_, i) =>
+			makePage({
+				url: `https://example.com/page${i}`,
+				sentences: ["Generic content with no citations or attributions here."],
+				headings: [],
+			}),
+		);
+		const result = scoreEvidencePackaging([richPage, ...genericPages], makeMeta());
+		expect(result.score).toBeGreaterThanOrEqual(2);
+	});
+});
+
+describe("scoreCitationReadyWriting", () => {
+	it("returns 0 when no pages", () => {
+		const result = scoreCitationReadyWriting([], makeMeta());
+		expect(result.score).toBe(0);
+	});
+
+	it("returns 0 for page with only questions or rambling paragraphs", () => {
+		const page = makePage({
+			sentences: [
+				"What is the best way to optimize performance and should we consider using a framework?",
+				"Have you ever wondered about the complexities of modern software engineering practices?",
+			],
+		});
+		const result = scoreCitationReadyWriting([page], makeMeta());
+		expect(result.score).toBeLessThanOrEqual(3);
+	});
+
+	it("returns 7-10 for page with definition and single-claim sentences", () => {
+		const page = makePage({
+			sentences: [
+				"AEO is defined as Answer Engine Optimization.",
+				"Content scoring measures the quality of web pages.",
+				"Topical authority refers to demonstrated expertise in a subject area.",
+				"Schema markup describes structured data for search engines.",
+			],
+		});
+		const result = scoreCitationReadyWriting([page], makeMeta());
+		expect(result.score).toBeGreaterThanOrEqual(7);
+	});
+
+	it("returns intermediate score for mixed content", () => {
+		const page = makePage({
+			sentences: [
+				"AEO is defined as Answer Engine Optimization for modern websites.",
+				"What are the best practices, and how should we implement them today?",
+				"Content quality refers to the overall value provided, and it improves engagement.",
+				"Is this approach correct, and does it work well in practice here?",
+				"We need to analyze performance, and then optimize accordingly for users.",
+				"Have you considered the trade-offs, and weighed them against project goals?",
+			],
+		});
+		const result = scoreCitationReadyWriting([page], makeMeta());
+		expect(result.score).toBeGreaterThan(0);
+		expect(result.score).toBeLessThan(10);
 	});
 });

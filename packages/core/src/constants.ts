@@ -1,6 +1,6 @@
 import type { DimensionDef, ScanConfig } from "./types.js";
 
-/** All 16 AEO scoring dimensions with weights */
+/** All 19 AEO scoring dimensions */
 export const DIMENSION_DEFS: DimensionDef[] = [
 	{ id: "llms-txt", name: "llms.txt Presence", weight: "high", maxScore: 10 },
 	{ id: "schema-markup", name: "Schema.org Markup", weight: "high", maxScore: 10 },
@@ -18,6 +18,9 @@ export const DIMENSION_DEFS: DimensionDef[] = [
 	{ id: "original-data", name: "Original Research & Data", weight: "medium", maxScore: 10 },
 	{ id: "fact-density", name: "Fact & Data Density", weight: "medium", maxScore: 10 },
 	{ id: "duplicate-content", name: "Duplicate Content", weight: "medium", maxScore: 10 },
+	{ id: "cross-page-duplication", name: "Cross-Page Duplication", weight: "low", maxScore: 10 },
+	{ id: "evidence-packaging", name: "Evidence Packaging", weight: "low", maxScore: 10 },
+	{ id: "citation-ready-writing", name: "Citation-Ready Writing", weight: "low", maxScore: 10 },
 ];
 
 /** Grade thresholds (score >= threshold = that grade) */
