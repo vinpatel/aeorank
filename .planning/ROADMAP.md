@@ -79,7 +79,9 @@ Plans:
   2. A site with rich internal linking and author schema scores higher than one without
   3. All existing + new tests pass with zero failures
   4. Determinism test passes for both new dimensions
-**Plans**: TBD
+**Plans:** 1 plan
+Plans:
+- [ ] 10-01-PLAN.md — Both scorers (internal-linking, author-schema) + determinism tests
 
 ### Phase 11: Technical Foundation Expansion
 **Goal**: Add 5 Technical Foundation dimensions checking semantic HTML, extraction friction, image context, schema coverage on inner pages, and speakable markup. Parser detects semantic elements, measures sentence complexity, and checks image figure patterns.
@@ -166,7 +168,7 @@ Plans:
 | 7. Marketing Content | v1.0 | 2/2 | Complete | 2026-03-15 |
 | 8. Answer Readiness | v2.0 | 2/2 | Complete |  |
 | 9. Content Structure | v2.0 | 2/2 | Complete   | 2026-03-28 |
-| 10. Trust & Authority | v2.0 | 0/? | Not Started | — |
+| 10. Trust & Authority | v2.0 | 0/1 | Not Started | — |
 | 11. Technical Foundation | v2.0 | 0/? | Not Started | — |
 | 12. AI Discovery | v2.0 | 0/? | Not Started | — |
 | 13. Weight Migration | v2.0 | 0/? | Not Started | — |
