@@ -74,7 +74,7 @@ describe("calculateAeoScore", () => {
 		const pages = [makePage(), makePage({ url: "https://example.com/about" })];
 		const result = calculateAeoScore(pages, makePerfectMeta());
 		expect(result.score).toBeGreaterThanOrEqual(70);
-		expect(result.dimensions).toHaveLength(12);
+		expect(result.dimensions).toHaveLength(16);
 		expect(result.grade).toMatch(/^[A-F][+]?$/);
 	});
 
@@ -94,9 +94,9 @@ describe("calculateAeoScore", () => {
 		expect(result.grade).toBe("F");
 	});
 
-	it("returns exactly 12 dimensions", () => {
+	it("returns exactly 16 dimensions", () => {
 		const result = calculateAeoScore([makePage()], makePerfectMeta());
-		expect(result.dimensions).toHaveLength(12);
+		expect(result.dimensions).toHaveLength(16);
 
 		const ids = result.dimensions.map((d) => d.id);
 		expect(ids).toContain("llms-txt");

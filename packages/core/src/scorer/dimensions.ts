@@ -453,6 +453,222 @@ export function scoreCitationAnchors(pages: ScannedPage[], _meta: ScanMeta): Dim
 	);
 }
 
+const STOPWORDS = new Set([
+	"the", "a", "an", "is", "are", "was", "were", "in", "on", "at", "to", "for",
+	"of", "and", "or", "but", "with", "from", "by", "as", "it", "this", "that",
+	"not", "be", "has", "have", "had", "do", "does", "did", "will", "would",
+	"can", "could", "should",
+]);
+
+/** Dimension 13: Topic Coherence (high weight) */
+export function scoreTopicCoherence(pages: ScannedPage[], _meta: ScanMeta): DimensionScore {
+	if (pages.length < 2) {
+		return makeDimension(
+			"topic-coherence",
+			"Topical Authority",
+			5,
+			"high",
+			"Not enough pages to assess topical authority",
+		);
+	}
+
+	// Build word frequency map from all heading texts
+	const wordFreq = new Map<string, number>();
+	for (const page of pages) {
+		for (const heading of page.headings) {
+			const words = heading.text.toLowerCase().split(/\s+/);
+			for (const word of words) {
+				const clean = word.replace(/[^a-z0-9]/g, "");
+				if (clean.length > 2 && !STOPWORDS.has(clean)) {
+					wordFreq.set(clean, (wordFreq.get(clean) ?? 0) + 1);
+				}
+			}
+		}
+	}
+
+	// Find top 5 keywords by frequency
+	const top5 = [...wordFreq.entries()]
+		.sort((a, b) => b[1] - a[1])
+		.slice(0, 5)
+		.map(([word]) => word);
+
+	if (top5.length === 0) {
+		return makeDimension(
+			"topic-coherence",
+			"Topical Authority",
+			0,
+			"high",
+			"Focus content around consistent core topics across all pages",
+		);
+	}
+
+	// Count pages containing at least 2 of the top-5 keywords in bodyText
+	let matchingPages = 0;
+	for (const page of pages) {
+		const bodyLower = page.bodyText.toLowerCase();
+		const matchCount = top5.filter((kw) => bodyLower.includes(kw)).length;
+		if (matchCount >= 2) matchingPages++;
+	}
+
+	const pct = matchingPages / pages.length;
+	let score: number;
+	if (pct > 0.7) score = 10;
+	else if (pct > 0.5) score = 7;
+	else if (pct > 0.3) score = 4;
+	else score = 0;
+
+	return makeDimension(
+		"topic-coherence",
+		"Topical Authority",
+		score,
+		"high",
+		score < 10
+			? "Focus content around consistent core topics across all pages"
+			: "Strong topical authority across pages",
+	);
+}
+
+const ORIGINAL_DATA_PATTERNS = [
+	/our (research|study|data|survey|analysis)/i,
+	/case study/i,
+	/\d+%\s+of\s+(our|surveyed|respondents)/i,
+	/we (found|discovered|measured|analyzed)/i,
+	/proprietary/i,
+	/original (research|data)/i,
+];
+
+/** Dimension 14: Original Research & Data (medium weight) */
+export function scoreOriginalData(pages: ScannedPage[], _meta: ScanMeta): DimensionScore {
+	if (pages.length === 0) {
+		return makeDimension(
+			"original-data",
+			"Original Research & Data",
+			0,
+			"medium",
+			"Add original research, case studies, or proprietary data to establish authority",
+		);
+	}
+
+	let pagesWithData = 0;
+	for (const page of pages) {
+		const allText = page.sentences.join(" ");
+		const hasMatch = ORIGINAL_DATA_PATTERNS.some((pattern) => pattern.test(allText));
+		if (hasMatch) pagesWithData++;
+	}
+
+	const pct = pagesWithData / pages.length;
+	let score: number;
+	if (pct > 0.5) score = 10;
+	else if (pct > 0.3) score = 7;
+	else if (pct > 0.15) score = 4;
+	else if (pct > 0) score = 2;
+	else score = 0;
+
+	return makeDimension(
+		"original-data",
+		"Original Research & Data",
+		score,
+		"medium",
+		score < 10
+			? "Add original research, case studies, or proprietary data to establish authority"
+			: "Strong original research and data presence",
+	);
+}
+
+const FACT_PATTERNS = [
+	/\b\d{1,3}(?:,\d{3})*(?:\.\d+)?\s*%/,
+	/\b\d+(?:\.\d+)?\s*(million|billion|thousand|x|times|percent)/i,
+	/\b(19|20)\d{2}\b/,
+	/\$\d+/,
+];
+
+/** Dimension 15: Fact & Data Density (medium weight) */
+export function scoreFactDensity(pages: ScannedPage[], _meta: ScanMeta): DimensionScore {
+	if (pages.length === 0) {
+		return makeDimension(
+			"fact-density",
+			"Fact & Data Density",
+			0,
+			"medium",
+			"Include specific numbers, statistics, and data points to increase credibility",
+		);
+	}
+
+	let totalFacts = 0;
+	for (const page of pages) {
+		for (const sentence of page.sentences) {
+			for (const pattern of FACT_PATTERNS) {
+				const matches = sentence.match(new RegExp(pattern.source, `g${pattern.flags.replace("g", "")}`));
+				if (matches) totalFacts += matches.length;
+			}
+		}
+	}
+
+	const avgFacts = totalFacts / pages.length;
+	let score: number;
+	if (avgFacts >= 5) score = 10;
+	else if (avgFacts >= 3) score = 7;
+	else if (avgFacts >= 1) score = 4;
+	else if (avgFacts > 0) score = 2;
+	else score = 0;
+
+	return makeDimension(
+		"fact-density",
+		"Fact & Data Density",
+		score,
+		"medium",
+		score < 10
+			? "Include specific numbers, statistics, and data points to increase credibility"
+			: "Strong fact and data density",
+	);
+}
+
+/** Dimension 16: Duplicate Content (medium weight) */
+export function scoreDuplicateContent(pages: ScannedPage[], _meta: ScanMeta): DimensionScore {
+	if (pages.length === 0) {
+		return makeDimension(
+			"duplicate-content",
+			"Duplicate Content",
+			10,
+			"medium",
+			"Remove repeated content blocks within pages to improve content quality",
+		);
+	}
+
+	let totalDuplicates = 0;
+	for (const page of pages) {
+		const seen = new Set<string>();
+		let dupeCount = 0;
+		for (const para of page.paragraphs) {
+			const normalized = para.toLowerCase().replace(/\s+/g, " ").trim();
+			if (seen.has(normalized)) {
+				dupeCount++;
+			} else {
+				seen.add(normalized);
+			}
+		}
+		totalDuplicates += dupeCount;
+	}
+
+	const avgDupes = totalDuplicates / pages.length;
+	let score: number;
+	if (avgDupes === 0) score = 10;
+	else if (avgDupes < 1) score = 8;
+	else if (avgDupes < 2) score = 5;
+	else if (avgDupes < 3) score = 3;
+	else score = 0;
+
+	return makeDimension(
+		"duplicate-content",
+		"Duplicate Content",
+		score,
+		"medium",
+		score < 10
+			? "Remove repeated content blocks within pages to improve content quality"
+			: "No duplicate content detected",
+	);
+}
+
 /** Registry mapping dimension IDs to scorer functions */
 export const DIMENSION_SCORERS: Record<string, DimensionScorer> = {
 	"llms-txt": scoreLlmsTxt,
@@ -467,6 +683,10 @@ export const DIMENSION_SCORERS: Record<string, DimensionScorer> = {
 	"https-redirects": scoreHttpsRedirects,
 	"page-freshness": scorePageFreshness,
 	"citation-anchors": scoreCitationAnchors,
+	"topic-coherence": scoreTopicCoherence,
+	"original-data": scoreOriginalData,
+	"fact-density": scoreFactDensity,
+	"duplicate-content": scoreDuplicateContent,
 };
 
 function makeDimension(

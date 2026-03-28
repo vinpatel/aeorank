@@ -45,6 +45,8 @@ const PAGE_LEVEL_DIMENSIONS = [
 	"citation-anchors",
 	"schema-markup",
 	"eeat-signals",
+	"fact-density",
+	"duplicate-content",
 ];
 
 /** Score each page individually across page-level dimensions */
