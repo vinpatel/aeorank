@@ -14,9 +14,12 @@ export type {
 	PageScore,
 } from "./types.js";
 
+export type { PillarGroup } from "./constants.js";
+
 // Constants
 export {
 	DIMENSION_DEFS,
+	PILLAR_GROUPS,
 	GRADE_THRESHOLDS,
 	STATUS_THRESHOLDS,
 	DEFAULT_CONFIG,

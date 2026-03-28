@@ -1,5 +1,11 @@
 import type { DimensionDef, ScanConfig } from "./types.js";
 
+export interface PillarGroup {
+	id: string;
+	name: string;
+	dimensionIds: string[];
+}
+
 /**
  * All 36 AEO scoring dimensions with percentage-based weights.
  * Weights sum to exactly 100.
@@ -52,6 +58,80 @@ export const DIMENSION_DEFS: DimensionDef[] = [
 ];
 // Verify sum at runtime in development
 // DIMENSION_DEFS.reduce((s, d) => s + d.weightPct, 0) === 100
+
+/**
+ * Five AEO scoring pillars, each grouping related dimension IDs.
+ * Single source of truth for pillar membership — used by the dashboard
+ * and any surface that needs to display grouped scores.
+ */
+export const PILLAR_GROUPS: PillarGroup[] = [
+	{
+		id: "answer-readiness",
+		name: "Answer Readiness",
+		dimensionIds: [
+			"topic-coherence",
+			"original-data",
+			"fact-density",
+			"duplicate-content",
+			"cross-page-duplication",
+			"evidence-packaging",
+			"citation-ready-writing",
+		],
+	},
+	{
+		id: "content-structure",
+		name: "Content Structure",
+		dimensionIds: [
+			"content-structure",
+			"answer-first",
+			"qa-format",
+			"direct-answer-density",
+			"query-answer-alignment",
+			"tables-lists",
+			"definition-patterns",
+			"entity-disambiguation",
+		],
+	},
+	{
+		id: "trust-authority",
+		name: "Trust & Authority",
+		dimensionIds: [
+			"eeat-signals",
+			"citation-anchors",
+			"internal-linking",
+		],
+	},
+	{
+		id: "technical-foundation",
+		name: "Technical Foundation",
+		dimensionIds: [
+			"llms-txt",
+			"schema-markup",
+			"ai-crawler-access",
+			"faq-speakable",
+			"meta-descriptions",
+			"semantic-html",
+			"extraction-friction",
+			"image-context",
+			"schema-coverage",
+		],
+	},
+	{
+		id: "ai-discovery",
+		name: "AI Discovery",
+		dimensionIds: [
+			"sitemap",
+			"https-redirects",
+			"page-freshness",
+			"content-cannibalization",
+			"publishing-velocity",
+			"content-licensing",
+			"canonical-urls",
+			"rss-feed",
+			"visible-dates",
+		],
+	},
+];
 
 /** Grade thresholds (score >= threshold = that grade) */
 export const GRADE_THRESHOLDS = {
