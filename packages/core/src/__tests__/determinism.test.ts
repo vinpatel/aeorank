@@ -24,15 +24,43 @@ function createMockFetcher(responses: Record<string, Partial<FetchResult>>) {
 	};
 }
 
+// Enhanced sample page HTML that includes structured data for new dimensions
+const enhancedPageHtml = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>AEO Optimization Guide</title>
+  <meta name="description" content="Comprehensive guide to AEO optimization.">
+</head>
+<body>
+  <h1>AEO Optimization Guide</h1>
+  <p>AEO optimization is a platform for improving AI visibility. AEO optimization helps businesses achieve better results.</p>
+  <h2>What is AEO?</h2>
+  <p>AEO is defined as the practice of optimizing content for AI answer extraction.</p>
+  <h2>How does optimization work?</h2>
+  <p>Optimization refers to the process of making content more accessible to AI systems.</p>
+  <table>
+    <tr><th>Dimension</th><th>Score</th></tr>
+    <tr><td>Content</td><td>8</td></tr>
+  </table>
+  <ul>
+    <li>Item one</li>
+    <li>Item two</li>
+    <li>Item three</li>
+  </ul>
+  <p>AEO optimization scores are calculated across 25 dimensions.</p>
+  <p>The AEO optimization framework provides comprehensive analysis.</p>
+</body>
+</html>`;
+
 const defaultResponses: Record<string, Partial<FetchResult>> = {
 	"https://example.com/robots.txt": { html: robotsTxtContent },
 	"https://example.com/llms.txt": { status: 404 },
 	"https://example.com/sitemap.xml": { html: sitemapXml },
-	"https://example.com": { html: sampleHtml },
-	"https://example.com/about": { html: sampleHtml },
-	"https://example.com/blog": { html: sampleHtml },
-	"https://example.com/blog/aeo-guide": { html: sampleHtml },
-	"https://example.com/pricing": { html: sampleHtml },
+	"https://example.com": { html: enhancedPageHtml },
+	"https://example.com/about": { html: enhancedPageHtml },
+	"https://example.com/blog": { html: enhancedPageHtml },
+	"https://example.com/blog/aeo-guide": { html: enhancedPageHtml },
+	"https://example.com/pricing": { html: enhancedPageHtml },
 };
 
 describe("determinism", () => {
@@ -73,6 +101,9 @@ describe("determinism", () => {
 			"qa-format",
 			"direct-answer-density",
 			"query-answer-alignment",
+			"tables-lists",
+			"definition-patterns",
+			"entity-disambiguation",
 		];
 		for (const id of newDimIds) {
 			const dim = results[0].dimensions.find((d) => d.id === id);
