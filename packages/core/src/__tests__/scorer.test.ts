@@ -346,7 +346,7 @@ describe("calculateAeoScore", () => {
 	});
 
 	describe("duplication gate", () => {
-		it("caps page score at 35 when 3+ duplicate blocks", () => {
+		it("caps page score at 26 when 3+ duplicate blocks", () => {
 			// A page with 3+ identical paragraphs triggers the duplication gate
 			const duplicatePara = "This is a repeated paragraph that appears multiple times on the page.";
 			const page = makePage({
@@ -366,7 +366,8 @@ describe("calculateAeoScore", () => {
 
 			const pageScores = scorePerPage([page], makePerfectMeta());
 			expect(pageScores).toHaveLength(1);
-			expect(pageScores[0].score).toBeLessThanOrEqual(35);
+			expect(pageScores[0].score).toBeLessThanOrEqual(26);
+			expect(pageScores[0].maxScore).toBe(75);
 		});
 
 		it("duplication gate does not apply with fewer than 3 duplicate blocks", () => {
@@ -388,13 +389,14 @@ describe("calculateAeoScore", () => {
 
 			const pageScores = scorePerPage([page], makePerfectMeta());
 			expect(pageScores).toHaveLength(1);
-			// Score should NOT be artificially capped at 35 — can be higher
+			// Score should NOT be artificially capped at 26 — can be higher
 			// (we just verify it runs without the duplication gate blocking it)
 			expect(pageScores[0].score).toBeGreaterThanOrEqual(0);
-			expect(pageScores[0].score).toBeLessThanOrEqual(100);
+			expect(pageScores[0].score).toBeLessThanOrEqual(75);
+			expect(pageScores[0].maxScore).toBe(75);
 		});
 
-		it("duplication gate: page with exactly 3 dupes is capped at 35", () => {
+		it("duplication gate: page with exactly 3 dupes is capped at 26", () => {
 			const dup = "Repeated block content that appears multiple times.";
 			const page = makePage({
 				url: "https://example.com/exactly-3-dupes",
@@ -411,7 +413,8 @@ describe("calculateAeoScore", () => {
 			});
 
 			const pageScores = scorePerPage([page], makePerfectMeta());
-			expect(pageScores[0].score).toBeLessThanOrEqual(35);
+			expect(pageScores[0].score).toBeLessThanOrEqual(26);
+			expect(pageScores[0].maxScore).toBe(75);
 		});
 
 		it("duplication gate: page with 0 dupes is not capped", () => {
@@ -428,8 +431,9 @@ describe("calculateAeoScore", () => {
 
 			const pageScores = scorePerPage([page], makePerfectMeta());
 			expect(pageScores).toHaveLength(1);
-			// No cap applied, score can be > 35
+			// No cap applied, score can be > 26
 			expect(pageScores[0].score).toBeGreaterThanOrEqual(0);
+			expect(pageScores[0].maxScore).toBe(75);
 		});
 	});
 
