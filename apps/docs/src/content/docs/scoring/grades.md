@@ -10,7 +10,7 @@ AEOrank converts your 0-100 score into a letter grade for quick assessment.
 | Grade | Score Range | Meaning |
 |-------|-----------|---------|
 | **A+** | 95-100 | Exceptional — your site is fully optimized for AI engines |
-| **A** | 85-94 | Excellent — strong AI visibility across all dimensions |
+| **A** | 85-94 | Excellent — strong AI visibility across all criteria |
 | **B** | 70-84 | Good — solid foundation with room to improve |
 | **C** | 55-69 | Fair — basic AI signals present but significant gaps |
 | **D** | 40-54 | Poor — most AI engines will struggle to understand your site |

@@ -26,7 +26,7 @@ AEO complements SEO — you should do both.
 
 ## What AEOrank does
 
-AEOrank measures your site's AI visibility across [12 dimensions](/scoring/dimensions/) and generates 8 files that AI engines look for:
+AEOrank measures your site's AI visibility across [36 criteria across 5 pillars](/scoring/dimensions/) and generates 8 files that AI engines look for:
 
 1. **Scans** your site (up to 50 pages, under 30 seconds)
 2. **Scores** your AI visibility from 0-100

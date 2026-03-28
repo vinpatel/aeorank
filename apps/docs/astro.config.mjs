@@ -93,7 +93,7 @@ export default defineConfig({
 				{
 					label: "Scoring",
 					items: [
-						{ label: "12 Dimensions", slug: "scoring/dimensions" },
+						{ label: "36 Criteria", slug: "scoring/dimensions" },
 						{ label: "How Scores Work", slug: "scoring/calculation" },
 						{ label: "Grades", slug: "scoring/grades" },
 					],
