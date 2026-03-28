@@ -87,37 +87,39 @@ describe("renderScore", () => {
 
 describe("renderDimensionTable", () => {
 	it("shows pass icon for passing dimensions", () => {
-		const dims = [makeDimension({ status: "pass", name: "Good Dim" })];
+		// Use a real dimension ID that belongs to a pillar (llms-txt -> technical-foundation)
+		const dims = [makeDimension({ id: "llms-txt", status: "pass", name: "Good Dim" })];
 		const output = stripAnsi(renderDimensionTable(dims));
 		expect(output).toContain("✓");
 		expect(output).toContain("Good Dim");
 	});
 
 	it("shows warn icon for warning dimensions", () => {
-		const dims = [makeDimension({ status: "warn", name: "Warn Dim" })];
+		const dims = [makeDimension({ id: "llms-txt", status: "warn", name: "Warn Dim" })];
 		const output = stripAnsi(renderDimensionTable(dims));
 		expect(output).toContain("⚠");
 		expect(output).toContain("Warn Dim");
 	});
 
 	it("shows fail icon for failing dimensions", () => {
-		const dims = [makeDimension({ status: "fail", name: "Fail Dim" })];
+		const dims = [makeDimension({ id: "llms-txt", status: "fail", name: "Fail Dim" })];
 		const output = stripAnsi(renderDimensionTable(dims));
 		expect(output).toContain("✗");
 		expect(output).toContain("Fail Dim");
 	});
 
 	it("shows score/maxScore for each dimension", () => {
-		const dims = [makeDimension({ score: 3, maxScore: 10 })];
+		const dims = [makeDimension({ id: "llms-txt", score: 3, maxScore: 10 })];
 		const output = stripAnsi(renderDimensionTable(dims));
 		expect(output).toContain("3/10");
 	});
 
 	it("shows weightPct percentage label", () => {
+		// Use real IDs from different pillars
 		const dims = [
-			makeDimension({ weightPct: 5, name: "High Dim" }),
-			makeDimension({ weightPct: 3, name: "Med Dim" }),
-			makeDimension({ weightPct: 1, name: "Low Dim" }),
+			makeDimension({ id: "eeat-signals", weightPct: 5, name: "High Dim" }),
+			makeDimension({ id: "internal-linking", weightPct: 3, name: "Med Dim" }),
+			makeDimension({ id: "sitemap", weightPct: 1, name: "Low Dim" }),
 		];
 		const output = stripAnsi(renderDimensionTable(dims));
 		expect(output).toContain("[5%]");
@@ -127,24 +129,29 @@ describe("renderDimensionTable", () => {
 
 	it("shows hint only for non-pass dimensions", () => {
 		const dims = [
-			makeDimension({ status: "pass", hint: "All good" }),
-			makeDimension({ status: "fail", hint: "Fix this thing", name: "Broken" }),
+			makeDimension({ id: "llms-txt", status: "pass", hint: "All good" }),
+			makeDimension({ id: "schema-markup", status: "fail", hint: "Fix this thing", name: "Broken" }),
 		];
-		const output = stripAnsi(renderDimensionTable(dims));
+		// Both in technical-foundation pillar — use pillar filter for clarity
+		const output = stripAnsi(renderDimensionTable(dims, "technical-foundation"));
 		// Hint for failing dimension should appear
 		expect(output).toContain("Fix this thing");
 	});
 
 	it("sorts by weightPct (high first) then score ascending", () => {
+		// Use dimensions that belong to the same pillar so they all appear together
+		// topic-coherence and original-data are in answer-readiness
+		// fact-density also in answer-readiness
+		// duplicate-content also in answer-readiness
 		const dims = [
-			makeDimension({ id: "low-good", weightPct: 1, score: 8, name: "Low Good" }),
-			makeDimension({ id: "high-bad", weightPct: 5, score: 2, name: "High Bad" }),
-			makeDimension({ id: "high-ok", weightPct: 5, score: 5, name: "High OK" }),
-			makeDimension({ id: "med", weightPct: 3, score: 6, name: "Medium" }),
+			makeDimension({ id: "duplicate-content", weightPct: 1, score: 8, name: "Low Good" }),
+			makeDimension({ id: "topic-coherence", weightPct: 5, score: 2, name: "High Bad" }),
+			makeDimension({ id: "original-data", weightPct: 5, score: 5, name: "High OK" }),
+			makeDimension({ id: "fact-density", weightPct: 3, score: 6, name: "Medium" }),
 		];
 		const output = stripAnsi(renderDimensionTable(dims));
 		const lines = output.split("\n").filter((l) => l.trim().length > 0);
-		// High weightPct dims should come first
+		// High weightPct dims should come first within their pillar section
 		const highBadIdx = lines.findIndex((l) => l.includes("High Bad"));
 		const highOkIdx = lines.findIndex((l) => l.includes("High OK"));
 		const medIdx = lines.findIndex((l) => l.includes("Medium"));
@@ -155,6 +162,77 @@ describe("renderDimensionTable", () => {
 		expect(medIdx).toBeLessThan(lowIdx);
 		// Within same weightPct, worse score first
 		expect(highBadIdx).toBeLessThan(highOkIdx);
+	});
+
+	// --- Pillar grouping tests (new) ---
+
+	it("renders all 5 pillar headers when no pillarFilter is provided", () => {
+		// Create one dimension per pillar to ensure each appears
+		const dims = [
+			makeDimension({ id: "topic-coherence", name: "Topical Authority", weightPct: 7 }),
+			makeDimension({ id: "content-structure", name: "Content Structure", weightPct: 5 }),
+			makeDimension({ id: "eeat-signals", name: "E-E-A-T Signals", weightPct: 6 }),
+			makeDimension({ id: "llms-txt", name: "llms.txt Presence", weightPct: 5 }),
+			makeDimension({ id: "sitemap", name: "Sitemap Presence", weightPct: 1 }),
+		];
+		const output = stripAnsi(renderDimensionTable(dims));
+		expect(output).toContain("Answer Readiness");
+		expect(output).toContain("Content Structure");
+		expect(output).toContain("Trust & Authority");
+		expect(output).toContain("Technical Foundation");
+		expect(output).toContain("AI Discovery");
+	});
+
+	it("renders only the filtered pillar when pillarFilter is set", () => {
+		const dims = [
+			makeDimension({ id: "topic-coherence", name: "Topical Authority", weightPct: 7 }),
+			makeDimension({ id: "content-structure", name: "Content Structure", weightPct: 5 }),
+			makeDimension({ id: "eeat-signals", name: "E-E-A-T Signals", weightPct: 6 }),
+			makeDimension({ id: "llms-txt", name: "llms.txt Presence", weightPct: 5 }),
+			makeDimension({ id: "sitemap", name: "Sitemap Presence", weightPct: 1 }),
+		];
+		const output = stripAnsi(renderDimensionTable(dims, "answer-readiness"));
+		expect(output).toContain("Answer Readiness");
+		expect(output).not.toContain("Content Structure\n");
+		expect(output).not.toContain("Trust & Authority");
+		expect(output).not.toContain("Technical Foundation");
+		expect(output).not.toContain("AI Discovery");
+		// The dimension from answer-readiness should be present
+		expect(output).toContain("Topical Authority");
+	});
+
+	it("pillar headers include aggregate score and weight sum", () => {
+		// topic-coherence: score=7, maxScore=10, weightPct=7
+		// original-data: score=5, maxScore=10, weightPct=5
+		// Both in answer-readiness pillar
+		const dims = [
+			makeDimension({ id: "topic-coherence", score: 7, maxScore: 10, weightPct: 7 }),
+			makeDimension({ id: "original-data", score: 5, maxScore: 10, weightPct: 5 }),
+		];
+		const output = stripAnsi(renderDimensionTable(dims, "answer-readiness"));
+		// Pillar score: (7*7 + 5*5) / ((10*7) + (10*5)) * 10 = (49+25)/(70+50)*10 = 74/120*10 = 6.2
+		expect(output).toContain("Answer Readiness");
+		// Should contain a score like "6.2/10"
+		expect(output).toMatch(/\d+\.\d+\/10/);
+		// Should contain weight sum in brackets
+		expect(output).toContain("[12%]");
+	});
+
+	it("dimensions within each pillar are sorted by weightPct descending", () => {
+		const dims = [
+			makeDimension({ id: "cross-page-duplication", weightPct: 2, score: 5, name: "Low Weight" }),
+			makeDimension({ id: "topic-coherence", weightPct: 7, score: 5, name: "High Weight" }),
+		];
+		const output = stripAnsi(renderDimensionTable(dims, "answer-readiness"));
+		const highIdx = output.indexOf("High Weight");
+		const lowIdx = output.indexOf("Low Weight");
+		expect(highIdx).toBeLessThan(lowIdx);
+	});
+
+	it("shows warning when pillarFilter does not match any known pillar", () => {
+		const dims = [makeDimension({ id: "topic-coherence", name: "Topical Authority" })];
+		const output = stripAnsi(renderDimensionTable(dims, "invalid-pillar"));
+		expect(output.toLowerCase()).toMatch(/invalid|unknown|not found|valid pillar/i);
 	});
 });
 
@@ -210,5 +288,25 @@ describe("renderNextSteps", () => {
 		expect(output).toContain("[5%]");
 		expect(output).toContain("[3%]");
 		expect(output).toContain("[1%]");
+	});
+
+	it("accepts optional pillarFilter and filters next steps to that pillar", () => {
+		const dims = [
+			makeDimension({
+				id: "topic-coherence",
+				status: "fail",
+				weightPct: 7,
+				hint: "Answer Readiness fix",
+			}),
+			makeDimension({
+				id: "eeat-signals",
+				status: "fail",
+				weightPct: 6,
+				hint: "Trust fix",
+			}),
+		];
+		const output = stripAnsi(renderNextSteps(dims, "answer-readiness"));
+		expect(output).toContain("Answer Readiness fix");
+		expect(output).not.toContain("Trust fix");
 	});
 });
