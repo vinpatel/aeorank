@@ -65,9 +65,9 @@ Plans:
   3. A FAQ-style page scores significantly higher on qa-format and direct-answer-density than a narrative page
   4. All existing + new tests pass with zero failures
   5. Determinism test passes for all 6 new dimensions
-**Plans:** 2 plans
+**Plans:** 1/2 plans executed
 Plans:
-- [ ] 09-01-PLAN.md — Parser extensions (question headings, table/list counts) + first 3 scorers (qa-format, direct-answer-density, query-answer-alignment)
+- [x] 09-01-PLAN.md — Parser extensions (question headings, table/list counts) + first 3 scorers (qa-format, direct-answer-density, query-answer-alignment)
 - [ ] 09-02-PLAN.md — Last 3 scorers (tables-lists, definition-patterns, entity-disambiguation) + determinism tests
 
 ### Phase 10: Trust & Authority Expansion
@@ -165,7 +165,7 @@ Plans:
 | 6. Retroactive Verification | v1.0 | 3/3 | Complete | 2026-03-15 |
 | 7. Marketing Content | v1.0 | 2/2 | Complete | 2026-03-15 |
 | 8. Answer Readiness | v2.0 | 2/2 | Complete |  |
-| 9. Content Structure | v2.0 | 0/2 | Not Started | — |
+| 9. Content Structure | v2.0 | 1/2 | In Progress|  |
 | 10. Trust & Authority | v2.0 | 0/? | Not Started | — |
 | 11. Technical Foundation | v2.0 | 0/? | Not Started | — |
 | 12. AI Discovery | v2.0 | 0/? | Not Started | — |
