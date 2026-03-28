@@ -123,7 +123,10 @@ Plans:
   3. Coherence gate: site with topic-coherence < 6/10 has score capped visibly in output
   4. Duplication gate: page with 3+ duplicate blocks capped at 35% in per-page score
   5. All existing tests updated and passing with zero failures
-**Plans**: TBD
+**Plans:** 2 plans
+Plans:
+- [ ] 13-01-PLAN.md — Weight migration: types, constants, scorer to weightPct + merge speakable-schema and author-schema
+- [ ] 13-02-PLAN.md — Score gates (coherence + duplication) + CLI/dashboard weightPct display updates
 
 ### Phase 14: New File Generators
 **Goal**: Add ai.txt generator and improve llms-full.txt with Q&A pairs, definition blocks, and entity disambiguation. Update generateFiles() to produce 10 files total.
@@ -177,7 +180,7 @@ Plans:
 | 10. Trust & Authority | v2.0 | 1/1 | Complete    | 2026-03-28 |
 | 11. Technical Foundation | v2.0 | 2/2 | Complete    | 2026-03-28 |
 | 12. AI Discovery | v2.0 | 2/2 | Complete    | 2026-03-28 |
-| 13. Weight Migration | v2.0 | 0/? | Not Started | — |
+| 13. Weight Migration | v2.0 | 0/2 | Not Started | — |
 | 14. New File Generators | v2.0 | 0/? | Not Started | — |
 | 15. Dashboard & Docs | v2.0 | 0/? | Not Started | — |
 | 16. Per-Page Scoring | v2.0 | 0/? | Not Started | — |
