@@ -129,7 +129,7 @@ Plans:
 - [x] 13-02-PLAN.md — Score gates (coherence + duplication) + CLI/dashboard weightPct display updates
 
 ### Phase 14: New File Generators
-**Goal**: Add ai.txt generator and improve llms-full.txt with Q&A pairs, definition blocks, and entity disambiguation. Update generateFiles() to produce 10 files total.
+**Goal**: Add ai.txt generator and improve llms-full.txt with Q&A pairs, definition blocks, and entity disambiguation. Update generateFiles() to produce 9 files total.
 **Depends on**: Phase 13
 **Requirements**: FGEN-01, FGEN-02
 **Success Criteria** (what must be TRUE):
@@ -138,7 +138,9 @@ Plans:
   3. llms-full.txt includes extracted Q&A pairs and definition blocks from scan results
   4. Generator tests cover both new outputs
   5. All existing generator tests still pass
-**Plans**: TBD
+**Plans:** 1 plan
+Plans:
+- [ ] 14-01-PLAN.md — ai.txt generator + llms-full.txt Q&A/definitions/entities enrichment
 
 ### Phase 15: Dashboard & Docs Updates
 **Goal**: Update all user-facing surfaces for 36 criteria. Dashboard shows pillar-grouped breakdown, docs reference all criteria, marketing reflects "36 criteria across 5 pillars", CLI groups by pillar with --pillar filter.
@@ -181,6 +183,6 @@ Plans:
 | 11. Technical Foundation | v2.0 | 2/2 | Complete    | 2026-03-28 |
 | 12. AI Discovery | v2.0 | 2/2 | Complete    | 2026-03-28 |
 | 13. Weight Migration | v2.0 | 2/2 | Complete    | 2026-03-28 |
-| 14. New File Generators | v2.0 | 0/? | Not Started | — |
+| 14. New File Generators | v2.0 | 0/1 | Planning | — |
 | 15. Dashboard & Docs | v2.0 | 0/? | Not Started | — |
 | 16. Per-Page Scoring | v2.0 | 0/? | Not Started | — |
