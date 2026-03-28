@@ -26,7 +26,7 @@ runs:
       id: scan
       shell: bash
       run: |
-        RESULT=$(npx aeorank@latest scan "${{ inputs.url }}" --format json --no-files 2>/dev/null)
+        RESULT=$(npx aeorank-cli@latest scan "${{ inputs.url }}" --format json --no-files 2>/dev/null)
         echo "result<<AEORANK_EOF" >> $GITHUB_OUTPUT
         echo "$RESULT" >> $GITHUB_OUTPUT
         echo "AEORANK_EOF" >> $GITHUB_OUTPUT

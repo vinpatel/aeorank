@@ -48,7 +48,7 @@ export async function getUserScansThisMonth(userId: string): Promise<number> {
 		.from("scans")
 		.select("*", { count: "exact", head: true })
 		.eq("user_id", userId)
-		.gte("created_at", startOfMonth);
+		.gte("scanned_at", startOfMonth);
 	return count ?? 0;
 }
 
