@@ -1406,6 +1406,105 @@ export function scoreImageContext(pages: ScannedPage[], _meta: ScanMeta): Dimens
 	);
 }
 
+/** Dimension 31: Schema Coverage (low weight) */
+export function scoreSchemaCoverage(pages: ScannedPage[], _meta: ScanMeta): DimensionScore {
+	const hint = "Add structured data (schema.org) to inner pages, not just the homepage";
+
+	if (pages.length === 0) {
+		return makeDimension("schema-coverage", "Schema Coverage", 0, "low", hint);
+	}
+
+	// Sort pages by URL for determinism
+	const sorted = [...pages].sort((a, b) => a.url.localeCompare(b.url));
+
+	/**
+	 * A page "has schema" if at least one schema object has a meaningful @type.
+	 */
+	function pageHasSchema(page: ScannedPage): boolean {
+		for (const schema of page.schemaOrg) {
+			const s = schema as Record<string, unknown>;
+			// Direct @type
+			if (typeof s["@type"] === "string" && s["@type"].trim().length > 0) {
+				return true;
+			}
+			// @graph items
+			if (Array.isArray(s["@graph"])) {
+				for (const item of s["@graph"] as Record<string, unknown>[]) {
+					if (typeof item["@type"] === "string" && item["@type"].trim().length > 0) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+
+	const pagesWithSchema = sorted.filter(pageHasSchema).length;
+
+	// Special case: single page
+	if (sorted.length === 1) {
+		const score = pagesWithSchema > 0 ? 5 : 0;
+		return makeDimension("schema-coverage", "Schema Coverage", score, "low", hint);
+	}
+
+	const ratio = pagesWithSchema / sorted.length;
+	let score: number;
+	if (ratio >= 0.8) score = 10;
+	else if (ratio >= 0.6) score = 8;
+	else if (ratio >= 0.4) score = 6;
+	else if (ratio >= 0.2) score = 3;
+	else if (ratio > 0) score = 1;
+	else score = 0;
+
+	return makeDimension("schema-coverage", "Schema Coverage", score, "low", hint);
+}
+
+/** Dimension 32: Speakable Schema (low weight) */
+export function scoreSpeakableSchema(pages: ScannedPage[], _meta: ScanMeta): DimensionScore {
+	const hint =
+		"Add SpeakableSpecification markup to indicate content suitable for text-to-speech and voice assistants";
+
+	if (pages.length === 0) {
+		return makeDimension("speakable-schema", "Speakable Schema", 0, "low", hint);
+	}
+
+	// Sort pages by URL for determinism
+	const sorted = [...pages].sort((a, b) => a.url.localeCompare(b.url));
+
+	function pageHasSpeakable(page: ScannedPage): boolean {
+		for (const schema of page.schemaOrg) {
+			const s = schema as Record<string, unknown>;
+
+			// Direct @type === "SpeakableSpecification"
+			if (s["@type"] === "SpeakableSpecification") return true;
+
+			// In @graph array
+			if (Array.isArray(s["@graph"])) {
+				for (const item of s["@graph"] as Record<string, unknown>[]) {
+					if (item["@type"] === "SpeakableSpecification") return true;
+				}
+			}
+
+			// As nested speakable property
+			const speakable = s["speakable"] as Record<string, unknown> | undefined;
+			if (speakable && speakable["@type"] === "SpeakableSpecification") return true;
+		}
+		return false;
+	}
+
+	const pagesWithSpeakable = sorted.filter(pageHasSpeakable).length;
+	const ratio = pagesWithSpeakable / sorted.length;
+
+	let score: number;
+	if (ratio >= 0.5) score = 10;
+	else if (ratio >= 0.3) score = 7;
+	else if (ratio >= 0.1) score = 4;
+	else if (ratio > 0) score = 2;
+	else score = 0;
+
+	return makeDimension("speakable-schema", "Speakable Schema", score, "low", hint);
+}
+
 /** Registry mapping dimension IDs to scorer functions */
 export const DIMENSION_SCORERS: Record<string, DimensionScorer> = {
 	"llms-txt": scoreLlmsTxt,
@@ -1438,6 +1537,8 @@ export const DIMENSION_SCORERS: Record<string, DimensionScorer> = {
 	"semantic-html": scoreSemanticHtml,
 	"extraction-friction": scoreExtractionFriction,
 	"image-context": scoreImageContext,
+	"schema-coverage": scoreSchemaCoverage,
+	"speakable-schema": scoreSpeakableSchema,
 };
 
 function makeDimension(

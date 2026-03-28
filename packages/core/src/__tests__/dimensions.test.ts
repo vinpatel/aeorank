@@ -23,7 +23,9 @@ import {
 	scoreQaFormat,
 	scoreQueryAnswerAlignment,
 	scoreSchemaMarkup,
+	scoreSchemaCoverage,
 	scoreSemanticHtml,
+	scoreSpeakableSchema,
 	scoreTablesLists,
 	scoreTopicCoherence,
 } from "../scorer/dimensions.js";
@@ -1195,5 +1197,139 @@ describe("scoreImageContext", () => {
 		const result = scoreImageContext([makePage()], makeMeta());
 		expect(result.id).toBe("image-context");
 		expect(result.weight).toBe("low");
+	});
+});
+
+describe("scoreSchemaCoverage", () => {
+	it("returns score 0, weight 'low', id 'schema-coverage' for empty pages array", () => {
+		const result = scoreSchemaCoverage([], makeMeta());
+		expect(result.score).toBe(0);
+		expect(result.id).toBe("schema-coverage");
+		expect(result.weight).toBe("low");
+	});
+
+	it("returns score 5 for single page with schema (can't assess inner page coverage)", () => {
+		const page = makePage({ schemaOrg: [{ "@type": "Article" }] });
+		const result = scoreSchemaCoverage([page], makeMeta());
+		expect(result.score).toBe(5);
+	});
+
+	it("returns score 0 for single page with no schema", () => {
+		const page = makePage({ schemaOrg: [] });
+		const result = scoreSchemaCoverage([page], makeMeta());
+		expect(result.score).toBe(0);
+	});
+
+	it("returns score 2-3 for 5 pages where only homepage has schema (poor inner coverage)", () => {
+		const pages = [
+			makePage({ url: "https://example.com", schemaOrg: [{ "@type": "WebSite" }] }),
+			makePage({ url: "https://example.com/about", schemaOrg: [] }),
+			makePage({ url: "https://example.com/blog", schemaOrg: [] }),
+			makePage({ url: "https://example.com/pricing", schemaOrg: [] }),
+			makePage({ url: "https://example.com/contact", schemaOrg: [] }),
+		];
+		const result = scoreSchemaCoverage(pages, makeMeta());
+		expect(result.score).toBeGreaterThanOrEqual(1);
+		expect(result.score).toBeLessThanOrEqual(3);
+	});
+
+	it("returns score 8-10 for 5 pages where 4/5 have schema (good coverage)", () => {
+		const pages = [
+			makePage({ url: "https://example.com", schemaOrg: [{ "@type": "WebSite" }] }),
+			makePage({ url: "https://example.com/about", schemaOrg: [{ "@type": "Article" }] }),
+			makePage({ url: "https://example.com/blog", schemaOrg: [{ "@type": "Article" }] }),
+			makePage({ url: "https://example.com/pricing", schemaOrg: [{ "@type": "Product" }] }),
+			makePage({ url: "https://example.com/contact", schemaOrg: [] }),
+		];
+		const result = scoreSchemaCoverage(pages, makeMeta());
+		expect(result.score).toBeGreaterThanOrEqual(8);
+	});
+
+	it("returns score 10 for 5 pages where all 5 have schema", () => {
+		const pages = [
+			makePage({ url: "https://example.com", schemaOrg: [{ "@type": "WebSite" }] }),
+			makePage({ url: "https://example.com/about", schemaOrg: [{ "@type": "Article" }] }),
+			makePage({ url: "https://example.com/blog", schemaOrg: [{ "@type": "Article" }] }),
+			makePage({ url: "https://example.com/pricing", schemaOrg: [{ "@type": "Product" }] }),
+			makePage({ url: "https://example.com/faq", schemaOrg: [{ "@type": "FAQPage" }] }),
+		];
+		const result = scoreSchemaCoverage(pages, makeMeta());
+		expect(result.score).toBe(10);
+	});
+
+	it("returns score 0 for pages with zero schema on any page", () => {
+		const pages = [
+			makePage({ url: "https://example.com", schemaOrg: [] }),
+			makePage({ url: "https://example.com/about", schemaOrg: [] }),
+			makePage({ url: "https://example.com/blog", schemaOrg: [] }),
+		];
+		const result = scoreSchemaCoverage(pages, makeMeta());
+		expect(result.score).toBe(0);
+	});
+
+	it("detects schema in @graph array items", () => {
+		const page = makePage({
+			schemaOrg: [{ "@context": "https://schema.org", "@graph": [{ "@type": "Article" }] }],
+		});
+		const result = scoreSchemaCoverage([page], makeMeta());
+		expect(result.score).toBe(5);
+	});
+});
+
+describe("scoreSpeakableSchema", () => {
+	it("returns score 0, weight 'low', id 'speakable-schema' for empty pages array", () => {
+		const result = scoreSpeakableSchema([], makeMeta());
+		expect(result.score).toBe(0);
+		expect(result.id).toBe("speakable-schema");
+		expect(result.weight).toBe("low");
+	});
+
+	it("returns score 0 for pages with no SpeakableSpecification markup", () => {
+		const page = makePage({ schemaOrg: [{ "@type": "Article" }] });
+		const result = scoreSpeakableSchema([page], makeMeta());
+		expect(result.score).toBe(0);
+	});
+
+	it("returns score 10 for page with SpeakableSpecification @type", () => {
+		const page = makePage({ schemaOrg: [{ "@type": "SpeakableSpecification", cssSelector: [".body"] }] });
+		const result = scoreSpeakableSchema([page], makeMeta());
+		expect(result.score).toBe(10);
+	});
+
+	it("returns score 10 for page with speakable property containing SpeakableSpecification", () => {
+		const page = makePage({
+			schemaOrg: [{ "@type": "Article", speakable: { "@type": "SpeakableSpecification", cssSelector: [".body"] } }],
+		});
+		const result = scoreSpeakableSchema([page], makeMeta());
+		expect(result.score).toBe(10);
+	});
+
+	it("returns score 10 for SpeakableSpecification in @graph array", () => {
+		const page = makePage({
+			schemaOrg: [
+				{
+					"@context": "https://schema.org",
+					"@graph": [{ "@type": "SpeakableSpecification", cssSelector: [".article-body"] }],
+				},
+			],
+		});
+		const result = scoreSpeakableSchema([page], makeMeta());
+		expect(result.score).toBe(10);
+	});
+
+	it("returns score 3-5 for 1 page with speakable out of 5 (partial coverage)", () => {
+		const pages = [
+			makePage({
+				url: "https://example.com",
+				schemaOrg: [{ "@type": "SpeakableSpecification", cssSelector: [".body"] }],
+			}),
+			makePage({ url: "https://example.com/about", schemaOrg: [] }),
+			makePage({ url: "https://example.com/blog", schemaOrg: [] }),
+			makePage({ url: "https://example.com/pricing", schemaOrg: [] }),
+			makePage({ url: "https://example.com/faq", schemaOrg: [] }),
+		];
+		const result = scoreSpeakableSchema(pages, makeMeta());
+		expect(result.score).toBeGreaterThanOrEqual(2);
+		expect(result.score).toBeLessThanOrEqual(5);
 	});
 });
