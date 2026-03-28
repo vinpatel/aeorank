@@ -33,9 +33,9 @@ Requirements for Competitive Parity milestone. Expands scoring from 12 to 36 cri
 
 ### Technical Foundation
 
-- [ ] **TECH-01**: Scanner checks semantic HTML usage (main, article, nav, aside, ARIA, lang attribute) and scores 0-10
-- [ ] **TECH-02**: Scanner measures extraction friction (average sentence length, jargon density, passive voice) and scores 0-10
-- [ ] **TECH-03**: Scanner checks image context for AI (figure/figcaption, descriptive alt text, contextual placement) and scores 0-10
+- [x] **TECH-01**: Scanner checks semantic HTML usage (main, article, nav, aside, ARIA, lang attribute) and scores 0-10
+- [x] **TECH-02**: Scanner measures extraction friction (average sentence length, jargon density, passive voice) and scores 0-10
+- [x] **TECH-03**: Scanner checks image context for AI (figure/figcaption, descriptive alt text, contextual placement) and scores 0-10
 - [ ] **TECH-04**: Scanner checks schema coverage on inner pages (not just homepage) and scores 0-10
 - [ ] **TECH-05**: Scanner detects SpeakableSpecification markup and scores 0-10
 
@@ -121,9 +121,9 @@ Deferred beyond v2.0.
 | CSTR-06 | Phase 9 | Complete |
 | TRST-01 | Phase 10 | Complete |
 | TRST-02 | Phase 10 | Complete |
-| TECH-01 | Phase 11 | Pending |
-| TECH-02 | Phase 11 | Pending |
-| TECH-03 | Phase 11 | Pending |
+| TECH-01 | Phase 11 | Complete |
+| TECH-02 | Phase 11 | Complete |
+| TECH-03 | Phase 11 | Complete |
 | TECH-04 | Phase 11 | Pending |
 | TECH-05 | Phase 11 | Pending |
 | DISC-01 | Phase 12 | Pending |

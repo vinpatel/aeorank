@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: Competitive Parity
-status: verifying
-stopped_at: Completed 10-01-PLAN.md — internal-linking and author-schema scorers added, DIMENSION_DEFS at 27, all 527 tests passing
-last_updated: "2026-03-28T19:17:19.825Z"
+status: executing
+stopped_at: Completed 11-01-PLAN.md — semantic-html, extraction-friction, image-context scorers added, DIMENSION_DEFS at 30, all 553 tests passing
+last_updated: "2026-03-28T19:27:38.594Z"
 last_activity: 2026-03-28
 progress:
   total_phases: 9
   completed_phases: 3
-  total_plans: 5
-  completed_plans: 5
+  total_plans: 7
+  completed_plans: 6
 ---
 
 # Project State
@@ -20,14 +20,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-28)
 
 **Core value:** A developer runs `npx aeorank-cli scan <url>` with zero config and gets an AEO score plus all 8 generated files needed for AI visibility — in under 30 seconds.
-**Current focus:** Phase 10 — trust-authority-expansion
+**Current focus:** Phase 11 — technical-foundation-expansion
 
 ## Current Position
 
-Phase: 11
-Plan: Not started
+Phase: 11 (technical-foundation-expansion) — EXECUTING
+Plan: 2 of 2
 Milestone: v2.0 Competitive Parity — Phases 8-16
-Status: Phase complete — ready for verification
+Status: Ready to execute
 Last activity: 2026-03-28
 
 Progress: [####################] (Phase 7 — 2/3 plans done)
@@ -76,6 +76,7 @@ Progress: [####################] (Phase 7 — 2/3 plans done)
 | Phase 09 P01 | 5min | 2 tasks | 10 files |
 | Phase 09 P02 | 3min | 2 tasks | 7 files |
 | Phase 10 P01 | 6min | 2 tasks | 6 files |
+| Phase 11-technical-foundation-expansion P01 | 480s | 2 tasks | 9 files |
 
 ## Phase 4 Deliverables
 
@@ -239,6 +240,9 @@ Recent decisions affecting current work:
 - [Phase 10-01]: scoreInternalLinking avgInternal thresholds: >=5+breadcrumbs=10, >=5=8, >=3=6, >=1=3, else=0
 - [Phase 10-01]: scoreAuthorSchema credential ladder: personSchema+credentials+sameAs=10, +credentials=6, person=3, none=0
 - [Phase 10-01]: Both new dimensions added to PAGE_LEVEL_DIMENSIONS (page-level: each page has own links + schema)
+- [Phase 11-01]: scoreExtractionFriction uses avgSentenceLength pre-computed by parser for efficiency and consistency
+- [Phase 11-01]: scoreImageContext returns 10 for zero-image pages (no images = no friction from missing alt text)
+- [Phase 11-01]: All 3 Technical Foundation dimensions added to PAGE_LEVEL_DIMENSIONS (each page has own semantic elements and images)
 
 ### Pending Todos
 
@@ -254,6 +258,6 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-03-28T19:16:41.786Z
-Stopped at: Completed 10-01-PLAN.md — internal-linking and author-schema scorers added, DIMENSION_DEFS at 27, all 527 tests passing
+Last session: 2026-03-28T19:27:38.592Z
+Stopped at: Completed 11-01-PLAN.md — semantic-html, extraction-friction, image-context scorers added, DIMENSION_DEFS at 30, all 553 tests passing
 Resume file: None
