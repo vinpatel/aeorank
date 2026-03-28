@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { calculateAeoScore, scorePerPage } from "../scorer/index.js";
+import { PAGE_LEVEL_DIMENSIONS } from "../index.js";
 import type { ScanMeta, ScannedPage } from "../types.js";
 
 function makePage(overrides: Partial<ScannedPage> = {}): ScannedPage {
@@ -429,6 +430,83 @@ describe("calculateAeoScore", () => {
 			expect(pageScores).toHaveLength(1);
 			// No cap applied, score can be > 35
 			expect(pageScores[0].score).toBeGreaterThanOrEqual(0);
+		});
+	});
+
+	describe("0-75 scale (PAGE-01)", () => {
+		it("scorePerPage returns score <= 75 for any page", () => {
+			const page = makePage({
+				url: "https://example.com/page",
+				paragraphs: ["Unique paragraph one.", "Unique paragraph two."],
+			});
+			const pageScores = scorePerPage([page], makePerfectMeta());
+			expect(pageScores[0].score).toBeLessThanOrEqual(75);
+		});
+
+		it("scorePerPage returns score >= 0 for any page", () => {
+			const page = makePage({ url: "https://example.com/page" });
+			const pageScores = scorePerPage([page], makePerfectMeta());
+			expect(pageScores[0].score).toBeGreaterThanOrEqual(0);
+		});
+
+		it("PageScore objects include maxScore property equal to 75", () => {
+			const page = makePage({ url: "https://example.com/page" });
+			const pageScores = scorePerPage([page], makePerfectMeta());
+			expect(pageScores[0].maxScore).toBe(75);
+		});
+
+		it("duplication gate caps at 26 (35% of 75) not 35", () => {
+			const dup = "Repeated block content that appears multiple times on the page.";
+			const page = makePage({
+				url: "https://example.com/dupe",
+				paragraphs: [
+					"First unique paragraph.",
+					dup,
+					"Second unique paragraph.",
+					dup, // dupe 1
+					"Third unique paragraph.",
+					dup, // dupe 2
+					"Fourth unique paragraph.",
+					dup, // dupe 3 — triggers gate
+				],
+			});
+			const pageScores = scorePerPage([page], makePerfectMeta());
+			expect(pageScores[0].score).toBeLessThanOrEqual(26);
+		});
+
+		it("page with 0 dupes can score above 26", () => {
+			const page = makePage({
+				url: "https://example.com/clean",
+				paragraphs: [
+					"First completely unique paragraph about topic A.",
+					"Second completely unique paragraph about topic B.",
+					"Third completely unique paragraph about topic C.",
+				],
+			});
+			const pageScores = scorePerPage([page], makePerfectMeta());
+			expect(pageScores[0].score).toBeGreaterThan(26);
+		});
+
+		it("page score never exceeds 75 even with perfect signals", () => {
+			const page = makePage({
+				url: "https://example.com/perfect",
+				wordCount: 1500,
+				schemaOrg: [
+					{ "@type": "Organization", name: "Test" },
+					{ "@type": "WebSite", name: "Test" },
+					{ "@type": "FAQPage", mainEntity: [{ "@type": "Question" }, { "@type": "Question" }] },
+					{ "@type": "Article", author: { name: "Jane" } },
+					{ "@type": "BreadcrumbList" },
+				],
+			});
+			const pageScores = scorePerPage([page], makePerfectMeta());
+			expect(pageScores[0].score).toBeLessThanOrEqual(75);
+		});
+
+		it("PAGE_LEVEL_DIMENSIONS is exported from @aeorank/core with 25 entries", () => {
+			expect(PAGE_LEVEL_DIMENSIONS).toBeDefined();
+			expect(Array.isArray(PAGE_LEVEL_DIMENSIONS)).toBe(true);
+			expect(PAGE_LEVEL_DIMENSIONS).toHaveLength(25);
 		});
 	});
 
