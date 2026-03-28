@@ -58,3 +58,58 @@
 | LOC | 22,459 |
 | Timeline | 14 days |
 | Integration bugs found at audit | 2 |
+
+## Milestone: v2.0 — Competitive Parity
+
+**Shipped:** 2026-03-28
+**Phases:** 9 | **Plans:** 17 | **Timeline:** Same day as v1.0 completion (~3 hours)
+
+### What Was Built
+- 24 new scoring dimensions (12→36 total) across 5 pillars
+- Percentage-based weight system with coherence + duplication score gates
+- ai.txt generator + enriched llms-full.txt (Q&A, definitions, entities)
+- Pillar-grouped UI across dashboard, CLI, docs, marketing
+- Per-page scoring (0-75 scale) with CLI --page flag and dashboard breakdown
+
+### What Worked
+- Consistent scorer pattern from Phase 8 made Phases 9-12 fast — each new dimension was copy-paste-modify
+- TDD for every scorer caught issues immediately
+- SCORING_ROADMAP.md as detailed spec eliminated need for discuss phases on infrastructure work
+- Parallel Wave 1 execution for Phase 15 (dashboard + docs/marketing in parallel)
+- Autonomous mode sustained 9 phases without manual intervention
+
+### What Was Inefficient
+- WGHT-01/WGHT-02 not marked complete by Phase 13 executor — caught at audit
+- Phase 13 weight migration took longest (~40min) due to test update cascade
+- CLI integration test mock not updated for 9 files — caught by regression test
+- No VERIFICATION.md for phases 10-16 — relied on test passing as implicit verification
+
+### Patterns Established
+- PILLAR_GROUPS constant in core as single source of truth for UI/CLI grouping
+- Server/client component split to avoid Turbopack bundling @aeorank/core in browser
+- Hardcoded dimension name maps in dashboard components (avoids core import)
+- PAGE_SCORE_MAX=75 exported from core for consumer display
+
+### Key Lessons
+1. Infrastructure phases (pure scoring functions) can be fully automated — no discuss phase needed when specs are detailed
+2. Weight migration is the hardest kind of refactor — touching scoring formula cascades to every test
+3. Regression test suite is essential for multi-phase work — caught the CLI mock issue immediately
+
+### Cost Observations
+- 85 commits in ~3 hours
+- 93 files changed, 13,551 insertions
+- 637 tests (up from 479 at start of v2.0)
+- 9 phases executed autonomously without manual intervention
+
+## Cross-Milestone Trends
+
+| Metric | v1.0 | v2.0 |
+|--------|------|------|
+| Phases | 7 | 9 |
+| Plans | 24 | 17 |
+| Requirements | 40 | 40 |
+| Requirements satisfied | 40/40 | 40/40 |
+| Tests | 479 | 637 |
+| LOC | 22,459 | ~36,000 |
+| Timeline | 14 days | 3 hours |
+| Integration bugs at audit | 2 | 0 |
