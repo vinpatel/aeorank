@@ -1,6 +1,6 @@
 import { existsSync, mkdirSync, readdirSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
-import { scan } from "@aeorank/core";
+import { PILLAR_GROUPS, scan } from "@aeorank/core";
 import type { ScanConfig } from "@aeorank/core";
 import chalk from "chalk";
 import { Command } from "commander";
@@ -20,6 +20,10 @@ export const scanCommand = new Command("scan")
 	.option("--no-files", "Skip writing generated files")
 	.option("-c, --config <path>", "Path to config file")
 	.option("-b, --browser", "Use Playwright for JavaScript-rendered pages (SPAs)")
+	.option(
+		"--pillar <name>",
+		"Filter dimensions to a specific pillar (answer-readiness, content-structure, trust-authority, technical-foundation, ai-discovery)",
+	)
 	.action(async (url: string, options: ScanOptions) => {
 		const isJson = options.format === "json";
 		const spinner = createSpinner(`Scanning ${url}...`, isJson);
@@ -66,12 +70,21 @@ export const scanCommand = new Command("scan")
 
 			// JSON output mode
 			if (isJson) {
+				// Filter dimensions by pillar if --pillar is set
+				if (options.pillar) {
+					const pillar = PILLAR_GROUPS.find((p) => p.id === options.pillar);
+					if (pillar) {
+						result.dimensions = result.dimensions.filter((d) =>
+							pillar.dimensionIds.includes(d.id),
+						);
+					}
+				}
 				console.log(JSON.stringify(result, null, 2));
 			} else {
 				// Human output mode
 				console.log(renderScore(result));
-				console.log(renderDimensionTable(result.dimensions));
-				console.log(renderNextSteps(result.dimensions));
+				console.log(renderDimensionTable(result.dimensions, options.pillar));
+				console.log(renderNextSteps(result.dimensions, options.pillar));
 			}
 
 			// Write files
@@ -126,4 +139,5 @@ interface ScanOptions {
 	files?: boolean;
 	config?: string;
 	browser?: boolean;
+	pillar?: string;
 }
