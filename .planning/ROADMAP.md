@@ -108,7 +108,10 @@ Plans:
   3. A site with canonical tags, RSS feed, and dated content scores higher on discovery dimensions
   4. All existing + new tests pass with zero failures
   5. Determinism test passes for all 6 new dimensions
-**Plans**: TBD
+**Plans:** 2 plans
+Plans:
+- [ ] 12-01-PLAN.md — Parser/scanner extensions + first 3 scorers (content-cannibalization, publishing-velocity, content-licensing)
+- [ ] 12-02-PLAN.md — Last 3 scorers (canonical-urls, rss-feed, visible-dates) + determinism tests for all 38 dimensions
 
 ### Phase 13: Weight Migration & Score Gates
 **Goal**: Migrate from high/medium/low weights to percentage-based weights summing to 100%. Redistribute existing 12 dimensions into new system. Add coherence gate (topic-coherence < 6 caps score) and duplication gate (3+ blocks caps page at 35%). Merge overlapping dimensions where noted in SCORING_ROADMAP.md.
@@ -173,7 +176,7 @@ Plans:
 | 9. Content Structure | v2.0 | 2/2 | Complete   | 2026-03-28 |
 | 10. Trust & Authority | v2.0 | 1/1 | Complete    | 2026-03-28 |
 | 11. Technical Foundation | v2.0 | 2/2 | Complete    | 2026-03-28 |
-| 12. AI Discovery | v2.0 | 0/? | Not Started | — |
+| 12. AI Discovery | v2.0 | 0/2 | Not Started | — |
 | 13. Weight Migration | v2.0 | 0/? | Not Started | — |
 | 14. New File Generators | v2.0 | 0/? | Not Started | — |
 | 15. Dashboard & Docs | v2.0 | 0/? | Not Started | — |
