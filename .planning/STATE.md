@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: Competitive Parity
-status: verifying
-stopped_at: Completed 08-02-PLAN.md — 3 Answer Readiness scorers added, DIMENSION_DEFS at 19 entries, all 148 tests passing
-last_updated: "2026-03-28T18:50:52.558Z"
+status: executing
+stopped_at: Completed 09-01-PLAN.md — 3 Q&A Content Structure scorers added, DIMENSION_DEFS at 22 entries, all 167 tests passing
+last_updated: "2026-03-28T19:00:28.284Z"
 last_activity: 2026-03-28
 progress:
   total_phases: 9
   completed_phases: 1
-  total_plans: 2
-  completed_plans: 2
+  total_plans: 4
+  completed_plans: 3
 ---
 
 # Project State
@@ -20,14 +20,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-28)
 
 **Core value:** A developer runs `npx aeorank-cli scan <url>` with zero config and gets an AEO score plus all 8 generated files needed for AI visibility — in under 30 seconds.
-**Current focus:** Phase 08 — answer-readiness
+**Current focus:** Phase 09 — content-structure-expansion
 
 ## Current Position
 
-Phase: 9
-Plan: Not started
+Phase: 09 (content-structure-expansion) — EXECUTING
+Plan: 2 of 2
 Milestone: v2.0 Competitive Parity — Phases 8-16
-Status: Phase complete — ready for verification
+Status: Ready to execute
 Last activity: 2026-03-28
 
 Progress: [####################] (Phase 7 — 2/3 plans done)
@@ -73,6 +73,7 @@ Progress: [####################] (Phase 7 — 2/3 plans done)
 | Phase 01-core-engine P04 | 20min | 2 tasks | 11 files |
 | Phase 08 P01 | 8min | 2 tasks | 8 files |
 | Phase 08 P02 | 5min | 2 tasks | 7 files |
+| Phase 09 P01 | 5min | 2 tasks | 10 files |
 
 ## Phase 4 Deliverables
 
@@ -226,6 +227,10 @@ Recent decisions affecting current work:
 - [Phase 08]: scoreEvidencePackaging requires 2+ attribution/citation markers per page to count toward the scored percentage
 - [Phase 08]: scoreCitationReadyWriting uses negative lookahead to exclude question words from definition pattern — prevents 'What is' from matching as definition
 - [Phase 08]: cross-page-duplication kept site-level only; evidence-packaging and citation-ready-writing added to PAGE_LEVEL_DIMENSIONS
+- [Phase 09]: scoreQaFormat scores ratio of question headings to total headings; thresholds >0.4=10 >0.25=7 >0.1=4 >0=2
+- [Phase 09]: scoreDirectAnswerDensity only analyzes pages with question headings; 40-300 char capital-start paragraphs count as direct answers
+- [Phase 09]: scoreQueryAnswerAlignment checks paragraphs.length >= questionHeadings.length per page as alignment signal
+- [Phase 09]: QUESTION_WORD_REGEX extracts headings starting with What/How/Why/When/Where/Who/Is/Are/Do/Does/Did/Can/Could/Should OR containing ?
 
 ### Pending Todos
 
@@ -241,6 +246,6 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-03-28T18:46:36.036Z
-Stopped at: Completed 08-02-PLAN.md — 3 Answer Readiness scorers added, DIMENSION_DEFS at 19 entries, all 148 tests passing
+Last session: 2026-03-28T19:00:28.281Z
+Stopped at: Completed 09-01-PLAN.md — 3 Q&A Content Structure scorers added, DIMENSION_DEFS at 22 entries, all 167 tests passing
 Resume file: None

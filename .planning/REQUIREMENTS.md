@@ -19,9 +19,9 @@ Requirements for Competitive Parity milestone. Expands scoring from 12 to 36 cri
 
 ### Content Structure
 
-- [ ] **CSTR-01**: Scanner detects Q&A content format (question-format headings with answers) and scores 0-10
-- [ ] **CSTR-02**: Scanner measures direct answer density (concise answer paragraphs after question headings) and scores 0-10
-- [ ] **CSTR-03**: Scanner checks query-answer alignment (every question heading followed by a direct answer) and scores 0-10
+- [x] **CSTR-01**: Scanner detects Q&A content format (question-format headings with answers) and scores 0-10
+- [x] **CSTR-02**: Scanner measures direct answer density (concise answer paragraphs after question headings) and scores 0-10
+- [x] **CSTR-03**: Scanner checks query-answer alignment (every question heading followed by a direct answer) and scores 0-10
 - [ ] **CSTR-04**: Scanner detects tables with headers and ordered/unordered lists and scores their presence 0-10
 - [ ] **CSTR-05**: Scanner detects definition patterns ("X is defined as...", "X refers to...") and scores 0-10
 - [ ] **CSTR-06**: Scanner checks entity disambiguation (primary entity defined early, consistent terminology) and scores 0-10
@@ -113,9 +113,9 @@ Deferred beyond v2.0.
 | ANS-05 | Phase 8 | Complete |
 | ANS-06 | Phase 8 | Complete |
 | ANS-07 | Phase 8 | Complete |
-| CSTR-01 | Phase 9 | Pending |
-| CSTR-02 | Phase 9 | Pending |
-| CSTR-03 | Phase 9 | Pending |
+| CSTR-01 | Phase 9 | Complete |
+| CSTR-02 | Phase 9 | Complete |
+| CSTR-03 | Phase 9 | Complete |
 | CSTR-04 | Phase 9 | Pending |
 | CSTR-05 | Phase 9 | Pending |
 | CSTR-06 | Phase 9 | Pending |
