@@ -28,8 +28,8 @@ Requirements for Competitive Parity milestone. Expands scoring from 12 to 36 cri
 
 ### Trust & Authority
 
-- [ ] **TRST-01**: Scanner analyzes internal linking (topic clusters, breadcrumbs, link depth from homepage) and scores 0-10
-- [ ] **TRST-02**: Scanner detects author and expert schema (Person schema with credentials, sameAs links) and scores 0-10
+- [x] **TRST-01**: Scanner analyzes internal linking (topic clusters, breadcrumbs, link depth from homepage) and scores 0-10
+- [x] **TRST-02**: Scanner detects author and expert schema (Person schema with credentials, sameAs links) and scores 0-10
 
 ### Technical Foundation
 
@@ -119,8 +119,8 @@ Deferred beyond v2.0.
 | CSTR-04 | Phase 9 | Complete |
 | CSTR-05 | Phase 9 | Complete |
 | CSTR-06 | Phase 9 | Complete |
-| TRST-01 | Phase 10 | Pending |
-| TRST-02 | Phase 10 | Pending |
+| TRST-01 | Phase 10 | Complete |
+| TRST-02 | Phase 10 | Complete |
 | TECH-01 | Phase 11 | Pending |
 | TECH-02 | Phase 11 | Pending |
 | TECH-03 | Phase 11 | Pending |
