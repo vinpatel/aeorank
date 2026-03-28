@@ -27,6 +27,7 @@ function createMockFetcher(responses: Record<string, Partial<FetchResult>>) {
 const defaultResponses: Record<string, Partial<FetchResult>> = {
 	"https://example.com/robots.txt": { html: robotsTxtContent },
 	"https://example.com/llms.txt": { status: 404 },
+	"https://example.com/ai.txt": { status: 404 },
 	"https://example.com/sitemap.xml": { html: sitemapXml },
 	"https://example.com": { html: sampleHtml },
 	"https://example.com/about": { html: sampleHtml },
@@ -52,14 +53,14 @@ describe("scan() full pipeline", () => {
 		expect(result.scannedAt).toBeTruthy();
 	});
 
-	it("produces exactly 35 dimensions", async () => {
+	it("produces exactly 38 dimensions", async () => {
 		const result = await scan(
 			"https://example.com",
 			{ maxPages: 3 },
 			createMockFetcher(defaultResponses),
 		);
 
-		expect(result.dimensions).toHaveLength(35);
+		expect(result.dimensions).toHaveLength(38);
 		for (const dim of result.dimensions) {
 			expect(dim.score).toBeGreaterThanOrEqual(0);
 			expect(dim.score).toBeLessThanOrEqual(dim.maxScore);
