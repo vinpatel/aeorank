@@ -50,7 +50,10 @@ Expands scoring from 12 dimensions to 36 criteria across 5 pillars, matching AEO
   3. Running the full test suite (existing + new) passes with zero failures
   4. Scanning a content-rich site (e.g., blog with 10+ articles) produces meaningfully different scores per dimension (not all zeros or all tens)
   5. Determinism test: same URL scanned twice produces identical scores for all 7 new dimensions
-**Plans**: TBD
+**Plans:** 2 plans
+Plans:
+- [ ] 08-01-PLAN.md — Parser extensions + first 4 scorers (topic-coherence, original-data, fact-density, duplicate-content)
+- [ ] 08-02-PLAN.md — Last 3 scorers (cross-page-duplication, evidence-packaging, citation-ready-writing) + determinism tests
 
 ### Phase 9: Content Structure Expansion
 **Goal**: Add 6 Content Structure scoring dimensions checking Q&A format, answer density, tables/lists, definition patterns, and entity disambiguation. Parser detects question headings, table/list elements, and definition sentence patterns.
@@ -158,7 +161,7 @@ Expands scoring from 12 dimensions to 36 criteria across 5 pillars, matching AEO
 | 5. SaaS Dashboard | v1.0 | 5/5 | Complete | 2026-03-14 |
 | 6. Retroactive Verification | v1.0 | 3/3 | Complete | 2026-03-15 |
 | 7. Marketing Content | v1.0 | 2/2 | Complete | 2026-03-15 |
-| 8. Answer Readiness | v2.0 | 0/? | Not Started | — |
+| 8. Answer Readiness | v2.0 | 0/2 | Planned | — |
 | 9. Content Structure | v2.0 | 0/? | Not Started | — |
 | 10. Trust & Authority | v2.0 | 0/? | Not Started | — |
 | 11. Technical Foundation | v2.0 | 0/? | Not Started | — |
