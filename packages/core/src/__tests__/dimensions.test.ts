@@ -47,6 +47,12 @@ function makePage(overrides: Partial<ScannedPage> = {}): ScannedPage {
 		questionHeadings: [],
 		tableCount: 0,
 		listCount: 0,
+		semanticElements: { main: 0, article: 0, nav: 0, aside: 0, section: 0, header: 0, footer: 0 },
+		ariaRoleCount: 0,
+		figureCount: 0,
+		imgCount: 0,
+		imgsWithAlt: 0,
+		avgSentenceLength: 0,
 		...overrides,
 	};
 }
