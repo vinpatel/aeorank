@@ -9,10 +9,10 @@ Requirements for Competitive Parity milestone. Expands scoring from 12 to 36 cri
 
 ### Answer Readiness
 
-- [ ] **ANS-01**: Scanner detects topical authority by analyzing heading/content thematic focus across pages and scores topic coherence 0-10
-- [ ] **ANS-02**: Scanner detects original research and data (case studies, proprietary stats, unique data points) and scores 0-10
-- [ ] **ANS-03**: Scanner measures fact and data density (numbers, percentages, statistics per page) and scores 0-10
-- [ ] **ANS-04**: Scanner detects duplicate content blocks within a single page and scores 0-10
+- [x] **ANS-01**: Scanner detects topical authority by analyzing heading/content thematic focus across pages and scores topic coherence 0-10
+- [x] **ANS-02**: Scanner detects original research and data (case studies, proprietary stats, unique data points) and scores 0-10
+- [x] **ANS-03**: Scanner measures fact and data density (numbers, percentages, statistics per page) and scores 0-10
+- [x] **ANS-04**: Scanner detects duplicate content blocks within a single page and scores 0-10
 - [ ] **ANS-05**: Scanner detects cross-page duplication (identical paragraphs across multiple pages) and scores 0-10
 - [ ] **ANS-06**: Scanner checks for evidence packaging (inline citations, attribution phrases, sources sections) and scores 0-10
 - [ ] **ANS-07**: Scanner detects citation-ready writing (self-contained definitions, single-claim statements) and scores 0-10
@@ -106,10 +106,10 @@ Deferred beyond v2.0.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| ANS-01 | Phase 8 | Pending |
-| ANS-02 | Phase 8 | Pending |
-| ANS-03 | Phase 8 | Pending |
-| ANS-04 | Phase 8 | Pending |
+| ANS-01 | Phase 8 | Complete |
+| ANS-02 | Phase 8 | Complete |
+| ANS-03 | Phase 8 | Complete |
+| ANS-04 | Phase 8 | Complete |
 | ANS-05 | Phase 8 | Pending |
 | ANS-06 | Phase 8 | Pending |
 | ANS-07 | Phase 8 | Pending |
