@@ -70,8 +70,8 @@ Requirements for Competitive Parity milestone. Expands scoring from 12 to 36 cri
 ### Per-Page Scoring
 
 - [x] **PAGE-01**: 21 page-level criteria scored on 0-75 scale per page
-- [ ] **PAGE-02**: Dashboard shows per-page score breakdown with page-level dimension table
-- [ ] **PAGE-03**: CLI supports --page flag for single-page audit
+- [x] **PAGE-02**: Dashboard shows per-page score breakdown with page-level dimension table
+- [x] **PAGE-03**: CLI supports --page flag for single-page audit
 - [x] **PAGE-04**: API returns per-page scores in scan results alongside site-level score
 
 ## Future Requirements
@@ -143,8 +143,8 @@ Deferred beyond v2.0.
 | SURF-03 | Phase 15 | Complete |
 | SURF-04 | Phase 15 | Complete |
 | PAGE-01 | Phase 16 | Complete |
-| PAGE-02 | Phase 16 | Pending |
-| PAGE-03 | Phase 16 | Pending |
+| PAGE-02 | Phase 16 | Complete |
+| PAGE-03 | Phase 16 | Complete |
 | PAGE-04 | Phase 16 | Complete |
 
 **Coverage:**
