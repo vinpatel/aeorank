@@ -131,6 +131,107 @@ describe("parsePage", () => {
 	});
 });
 
+describe("parsePage semantic elements", () => {
+	it("extracts counts for semantic HTML5 elements", () => {
+		const html = `<html lang="en"><body>
+			<main><p>Main content here for the test page.</p></main>
+			<article><p>Article content here for the test page.</p></article>
+			<nav><a href="/home">Home</a></nav>
+			<aside><p>Sidebar content here for the test page.</p></aside>
+			<section><p>Section content here for the test page.</p></section>
+			<header><h1>Header here</h1></header>
+			<footer><p>Footer here</p></footer>
+		</body></html>`;
+		const page = parsePage("https://example.com", html, "https://example.com");
+		expect(page.semanticElements.main).toBe(1);
+		expect(page.semanticElements.article).toBe(1);
+		expect(page.semanticElements.nav).toBe(1);
+		expect(page.semanticElements.aside).toBe(1);
+		expect(page.semanticElements.section).toBe(1);
+		expect(page.semanticElements.header).toBe(1);
+		expect(page.semanticElements.footer).toBe(1);
+	});
+
+	it("returns zero counts when no semantic elements present", () => {
+		const html = `<html><body><div><p>Just div soup content here on the page.</p></div></body></html>`;
+		const page = parsePage("https://example.com", html, "https://example.com");
+		expect(page.semanticElements.main).toBe(0);
+		expect(page.semanticElements.article).toBe(0);
+		expect(page.semanticElements.nav).toBe(0);
+		expect(page.semanticElements.aside).toBe(0);
+		expect(page.semanticElements.section).toBe(0);
+		expect(page.semanticElements.header).toBe(0);
+		expect(page.semanticElements.footer).toBe(0);
+	});
+
+	it("counts ARIA role attributes", () => {
+		const html = `<html><body>
+			<div role="navigation"><a href="/home">Home</a></div>
+			<div role="main"><p>Main content here for the page test.</p></div>
+		</body></html>`;
+		const page = parsePage("https://example.com", html, "https://example.com");
+		expect(page.ariaRoleCount).toBeGreaterThanOrEqual(2);
+	});
+
+	it("returns ariaRoleCount=0 when no ARIA roles present", () => {
+		const html = `<html><body><div><p>No ARIA roles here on the page at all.</p></div></body></html>`;
+		const page = parsePage("https://example.com", html, "https://example.com");
+		expect(page.ariaRoleCount).toBe(0);
+	});
+
+	it("counts figure elements containing figcaption", () => {
+		const html = `<html><body>
+			<figure><img src="chart.png" alt="Revenue chart"><figcaption>Annual revenue growth 2024</figcaption></figure>
+			<figure><img src="photo.png" alt="Team photo"><figcaption>Our team at conference</figcaption></figure>
+			<figure><img src="bare.png" alt="bare image"></figure>
+			<p>Some page content here for the test.</p>
+		</body></html>`;
+		const page = parsePage("https://example.com", html, "https://example.com");
+		expect(page.figureCount).toBe(2);
+	});
+
+	it("returns figureCount=0 when no figure elements with figcaption", () => {
+		const html = `<html><body><img src="image.png" alt="test image on the page"><p>Some content here.</p></body></html>`;
+		const page = parsePage("https://example.com", html, "https://example.com");
+		expect(page.figureCount).toBe(0);
+	});
+
+	it("counts total img elements and those with non-empty alt text", () => {
+		const html = `<html><body>
+			<img src="a.png" alt="First image description">
+			<img src="b.png" alt="Second image description">
+			<img src="c.png" alt="">
+			<p>Some content here for the page test.</p>
+		</body></html>`;
+		const page = parsePage("https://example.com", html, "https://example.com");
+		expect(page.imgCount).toBe(3);
+		expect(page.imgsWithAlt).toBe(2);
+	});
+
+	it("returns imgCount=0 and imgsWithAlt=0 when no images", () => {
+		const html = `<html><body><p>No images on this page at all in the content.</p></body></html>`;
+		const page = parsePage("https://example.com", html, "https://example.com");
+		expect(page.imgCount).toBe(0);
+		expect(page.imgsWithAlt).toBe(0);
+	});
+
+	it("calculates average sentence length from paragraphs", () => {
+		// Each sentence is roughly 10 words
+		const html = `<html><body>
+			<p>This is a sentence with exactly ten words total here. Another sentence with exactly ten words total here.</p>
+			<p>One more paragraph with ten words in this one here.</p>
+		</body></html>`;
+		const page = parsePage("https://example.com", html, "https://example.com");
+		expect(page.avgSentenceLength).toBeGreaterThan(0);
+	});
+
+	it("returns avgSentenceLength=0 when no sentences", () => {
+		const html = `<html><body></body></html>`;
+		const page = parsePage("https://example.com", html, "https://example.com");
+		expect(page.avgSentenceLength).toBe(0);
+	});
+});
+
 describe("parseRobotsTxt", () => {
 	it("identifies allowed AI crawlers", () => {
 		const info = parseRobotsTxt("https://example.com", robotsTxtContent);

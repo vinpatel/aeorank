@@ -25,6 +25,18 @@ export interface ScannedPage {
 	tableCount: number;
 	/** Count of <ol> and <ul> elements with at least 2 <li> children */
 	listCount: number;
+	/** Counts of semantic HTML5 elements found: main, article, nav, aside, section, header, footer */
+	semanticElements: { main: number; article: number; nav: number; aside: number; section: number; header: number; footer: number };
+	/** Number of ARIA role attributes found on any element */
+	ariaRoleCount: number;
+	/** Number of figure elements containing figcaption */
+	figureCount: number;
+	/** Total img elements on the page */
+	imgCount: number;
+	/** Number of img elements with non-empty alt attribute */
+	imgsWithAlt: number;
+	/** Average sentence length in words across all sentences */
+	avgSentenceLength: number;
 }
 
 export interface Heading {

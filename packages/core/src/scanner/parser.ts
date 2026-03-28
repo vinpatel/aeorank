@@ -66,6 +66,26 @@ export function parsePage(url: string, html: string, baseUrl: string): ScannedPa
 	const tableCount = countTables($);
 	const listCount = countLists($);
 
+	// Extract semantic HTML5 elements (BEFORE DOM mutation)
+	const semanticElements = {
+		main: $("main").length,
+		article: $("article").length,
+		nav: $("nav").length,
+		aside: $("aside").length,
+		section: $("section").length,
+		header: $("header").length,
+		footer: $("footer").length,
+	};
+	const ariaRoleCount = $("[role]").length;
+	const figureCount = $("figure").filter((_, el) => $(el).find("figcaption").length > 0).length;
+	const imgCount = $("img").length;
+	const imgsWithAlt = $("img[alt]").filter((_, el) => ($(el).attr("alt") || "").trim().length > 0).length;
+	const avgSentenceLengthRaw =
+		sentences.length > 0
+			? sentences.reduce((sum, s) => sum + s.split(/\s+/).length, 0) / sentences.length
+			: 0;
+	const avgSentenceLength = Math.round(avgSentenceLengthRaw * 10) / 10;
+
 	// Extract body text
 	// Remove script, style, nav, and footer for cleaner text
 	$("script, style, nav, footer, header").remove();
@@ -102,6 +122,12 @@ export function parsePage(url: string, html: string, baseUrl: string): ScannedPa
 		questionHeadings,
 		tableCount,
 		listCount,
+		semanticElements,
+		ariaRoleCount,
+		figureCount,
+		imgCount,
+		imgsWithAlt,
+		avgSentenceLength,
 	};
 }
 
