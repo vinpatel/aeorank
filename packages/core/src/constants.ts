@@ -1,46 +1,57 @@
 import type { DimensionDef, ScanConfig } from "./types.js";
 
-/** All 38 AEO scoring dimensions */
+/**
+ * All 36 AEO scoring dimensions with percentage-based weights.
+ * Weights sum to exactly 100.
+ * speakable-schema absorbed into faq-speakable (+1%).
+ * author-schema absorbed into eeat-signals (+2%).
+ */
 export const DIMENSION_DEFS: DimensionDef[] = [
-	{ id: "llms-txt", name: "llms.txt Presence", weight: "high", maxScore: 10 },
-	{ id: "schema-markup", name: "Schema.org Markup", weight: "high", maxScore: 10 },
-	{ id: "ai-crawler-access", name: "AI Crawler Access", weight: "medium", maxScore: 10 },
-	{ id: "content-structure", name: "Content Structure", weight: "high", maxScore: 10 },
-	{ id: "answer-first", name: "Answer-First Formatting", weight: "medium", maxScore: 10 },
-	{ id: "faq-speakable", name: "FAQ & Speakable", weight: "medium", maxScore: 10 },
-	{ id: "eeat-signals", name: "E-E-A-T Signals", weight: "medium", maxScore: 10 },
-	{ id: "meta-descriptions", name: "Meta Descriptions", weight: "medium", maxScore: 10 },
-	{ id: "sitemap", name: "Sitemap Presence", weight: "low", maxScore: 10 },
-	{ id: "https-redirects", name: "HTTPS & Redirects", weight: "low", maxScore: 10 },
-	{ id: "page-freshness", name: "Page Freshness", weight: "low", maxScore: 10 },
-	{ id: "citation-anchors", name: "Citation Anchors", weight: "medium", maxScore: 10 },
-	{ id: "topic-coherence", name: "Topical Authority", weight: "high", maxScore: 10 },
-	{ id: "original-data", name: "Original Research & Data", weight: "medium", maxScore: 10 },
-	{ id: "fact-density", name: "Fact & Data Density", weight: "medium", maxScore: 10 },
-	{ id: "duplicate-content", name: "Duplicate Content", weight: "medium", maxScore: 10 },
-	{ id: "cross-page-duplication", name: "Cross-Page Duplication", weight: "low", maxScore: 10 },
-	{ id: "evidence-packaging", name: "Evidence Packaging", weight: "low", maxScore: 10 },
-	{ id: "citation-ready-writing", name: "Citation-Ready Writing", weight: "low", maxScore: 10 },
-	{ id: "qa-format", name: "Q&A Content Format", weight: "medium", maxScore: 10 },
-	{ id: "direct-answer-density", name: "Direct Answer Density", weight: "medium", maxScore: 10 },
-	{ id: "query-answer-alignment", name: "Query-Answer Alignment", weight: "low", maxScore: 10 },
-	{ id: "tables-lists", name: "Tables & Lists", weight: "low", maxScore: 10 },
-	{ id: "definition-patterns", name: "Definition Patterns", weight: "low", maxScore: 10 },
-	{ id: "entity-disambiguation", name: "Entity Disambiguation", weight: "low", maxScore: 10 },
-	{ id: "internal-linking", name: "Internal Linking", weight: "medium", maxScore: 10 },
-	{ id: "author-schema", name: "Author & Expert Schema", weight: "low", maxScore: 10 },
-	{ id: "semantic-html", name: "Semantic HTML", weight: "low", maxScore: 10 },
-	{ id: "extraction-friction", name: "Extraction Friction", weight: "low", maxScore: 10 },
-	{ id: "image-context", name: "Image Context for AI", weight: "low", maxScore: 10 },
-	{ id: "schema-coverage", name: "Schema Coverage", weight: "low", maxScore: 10 },
-	{ id: "speakable-schema", name: "Speakable Schema", weight: "low", maxScore: 10 },
-	{ id: "content-cannibalization", name: "Content Cannibalization", weight: "low", maxScore: 10 },
-	{ id: "publishing-velocity", name: "Publishing Velocity", weight: "low", maxScore: 10 },
-	{ id: "content-licensing", name: "Content Licensing", weight: "low", maxScore: 10 },
-	{ id: "canonical-urls", name: "Canonical URLs", weight: "low", maxScore: 10 },
-	{ id: "rss-feed", name: "RSS/Atom Feed", weight: "low", maxScore: 10 },
-	{ id: "visible-dates", name: "Visible Date Signals", weight: "low", maxScore: 10 },
+	// Original 12 (redistributed)
+	{ id: "llms-txt", name: "llms.txt Presence", weightPct: 5, maxScore: 10 },
+	{ id: "schema-markup", name: "Schema.org Markup", weightPct: 4, maxScore: 10 },
+	{ id: "content-structure", name: "Content Structure", weightPct: 5, maxScore: 10 },
+	{ id: "ai-crawler-access", name: "AI Crawler Access", weightPct: 3, maxScore: 10 },
+	{ id: "answer-first", name: "Answer-First Formatting", weightPct: 4, maxScore: 10 },
+	{ id: "faq-speakable", name: "FAQ & Speakable", weightPct: 5, maxScore: 10 },
+	{ id: "eeat-signals", name: "E-E-A-T Signals", weightPct: 6, maxScore: 10 },
+	{ id: "meta-descriptions", name: "Meta Descriptions", weightPct: 2, maxScore: 10 },
+	{ id: "citation-anchors", name: "Citation Anchors", weightPct: 2, maxScore: 10 },
+	{ id: "sitemap", name: "Sitemap Presence", weightPct: 1, maxScore: 10 },
+	{ id: "https-redirects", name: "HTTPS & Redirects", weightPct: 2, maxScore: 10 },
+	{ id: "page-freshness", name: "Page Freshness", weightPct: 2, maxScore: 10 },
+	// Phase 8 — Answer Readiness (7)
+	{ id: "topic-coherence", name: "Topical Authority", weightPct: 7, maxScore: 10 },
+	{ id: "original-data", name: "Original Research & Data", weightPct: 5, maxScore: 10 },
+	{ id: "fact-density", name: "Fact & Data Density", weightPct: 4, maxScore: 10 },
+	{ id: "duplicate-content", name: "Duplicate Content", weightPct: 4, maxScore: 10 },
+	{ id: "cross-page-duplication", name: "Cross-Page Duplication", weightPct: 2, maxScore: 10 },
+	{ id: "evidence-packaging", name: "Evidence Packaging", weightPct: 2, maxScore: 10 },
+	{ id: "citation-ready-writing", name: "Citation-Ready Writing", weightPct: 2, maxScore: 10 },
+	// Phase 9 — Content Structure (6)
+	{ id: "qa-format", name: "Q&A Content Format", weightPct: 4, maxScore: 10 },
+	{ id: "direct-answer-density", name: "Direct Answer Density", weightPct: 4, maxScore: 10 },
+	{ id: "query-answer-alignment", name: "Query-Answer Alignment", weightPct: 2, maxScore: 10 },
+	{ id: "tables-lists", name: "Tables & Lists", weightPct: 2, maxScore: 10 },
+	{ id: "definition-patterns", name: "Definition Patterns", weightPct: 2, maxScore: 10 },
+	{ id: "entity-disambiguation", name: "Entity Disambiguation", weightPct: 2, maxScore: 10 },
+	// Phase 10 — Trust & Authority (author-schema absorbed into eeat-signals)
+	{ id: "internal-linking", name: "Internal Linking", weightPct: 4, maxScore: 10 },
+	// Phase 11 — Technical Foundation (speakable-schema absorbed into faq-speakable)
+	{ id: "semantic-html", name: "Semantic HTML", weightPct: 2, maxScore: 10 },
+	{ id: "extraction-friction", name: "Extraction Friction", weightPct: 2, maxScore: 10 },
+	{ id: "image-context", name: "Image Context for AI", weightPct: 1, maxScore: 10 },
+	{ id: "schema-coverage", name: "Schema Coverage", weightPct: 1, maxScore: 10 },
+	// Phase 12 — AI Discovery (canonical-urls and visible-dates kept as separate dimensions)
+	{ id: "content-cannibalization", name: "Content Cannibalization", weightPct: 2, maxScore: 10 },
+	{ id: "publishing-velocity", name: "Publishing Velocity", weightPct: 1, maxScore: 10 },
+	{ id: "content-licensing", name: "Content Licensing", weightPct: 1, maxScore: 10 },
+	{ id: "canonical-urls", name: "Canonical URLs", weightPct: 1, maxScore: 10 },
+	{ id: "rss-feed", name: "RSS/Atom Feed", weightPct: 1, maxScore: 10 },
+	{ id: "visible-dates", name: "Visible Date Signals", weightPct: 1, maxScore: 10 },
 ];
+// Verify sum at runtime in development
+// DIMENSION_DEFS.reduce((s, d) => s + d.weightPct, 0) === 100
 
 /** Grade thresholds (score >= threshold = that grade) */
 export const GRADE_THRESHOLDS = {
@@ -55,13 +66,6 @@ export const GRADE_THRESHOLDS = {
 export const STATUS_THRESHOLDS = {
 	pass: 70,
 	warn: 40,
-} as const;
-
-/** Weight multipliers for weighted score calculation */
-export const WEIGHT_MULTIPLIER = {
-	high: 1.5,
-	medium: 1.0,
-	low: 0.5,
 } as const;
 
 /** Maximum crawl delay (in seconds) we'll respect — anything higher gets capped */

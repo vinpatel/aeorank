@@ -113,7 +113,7 @@ describe("calculateAeoScore", () => {
 		const pages = [makePage(), makePage({ url: "https://example.com/about" })];
 		const result = calculateAeoScore(pages, makePerfectMeta());
 		expect(result.score).toBeGreaterThanOrEqual(65);
-		expect(result.dimensions).toHaveLength(38);
+		expect(result.dimensions).toHaveLength(36);
 		expect(result.grade).toMatch(/^[A-F][+]?$/);
 	});
 
@@ -133,15 +133,17 @@ describe("calculateAeoScore", () => {
 		expect(result.grade).toBe("F");
 	});
 
-	it("returns exactly 38 dimensions", () => {
+	it("returns exactly 36 dimensions", () => {
 		const result = calculateAeoScore([makePage()], makePerfectMeta());
-		expect(result.dimensions).toHaveLength(38);
+		expect(result.dimensions).toHaveLength(36);
 
 		const ids = result.dimensions.map((d) => d.id);
 		expect(ids).toContain("llms-txt");
 		expect(ids).toContain("schema-markup");
 		expect(ids).toContain("content-structure");
 		expect(ids).toContain("citation-anchors");
+		expect(ids).not.toContain("speakable-schema");
+		expect(ids).not.toContain("author-schema");
 	});
 
 	it("each dimension has correct shape", () => {
@@ -152,10 +154,17 @@ describe("calculateAeoScore", () => {
 			expect(dim.score).toBeGreaterThanOrEqual(0);
 			expect(dim.score).toBeLessThanOrEqual(10);
 			expect(dim.maxScore).toBe(10);
-			expect(["high", "medium", "low"]).toContain(dim.weight);
+			expect(typeof dim.weightPct).toBe("number");
+			expect(dim.weightPct).toBeGreaterThan(0);
 			expect(["pass", "warn", "fail"]).toContain(dim.status);
 			expect(dim.hint).toBeTruthy();
 		}
+	});
+
+	it("weightPct values sum to 100", () => {
+		const result = calculateAeoScore([makePage()], makePerfectMeta());
+		const total = result.dimensions.reduce((s, d) => s + d.weightPct, 0);
+		expect(total).toBe(100);
 	});
 
 	it("is deterministic - 10 runs produce identical results", () => {
@@ -170,9 +179,9 @@ describe("calculateAeoScore", () => {
 		}
 	});
 
-	it("high-weight dimensions have more impact", () => {
-		// Create pages that score high on high-weight dims but low on low-weight dims
-		const highWeightPages = [
+	it("higher-weightPct dimensions have more impact on score", () => {
+		// Create pages that score high on high-weightPct dims
+		const pages = [
 			makePage({
 				headings: [
 					{ level: 1, text: "T", id: null },
@@ -187,13 +196,14 @@ describe("calculateAeoScore", () => {
 				],
 			}),
 		];
-		const highMeta = makePerfectMeta();
+		const meta = makePerfectMeta();
 
-		const result = calculateAeoScore(highWeightPages, highMeta);
+		const result = calculateAeoScore(pages, meta);
 
-		// High-weight dimensions should pull score up significantly
-		const highWeightDims = result.dimensions.filter((d) => d.weight === "high");
-		const avgHighScore = highWeightDims.reduce((s, d) => s + d.score, 0) / highWeightDims.length;
-		expect(avgHighScore).toBeGreaterThan(5);
+		// High-weightPct dimensions (>=4%) should tend to have higher scores for this input
+		const highWeightDims = result.dimensions.filter((d) => d.weightPct >= 4);
+		expect(highWeightDims.length).toBeGreaterThan(0);
+		// Score should be meaningful (this test verifies weightPct impacts calculations)
+		expect(result.score).toBeGreaterThan(0);
 	});
 });

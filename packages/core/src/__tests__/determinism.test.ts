@@ -143,10 +143,10 @@ describe("determinism", () => {
 			status: d.status,
 		}));
 
-		// All 38 dimensions should be present
-		expect(results[0].dimensions).toHaveLength(38);
+		// All 36 dimensions should be present (speakable-schema and author-schema merged)
+		expect(results[0].dimensions).toHaveLength(36);
 
-		// All new dimensions should appear in results
+		// All new dimensions should appear in results (minus absorbed ones)
 		const newDimIds = [
 			"topic-coherence",
 			"original-data",
@@ -162,12 +162,10 @@ describe("determinism", () => {
 			"definition-patterns",
 			"entity-disambiguation",
 			"internal-linking",
-			"author-schema",
 			"semantic-html",
 			"extraction-friction",
 			"image-context",
 			"schema-coverage",
-			"speakable-schema",
 			"content-cannibalization",
 			"publishing-velocity",
 			"content-licensing",

@@ -19,7 +19,6 @@ export {
 	DIMENSION_DEFS,
 	GRADE_THRESHOLDS,
 	STATUS_THRESHOLDS,
-	WEIGHT_MULTIPLIER,
 	DEFAULT_CONFIG,
 	AI_CRAWLERS,
 } from "./constants.js";
@@ -47,7 +46,7 @@ export type { RobotsInfo } from "./scanner/index.js";
 export type { FetcherFn, FetchResult } from "./scanner/index.js";
 
 // Scorer
-export { calculateAeoScore, scorePerPage } from "./scorer/index.js";
+export { calculateAeoScore, scorePerPage, getWeightCategory } from "./scorer/index.js";
 
 // Generators
 export { generateFiles } from "./generators/index.js";

@@ -1,5 +1,12 @@
 import { GRADE_THRESHOLDS, STATUS_THRESHOLDS } from "../constants.js";
 
+/** Get weight category label for backward compat with CLI/dashboard display */
+export function getWeightCategory(weightPct: number): "high" | "medium" | "low" {
+	if (weightPct >= 3) return "high";
+	if (weightPct >= 2) return "medium";
+	return "low";
+}
+
 /** Get letter grade from a 0-100 score */
 export function getGrade(score: number): string {
 	if (score >= GRADE_THRESHOLDS["A+"]) return "A+";

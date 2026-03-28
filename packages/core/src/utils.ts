@@ -1,4 +1,4 @@
-import { GRADE_THRESHOLDS, STATUS_THRESHOLDS, WEIGHT_MULTIPLIER } from "./constants.js";
+import { GRADE_THRESHOLDS, STATUS_THRESHOLDS } from "./constants.js";
 import type { DimensionScore } from "./types.js";
 
 /** Normalize a URL: lowercase hostname, strip trailing slash */
@@ -44,7 +44,7 @@ export function getDimensionStatus(score: number, maxScore: number): "pass" | "w
 	return getStatus(pct);
 }
 
-/** Calculate weighted AEO score from dimension scores */
+/** Calculate weighted AEO score from dimension scores using percentage weights */
 export function calculateWeightedScore(dimensions: DimensionScore[]): number {
 	if (dimensions.length === 0) return 0;
 
@@ -52,12 +52,13 @@ export function calculateWeightedScore(dimensions: DimensionScore[]): number {
 	let totalWeight = 0;
 
 	for (const dim of dimensions) {
-		const multiplier = WEIGHT_MULTIPLIER[dim.weight];
-		weightedSum += (dim.score / dim.maxScore) * multiplier;
-		totalWeight += multiplier;
+		weightedSum += (dim.score / dim.maxScore) * dim.weightPct;
+		totalWeight += dim.weightPct;
 	}
 
+	// If weights don't sum to 100 (e.g. page-level subset), normalize
 	if (totalWeight === 0) return 0;
+	if (totalWeight === 100) return Math.round(weightedSum);
 	return Math.round((weightedSum / totalWeight) * 100);
 }
 

@@ -105,7 +105,7 @@ export interface DimensionScore {
 	name: string;
 	score: number;
 	maxScore: number;
-	weight: "high" | "medium" | "low";
+	weightPct: number;
 	status: "pass" | "warn" | "fail";
 	hint: string;
 }
@@ -147,6 +147,6 @@ export interface AeorankConfig {
 export interface DimensionDef {
 	id: string;
 	name: string;
-	weight: "high" | "medium" | "low";
+	weightPct: number;
 	maxScore: number;
 }

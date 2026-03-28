@@ -29,7 +29,7 @@ export function scoreLlmsTxt(pages: ScannedPage[], meta: ScanMeta): DimensionSco
 		name: "llms.txt Presence",
 		score,
 		maxScore: 10,
-		weight: "high",
+		weightPct: 5,
 		status: getDimensionStatus(score, 10),
 		hint:
 			score < 10
@@ -80,7 +80,7 @@ export function scoreSchemaMarkup(pages: ScannedPage[], _meta: ScanMeta): Dimens
 		name: "Schema.org Markup",
 		score,
 		maxScore: 10,
-		weight: "high",
+		weightPct: 4,
 		status: getDimensionStatus(score, 10),
 		hint:
 			score < 10
@@ -112,7 +112,7 @@ export function scoreAiCrawlerAccess(_pages: ScannedPage[], meta: ScanMeta): Dim
 		name: "AI Crawler Access",
 		score,
 		maxScore: 10,
-		weight: "medium",
+		weightPct: 3,
 		status: getDimensionStatus(score, 10),
 		hint:
 			score < 10
@@ -128,7 +128,7 @@ export function scoreContentStructure(pages: ScannedPage[], _meta: ScanMeta): Di
 			"content-structure",
 			"Content Structure",
 			0,
-			"high",
+			5,
 			"No pages to analyze",
 		);
 	}
@@ -166,7 +166,7 @@ export function scoreContentStructure(pages: ScannedPage[], _meta: ScanMeta): Di
 		"content-structure",
 		"Content Structure",
 		score,
-		"high",
+		5,
 		score < 10
 			? "Add H1 to every page and maintain proper heading hierarchy (H1->H2->H3)"
 			: "Strong content structure",
@@ -180,7 +180,7 @@ export function scoreAnswerFirst(pages: ScannedPage[], _meta: ScanMeta): Dimensi
 			"answer-first",
 			"Answer-First Formatting",
 			0,
-			"medium",
+			4,
 			"No pages to analyze",
 		);
 	}
@@ -206,7 +206,7 @@ export function scoreAnswerFirst(pages: ScannedPage[], _meta: ScanMeta): Dimensi
 		"answer-first",
 		"Answer-First Formatting",
 		score,
-		"medium",
+		4,
 		score < 10
 			? "Start pages with concise lead paragraphs (<300 chars) that directly answer the page topic"
 			: "Good answer-first formatting",
@@ -249,7 +249,7 @@ export function scoreFaqSpeakable(pages: ScannedPage[], _meta: ScanMeta): Dimens
 		"faq-speakable",
 		"FAQ & Speakable",
 		score,
-		"medium",
+		5,
 		score < 10
 			? "Add FAQPage schema markup with 3+ question-answer pairs"
 			: "FAQ schema is well-implemented",
@@ -280,7 +280,7 @@ export function scoreEeatSignals(pages: ScannedPage[], _meta: ScanMeta): Dimensi
 		"eeat-signals",
 		"E-E-A-T Signals",
 		score,
-		"medium",
+		6,
 		score < 10
 			? "Add author names, publication dates, and an About page with credentials"
 			: "Strong E-E-A-T signals",
@@ -294,7 +294,7 @@ export function scoreMetaDescriptions(pages: ScannedPage[], _meta: ScanMeta): Di
 			"meta-descriptions",
 			"Meta Descriptions",
 			0,
-			"medium",
+			2,
 			"No pages to analyze",
 		);
 	}
@@ -325,7 +325,7 @@ export function scoreMetaDescriptions(pages: ScannedPage[], _meta: ScanMeta): Di
 		"meta-descriptions",
 		"Meta Descriptions",
 		score,
-		"medium",
+		2,
 		score < 10
 			? "Add meta descriptions (50-160 chars) to all pages"
 			: "Meta descriptions are optimal",
@@ -347,7 +347,7 @@ export function scoreSitemap(pages: ScannedPage[], meta: ScanMeta): DimensionSco
 		"sitemap",
 		"Sitemap Presence",
 		score,
-		"low",
+		1,
 		score < 10 ? "Create and maintain an XML sitemap with lastmod dates" : "Sitemap is up to date",
 	);
 }
@@ -372,7 +372,7 @@ export function scoreHttpsRedirects(pages: ScannedPage[], meta: ScanMeta): Dimen
 		"https-redirects",
 		"HTTPS & Redirects",
 		score,
-		"low",
+		2,
 		score < 10
 			? "Ensure HTTPS and add canonical URLs to all pages"
 			: "HTTPS and canonical URLs configured",
@@ -382,7 +382,7 @@ export function scoreHttpsRedirects(pages: ScannedPage[], meta: ScanMeta): Dimen
 /** Dimension 11: Page Freshness (low weight) */
 export function scorePageFreshness(pages: ScannedPage[], _meta: ScanMeta): DimensionScore {
 	if (pages.length === 0) {
-		return makeDimension("page-freshness", "Page Freshness", 0, "low", "No pages to analyze");
+		return makeDimension("page-freshness", "Page Freshness", 0, 2, "No pages to analyze");
 	}
 
 	const sortedPages = [...pages].sort((a, b) => a.url.localeCompare(b.url));
@@ -403,7 +403,7 @@ export function scorePageFreshness(pages: ScannedPage[], _meta: ScanMeta): Dimen
 		"page-freshness",
 		"Page Freshness",
 		score,
-		"low",
+		2,
 		score < 10
 			? "Add publication and last-modified dates to content pages"
 			: "Date signals present",
@@ -417,7 +417,7 @@ export function scoreCitationAnchors(pages: ScannedPage[], _meta: ScanMeta): Dim
 			"citation-anchors",
 			"Citation Anchors",
 			0,
-			"medium",
+			2,
 			"No pages to analyze",
 		);
 	}
@@ -446,7 +446,7 @@ export function scoreCitationAnchors(pages: ScannedPage[], _meta: ScanMeta): Dim
 		"citation-anchors",
 		"Citation Anchors",
 		score,
-		"medium",
+		2,
 		score < 10
 			? "Add id attributes to H2 and H3 headings for deep linking"
 			: "Headings are deep-linkable",
@@ -467,7 +467,7 @@ export function scoreTopicCoherence(pages: ScannedPage[], _meta: ScanMeta): Dime
 			"topic-coherence",
 			"Topical Authority",
 			5,
-			"high",
+			7,
 			"Not enough pages to assess topical authority",
 		);
 	}
@@ -497,7 +497,7 @@ export function scoreTopicCoherence(pages: ScannedPage[], _meta: ScanMeta): Dime
 			"topic-coherence",
 			"Topical Authority",
 			0,
-			"high",
+			7,
 			"Focus content around consistent core topics across all pages",
 		);
 	}
@@ -521,7 +521,7 @@ export function scoreTopicCoherence(pages: ScannedPage[], _meta: ScanMeta): Dime
 		"topic-coherence",
 		"Topical Authority",
 		score,
-		"high",
+		7,
 		score < 10
 			? "Focus content around consistent core topics across all pages"
 			: "Strong topical authority across pages",
@@ -544,7 +544,7 @@ export function scoreOriginalData(pages: ScannedPage[], _meta: ScanMeta): Dimens
 			"original-data",
 			"Original Research & Data",
 			0,
-			"medium",
+			5,
 			"Add original research, case studies, or proprietary data to establish authority",
 		);
 	}
@@ -568,7 +568,7 @@ export function scoreOriginalData(pages: ScannedPage[], _meta: ScanMeta): Dimens
 		"original-data",
 		"Original Research & Data",
 		score,
-		"medium",
+		5,
 		score < 10
 			? "Add original research, case studies, or proprietary data to establish authority"
 			: "Strong original research and data presence",
@@ -589,7 +589,7 @@ export function scoreFactDensity(pages: ScannedPage[], _meta: ScanMeta): Dimensi
 			"fact-density",
 			"Fact & Data Density",
 			0,
-			"medium",
+			4,
 			"Include specific numbers, statistics, and data points to increase credibility",
 		);
 	}
@@ -616,7 +616,7 @@ export function scoreFactDensity(pages: ScannedPage[], _meta: ScanMeta): Dimensi
 		"fact-density",
 		"Fact & Data Density",
 		score,
-		"medium",
+		4,
 		score < 10
 			? "Include specific numbers, statistics, and data points to increase credibility"
 			: "Strong fact and data density",
@@ -630,7 +630,7 @@ export function scoreDuplicateContent(pages: ScannedPage[], _meta: ScanMeta): Di
 			"duplicate-content",
 			"Duplicate Content",
 			10,
-			"medium",
+			4,
 			"Remove repeated content blocks within pages to improve content quality",
 		);
 	}
@@ -662,7 +662,7 @@ export function scoreDuplicateContent(pages: ScannedPage[], _meta: ScanMeta): Di
 		"duplicate-content",
 		"Duplicate Content",
 		score,
-		"medium",
+		4,
 		score < 10
 			? "Remove repeated content blocks within pages to improve content quality"
 			: "No duplicate content detected",
@@ -676,7 +676,7 @@ export function scoreCrossPageDuplication(pages: ScannedPage[], _meta: ScanMeta)
 			"cross-page-duplication",
 			"Cross-Page Duplication",
 			10,
-			"low",
+			2,
 			"Single page — cross-page duplication not applicable",
 		);
 	}
@@ -700,7 +700,7 @@ export function scoreCrossPageDuplication(pages: ScannedPage[], _meta: ScanMeta)
 			"cross-page-duplication",
 			"Cross-Page Duplication",
 			10,
-			"low",
+			2,
 			"Remove identical content blocks that appear across multiple pages",
 		);
 	}
@@ -723,7 +723,7 @@ export function scoreCrossPageDuplication(pages: ScannedPage[], _meta: ScanMeta)
 		"cross-page-duplication",
 		"Cross-Page Duplication",
 		score,
-		"low",
+		2,
 		score < 10
 			? "Remove identical content blocks that appear across multiple pages"
 			: "No cross-page content duplication detected",
@@ -737,7 +737,7 @@ export function scoreEvidencePackaging(pages: ScannedPage[], _meta: ScanMeta): D
 			"evidence-packaging",
 			"Evidence Packaging",
 			0,
-			"low",
+			2,
 			"Add inline citations, attribution phrases, and source references to support claims",
 		);
 	}
@@ -785,7 +785,7 @@ export function scoreEvidencePackaging(pages: ScannedPage[], _meta: ScanMeta): D
 		"evidence-packaging",
 		"Evidence Packaging",
 		score,
-		"low",
+		2,
 		score < 10
 			? "Add inline citations, attribution phrases, and source references to support claims"
 			: "Strong evidence packaging with citations and attribution",
@@ -801,7 +801,7 @@ export function scoreCitationReadyWriting(pages: ScannedPage[], _meta: ScanMeta)
 			"citation-ready-writing",
 			"Citation-Ready Writing",
 			0,
-			"low",
+			2,
 			"Write self-contained definition sentences and single-claim statements that AI can quote directly",
 		);
 	}
@@ -839,7 +839,7 @@ export function scoreCitationReadyWriting(pages: ScannedPage[], _meta: ScanMeta)
 			"citation-ready-writing",
 			"Citation-Ready Writing",
 			0,
-			"low",
+			2,
 			"Write self-contained definition sentences and single-claim statements that AI can quote directly",
 		);
 	}
@@ -856,7 +856,7 @@ export function scoreCitationReadyWriting(pages: ScannedPage[], _meta: ScanMeta)
 		"citation-ready-writing",
 		"Citation-Ready Writing",
 		score,
-		"low",
+		2,
 		score < 10
 			? "Write self-contained definition sentences and single-claim statements that AI can quote directly"
 			: "Excellent citation-ready writing style",
@@ -870,7 +870,7 @@ export function scoreQaFormat(pages: ScannedPage[], _meta: ScanMeta): DimensionS
 			"qa-format",
 			"Q&A Content Format",
 			0,
-			"medium",
+			4,
 			"Use question-format headings (What, How, Why) to structure content for AI answer extraction",
 		);
 	}
@@ -888,7 +888,7 @@ export function scoreQaFormat(pages: ScannedPage[], _meta: ScanMeta): DimensionS
 			"qa-format",
 			"Q&A Content Format",
 			0,
-			"medium",
+			4,
 			"Use question-format headings (What, How, Why) to structure content for AI answer extraction",
 		);
 	}
@@ -905,7 +905,7 @@ export function scoreQaFormat(pages: ScannedPage[], _meta: ScanMeta): DimensionS
 		"qa-format",
 		"Q&A Content Format",
 		score,
-		"medium",
+		4,
 		score < 10
 			? "Use question-format headings (What, How, Why) to structure content for AI answer extraction"
 			: "Excellent Q&A content format with high question heading ratio",
@@ -921,7 +921,7 @@ export function scoreDirectAnswerDensity(pages: ScannedPage[], _meta: ScanMeta):
 			"direct-answer-density",
 			"Direct Answer Density",
 			0,
-			"medium",
+			4,
 			"Add concise answer paragraphs (40-300 chars) immediately after question headings",
 		);
 	}
@@ -948,7 +948,7 @@ export function scoreDirectAnswerDensity(pages: ScannedPage[], _meta: ScanMeta):
 		"direct-answer-density",
 		"Direct Answer Density",
 		score,
-		"medium",
+		4,
 		score < 10
 			? "Add concise answer paragraphs (40-300 chars) immediately after question headings"
 			: "Strong direct answer density with concise answer paragraphs",
@@ -964,7 +964,7 @@ export function scoreQueryAnswerAlignment(pages: ScannedPage[], _meta: ScanMeta)
 			"query-answer-alignment",
 			"Query-Answer Alignment",
 			0,
-			"low",
+			2,
 			"Ensure every question heading is followed by a direct answer paragraph",
 		);
 	}
@@ -988,7 +988,7 @@ export function scoreQueryAnswerAlignment(pages: ScannedPage[], _meta: ScanMeta)
 		"query-answer-alignment",
 		"Query-Answer Alignment",
 		score,
-		"low",
+		2,
 		score < 10
 			? "Ensure every question heading is followed by a direct answer paragraph"
 			: "Strong query-answer alignment across all pages",
@@ -1020,7 +1020,7 @@ export function scoreTablesLists(pages: ScannedPage[], _meta: ScanMeta): Dimensi
 			"tables-lists",
 			"Tables & Lists",
 			0,
-			"low",
+			2,
 			"Add HTML tables with headers and ordered/unordered lists to present structured data",
 		);
 	}
@@ -1044,7 +1044,7 @@ export function scoreTablesLists(pages: ScannedPage[], _meta: ScanMeta): Dimensi
 		"tables-lists",
 		"Tables & Lists",
 		score,
-		"low",
+		2,
 		score < 10
 			? "Add HTML tables with headers and ordered/unordered lists to present structured data"
 			: "Strong use of tables and lists for structured content presentation",
@@ -1058,7 +1058,7 @@ export function scoreDefinitionPatterns(pages: ScannedPage[], _meta: ScanMeta): 
 			"definition-patterns",
 			"Definition Patterns",
 			0,
-			"low",
+			2,
 			"Use definition patterns like 'X is defined as...' and 'X refers to...' for AI-extractable definitions",
 		);
 	}
@@ -1083,7 +1083,7 @@ export function scoreDefinitionPatterns(pages: ScannedPage[], _meta: ScanMeta): 
 		"definition-patterns",
 		"Definition Patterns",
 		score,
-		"low",
+		2,
 		score < 10
 			? "Use definition patterns like 'X is defined as...' and 'X refers to...' for AI-extractable definitions"
 			: "Strong use of definition patterns for AI-extractable content",
@@ -1097,7 +1097,7 @@ export function scoreEntityDisambiguation(pages: ScannedPage[], _meta: ScanMeta)
 			"entity-disambiguation",
 			"Entity Disambiguation",
 			0,
-			"low",
+			2,
 			"Define the primary entity early in each page and use consistent terminology throughout",
 		);
 	}
@@ -1144,7 +1144,7 @@ export function scoreEntityDisambiguation(pages: ScannedPage[], _meta: ScanMeta)
 		"entity-disambiguation",
 		"Entity Disambiguation",
 		score,
-		"low",
+		2,
 		score < 10
 			? "Define the primary entity early in each page and use consistent terminology throughout"
 			: "Strong entity disambiguation with consistent terminology usage",
@@ -1158,7 +1158,7 @@ export function scoreInternalLinking(pages: ScannedPage[], _meta: ScanMeta): Dim
 			"internal-linking",
 			"Internal Linking",
 			0,
-			"medium",
+			4,
 			"Add internal links between related content pages and implement breadcrumb navigation",
 		);
 	}
@@ -1206,7 +1206,7 @@ export function scoreInternalLinking(pages: ScannedPage[], _meta: ScanMeta): Dim
 		"internal-linking",
 		"Internal Linking",
 		score,
-		"medium",
+		4,
 		score < 10
 			? "Add internal links between related content pages and implement breadcrumb navigation"
 			: "Strong internal link structure with breadcrumb navigation",
@@ -1220,7 +1220,7 @@ export function scoreAuthorSchema(pages: ScannedPage[], _meta: ScanMeta): Dimens
 			"author-schema",
 			"Author & Expert Schema",
 			0,
-			"low",
+			2,
 			"Add Person schema with jobTitle/credentials and sameAs links to author profiles",
 		);
 	}
@@ -1260,7 +1260,7 @@ export function scoreAuthorSchema(pages: ScannedPage[], _meta: ScanMeta): Dimens
 		"author-schema",
 		"Author & Expert Schema",
 		score,
-		"low",
+		2,
 		score < 10
 			? "Add Person schema with jobTitle/credentials and sameAs links to author profiles"
 			: "Strong author schema with credentials and authority links",
@@ -1272,7 +1272,7 @@ export function scoreSemanticHtml(pages: ScannedPage[], _meta: ScanMeta): Dimens
 	const hint = "Use semantic HTML5 elements (main, article, nav, aside) and add lang attribute to html tag";
 
 	if (pages.length === 0) {
-		return makeDimension("semantic-html", "Semantic HTML", 0, "low", hint);
+		return makeDimension("semantic-html", "Semantic HTML", 0, 2, hint);
 	}
 
 	// Sort pages by URL for determinism
@@ -1307,7 +1307,7 @@ export function scoreSemanticHtml(pages: ScannedPage[], _meta: ScanMeta): Dimens
 		"semantic-html",
 		"Semantic HTML",
 		score,
-		"low",
+		2,
 		score < 10 ? hint : "Strong semantic HTML5 structure with proper landmark elements",
 	);
 }
@@ -1317,7 +1317,7 @@ export function scoreExtractionFriction(pages: ScannedPage[], _meta: ScanMeta): 
 	const hint = "Reduce average sentence length below 20 words and minimize passive voice for easier AI extraction";
 
 	if (pages.length === 0) {
-		return makeDimension("extraction-friction", "Extraction Friction", 0, "low", hint);
+		return makeDimension("extraction-friction", "Extraction Friction", 0, 2, hint);
 	}
 
 	// Sort pages by URL for determinism
@@ -1354,7 +1354,7 @@ export function scoreExtractionFriction(pages: ScannedPage[], _meta: ScanMeta): 
 		"extraction-friction",
 		"Extraction Friction",
 		score,
-		"low",
+		2,
 		score < 10 ? hint : "Excellent readability with short sentences and active voice",
 	);
 }
@@ -1364,7 +1364,7 @@ export function scoreImageContext(pages: ScannedPage[], _meta: ScanMeta): Dimens
 	const hint = "Add descriptive alt text to all images and wrap important images in figure/figcaption elements";
 
 	if (pages.length === 0) {
-		return makeDimension("image-context", "Image Context for AI", 0, "low", hint);
+		return makeDimension("image-context", "Image Context for AI", 0, 1, hint);
 	}
 
 	// Sort pages by URL for determinism
@@ -1401,7 +1401,7 @@ export function scoreImageContext(pages: ScannedPage[], _meta: ScanMeta): Dimens
 		"image-context",
 		"Image Context for AI",
 		score,
-		"low",
+		1,
 		score < 10 ? hint : "All images have descriptive alt text and are wrapped in figure/figcaption",
 	);
 }
@@ -1411,7 +1411,7 @@ export function scoreSchemaCoverage(pages: ScannedPage[], _meta: ScanMeta): Dime
 	const hint = "Add structured data (schema.org) to inner pages, not just the homepage";
 
 	if (pages.length === 0) {
-		return makeDimension("schema-coverage", "Schema Coverage", 0, "low", hint);
+		return makeDimension("schema-coverage", "Schema Coverage", 0, 1, hint);
 	}
 
 	// Sort pages by URL for determinism
@@ -1444,7 +1444,7 @@ export function scoreSchemaCoverage(pages: ScannedPage[], _meta: ScanMeta): Dime
 	// Special case: single page
 	if (sorted.length === 1) {
 		const score = pagesWithSchema > 0 ? 5 : 0;
-		return makeDimension("schema-coverage", "Schema Coverage", score, "low", hint);
+		return makeDimension("schema-coverage", "Schema Coverage", score, 1, hint);
 	}
 
 	const ratio = pagesWithSchema / sorted.length;
@@ -1456,7 +1456,7 @@ export function scoreSchemaCoverage(pages: ScannedPage[], _meta: ScanMeta): Dime
 	else if (ratio > 0) score = 1;
 	else score = 0;
 
-	return makeDimension("schema-coverage", "Schema Coverage", score, "low", hint);
+	return makeDimension("schema-coverage", "Schema Coverage", score, 1, hint);
 }
 
 /** Dimension 32: Speakable Schema (low weight) */
@@ -1465,7 +1465,7 @@ export function scoreSpeakableSchema(pages: ScannedPage[], _meta: ScanMeta): Dim
 		"Add SpeakableSpecification markup to indicate content suitable for text-to-speech and voice assistants";
 
 	if (pages.length === 0) {
-		return makeDimension("speakable-schema", "Speakable Schema", 0, "low", hint);
+		return makeDimension("speakable-schema", "Speakable Schema", 0, 1, hint);
 	}
 
 	// Sort pages by URL for determinism
@@ -1502,7 +1502,7 @@ export function scoreSpeakableSchema(pages: ScannedPage[], _meta: ScanMeta): Dim
 	else if (ratio > 0) score = 2;
 	else score = 0;
 
-	return makeDimension("speakable-schema", "Speakable Schema", score, "low", hint);
+	return makeDimension("speakable-schema", "Speakable Schema", score, 1, hint);
 }
 
 /** Dimension 33: Content Cannibalization (low weight) */
@@ -1510,7 +1510,7 @@ export function scoreContentCannibalization(pages: ScannedPage[], _meta: ScanMet
 	const hint = "Consolidate pages with overlapping topics to avoid content cannibalization";
 
 	if (pages.length <= 1) {
-		return makeDimension("content-cannibalization", "Content Cannibalization", 10, "low", hint);
+		return makeDimension("content-cannibalization", "Content Cannibalization", 10, 2, hint);
 	}
 
 	// Sort pages by URL for determinism
@@ -1574,7 +1574,7 @@ export function scoreContentCannibalization(pages: ScannedPage[], _meta: ScanMet
 		"content-cannibalization",
 		"Content Cannibalization",
 		score,
-		"low",
+		2,
 		score < 10 ? hint : "No content cannibalization detected — all pages target distinct topics",
 	);
 }
@@ -1586,7 +1586,7 @@ export function scorePublishingVelocity(_pages: ScannedPage[], meta: ScanMeta): 
 	const lastmods = meta.sitemapLastmods ?? [];
 
 	if (lastmods.length < 2) {
-		return makeDimension("publishing-velocity", "Publishing Velocity", 0, "low", "Add lastmod dates to sitemap.xml entries");
+		return makeDimension("publishing-velocity", "Publishing Velocity", 0, 1, "Add lastmod dates to sitemap.xml entries");
 	}
 
 	// Parse and sort valid dates chronologically
@@ -1596,7 +1596,7 @@ export function scorePublishingVelocity(_pages: ScannedPage[], meta: ScanMeta): 
 		.sort((a, b) => a - b);
 
 	if (parsed.length < 2) {
-		return makeDimension("publishing-velocity", "Publishing Velocity", 0, "low", "Add lastmod dates to sitemap.xml entries");
+		return makeDimension("publishing-velocity", "Publishing Velocity", 0, 1, "Add lastmod dates to sitemap.xml entries");
 	}
 
 	const now = Date.now();
@@ -1620,7 +1620,7 @@ export function scorePublishingVelocity(_pages: ScannedPage[], meta: ScanMeta): 
 			"publishing-velocity",
 			"Publishing Velocity",
 			Math.min(3, parsed.length > 6 ? 2 : 1),
-			"low",
+			1,
 			hint,
 		);
 	}
@@ -1654,7 +1654,7 @@ export function scorePublishingVelocity(_pages: ScannedPage[], meta: ScanMeta): 
 		"publishing-velocity",
 		"Publishing Velocity",
 		score,
-		"low",
+		1,
 		score < 10 ? hint : "Excellent publishing cadence with regular, recent content updates",
 	);
 }
@@ -1698,7 +1698,7 @@ export function scoreContentLicensing(pages: ScannedPage[], meta: ScanMeta): Dim
 		"content-licensing",
 		"Content Licensing",
 		score,
-		"low",
+		1,
 		score < 10 ? hint : "Strong content licensing with /ai.txt and CreativeWork license schema",
 	);
 }
@@ -1708,7 +1708,7 @@ export function scoreCanonicalUrls(pages: ScannedPage[], _meta: ScanMeta): Dimen
 	const hint = "Add self-referencing <link rel='canonical'> tags to all pages to prevent duplicate content issues";
 
 	if (pages.length === 0) {
-		return makeDimension("canonical-urls", "Canonical URLs", 0, "low", hint);
+		return makeDimension("canonical-urls", "Canonical URLs", 0, 1, hint);
 	}
 
 	// Sort pages by URL for determinism
@@ -1745,7 +1745,7 @@ export function scoreCanonicalUrls(pages: ScannedPage[], _meta: ScanMeta): Dimen
 		"canonical-urls",
 		"Canonical URLs",
 		score,
-		"low",
+		1,
 		score < 10 ? hint : "All pages have self-referencing canonical tags",
 	);
 }
@@ -1755,7 +1755,7 @@ export function scoreRssFeed(pages: ScannedPage[], _meta: ScanMeta): DimensionSc
 	const hint = "Add RSS/Atom feed and link it from the homepage with <link rel='alternate' type='application/rss+xml'>";
 
 	if (pages.length === 0) {
-		return makeDimension("rss-feed", "RSS/Atom Feed", 0, "low", hint);
+		return makeDimension("rss-feed", "RSS/Atom Feed", 0, 1, hint);
 	}
 
 	// Sort pages by URL for determinism; identify homepage as shortest path
@@ -1786,7 +1786,7 @@ export function scoreRssFeed(pages: ScannedPage[], _meta: ScanMeta): DimensionSc
 		"rss-feed",
 		"RSS/Atom Feed",
 		score,
-		"low",
+		1,
 		score < 10 ? hint : "RSS/Atom feed linked from homepage",
 	);
 }
@@ -1796,7 +1796,7 @@ export function scoreVisibleDates(pages: ScannedPage[], _meta: ScanMeta): Dimens
 	const hint = "Add <time datetime='...'> elements to show publication and update dates visibly on content pages";
 
 	if (pages.length === 0) {
-		return makeDimension("visible-dates", "Visible Date Signals", 0, "low", hint);
+		return makeDimension("visible-dates", "Visible Date Signals", 0, 1, hint);
 	}
 
 	// Sort pages by URL for determinism
@@ -1824,7 +1824,7 @@ export function scoreVisibleDates(pages: ScannedPage[], _meta: ScanMeta): Dimens
 		"visible-dates",
 		"Visible Date Signals",
 		score,
-		"low",
+		1,
 		score < 10 ? hint : "Excellent visible date signals with time elements on all pages",
 	);
 }
@@ -1875,7 +1875,7 @@ function makeDimension(
 	id: string,
 	name: string,
 	score: number,
-	weight: "high" | "medium" | "low",
+	weightPct: number,
 	hint: string,
 ): DimensionScore {
 	return {
@@ -1883,7 +1883,7 @@ function makeDimension(
 		name,
 		score,
 		maxScore: 10,
-		weight,
+		weightPct,
 		status: getDimensionStatus(score, 10),
 		hint,
 	};
