@@ -98,37 +98,35 @@ describe("getDimensionStatus", () => {
 });
 
 describe("calculateWeightedScore", () => {
-	const makeDimension = (score: number, weight: "high" | "medium" | "low"): DimensionScore => ({
+	const makeDimension = (score: number, weightPct: number): DimensionScore => ({
 		id: "test",
 		name: "Test",
 		score,
 		maxScore: 10,
-		weight,
+		weightPct,
 		status: "pass",
 		hint: "",
 	});
 
-	it("returns 100 for all perfect scores", () => {
+	it("returns 100 for all perfect scores with equal weights summing to 100", () => {
 		const dims: DimensionScore[] = [
-			makeDimension(10, "high"),
-			makeDimension(10, "medium"),
-			makeDimension(10, "low"),
+			makeDimension(10, 50),
+			makeDimension(10, 50),
 		];
 		expect(calculateWeightedScore(dims)).toBe(100);
 	});
 
 	it("returns 0 for all zero scores", () => {
 		const dims: DimensionScore[] = [
-			makeDimension(0, "high"),
-			makeDimension(0, "medium"),
-			makeDimension(0, "low"),
+			makeDimension(0, 50),
+			makeDimension(0, 50),
 		];
 		expect(calculateWeightedScore(dims)).toBe(0);
 	});
 
-	it("weights high dimensions more", () => {
-		const highOnly: DimensionScore[] = [makeDimension(10, "high"), makeDimension(0, "low")];
-		const lowOnly: DimensionScore[] = [makeDimension(0, "high"), makeDimension(10, "low")];
+	it("weights higher-weightPct dimensions more", () => {
+		const highOnly: DimensionScore[] = [makeDimension(10, 9), makeDimension(0, 1)];
+		const lowOnly: DimensionScore[] = [makeDimension(0, 9), makeDimension(10, 1)];
 		expect(calculateWeightedScore(highOnly)).toBeGreaterThan(calculateWeightedScore(lowOnly));
 	});
 

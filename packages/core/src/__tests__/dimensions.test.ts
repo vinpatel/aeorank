@@ -711,10 +711,10 @@ describe("scoreQaFormat", () => {
 		expect(result.score).toBeGreaterThanOrEqual(8);
 	});
 
-	it("has id 'qa-format' and weight 'medium'", () => {
+	it("has id 'qa-format' and weightPct 4", () => {
 		const result = scoreQaFormat([makePage()], makeMeta());
 		expect(result.id).toBe("qa-format");
-		expect(result.weight).toBe("medium");
+		expect(result.weightPct).toBe(4);
 	});
 });
 
@@ -746,10 +746,10 @@ describe("scoreDirectAnswerDensity", () => {
 		expect(result.score).toBeGreaterThanOrEqual(8);
 	});
 
-	it("has id 'direct-answer-density' and weight 'medium'", () => {
+	it("has id 'direct-answer-density' and weightPct 4", () => {
 		const result = scoreDirectAnswerDensity([makePage()], makeMeta());
 		expect(result.id).toBe("direct-answer-density");
-		expect(result.weight).toBe("medium");
+		expect(result.weightPct).toBe(4);
 	});
 });
 
@@ -794,10 +794,10 @@ describe("scoreQueryAnswerAlignment", () => {
 		expect(result.score).toBe(0);
 	});
 
-	it("has id 'query-answer-alignment' and weight 'low'", () => {
+	it("has id 'query-answer-alignment' and weightPct 2", () => {
 		const result = scoreQueryAnswerAlignment([makePage()], makeMeta());
 		expect(result.id).toBe("query-answer-alignment");
-		expect(result.weight).toBe("low");
+		expect(result.weightPct).toBe(2);
 	});
 });
 
@@ -825,10 +825,10 @@ describe("scoreTablesLists", () => {
 		expect(result.score).toBeGreaterThanOrEqual(8);
 	});
 
-	it("has id 'tables-lists' and weight 'low'", () => {
+	it("has id 'tables-lists' and weightPct 2", () => {
 		const result = scoreTablesLists([makePage()], makeMeta());
 		expect(result.id).toBe("tables-lists");
-		expect(result.weight).toBe("low");
+		expect(result.weightPct).toBe(2);
 	});
 });
 
@@ -865,10 +865,10 @@ describe("scoreDefinitionPatterns", () => {
 		expect(result.score).toBeGreaterThanOrEqual(8);
 	});
 
-	it("has id 'definition-patterns' and weight 'low'", () => {
+	it("has id 'definition-patterns' and weightPct 2", () => {
 		const result = scoreDefinitionPatterns([makePage()], makeMeta());
 		expect(result.id).toBe("definition-patterns");
-		expect(result.weight).toBe("low");
+		expect(result.weightPct).toBe(2);
 	});
 });
 
@@ -903,10 +903,10 @@ describe("scoreEntityDisambiguation", () => {
 		expect(result.score).toBeGreaterThanOrEqual(8);
 	});
 
-	it("has id 'entity-disambiguation' and weight 'low'", () => {
+	it("has id 'entity-disambiguation' and weightPct 2", () => {
 		const result = scoreEntityDisambiguation([makePage()], makeMeta());
 		expect(result.id).toBe("entity-disambiguation");
-		expect(result.weight).toBe("low");
+		expect(result.weightPct).toBe(2);
 	});
 });
 
@@ -1002,10 +1002,10 @@ describe("scoreInternalLinking", () => {
 		expect(result.score).toBe(10);
 	});
 
-	it("has id 'internal-linking' and weight 'medium'", () => {
+	it("has id 'internal-linking' and weightPct 4", () => {
 		const result = scoreInternalLinking([makePage()], makeMeta());
 		expect(result.id).toBe("internal-linking");
-		expect(result.weight).toBe("medium");
+		expect(result.weightPct).toBe(4);
 	});
 });
 
@@ -1083,10 +1083,10 @@ describe("scoreAuthorSchema", () => {
 		expect(result.score).toBe(10);
 	});
 
-	it("has id 'author-schema' and weight 'low'", () => {
+	it("has id 'author-schema' and weightPct 2", () => {
 		const result = scoreAuthorSchema([makePage()], makeMeta());
 		expect(result.id).toBe("author-schema");
-		expect(result.weight).toBe("low");
+		expect(result.weightPct).toBe(2);
 	});
 });
 
@@ -1095,7 +1095,7 @@ describe("scoreSemanticHtml", () => {
 		const result = scoreSemanticHtml([], makeMeta());
 		expect(result.score).toBe(0);
 		expect(result.id).toBe("semantic-html");
-		expect(result.weight).toBe("low");
+		expect(result.weightPct).toBe(2);
 	});
 
 	it("returns score 10 for page with main+article+nav+aside+lang+ARIA", () => {
@@ -1129,10 +1129,10 @@ describe("scoreSemanticHtml", () => {
 		expect(result.score).toBe(0);
 	});
 
-	it("has id 'semantic-html' and weight 'low'", () => {
+	it("has id 'semantic-html' and weightPct 2", () => {
 		const result = scoreSemanticHtml([makePage()], makeMeta());
 		expect(result.id).toBe("semantic-html");
-		expect(result.weight).toBe("low");
+		expect(result.weightPct).toBe(2);
 	});
 });
 
@@ -1141,7 +1141,7 @@ describe("scoreExtractionFriction", () => {
 		const result = scoreExtractionFriction([], makeMeta());
 		expect(result.score).toBe(0);
 		expect(result.id).toBe("extraction-friction");
-		expect(result.weight).toBe("low");
+		expect(result.weightPct).toBe(2);
 	});
 
 	it("returns 9-10 for pages with avgSentenceLength ~15 words (easy to extract)", () => {
@@ -1163,10 +1163,10 @@ describe("scoreExtractionFriction", () => {
 		expect(result.score).toBeLessThanOrEqual(3);
 	});
 
-	it("has id 'extraction-friction' and weight 'low'", () => {
+	it("has id 'extraction-friction' and weightPct 2", () => {
 		const result = scoreExtractionFriction([makePage()], makeMeta());
 		expect(result.id).toBe("extraction-friction");
-		expect(result.weight).toBe("low");
+		expect(result.weightPct).toBe(2);
 	});
 });
 
@@ -1175,7 +1175,7 @@ describe("scoreImageContext", () => {
 		const result = scoreImageContext([], makeMeta());
 		expect(result.score).toBe(0);
 		expect(result.id).toBe("image-context");
-		expect(result.weight).toBe("low");
+		expect(result.weightPct).toBe(1);
 	});
 
 	it("returns 10 for page with all images having alt text and figures with captions", () => {
@@ -1203,19 +1203,19 @@ describe("scoreImageContext", () => {
 		expect(result.score).toBe(10);
 	});
 
-	it("has id 'image-context' and weight 'low'", () => {
+	it("has id 'image-context' and weightPct 1", () => {
 		const result = scoreImageContext([makePage()], makeMeta());
 		expect(result.id).toBe("image-context");
-		expect(result.weight).toBe("low");
+		expect(result.weightPct).toBe(1);
 	});
 });
 
 describe("scoreSchemaCoverage", () => {
-	it("returns score 0, weight 'low', id 'schema-coverage' for empty pages array", () => {
+	it("returns score 0, weightPct 1, id 'schema-coverage' for empty pages array", () => {
 		const result = scoreSchemaCoverage([], makeMeta());
 		expect(result.score).toBe(0);
 		expect(result.id).toBe("schema-coverage");
-		expect(result.weight).toBe("low");
+		expect(result.weightPct).toBe(1);
 	});
 
 	it("returns score 5 for single page with schema (can't assess inner page coverage)", () => {
@@ -1287,11 +1287,11 @@ describe("scoreSchemaCoverage", () => {
 });
 
 describe("scoreSpeakableSchema", () => {
-	it("returns score 0, weight 'low', id 'speakable-schema' for empty pages array", () => {
+	it("returns score 0, weightPct 1, id 'speakable-schema' for empty pages array", () => {
 		const result = scoreSpeakableSchema([], makeMeta());
 		expect(result.score).toBe(0);
 		expect(result.id).toBe("speakable-schema");
-		expect(result.weight).toBe("low");
+		expect(result.weightPct).toBe(1);
 	});
 
 	it("returns score 0 for pages with no SpeakableSpecification markup", () => {
@@ -1345,11 +1345,11 @@ describe("scoreSpeakableSchema", () => {
 });
 
 describe("scoreContentCannibalization", () => {
-	it("returns score 10, weight 'low', id 'content-cannibalization' for empty pages", () => {
+	it("returns score 10, weightPct 2, id 'content-cannibalization' for empty pages", () => {
 		const result = scoreContentCannibalization([], makeMeta());
 		expect(result.score).toBe(10);
 		expect(result.id).toBe("content-cannibalization");
-		expect(result.weight).toBe("low");
+		expect(result.weightPct).toBe(2);
 	});
 
 	it("returns score 10 for a single page (no cannibalization possible)", () => {
@@ -1488,11 +1488,11 @@ describe("scoreContentLicensing", () => {
 });
 
 describe("scoreCanonicalUrls", () => {
-	it("returns score 0, weight 'low', id 'canonical-urls' for empty pages", () => {
+	it("returns score 0, weightPct 1, id 'canonical-urls' for empty pages", () => {
 		const result = scoreCanonicalUrls([], makeMeta());
 		expect(result.score).toBe(0);
 		expect(result.id).toBe("canonical-urls");
-		expect(result.weight).toBe("low");
+		expect(result.weightPct).toBe(1);
 	});
 
 	it("returns score 10 when all pages have self-referencing canonical", () => {
@@ -1551,11 +1551,11 @@ describe("scoreCanonicalUrls", () => {
 });
 
 describe("scoreRssFeed", () => {
-	it("returns score 0, weight 'low', id 'rss-feed' for empty pages", () => {
+	it("returns score 0, weightPct 1, id 'rss-feed' for empty pages", () => {
 		const result = scoreRssFeed([], makeMeta());
 		expect(result.score).toBe(0);
 		expect(result.id).toBe("rss-feed");
-		expect(result.weight).toBe("low");
+		expect(result.weightPct).toBe(1);
 	});
 
 	it("returns score 10 when homepage has RSS feed", () => {
@@ -1603,11 +1603,11 @@ describe("scoreRssFeed", () => {
 });
 
 describe("scoreVisibleDates", () => {
-	it("returns score 0, weight 'low', id 'visible-dates' for empty pages", () => {
+	it("returns score 0, weightPct 1, id 'visible-dates' for empty pages", () => {
 		const result = scoreVisibleDates([], makeMeta());
 		expect(result.score).toBe(0);
 		expect(result.id).toBe("visible-dates");
-		expect(result.weight).toBe("low");
+		expect(result.weightPct).toBe(1);
 	});
 
 	it("returns score 9-10 when all pages have timeElementCount >= 1", () => {

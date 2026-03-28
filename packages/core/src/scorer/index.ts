@@ -1,9 +1,9 @@
-import { DIMENSION_DEFS, WEIGHT_MULTIPLIER } from "../constants.js";
+import { DIMENSION_DEFS } from "../constants.js";
 import type { DimensionScore, PageScore, ScanMeta, ScannedPage } from "../types.js";
 import { DIMENSION_SCORERS } from "./dimensions.js";
 import { getGrade } from "./grades.js";
 
-export { getGrade, getStatus, getDimensionStatus } from "./grades.js";
+export { getGrade, getStatus, getDimensionStatus, getWeightCategory } from "./grades.js";
 export { DIMENSION_SCORERS } from "./dimensions.js";
 
 /** Calculate the complete AEO score from scanned pages and metadata */
@@ -20,17 +20,17 @@ export function calculateAeoScore(
 		}
 	}
 
-	// Calculate weighted score
+	// Calculate weighted score using percentage weights (weightPct sums to 100)
 	let weightedSum = 0;
-	let totalWeight = 0;
 
 	for (const dim of dimensions) {
-		const multiplier = WEIGHT_MULTIPLIER[dim.weight];
-		weightedSum += (dim.score / dim.maxScore) * multiplier;
-		totalWeight += multiplier;
+		const def = DIMENSION_DEFS.find((d) => d.id === dim.id);
+		if (!def) continue;
+		weightedSum += (dim.score / dim.maxScore) * def.weightPct;
 	}
 
-	const score = totalWeight > 0 ? Math.round((weightedSum / totalWeight) * 100) : 0;
+	// weightedSum is already on 0-100 scale since weightPct sums to 100
+	const score = Math.round(weightedSum);
 	const grade = getGrade(score);
 
 	return { score, grade, dimensions };
@@ -56,12 +56,10 @@ const PAGE_LEVEL_DIMENSIONS = [
 	"definition-patterns",
 	"entity-disambiguation",
 	"internal-linking",
-	"author-schema",
 	"semantic-html",
 	"extraction-friction",
 	"image-context",
 	"schema-coverage",
-	"speakable-schema",
 	"content-cannibalization",
 	"canonical-urls",
 	"visible-dates",
@@ -72,7 +70,7 @@ export function scorePerPage(pages: ScannedPage[], meta: ScanMeta): PageScore[] 
 	return pages.map((page) => {
 		const dims: PageScore["dimensions"] = [];
 		let weightedSum = 0;
-		let totalWeight = 0;
+		let totalPageWeight = 0;
 
 		for (const dimId of PAGE_LEVEL_DIMENSIONS) {
 			const scorer = DIMENSION_SCORERS[dimId];
@@ -82,12 +80,12 @@ export function scorePerPage(pages: ScannedPage[], meta: ScanMeta): PageScore[] 
 			const result = scorer([page], meta);
 			dims.push({ id: result.id, score: result.score, status: result.status });
 
-			const multiplier = WEIGHT_MULTIPLIER[def.weight];
-			weightedSum += (result.score / result.maxScore) * multiplier;
-			totalWeight += multiplier;
+			weightedSum += (result.score / result.maxScore) * def.weightPct;
+			totalPageWeight += def.weightPct;
 		}
 
-		const score = totalWeight > 0 ? Math.round((weightedSum / totalWeight) * 100) : 0;
+		// Normalize to 0-100 since page-level dims don't sum to 100
+		const score = totalPageWeight > 0 ? Math.round((weightedSum / totalPageWeight) * 100) : 0;
 
 		return {
 			url: page.url,
