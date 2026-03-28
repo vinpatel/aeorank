@@ -34,6 +34,9 @@ export const DIMENSION_DEFS: DimensionDef[] = [
 	{ id: "image-context", name: "Image Context for AI", weight: "low", maxScore: 10 },
 	{ id: "schema-coverage", name: "Schema Coverage", weight: "low", maxScore: 10 },
 	{ id: "speakable-schema", name: "Speakable Schema", weight: "low", maxScore: 10 },
+	{ id: "content-cannibalization", name: "Content Cannibalization", weight: "low", maxScore: 10 },
+	{ id: "publishing-velocity", name: "Publishing Velocity", weight: "low", maxScore: 10 },
+	{ id: "content-licensing", name: "Content Licensing", weight: "low", maxScore: 10 },
 ];
 
 /** Grade thresholds (score >= threshold = that grade) */

@@ -1505,6 +1505,204 @@ export function scoreSpeakableSchema(pages: ScannedPage[], _meta: ScanMeta): Dim
 	return makeDimension("speakable-schema", "Speakable Schema", score, "low", hint);
 }
 
+/** Dimension 33: Content Cannibalization (low weight) */
+export function scoreContentCannibalization(pages: ScannedPage[], _meta: ScanMeta): DimensionScore {
+	const hint = "Consolidate pages with overlapping topics to avoid content cannibalization";
+
+	if (pages.length <= 1) {
+		return makeDimension("content-cannibalization", "Content Cannibalization", 10, "low", hint);
+	}
+
+	// Sort pages by URL for determinism
+	const sorted = [...pages].sort((a, b) => a.url.localeCompare(b.url));
+
+	// Normalize titles: lowercase, strip common suffixes
+	function normalizeTitle(title: string): string {
+		return title
+			.toLowerCase()
+			.replace(/\s*[|\-–—]\s*\S+.*$/, "")
+			.trim();
+	}
+
+	// Compute Jaccard similarity of word sets
+	function jaccard(a: string, b: string): number {
+		const wordsA = new Set(a.split(/\s+/).filter(Boolean));
+		const wordsB = new Set(b.split(/\s+/).filter(Boolean));
+		const intersection = new Set([...wordsA].filter((w) => wordsB.has(w)));
+		const union = new Set([...wordsA, ...wordsB]);
+		if (union.size === 0) return 0;
+		return intersection.size / union.size;
+	}
+
+	// Compute heading overlap (h2 headings by normalized text)
+	function h2Overlap(pageA: ScannedPage, pageB: ScannedPage): number {
+		const h2A = new Set(pageA.headings.filter((h) => h.level === 2).map((h) => h.text.toLowerCase().trim()));
+		const h2B = new Set(pageB.headings.filter((h) => h.level === 2).map((h) => h.text.toLowerCase().trim()));
+		if (h2A.size === 0 || h2B.size === 0) return 0;
+		const intersection = new Set([...h2A].filter((h) => h2B.has(h)));
+		const union = new Set([...h2A, ...h2B]);
+		return intersection.size / union.size;
+	}
+
+	let cannibalPairs = 0;
+	let totalPairs = 0;
+
+	for (let i = 0; i < sorted.length; i++) {
+		for (let j = i + 1; j < sorted.length; j++) {
+			totalPairs++;
+			const titleA = normalizeTitle(sorted[i].title);
+			const titleB = normalizeTitle(sorted[j].title);
+			const titleSimilarity = jaccard(titleA, titleB);
+			const headingSimilarity = h2Overlap(sorted[i], sorted[j]);
+
+			if (titleSimilarity > 0.7 || headingSimilarity > 0.5) {
+				cannibalPairs++;
+			}
+		}
+	}
+
+	const ratio = cannibalPairs / totalPairs;
+	let score: number;
+	if (ratio === 0) score = 10;
+	else if (ratio < 0.1) score = 8;
+	else if (ratio < 0.2) score = 6;
+	else if (ratio < 0.4) score = 4;
+	else if (ratio < 0.6) score = 2;
+	else score = 0;
+
+	return makeDimension(
+		"content-cannibalization",
+		"Content Cannibalization",
+		score,
+		"low",
+		score < 10 ? hint : "No content cannibalization detected — all pages target distinct topics",
+	);
+}
+
+/** Dimension 34: Publishing Velocity (low weight) */
+export function scorePublishingVelocity(_pages: ScannedPage[], meta: ScanMeta): DimensionScore {
+	const hint = "Maintain a regular publishing cadence — update sitemap lastmod dates to reflect content freshness";
+
+	const lastmods = meta.sitemapLastmods ?? [];
+
+	if (lastmods.length < 2) {
+		return makeDimension("publishing-velocity", "Publishing Velocity", 0, "low", "Add lastmod dates to sitemap.xml entries");
+	}
+
+	// Parse and sort valid dates chronologically
+	const parsed = lastmods
+		.map((d) => new Date(d).getTime())
+		.filter((t) => !Number.isNaN(t))
+		.sort((a, b) => a - b);
+
+	if (parsed.length < 2) {
+		return makeDimension("publishing-velocity", "Publishing Velocity", 0, "low", "Add lastmod dates to sitemap.xml entries");
+	}
+
+	const now = Date.now();
+	const mostRecent = parsed[parsed.length - 1];
+	const oldest = parsed[0];
+	const spanMs = mostRecent - oldest;
+	const dayMs = 86_400_000;
+
+	// Recency score (0-4): if completely stale (> 2 years), cap total score
+	const daysSinceRecent = (now - mostRecent) / dayMs;
+	let recencyScore: number;
+	if (daysSinceRecent <= 30) recencyScore = 4;
+	else if (daysSinceRecent <= 90) recencyScore = 3;
+	else if (daysSinceRecent <= 180) recencyScore = 2;
+	else if (daysSinceRecent <= 365) recencyScore = 1;
+	else recencyScore = 0;
+
+	// If completely stale (> 2 years), cap score at 3 regardless of regularity/span
+	if (daysSinceRecent > 730) {
+		return makeDimension(
+			"publishing-velocity",
+			"Publishing Velocity",
+			Math.min(3, parsed.length > 6 ? 2 : 1),
+			"low",
+			hint,
+		);
+	}
+
+	// Regularity score (0-3): compute stddev of gaps
+	const gaps: number[] = [];
+	for (let i = 1; i < parsed.length; i++) {
+		gaps.push(parsed[i] - parsed[i - 1]);
+	}
+	const medianGap = gaps.slice().sort((a, b) => a - b)[Math.floor(gaps.length / 2)];
+	const meanGap = gaps.reduce((a, b) => a + b, 0) / gaps.length;
+	const variance = gaps.reduce((sum, g) => sum + (g - meanGap) ** 2, 0) / gaps.length;
+	const stddev = Math.sqrt(variance);
+
+	let regularityScore: number;
+	if (stddev < medianGap) regularityScore = 3;
+	else if (stddev < 2 * medianGap) regularityScore = 2;
+	else regularityScore = 1;
+
+	// Span score (0-3)
+	const spanDays = spanMs / dayMs;
+	let spanScore: number;
+	if (spanDays > 180) spanScore = 3;
+	else if (spanDays > 90) spanScore = 2;
+	else if (spanDays > 30) spanScore = 1;
+	else spanScore = 0;
+
+	const score = Math.min(10, recencyScore + regularityScore + spanScore);
+
+	return makeDimension(
+		"publishing-velocity",
+		"Publishing Velocity",
+		score,
+		"low",
+		score < 10 ? hint : "Excellent publishing cadence with regular, recent content updates",
+	);
+}
+
+/** Dimension 35: Content Licensing (low weight) */
+export function scoreContentLicensing(pages: ScannedPage[], meta: ScanMeta): DimensionScore {
+	const hint = "Add /ai.txt with content licensing directives and CreativeWork schema with license property";
+
+	// ai.txt score
+	const aiTxt = meta.aiTxt ?? null;
+	let aiTxtScore: number;
+	if (!aiTxt) aiTxtScore = 0;
+	else if (aiTxt.trim().length < 50) aiTxtScore = 3;
+	else aiTxtScore = 7;
+
+	// License schema score: any page with license or usageInfo in schema
+	let licenseSchemaScore = 0;
+	for (const page of pages) {
+		for (const schema of page.schemaOrg) {
+			const s = schema as Record<string, unknown>;
+			if (s["license"] || s["usageInfo"]) {
+				licenseSchemaScore = 4;
+				break;
+			}
+			// Check @graph
+			if (Array.isArray(s["@graph"])) {
+				for (const item of s["@graph"] as Record<string, unknown>[]) {
+					if (item["license"] || item["usageInfo"]) {
+						licenseSchemaScore = 4;
+						break;
+					}
+				}
+			}
+		}
+		if (licenseSchemaScore > 0) break;
+	}
+
+	const score = Math.min(10, aiTxtScore + licenseSchemaScore);
+
+	return makeDimension(
+		"content-licensing",
+		"Content Licensing",
+		score,
+		"low",
+		score < 10 ? hint : "Strong content licensing with /ai.txt and CreativeWork license schema",
+	);
+}
+
 /** Registry mapping dimension IDs to scorer functions */
 export const DIMENSION_SCORERS: Record<string, DimensionScorer> = {
 	"llms-txt": scoreLlmsTxt,
@@ -1539,6 +1737,9 @@ export const DIMENSION_SCORERS: Record<string, DimensionScorer> = {
 	"image-context": scoreImageContext,
 	"schema-coverage": scoreSchemaCoverage,
 	"speakable-schema": scoreSpeakableSchema,
+	"content-cannibalization": scoreContentCannibalization,
+	"publishing-velocity": scorePublishingVelocity,
+	"content-licensing": scoreContentLicensing,
 };
 
 function makeDimension(
