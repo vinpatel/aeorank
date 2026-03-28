@@ -24,6 +24,8 @@ export {
 	STATUS_THRESHOLDS,
 	DEFAULT_CONFIG,
 	AI_CRAWLERS,
+	PAGE_LEVEL_DIMENSIONS,
+	PAGE_SCORE_MAX,
 } from "./constants.js";
 
 // Utilities

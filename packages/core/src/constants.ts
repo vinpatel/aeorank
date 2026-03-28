@@ -148,6 +148,38 @@ export const STATUS_THRESHOLDS = {
 	warn: 40,
 } as const;
 
+/** Maximum score for a per-page AEO score (site-level dimensions excluded) */
+export const PAGE_SCORE_MAX = 75;
+
+/** Dimension IDs that can be scored per-page (excludes site-level dimensions) */
+export const PAGE_LEVEL_DIMENSIONS = [
+	"content-structure",
+	"answer-first",
+	"meta-descriptions",
+	"page-freshness",
+	"citation-anchors",
+	"schema-markup",
+	"eeat-signals",
+	"fact-density",
+	"duplicate-content",
+	"evidence-packaging",
+	"citation-ready-writing",
+	"qa-format",
+	"direct-answer-density",
+	"query-answer-alignment",
+	"tables-lists",
+	"definition-patterns",
+	"entity-disambiguation",
+	"internal-linking",
+	"semantic-html",
+	"extraction-friction",
+	"image-context",
+	"schema-coverage",
+	"content-cannibalization",
+	"canonical-urls",
+	"visible-dates",
+] as const;
+
 /** Maximum crawl delay (in seconds) we'll respect — anything higher gets capped */
 export const MAX_CRAWL_DELAY = 2;
 
