@@ -168,7 +168,7 @@ Plans:
 | 7. Marketing Content | v1.0 | 2/2 | Complete | 2026-03-15 |
 | 8. Answer Readiness | v2.0 | 2/2 | Complete |  |
 | 9. Content Structure | v2.0 | 2/2 | Complete   | 2026-03-28 |
-| 10. Trust & Authority | v2.0 | 1/1 | Complete   | 2026-03-28 |
+| 10. Trust & Authority | v2.0 | 1/1 | Complete    | 2026-03-28 |
 | 11. Technical Foundation | v2.0 | 0/? | Not Started | — |
 | 12. AI Discovery | v2.0 | 0/? | Not Started | — |
 | 13. Weight Migration | v2.0 | 0/? | Not Started | — |
