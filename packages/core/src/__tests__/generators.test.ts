@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { generateFiles } from "../generators/index.js";
+import { generateAiTxt } from "../generators/ai-txt.js";
 import { generateLlmsFullTxt } from "../generators/llms-full.js";
 import { generateLlmsTxt } from "../generators/llms-txt.js";
 import { generateRobotsPatch } from "../generators/robots-patch.js";
@@ -7,7 +8,7 @@ import { generateSchemaJson } from "../generators/schema-json.js";
 import type { DimensionScore, ScanMeta, ScanResult, ScannedPage } from "../types.js";
 
 function makeDimension(id: string): DimensionScore {
-	return { id, name: id, score: 5, maxScore: 10, weight: "medium", status: "warn", hint: "" };
+	return { id, name: id, score: 5, maxScore: 10, weightPct: 3, status: "warn", hint: "" };
 }
 
 function makeMockResult(): ScanResult {
@@ -30,6 +31,20 @@ function makeMockResult(): ScanResult {
 			wordCount: 50,
 			hasDatePublished: true,
 			authorName: "Jane Smith",
+			paragraphs: ["Welcome to our site.", "We build great things."],
+			sentences: ["Welcome to our site.", "We build great things."],
+			contentHash: "abc123",
+			questionHeadings: [],
+			tableCount: 0,
+			listCount: 0,
+			semanticElements: { main: 1, article: 0, nav: 1, aside: 0, section: 0, header: 1, footer: 1 },
+			ariaRoleCount: 0,
+			figureCount: 0,
+			imgCount: 0,
+			imgsWithAlt: 0,
+			avgSentenceLength: 5,
+			rssFeeds: [],
+			timeElementCount: 0,
 		},
 		{
 			url: "https://example.com/blog/first-post",
@@ -40,7 +55,8 @@ function makeMockResult(): ScanResult {
 				{ level: 2, text: "What is AEO?", id: "what-is-aeo" },
 				{ level: 2, text: "How does it work?", id: null },
 			],
-			bodyText: "AEO stands for AI Engine Optimization. It helps your site get cited by AI.",
+			bodyText:
+				"AEO stands for AI Engine Optimization. It helps your site get cited by AI. AEO is defined as the practice of optimizing content for AI answer engines. AEO refers to a set of techniques. AEO describes the process of structured content creation.",
 			schemaOrg: [],
 			links: [],
 			canonical: "https://example.com/blog/first-post",
@@ -49,6 +65,33 @@ function makeMockResult(): ScanResult {
 			wordCount: 80,
 			hasDatePublished: true,
 			authorName: "Jane Smith",
+			paragraphs: [
+				"AEO stands for AI Engine Optimization.",
+				"It helps your site get cited by AI.",
+				"AEO is defined as the practice of optimizing content for AI answer engines.",
+			],
+			sentences: [
+				"AEO stands for AI Engine Optimization.",
+				"It helps your site get cited by AI.",
+				"AEO is defined as the practice of optimizing content for AI answer engines.",
+				"AEO refers to a set of techniques.",
+				"AEO describes the process of structured content creation.",
+			],
+			contentHash: "def456",
+			questionHeadings: [
+				{ text: "What is AEO?", level: 2 },
+				{ text: "How does it work?", level: 2 },
+			],
+			tableCount: 0,
+			listCount: 0,
+			semanticElements: { main: 1, article: 1, nav: 0, aside: 0, section: 0, header: 0, footer: 0 },
+			ariaRoleCount: 0,
+			figureCount: 0,
+			imgCount: 0,
+			imgsWithAlt: 0,
+			avgSentenceLength: 8,
+			rssFeeds: [],
+			timeElementCount: 0,
 		},
 	];
 
@@ -69,6 +112,8 @@ function makeMockResult(): ScanResult {
 		existingLlmsTxt: null,
 		platform: null,
 		responseTimeMs: 500,
+		aiTxt: null,
+		sitemapLastmods: [],
 	};
 
 	return {
@@ -101,9 +146,9 @@ function makeMockResult(): ScanResult {
 }
 
 describe("generateFiles", () => {
-	it("returns exactly 8 files", () => {
+	it("returns exactly 9 files", () => {
 		const files = generateFiles(makeMockResult());
-		expect(files).toHaveLength(8);
+		expect(files).toHaveLength(9);
 	});
 
 	it("returns correct file names", () => {
@@ -118,6 +163,7 @@ describe("generateFiles", () => {
 			"faq-blocks.html",
 			"citation-anchors.html",
 			"sitemap-ai.xml",
+			"ai.txt",
 		]);
 	});
 
@@ -167,6 +213,91 @@ describe("generateLlmsFullTxt", () => {
 		const content = generateLlmsFullTxt(makeMockResult());
 		expect(content).toContain("URL: https://example.com");
 		expect(content).toContain("URL: https://example.com/blog/first-post");
+	});
+
+	it("contains Q&A section when page has questionHeadings", () => {
+		const content = generateLlmsFullTxt(makeMockResult());
+		expect(content).toContain("## Q&A");
+	});
+
+	it("Q&A section pairs question headings with paragraph text", () => {
+		const content = generateLlmsFullTxt(makeMockResult());
+		expect(content).toContain("**Q: What is AEO?**");
+	});
+
+	it("contains Definitions section when definition patterns found", () => {
+		const content = generateLlmsFullTxt(makeMockResult());
+		expect(content).toContain("## Definitions");
+	});
+
+	it("definition patterns match 'is defined as' sentences", () => {
+		const content = generateLlmsFullTxt(makeMockResult());
+		expect(content).toContain("is defined as");
+	});
+
+	it("contains Key Entities section with entity from page title", () => {
+		const content = generateLlmsFullTxt(makeMockResult());
+		expect(content).toContain("## Key Entities");
+	});
+
+	it("pages without questionHeadings omit Q&A section", () => {
+		const result = makeMockResult();
+		// Use only the homepage which has no question headings
+		const homePage = result.pages.find((p) => p.url === "https://example.com")!;
+		const singlePageResult = { ...result, pages: [homePage] };
+		const content = generateLlmsFullTxt(singlePageResult);
+		expect(content).not.toContain("## Q&A");
+	});
+
+	it("page separator '---' still present between pages", () => {
+		const content = generateLlmsFullTxt(makeMockResult());
+		expect(content).toContain("\n---\n");
+	});
+});
+
+describe("generateAiTxt", () => {
+	it("returns string starting with '# ai.txt'", () => {
+		const content = generateAiTxt(makeMockResult());
+		expect(content).toMatch(/^# ai\.txt/);
+	});
+
+	it("output contains 'User-Agent: *' directive line", () => {
+		const content = generateAiTxt(makeMockResult());
+		expect(content).toContain("User-Agent: *");
+	});
+
+	it("output contains 'Allow-AI-Training:' directive", () => {
+		const content = generateAiTxt(makeMockResult());
+		expect(content).toContain("Allow-AI-Training:");
+	});
+
+	it("output contains 'Allow-AI-Inference:' directive", () => {
+		const content = generateAiTxt(makeMockResult());
+		expect(content).toContain("Allow-AI-Inference:");
+	});
+
+	it("output contains site URL", () => {
+		const content = generateAiTxt(makeMockResult());
+		expect(content).toContain("https://example.com");
+	});
+
+	it("output contains site name", () => {
+		const content = generateAiTxt(makeMockResult());
+		expect(content).toContain("Example");
+	});
+
+	it("includes note comment when site already has ai.txt", () => {
+		const result = makeMockResult();
+		result.meta.aiTxt = "User-Agent: *\nAllow-AI-Training: Yes";
+		const content = generateAiTxt(result);
+		expect(content).toContain("# Note: Site already has ai.txt");
+	});
+
+	it("does not include note comment when aiTxt is null", () => {
+		const result = makeMockResult();
+		result.meta.aiTxt = null;
+		const content = generateAiTxt(result);
+		expect(content).not.toContain("# Note: Site already has ai.txt");
 	});
 });
 
