@@ -2,14 +2,15 @@
 gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: Competitive Parity
-status: planning
-last_updated: "2026-03-28T18:30:00.000Z"
+status: executing
+stopped_at: Completed 08-01-PLAN.md — 4 Answer Readiness scorers implemented, DIMENSION_DEFS expanded from 12 to 16
+last_updated: "2026-03-28T18:40:37.965Z"
 last_activity: 2026-03-28
 progress:
   total_phases: 9
   completed_phases: 0
-  total_plans: 0
-  completed_plans: 0
+  total_plans: 2
+  completed_plans: 1
 ---
 
 # Project State
@@ -19,13 +20,15 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-28)
 
 **Core value:** A developer runs `npx aeorank-cli scan <url>` with zero config and gets an AEO score plus all 8 generated files needed for AI visibility — in under 30 seconds.
-**Current focus:** v1.0 shipped. Planning v2.0 Competitive Parity — expand from 12 to 36 scoring criteria.
+**Current focus:** Phase 08 — answer-readiness
 
 ## Current Position
 
+Phase: 08 (answer-readiness) — EXECUTING
+Plan: 2 of 2
 Milestone: v2.0 Competitive Parity — Phases 8-16
-Status: Planning next milestone
-Last activity: 2026-03-28 — v1.0 milestone completed and archived
+Status: Ready to execute
+Last activity: 2026-03-28
 
 Progress: [####################] (Phase 7 — 2/3 plans done)
 
@@ -68,6 +71,7 @@ Progress: [####################] (Phase 7 — 2/3 plans done)
 | Phase 01-core-engine P02 | 15min | 2 tasks | 11 files |
 | Phase 01-core-engine P03 | 20 | 2 tasks | 6 files |
 | Phase 01-core-engine P04 | 20min | 2 tasks | 11 files |
+| Phase 08 P01 | 8min | 2 tasks | 8 files |
 
 ## Phase 4 Deliverables
 
@@ -213,6 +217,10 @@ Recent decisions affecting current work:
 - [Phase 01-core-engine]: All 8 generators are pure functions (ScanResult in, string out) with no disk I/O — guarantees determinism across CLI, GHA, and dashboard
 - [Phase 01-core-engine P05]: scan() convenience API wires scanner → scorer → generators in one call with optional customFetcher for hermetic test mocking
 - [Phase 01-core-engine P05]: Biome noParameterAssign: use resolvedFetcher local variable instead of reassigning customFetcher parameter in scan()
+- [Phase 08]: Extract paragraphs BEFORE DOM mutation in parser.ts to capture p elements that may be inside removed nav/footer containers
+- [Phase 08]: Use djb2-style hash (not crypto) for contentHash to keep parser.ts pure with no I/O imports
+- [Phase 08]: scoreTopicCoherence returns score=5 with informative hint when fewer than 2 pages (not enough data)
+- [Phase 08]: fact-density and duplicate-content added to PAGE_LEVEL_DIMENSIONS; topic-coherence and original-data kept site-level
 
 ### Pending Todos
 
@@ -228,6 +236,6 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-03-15
-Stopped at: Completed 07-02-PLAN.md — action/PUBLISHING.md Marketplace publication checklist created; GHA-01 documented.
+Last session: 2026-03-28T18:40:37.961Z
+Stopped at: Completed 08-01-PLAN.md — 4 Answer Readiness scorers implemented, DIMENSION_DEFS expanded from 12 to 16
 Resume file: None
