@@ -58,6 +58,24 @@ describe("determinism", () => {
 			status: d.status,
 		}));
 
+		// All 19 dimensions should be present
+		expect(results[0].dimensions).toHaveLength(19);
+
+		// All 7 new Answer Readiness dimensions should appear in results
+		const newDimIds = [
+			"topic-coherence",
+			"original-data",
+			"fact-density",
+			"duplicate-content",
+			"cross-page-duplication",
+			"evidence-packaging",
+			"citation-ready-writing",
+		];
+		for (const id of newDimIds) {
+			const dim = results[0].dimensions.find((d) => d.id === id);
+			expect(dim, `dimension ${id} should be present`).toBeDefined();
+		}
+
 		for (let i = 1; i < runs; i++) {
 			expect(results[i].score).toBe(firstScore);
 			expect(results[i].grade).toBe(firstGrade);
@@ -69,6 +87,13 @@ describe("determinism", () => {
 				status: d.status,
 			}));
 			expect(dims).toEqual(firstDimensions);
+
+			// Verify each new dimension produces identical score across runs
+			for (const id of newDimIds) {
+				const dim1 = results[0].dimensions.find((d) => d.id === id)!;
+				const dimI = results[i].dimensions.find((d) => d.id === id)!;
+				expect(dimI.score).toBe(dim1.score);
+			}
 		}
 	});
 
