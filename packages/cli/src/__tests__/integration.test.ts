@@ -161,6 +161,7 @@ const mockResult: ScanResult = {
 		{ name: "faq-blocks.html", content: '<script type="application/ld+json">{}</script>' },
 		{ name: "citation-anchors.html", content: '<h2 id="about">About</h2>' },
 		{ name: "sitemap-ai.xml", content: '<?xml version="1.0"?><urlset></urlset>' },
+		{ name: "ai.txt", content: "User-Agent: *\nAllow-AI-Training: yes\nAllow-AI-Inference: yes" },
 	],
 	pages: [],
 	pageScores: [],
