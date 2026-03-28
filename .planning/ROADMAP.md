@@ -32,7 +32,7 @@ Expands scoring from 12 dimensions to 36 criteria across 5 pillars, matching AEO
 - [x] **Phase 9: Content Structure Expansion** — +6 dimensions (Q&A format, direct answer density, tables & lists, definition patterns, entity disambiguation) (completed 2026-03-28)
 - [x] **Phase 10: Trust & Authority Expansion** — +2 dimensions (internal linking, author schema) (completed 2026-03-28)
 - [x] **Phase 11: Technical Foundation Expansion** — +5 dimensions (semantic HTML, extraction friction, image context, schema coverage, speakable) (completed 2026-03-28)
-- [ ] **Phase 12: AI Discovery Expansion** — +6 dimensions (content cannibalization, publishing velocity, content licensing, canonical URLs, RSS feed, visible dates)
+- [x] **Phase 12: AI Discovery Expansion** — +6 dimensions (content cannibalization, publishing velocity, content licensing, canonical URLs, RSS feed, visible dates) (completed 2026-03-28)
 - [ ] **Phase 13: Weight Migration & Score Gates** — Migrate to percentage weights, merge overlapping dimensions, add coherence + duplication gates
 - [ ] **Phase 14: New File Generators** — ai.txt generator, llms-full.txt improvements, plugin updates
 - [ ] **Phase 15: Dashboard & Docs Updates** — Update all surfaces for 36 criteria
@@ -108,10 +108,10 @@ Plans:
   3. A site with canonical tags, RSS feed, and dated content scores higher on discovery dimensions
   4. All existing + new tests pass with zero failures
   5. Determinism test passes for all 6 new dimensions
-**Plans:** 1/2 plans executed
+**Plans:** 2/2 plans complete
 Plans:
 - [x] 12-01-PLAN.md — Parser/scanner extensions + first 3 scorers (content-cannibalization, publishing-velocity, content-licensing)
-- [ ] 12-02-PLAN.md — Last 3 scorers (canonical-urls, rss-feed, visible-dates) + determinism tests for all 38 dimensions
+- [x] 12-02-PLAN.md — Last 3 scorers (canonical-urls, rss-feed, visible-dates) + determinism tests for all 38 dimensions
 
 ### Phase 13: Weight Migration & Score Gates
 **Goal**: Migrate from high/medium/low weights to percentage-based weights summing to 100%. Redistribute existing 12 dimensions into new system. Add coherence gate (topic-coherence < 6 caps score) and duplication gate (3+ blocks caps page at 35%). Merge overlapping dimensions where noted in SCORING_ROADMAP.md.
@@ -176,7 +176,7 @@ Plans:
 | 9. Content Structure | v2.0 | 2/2 | Complete   | 2026-03-28 |
 | 10. Trust & Authority | v2.0 | 1/1 | Complete    | 2026-03-28 |
 | 11. Technical Foundation | v2.0 | 2/2 | Complete    | 2026-03-28 |
-| 12. AI Discovery | v2.0 | 1/2 | In Progress|  |
+| 12. AI Discovery | v2.0 | 2/2 | Complete   | 2026-03-28 |
 | 13. Weight Migration | v2.0 | 0/? | Not Started | — |
 | 14. New File Generators | v2.0 | 0/? | Not Started | — |
 | 15. Dashboard & Docs | v2.0 | 0/? | Not Started | — |

@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: Competitive Parity
-status: executing
-stopped_at: Completed 12-01-PLAN.md — rssFeeds/timeElementCount/aiTxt/sitemapLastmods added, 3 new scorers (content-cannibalization, publishing-velocity, content-licensing), DIMENSION_DEFS at 35, all 581 tests passing
-last_updated: "2026-03-28T19:46:31.547Z"
+status: verifying
+stopped_at: Completed 12-02-PLAN.md — canonical-urls, rss-feed, visible-dates scorers added, DIMENSION_DEFS at 38, all 598 tests passing
+last_updated: "2026-03-28T19:52:42.682Z"
 last_activity: 2026-03-28
 progress:
   total_phases: 9
-  completed_phases: 4
+  completed_phases: 5
   total_plans: 9
-  completed_plans: 8
+  completed_plans: 9
 ---
 
 # Project State
@@ -27,7 +27,7 @@ See: .planning/PROJECT.md (updated 2026-03-28)
 Phase: 12 (ai-discovery-expansion) — EXECUTING
 Plan: 2 of 2
 Milestone: v2.0 Competitive Parity — Phases 8-16
-Status: Ready to execute
+Status: Phase complete — ready for verification
 Last activity: 2026-03-28
 
 Progress: [####################] (Phase 7 — 2/3 plans done)
@@ -79,6 +79,7 @@ Progress: [####################] (Phase 7 — 2/3 plans done)
 | Phase 11-technical-foundation-expansion P01 | 480s | 2 tasks | 9 files |
 | Phase 11-technical-foundation-expansion P02 | 178s | 2 tasks | 7 files |
 | Phase 12 P01 | 346s | 2 tasks | 11 files |
+| Phase 12-ai-discovery-expansion P02 | 232s | 2 tasks | 7 files |
 
 ## Phase 4 Deliverables
 
@@ -252,6 +253,8 @@ Recent decisions affecting current work:
 - [Phase 12]: scorePublishingVelocity caps score at 1-2 when most-recent date is >730 days old (completely stale)
 - [Phase 12]: scoreContentLicensing aiTxtScore=7 for substantial (>=50 chars) ai.txt so aiTxt alone can reach 7+ without schema
 - [Phase 12]: content-cannibalization added to PAGE_LEVEL_DIMENSIONS; publishing-velocity and content-licensing are site-level only
+- [Phase 12-02]: scoreVisibleDates base score uses dateRatio >= 1.0 -> 9 so all-pages-with-dates hits 9+ without meta bonus
+- [Phase 12-02]: canonical-urls and visible-dates in PAGE_LEVEL_DIMENSIONS; rss-feed is site-level only (homepage check)
 
 ### Pending Todos
 
@@ -267,6 +270,6 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-03-28T19:46:31.545Z
-Stopped at: Completed 12-01-PLAN.md — rssFeeds/timeElementCount/aiTxt/sitemapLastmods added, 3 new scorers (content-cannibalization, publishing-velocity, content-licensing), DIMENSION_DEFS at 35, all 581 tests passing
+Last session: 2026-03-28T19:52:42.680Z
+Stopped at: Completed 12-02-PLAN.md — canonical-urls, rss-feed, visible-dates scorers added, DIMENSION_DEFS at 38, all 598 tests passing
 Resume file: None
