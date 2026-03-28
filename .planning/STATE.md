@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: Competitive Parity
-status: verifying
-stopped_at: Completed 11-02-PLAN.md — schema-coverage and speakable-schema scorers added, DIMENSION_DEFS at 32, all 567 tests passing
-last_updated: "2026-03-28T19:33:03.859Z"
+status: executing
+stopped_at: Completed 12-01-PLAN.md — rssFeeds/timeElementCount/aiTxt/sitemapLastmods added, 3 new scorers (content-cannibalization, publishing-velocity, content-licensing), DIMENSION_DEFS at 35, all 581 tests passing
+last_updated: "2026-03-28T19:46:31.547Z"
 last_activity: 2026-03-28
 progress:
   total_phases: 9
   completed_phases: 4
-  total_plans: 7
-  completed_plans: 7
+  total_plans: 9
+  completed_plans: 8
 ---
 
 # Project State
@@ -20,14 +20,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-28)
 
 **Core value:** A developer runs `npx aeorank-cli scan <url>` with zero config and gets an AEO score plus all 8 generated files needed for AI visibility — in under 30 seconds.
-**Current focus:** Phase 11 — technical-foundation-expansion
+**Current focus:** Phase 12 — ai-discovery-expansion
 
 ## Current Position
 
-Phase: 12
-Plan: Not started
+Phase: 12 (ai-discovery-expansion) — EXECUTING
+Plan: 2 of 2
 Milestone: v2.0 Competitive Parity — Phases 8-16
-Status: Phase complete — ready for verification
+Status: Ready to execute
 Last activity: 2026-03-28
 
 Progress: [####################] (Phase 7 — 2/3 plans done)
@@ -78,6 +78,7 @@ Progress: [####################] (Phase 7 — 2/3 plans done)
 | Phase 10 P01 | 6min | 2 tasks | 6 files |
 | Phase 11-technical-foundation-expansion P01 | 480s | 2 tasks | 9 files |
 | Phase 11-technical-foundation-expansion P02 | 178s | 2 tasks | 7 files |
+| Phase 12 P01 | 346s | 2 tasks | 11 files |
 
 ## Phase 4 Deliverables
 
@@ -247,6 +248,10 @@ Recent decisions affecting current work:
 - [Phase 11-02]: scoreSchemaCoverage single-page special case returns score=5 (can't assess inner coverage with 1 page)
 - [Phase 11-02]: scoreSpeakableSchema detects SpeakableSpecification via direct @type, @graph traversal, and nested speakable property
 - [Phase 11-02]: Both schema-coverage and speakable-schema added to PAGE_LEVEL_DIMENSIONS — each page has its own schema, page-level scoring makes sense
+- [Phase 12]: scoreContentCannibalization uses Jaccard title similarity (>0.7) and h2 heading overlap (>0.5) to detect cannibalization pairs
+- [Phase 12]: scorePublishingVelocity caps score at 1-2 when most-recent date is >730 days old (completely stale)
+- [Phase 12]: scoreContentLicensing aiTxtScore=7 for substantial (>=50 chars) ai.txt so aiTxt alone can reach 7+ without schema
+- [Phase 12]: content-cannibalization added to PAGE_LEVEL_DIMENSIONS; publishing-velocity and content-licensing are site-level only
 
 ### Pending Todos
 
@@ -262,6 +267,6 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-03-28T19:32:32.783Z
-Stopped at: Completed 11-02-PLAN.md — schema-coverage and speakable-schema scorers added, DIMENSION_DEFS at 32, all 567 tests passing
+Last session: 2026-03-28T19:46:31.545Z
+Stopped at: Completed 12-01-PLAN.md — rssFeeds/timeElementCount/aiTxt/sitemapLastmods added, 3 new scorers (content-cannibalization, publishing-velocity, content-licensing), DIMENSION_DEFS at 35, all 581 tests passing
 Resume file: None
