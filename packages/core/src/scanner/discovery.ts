@@ -27,6 +27,8 @@ export interface DiscoveryResult {
 	urls: string[];
 	/** Pages already fetched and parsed during discovery (avoids double-fetching) */
 	cachedPages: Map<string, ScannedPage>;
+	/** lastmod dates extracted from sitemap.xml entries */
+	sitemapLastmods: string[];
 }
 
 /** Discover URLs from a starting URL using sitemap and internal links */
@@ -39,6 +41,7 @@ export async function discoverUrls(
 	const discovered = new Set<string>();
 	const queue: string[] = [];
 	const cachedPages = new Map<string, ScannedPage>();
+	const allSitemapLastmods: string[] = [];
 
 	discovered.add(normalizeUrl(startUrl));
 
@@ -58,6 +61,7 @@ export async function discoverUrls(
 						const subResult = await fetcher(subUrl);
 						if (subResult.status === 200 && subResult.html.includes("<urlset")) {
 							sitemapUrls.push(...extractSitemapUrls(subResult.html));
+							allSitemapLastmods.push(...extractSitemapLastmods(subResult.html));
 						}
 					} catch {
 						// Skip failed sub-sitemaps
@@ -65,6 +69,7 @@ export async function discoverUrls(
 				}
 			} else if (result.html.includes("<urlset")) {
 				sitemapUrls = extractSitemapUrls(result.html);
+				allSitemapLastmods.push(...extractSitemapLastmods(result.html));
 			}
 
 			for (const url of sitemapUrls) {
@@ -116,7 +121,7 @@ export async function discoverUrls(
 	// Smart sampling: if we have more URLs than maxPages, stratify by path segment
 	const sampled = allUrls.length > maxPages ? smartSample(allUrls, maxPages, startUrl) : allUrls;
 
-	return { urls: sampled, cachedPages };
+	return { urls: sampled, cachedPages, sitemapLastmods: allSitemapLastmods };
 }
 
 /**
@@ -194,4 +199,15 @@ function extractSitemapUrls(xml: string): string[] {
 		match = locRegex.exec(xml);
 	}
 	return urls;
+}
+
+function extractSitemapLastmods(xml: string): string[] {
+	const dates: string[] = [];
+	const lastmodRegex = /<lastmod>\s*(.*?)\s*<\/lastmod>/g;
+	let match = lastmodRegex.exec(xml);
+	while (match) {
+		dates.push(match[1]);
+		match = lastmodRegex.exec(xml);
+	}
+	return dates;
 }

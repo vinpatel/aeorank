@@ -58,6 +58,8 @@ function makePage(overrides: Partial<ScannedPage> = {}): ScannedPage {
 		imgCount: 0,
 		imgsWithAlt: 0,
 		avgSentenceLength: 0,
+		rssFeeds: [],
+		timeElementCount: 0,
 		...overrides,
 	};
 }
@@ -74,6 +76,8 @@ function makeMeta(overrides: Partial<ScanMeta> = {}): ScanMeta {
 		existingLlmsTxt: null,
 		platform: null,
 		responseTimeMs: 100,
+		aiTxt: null,
+		sitemapLastmods: [],
 		...overrides,
 	};
 }

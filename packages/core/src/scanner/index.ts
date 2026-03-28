@@ -56,6 +56,17 @@ export async function scanUrl(
 		// No llms.txt
 	}
 
+	// Step 3b: Check for ai.txt
+	let aiTxt: string | null = null;
+	try {
+		const aiTxtResult = await scanFetcher(`${origin}/ai.txt`);
+		if (aiTxtResult.status === 200 && aiTxtResult.html.trim().length > 0) {
+			aiTxt = aiTxtResult.html;
+		}
+	} catch {
+		// No ai.txt
+	}
+
 	// Step 4: Discover URLs (returns cached pages from BFS crawl)
 	// Cap maxPages based on time budget when crawl delay is active
 	let effectiveMaxPages = mergedConfig.maxPages;
@@ -66,7 +77,7 @@ export async function scanUrl(
 		const maxBatches = Math.floor(SCAN_TIME_BUDGET_MS / batchTime);
 		effectiveMaxPages = Math.min(effectiveMaxPages, Math.max(maxBatches * pagesPerBatch, 10));
 	}
-	const { urls, cachedPages } = await discoverUrls(url, scanFetcher, effectiveMaxPages);
+	const { urls, cachedPages, sitemapLastmods } = await discoverUrls(url, scanFetcher, effectiveMaxPages);
 
 	// Step 5: Fetch remaining pages concurrently (skip already-cached ones)
 	const pages: ScannedPage[] = [...cachedPages.values()];
@@ -121,6 +132,8 @@ export async function scanUrl(
 		existingLlmsTxt,
 		platform,
 		responseTimeMs: totalResponseTime,
+		aiTxt,
+		sitemapLastmods,
 	};
 
 	return { pages, meta };
