@@ -159,16 +159,19 @@ Plans:
 - [x] 15-03-PLAN.md — CLI pillar-grouped output + --pillar filter flag
 
 ### Phase 16: Per-Page Scoring
-**Goal**: Add per-page scoring (0-75 scale) for the 21 page-level criteria. Dashboard shows per-page breakdown, CLI supports --page flag, API returns per-page scores.
+**Goal**: Add per-page scoring (0-75 scale) for the 25 page-level criteria. Dashboard shows per-page breakdown, CLI supports --page flag, API returns per-page scores.
 **Depends on**: Phase 15
 **Requirements**: PAGE-01, PAGE-02, PAGE-03, PAGE-04
 **Success Criteria** (what must be TRUE):
-  1. `scorePerPage()` returns 0-75 score for each scanned page using 21 page-level criteria
-  2. Dashboard site detail page shows expandable per-page score table
+  1. `scorePerPage()` returns 0-75 score for each scanned page using 25 page-level criteria
+  2. Dashboard site detail page shows expandable per-page score table with dimension breakdown
   3. `aeorank scan <url> --page /about` outputs score for a single page
   4. API scan result JSON includes `pages[]` array with per-page dimension scores
   5. All existing + new tests pass
-**Plans**: TBD
+**Plans:** 2 plans
+Plans:
+- [ ] 16-01-PLAN.md — Core scoring 0-75 scale + export PAGE_LEVEL_DIMENSIONS + tests
+- [ ] 16-02-PLAN.md — CLI --page flag + Dashboard expandable per-page dimensions
 
 ## Progress
 
@@ -189,4 +192,4 @@ Plans:
 | 13. Weight Migration | v2.0 | 2/2 | Complete    | 2026-03-28 |
 | 14. New File Generators | v2.0 | 1/1 | Complete    | 2026-03-28 |
 | 15. Dashboard & Docs | v2.0 | 3/3 | Complete    | 2026-03-28 |
-| 16. Per-Page Scoring | v2.0 | 0/? | Not Started | — |
+| 16. Per-Page Scoring | v2.0 | 0/2 | Planning    | -- |
