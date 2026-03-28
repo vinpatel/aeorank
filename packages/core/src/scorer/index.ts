@@ -60,6 +60,8 @@ const PAGE_LEVEL_DIMENSIONS = [
 	"semantic-html",
 	"extraction-friction",
 	"image-context",
+	"schema-coverage",
+	"speakable-schema",
 ];
 
 /** Score each page individually across page-level dimensions */
