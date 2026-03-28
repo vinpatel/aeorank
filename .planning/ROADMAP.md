@@ -30,7 +30,7 @@ Expands scoring from 12 dimensions to 36 criteria across 5 pillars, matching AEO
 
 - [ ] **Phase 8: Answer Readiness** — +7 dimensions (topic coherence, original data, fact density, duplicate content, evidence packaging, citation-ready writing)
 - [x] **Phase 9: Content Structure Expansion** — +6 dimensions (Q&A format, direct answer density, tables & lists, definition patterns, entity disambiguation) (completed 2026-03-28)
-- [ ] **Phase 10: Trust & Authority Expansion** — +2 dimensions (internal linking, author schema)
+- [x] **Phase 10: Trust & Authority Expansion** — +2 dimensions (internal linking, author schema) (completed 2026-03-28)
 - [ ] **Phase 11: Technical Foundation Expansion** — +5 dimensions (semantic HTML, extraction friction, image context, schema coverage, speakable)
 - [ ] **Phase 12: AI Discovery Expansion** — +6 dimensions (content cannibalization, publishing velocity, content licensing, canonical URLs, RSS feed, visible dates)
 - [ ] **Phase 13: Weight Migration & Score Gates** — Migrate to percentage weights, merge overlapping dimensions, add coherence + duplication gates
@@ -79,9 +79,9 @@ Plans:
   2. A site with rich internal linking and author schema scores higher than one without
   3. All existing + new tests pass with zero failures
   4. Determinism test passes for both new dimensions
-**Plans:** 1 plan
+**Plans:** 1/1 plans complete
 Plans:
-- [ ] 10-01-PLAN.md — Both scorers (internal-linking, author-schema) + determinism tests
+- [x] 10-01-PLAN.md — Both scorers (internal-linking, author-schema) + determinism tests
 
 ### Phase 11: Technical Foundation Expansion
 **Goal**: Add 5 Technical Foundation dimensions checking semantic HTML, extraction friction, image context, schema coverage on inner pages, and speakable markup. Parser detects semantic elements, measures sentence complexity, and checks image figure patterns.
@@ -168,7 +168,7 @@ Plans:
 | 7. Marketing Content | v1.0 | 2/2 | Complete | 2026-03-15 |
 | 8. Answer Readiness | v2.0 | 2/2 | Complete |  |
 | 9. Content Structure | v2.0 | 2/2 | Complete   | 2026-03-28 |
-| 10. Trust & Authority | v2.0 | 0/1 | Not Started | — |
+| 10. Trust & Authority | v2.0 | 1/1 | Complete   | 2026-03-28 |
 | 11. Technical Foundation | v2.0 | 0/? | Not Started | — |
 | 12. AI Discovery | v2.0 | 0/? | Not Started | — |
 | 13. Weight Migration | v2.0 | 0/? | Not Started | — |

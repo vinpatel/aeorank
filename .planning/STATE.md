@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: Competitive Parity
 status: verifying
-stopped_at: Completed 09-02-PLAN.md — 3 final Content Structure scorers added (tables-lists, definition-patterns, entity-disambiguation), DIMENSION_DEFS at 25 entries, all 180 tests passing
-last_updated: "2026-03-28T19:08:10.835Z"
+stopped_at: Completed 10-01-PLAN.md — internal-linking and author-schema scorers added, DIMENSION_DEFS at 27, all 527 tests passing
+last_updated: "2026-03-28T19:16:41.789Z"
 last_activity: 2026-03-28
 progress:
   total_phases: 9
-  completed_phases: 2
-  total_plans: 4
-  completed_plans: 4
+  completed_phases: 3
+  total_plans: 5
+  completed_plans: 5
 ---
 
 # Project State
@@ -20,12 +20,12 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-28)
 
 **Core value:** A developer runs `npx aeorank-cli scan <url>` with zero config and gets an AEO score plus all 8 generated files needed for AI visibility — in under 30 seconds.
-**Current focus:** Phase 09 — content-structure-expansion
+**Current focus:** Phase 10 — trust-authority-expansion
 
 ## Current Position
 
-Phase: 10
-Plan: Not started
+Phase: 10 (trust-authority-expansion) — EXECUTING
+Plan: 1 of 1
 Milestone: v2.0 Competitive Parity — Phases 8-16
 Status: Phase complete — ready for verification
 Last activity: 2026-03-28
@@ -75,6 +75,7 @@ Progress: [####################] (Phase 7 — 2/3 plans done)
 | Phase 08 P02 | 5min | 2 tasks | 7 files |
 | Phase 09 P01 | 5min | 2 tasks | 10 files |
 | Phase 09 P02 | 3min | 2 tasks | 7 files |
+| Phase 10 P01 | 6min | 2 tasks | 6 files |
 
 ## Phase 4 Deliverables
 
@@ -235,6 +236,9 @@ Recent decisions affecting current work:
 - [Phase 09]: DEFINITION_SENTENCE_PATTERNS uses specific anchors (is defined as, refers to, means/describes + the/a/an) to avoid matching generic sentences
 - [Phase 09]: scoreEntityDisambiguation tokenizes page title into entity terms (>= 4 chars, not stopwords), checks first paragraph and 3+ total bodyText occurrences
 - [Phase 09]: ENTITY_STOPWORDS excludes common English words and generic web terms to improve entity term extraction quality
+- [Phase 10-01]: scoreInternalLinking avgInternal thresholds: >=5+breadcrumbs=10, >=5=8, >=3=6, >=1=3, else=0
+- [Phase 10-01]: scoreAuthorSchema credential ladder: personSchema+credentials+sameAs=10, +credentials=6, person=3, none=0
+- [Phase 10-01]: Both new dimensions added to PAGE_LEVEL_DIMENSIONS (page-level: each page has own links + schema)
 
 ### Pending Todos
 
@@ -250,6 +254,6 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-03-28T19:05:09.491Z
-Stopped at: Completed 09-02-PLAN.md — 3 final Content Structure scorers added (tables-lists, definition-patterns, entity-disambiguation), DIMENSION_DEFS at 25 entries, all 180 tests passing
+Last session: 2026-03-28T19:16:41.786Z
+Stopped at: Completed 10-01-PLAN.md — internal-linking and author-schema scorers added, DIMENSION_DEFS at 27, all 527 tests passing
 Resume file: None
