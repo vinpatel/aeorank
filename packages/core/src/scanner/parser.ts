@@ -61,6 +61,11 @@ export function parsePage(url: string, html: string, baseUrl: string): ScannedPa
 	const sentences = extractSentences(paragraphs);
 	const contentHash = hashText(paragraphs.join("\n"));
 
+	// Extract question headings, table count, list count (BEFORE DOM mutation)
+	const questionHeadings = extractQuestionHeadings(headings);
+	const tableCount = countTables($);
+	const listCount = countLists($);
+
 	// Extract body text
 	// Remove script, style, nav, and footer for cleaner text
 	$("script, style, nav, footer, header").remove();
@@ -94,7 +99,26 @@ export function parsePage(url: string, html: string, baseUrl: string): ScannedPa
 		paragraphs,
 		sentences,
 		contentHash,
+		questionHeadings,
+		tableCount,
+		listCount,
 	};
+}
+
+const QUESTION_WORD_REGEX = /^(What|How|Why|When|Where|Who|Is|Are|Do|Does|Did|Can|Could|Should)\b/i;
+
+function extractQuestionHeadings(headings: { text: string; level: number; id: string | null }[]): { text: string; level: number }[] {
+	return headings
+		.filter((h) => QUESTION_WORD_REGEX.test(h.text) || h.text.includes("?"))
+		.map((h) => ({ text: h.text, level: h.level }));
+}
+
+function countTables($: cheerio.CheerioAPI): number {
+	return $("table").filter((_, el) => $(el).find("th, thead").length > 0).length;
+}
+
+function countLists($: cheerio.CheerioAPI): number {
+	return $("ol, ul").filter((_, el) => $(el).children("li").length >= 2).length;
 }
 
 function extractParagraphs($: cheerio.CheerioAPI): string[] {

@@ -36,6 +36,9 @@ function makePage(overrides: Partial<ScannedPage> = {}): ScannedPage {
 		paragraphs: [],
 		sentences: [],
 		contentHash: "00000000",
+		questionHeadings: [],
+		tableCount: 0,
+		listCount: 0,
 		...overrides,
 	};
 }

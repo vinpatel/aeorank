@@ -8,6 +8,48 @@ const fixturesDir = join(import.meta.dirname, "fixtures");
 const sampleHtml = readFileSync(join(fixturesDir, "sample-page.html"), "utf-8");
 const robotsTxtContent = readFileSync(join(fixturesDir, "robots.txt"), "utf-8");
 
+describe("parsePage question headings and table/list counts", () => {
+	it("extracts question headings starting with 'What'", () => {
+		const html = `<html><body><h2>What is AEO?</h2><p>AEO stands for Answer Engine Optimization.</p></body></html>`;
+		const page = parsePage("https://example.com", html, "https://example.com");
+		expect(page.questionHeadings).toHaveLength(1);
+		expect(page.questionHeadings[0]).toEqual({ text: "What is AEO?", level: 2 });
+	});
+
+	it("extracts question headings starting with 'How'", () => {
+		const html = `<html><body><h3>How do I start?</h3><p>Follow these steps to get started.</p></body></html>`;
+		const page = parsePage("https://example.com", html, "https://example.com");
+		expect(page.questionHeadings).toHaveLength(1);
+		expect(page.questionHeadings[0]).toEqual({ text: "How do I start?", level: 3 });
+	});
+
+	it("does not include non-question headings in questionHeadings", () => {
+		const html = `<html><body><h2>Getting Started</h2><p>This guide helps you get started.</p></body></html>`;
+		const page = parsePage("https://example.com", html, "https://example.com");
+		expect(page.questionHeadings).toHaveLength(0);
+	});
+
+	it("extracts headings containing question mark as question headings", () => {
+		const html = `<html><body><h2>Ready to Begin?</h2><p>Let us help you.</p></body></html>`;
+		const page = parsePage("https://example.com", html, "https://example.com");
+		expect(page.questionHeadings).toHaveLength(1);
+	});
+
+	it("counts tables with thead or th", () => {
+		const html = `<html><body><table><thead><tr><th>Name</th></tr></thead><tr><td>Value</td></tr></table><ul><li>Item 1</li><li>Item 2</li></ul></body></html>`;
+		const page = parsePage("https://example.com", html, "https://example.com");
+		expect(page.tableCount).toBe(1);
+		expect(page.listCount).toBe(1);
+	});
+
+	it("returns tableCount=0 and listCount=0 when no tables or lists", () => {
+		const html = `<html><body><p>No tables or lists here at all.</p></body></html>`;
+		const page = parsePage("https://example.com", html, "https://example.com");
+		expect(page.tableCount).toBe(0);
+		expect(page.listCount).toBe(0);
+	});
+});
+
 describe("parsePage", () => {
 	const page = parsePage("https://example.com/about", sampleHtml, "https://example.com");
 
