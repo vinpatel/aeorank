@@ -863,6 +863,138 @@ export function scoreCitationReadyWriting(pages: ScannedPage[], _meta: ScanMeta)
 	);
 }
 
+/** Dimension 20: Q&A Content Format (medium weight) */
+export function scoreQaFormat(pages: ScannedPage[], _meta: ScanMeta): DimensionScore {
+	if (pages.length === 0) {
+		return makeDimension(
+			"qa-format",
+			"Q&A Content Format",
+			0,
+			"medium",
+			"Use question-format headings (What, How, Why) to structure content for AI answer extraction",
+		);
+	}
+
+	let totalHeadings = 0;
+	let totalQuestionHeadings = 0;
+
+	for (const page of pages) {
+		totalHeadings += page.headings.length;
+		totalQuestionHeadings += page.questionHeadings.length;
+	}
+
+	if (totalHeadings === 0) {
+		return makeDimension(
+			"qa-format",
+			"Q&A Content Format",
+			0,
+			"medium",
+			"Use question-format headings (What, How, Why) to structure content for AI answer extraction",
+		);
+	}
+
+	const ratio = totalQuestionHeadings / totalHeadings;
+	let score: number;
+	if (ratio > 0.4) score = 10;
+	else if (ratio > 0.25) score = 7;
+	else if (ratio > 0.1) score = 4;
+	else if (ratio > 0) score = 2;
+	else score = 0;
+
+	return makeDimension(
+		"qa-format",
+		"Q&A Content Format",
+		score,
+		"medium",
+		score < 10
+			? "Use question-format headings (What, How, Why) to structure content for AI answer extraction"
+			: "Excellent Q&A content format with high question heading ratio",
+	);
+}
+
+/** Dimension 21: Direct Answer Density (medium weight) */
+export function scoreDirectAnswerDensity(pages: ScannedPage[], _meta: ScanMeta): DimensionScore {
+	const pagesWithQuestions = pages.filter((p) => p.questionHeadings.length > 0);
+
+	if (pagesWithQuestions.length === 0) {
+		return makeDimension(
+			"direct-answer-density",
+			"Direct Answer Density",
+			0,
+			"medium",
+			"Add concise answer paragraphs (40-300 chars) immediately after question headings",
+		);
+	}
+
+	let totalRatio = 0;
+
+	for (const page of pagesWithQuestions) {
+		if (page.paragraphs.length === 0) continue;
+		const directAnswerCount = page.paragraphs.filter(
+			(p) => p.length >= 40 && p.length <= 300 && /^[A-Z]/.test(p) && !p.endsWith("?"),
+		).length;
+		totalRatio += directAnswerCount / page.paragraphs.length;
+	}
+
+	const avgRatio = totalRatio / pagesWithQuestions.length;
+	let score: number;
+	if (avgRatio > 0.5) score = 10;
+	else if (avgRatio > 0.3) score = 7;
+	else if (avgRatio > 0.15) score = 4;
+	else if (avgRatio > 0) score = 2;
+	else score = 0;
+
+	return makeDimension(
+		"direct-answer-density",
+		"Direct Answer Density",
+		score,
+		"medium",
+		score < 10
+			? "Add concise answer paragraphs (40-300 chars) immediately after question headings"
+			: "Strong direct answer density with concise answer paragraphs",
+	);
+}
+
+/** Dimension 22: Query-Answer Alignment (low weight) */
+export function scoreQueryAnswerAlignment(pages: ScannedPage[], _meta: ScanMeta): DimensionScore {
+	const pagesWithQuestions = pages.filter((p) => p.questionHeadings.length > 0);
+
+	if (pagesWithQuestions.length === 0) {
+		return makeDimension(
+			"query-answer-alignment",
+			"Query-Answer Alignment",
+			0,
+			"low",
+			"Ensure every question heading is followed by a direct answer paragraph",
+		);
+	}
+
+	let alignedPages = 0;
+	for (const page of pagesWithQuestions) {
+		if (page.paragraphs.length >= page.questionHeadings.length) {
+			alignedPages++;
+		}
+	}
+
+	const ratio = alignedPages / pagesWithQuestions.length;
+	let score: number;
+	if (ratio > 0.7) score = 10;
+	else if (ratio > 0.5) score = 7;
+	else if (ratio > 0.3) score = 4;
+	else if (ratio > 0) score = 2;
+	else score = 0;
+
+	return makeDimension(
+		"query-answer-alignment",
+		"Query-Answer Alignment",
+		score,
+		"low",
+		score < 10
+			? "Ensure every question heading is followed by a direct answer paragraph"
+			: "Strong query-answer alignment across all pages",
+	);
+}
+
 /** Registry mapping dimension IDs to scorer functions */
 export const DIMENSION_SCORERS: Record<string, DimensionScorer> = {
 	"llms-txt": scoreLlmsTxt,
@@ -884,6 +1016,9 @@ export const DIMENSION_SCORERS: Record<string, DimensionScorer> = {
 	"cross-page-duplication": scoreCrossPageDuplication,
 	"evidence-packaging": scoreEvidencePackaging,
 	"citation-ready-writing": scoreCitationReadyWriting,
+	"qa-format": scoreQaFormat,
+	"direct-answer-density": scoreDirectAnswerDensity,
+	"query-answer-alignment": scoreQueryAnswerAlignment,
 };
 
 function makeDimension(

@@ -49,6 +49,9 @@ const PAGE_LEVEL_DIMENSIONS = [
 	"duplicate-content",
 	"evidence-packaging",
 	"citation-ready-writing",
+	"qa-format",
+	"direct-answer-density",
+	"query-answer-alignment",
 ];
 
 /** Score each page individually across page-level dimensions */

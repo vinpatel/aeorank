@@ -30,10 +30,21 @@ function makePage(overrides: Partial<ScannedPage> = {}): ScannedPage {
 		wordCount: 200,
 		hasDatePublished: true,
 		authorName: "Jane Smith",
-		paragraphs: [],
-		sentences: [],
+		paragraphs: [
+			"AEO is Answer Engine Optimization for AI readability.",
+			"It improves citation rates for websites significantly.",
+			"Most sites see measurable improvements within weeks.",
+		],
+		sentences: [
+			"AEO is Answer Engine Optimization for AI readability.",
+			"It improves citation rates for websites significantly.",
+			"Most sites see measurable improvements within weeks.",
+		],
 		contentHash: "00000000",
-		questionHeadings: [],
+		questionHeadings: [
+			{ text: "What is AEO?", level: 2 },
+			{ text: "How does it work?", level: 2 },
+		],
 		tableCount: 0,
 		listCount: 0,
 		...overrides,
@@ -77,7 +88,7 @@ describe("calculateAeoScore", () => {
 		const pages = [makePage(), makePage({ url: "https://example.com/about" })];
 		const result = calculateAeoScore(pages, makePerfectMeta());
 		expect(result.score).toBeGreaterThanOrEqual(70);
-		expect(result.dimensions).toHaveLength(19);
+		expect(result.dimensions).toHaveLength(22);
 		expect(result.grade).toMatch(/^[A-F][+]?$/);
 	});
 
@@ -99,7 +110,7 @@ describe("calculateAeoScore", () => {
 
 	it("returns exactly 19 dimensions", () => {
 		const result = calculateAeoScore([makePage()], makePerfectMeta());
-		expect(result.dimensions).toHaveLength(19);
+		expect(result.dimensions).toHaveLength(22);
 
 		const ids = result.dimensions.map((d) => d.id);
 		expect(ids).toContain("llms-txt");

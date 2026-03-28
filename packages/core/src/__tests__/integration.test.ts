@@ -59,7 +59,7 @@ describe("scan() full pipeline", () => {
 			createMockFetcher(defaultResponses),
 		);
 
-		expect(result.dimensions).toHaveLength(19);
+		expect(result.dimensions).toHaveLength(22);
 		for (const dim of result.dimensions) {
 			expect(dim.score).toBeGreaterThanOrEqual(0);
 			expect(dim.score).toBeLessThanOrEqual(dim.maxScore);
