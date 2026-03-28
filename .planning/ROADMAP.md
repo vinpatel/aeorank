@@ -31,7 +31,7 @@ Expands scoring from 12 dimensions to 36 criteria across 5 pillars, matching AEO
 - [ ] **Phase 8: Answer Readiness** — +7 dimensions (topic coherence, original data, fact density, duplicate content, evidence packaging, citation-ready writing)
 - [x] **Phase 9: Content Structure Expansion** — +6 dimensions (Q&A format, direct answer density, tables & lists, definition patterns, entity disambiguation) (completed 2026-03-28)
 - [x] **Phase 10: Trust & Authority Expansion** — +2 dimensions (internal linking, author schema) (completed 2026-03-28)
-- [ ] **Phase 11: Technical Foundation Expansion** — +5 dimensions (semantic HTML, extraction friction, image context, schema coverage, speakable)
+- [x] **Phase 11: Technical Foundation Expansion** — +5 dimensions (semantic HTML, extraction friction, image context, schema coverage, speakable) (completed 2026-03-28)
 - [ ] **Phase 12: AI Discovery Expansion** — +6 dimensions (content cannibalization, publishing velocity, content licensing, canonical URLs, RSS feed, visible dates)
 - [ ] **Phase 13: Weight Migration & Score Gates** — Migrate to percentage weights, merge overlapping dimensions, add coherence + duplication gates
 - [ ] **Phase 14: New File Generators** — ai.txt generator, llms-full.txt improvements, plugin updates
@@ -93,10 +93,10 @@ Plans:
   3. A well-structured HTML5 site scores higher on semantic-html than a div-soup site
   4. All existing + new tests pass with zero failures
   5. Determinism test passes for all 5 new dimensions
-**Plans:** 1/2 plans executed
+**Plans:** 2/2 plans complete
 Plans:
 - [x] 11-01-PLAN.md — Parser extensions (semantic elements, image context, sentence metrics) + first 3 scorers (semantic-html, extraction-friction, image-context)
-- [ ] 11-02-PLAN.md — Last 2 scorers (schema-coverage, speakable-schema) + determinism tests for all 32 dimensions
+- [x] 11-02-PLAN.md — Last 2 scorers (schema-coverage, speakable-schema) + determinism tests for all 32 dimensions
 
 ### Phase 12: AI Discovery Expansion
 **Goal**: Add 6 AI Discovery dimensions checking content cannibalization, publishing velocity, content licensing, canonical URLs, RSS feeds, and visible dates. Parser extracts canonical tags, RSS link tags, time elements, and ai.txt.
@@ -172,7 +172,7 @@ Plans:
 | 8. Answer Readiness | v2.0 | 2/2 | Complete |  |
 | 9. Content Structure | v2.0 | 2/2 | Complete   | 2026-03-28 |
 | 10. Trust & Authority | v2.0 | 1/1 | Complete    | 2026-03-28 |
-| 11. Technical Foundation | v2.0 | 1/2 | In Progress|  |
+| 11. Technical Foundation | v2.0 | 2/2 | Complete   | 2026-03-28 |
 | 12. AI Discovery | v2.0 | 0/? | Not Started | — |
 | 13. Weight Migration | v2.0 | 0/? | Not Started | — |
 | 14. New File Generators | v2.0 | 0/? | Not Started | — |
