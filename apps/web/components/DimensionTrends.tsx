@@ -13,7 +13,7 @@ import {
 interface DimensionHistory {
 	id: string;
 	name: string;
-	weight: "high" | "medium" | "low";
+	weightPct: number;
 }
 
 type TrendDataPoint = Record<string, string | number>;

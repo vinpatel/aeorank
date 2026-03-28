@@ -6,7 +6,7 @@ interface DimensionScore {
 	name: string;
 	score: number;
 	maxScore: number;
-	weight: "high" | "medium" | "low";
+	weightPct: number;
 	status: "pass" | "warn" | "fail";
 	hint: string;
 }
@@ -67,7 +67,7 @@ export async function GET(
 		<tr>
 			<td style="padding:8px 12px;font-weight:500">${d.name}</td>
 			<td style="padding:8px 12px;text-align:center;font-weight:600;color:${scoreColor((d.score / d.maxScore) * 100)}">${d.score}/${d.maxScore}</td>
-			<td style="padding:8px 12px;text-align:center"><span style="padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;background:${d.weight === "high" ? "#fef2f2" : d.weight === "medium" ? "#fffbeb" : "#f0fdf4"};color:${d.weight === "high" ? "#dc2626" : d.weight === "medium" ? "#d97706" : "#16a34a"}">${d.weight.charAt(0).toUpperCase() + d.weight.slice(1)}</span></td>
+			<td style="padding:8px 12px;text-align:center"><span style="padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;background:${d.weightPct >= 5 ? "#fef2f2" : d.weightPct >= 3 ? "#fffbeb" : "#f0fdf4"};color:${d.weightPct >= 5 ? "#dc2626" : d.weightPct >= 3 ? "#d97706" : "#16a34a"}">${d.weightPct}%</span></td>
 			<td style="padding:8px 12px;color:#6b7280;font-size:13px">${d.status !== "pass" ? d.hint : "Passing"}</td>
 		</tr>`,
 		)

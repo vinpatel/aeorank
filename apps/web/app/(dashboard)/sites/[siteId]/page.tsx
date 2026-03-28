@@ -98,7 +98,7 @@ export default async function SiteDetailPage({ params }: PageProps) {
 		? (scan.dimensions as DimensionScore[]).map((d) => ({
 				id: d.id,
 				name: d.name,
-				weight: d.weight,
+				weightPct: d.weightPct,
 			}))
 		: [];
 

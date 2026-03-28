@@ -7,7 +7,7 @@ interface DimScore {
 	name: string;
 	score: number;
 	maxScore: number;
-	weight: "high" | "medium" | "low";
+	weightPct: number;
 	status: "pass" | "warn" | "fail";
 }
 

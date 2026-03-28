@@ -1,18 +1,6 @@
 import type { DimensionScore, ScanResult } from "@aeorank/core";
 import chalk from "chalk";
 
-const WEIGHT_PRIORITY: Record<string, number> = {
-	high: 3,
-	medium: 2,
-	low: 1,
-};
-
-const WEIGHT_LABEL: Record<string, string> = {
-	high: "HIGH",
-	medium: "MEDIUM",
-	low: "LOW",
-};
-
 const STATUS_ICON: Record<string, string> = {
 	pass: chalk.green("✓"),
 	warn: chalk.yellow("⚠"),
@@ -42,9 +30,9 @@ export function renderScore(result: ScanResult): string {
 
 /** Render the dimension breakdown table */
 export function renderDimensionTable(dimensions: DimensionScore[]): string {
-	// Sort: weight priority descending, then score ascending (worst first within group)
+	// Sort: weightPct descending, then score ascending (worst first within group)
 	const sorted = [...dimensions].sort((a, b) => {
-		const wDiff = WEIGHT_PRIORITY[b.weight] - WEIGHT_PRIORITY[a.weight];
+		const wDiff = b.weightPct - a.weightPct;
 		if (wDiff !== 0) return wDiff;
 		return a.score - b.score;
 	});
@@ -55,7 +43,7 @@ export function renderDimensionTable(dimensions: DimensionScore[]): string {
 		const icon = STATUS_ICON[dim.status];
 		const name = dim.name.padEnd(25);
 		const score = `${dim.score}/${dim.maxScore}`.padEnd(6);
-		const weight = chalk.dim(`[${WEIGHT_LABEL[dim.weight]}]`.padEnd(10));
+		const weight = chalk.dim(`[${dim.weightPct}%]`.padEnd(8));
 		const hint = dim.status !== "pass" ? chalk.dim(` — ${dim.hint}`) : "";
 
 		lines.push(`  ${icon} ${name} ${score} ${weight}${hint}`);
@@ -73,9 +61,9 @@ export function renderNextSteps(dimensions: DimensionScore[]): string {
 		return `\n  ${chalk.green.bold("All dimensions passing!")} Your site has excellent AEO coverage.\n`;
 	}
 
-	// Sort: weight priority descending, then score ascending
+	// Sort: weightPct descending, then score ascending
 	const sorted = [...failing].sort((a, b) => {
-		const wDiff = WEIGHT_PRIORITY[b.weight] - WEIGHT_PRIORITY[a.weight];
+		const wDiff = b.weightPct - a.weightPct;
 		if (wDiff !== 0) return wDiff;
 		return a.score - b.score;
 	});
@@ -86,9 +74,8 @@ export function renderNextSteps(dimensions: DimensionScore[]): string {
 
 	for (let i = 0; i < top.length; i++) {
 		const dim = top[i];
-		const label = WEIGHT_LABEL[dim.weight];
-		const color = label === "HIGH" ? chalk.red : label === "MEDIUM" ? chalk.yellow : chalk.dim;
-		lines.push(`  ${i + 1}. ${color(`[${label}]`)} ${dim.hint}`);
+		const color = dim.weightPct >= 5 ? chalk.red : dim.weightPct >= 3 ? chalk.yellow : chalk.dim;
+		lines.push(`  ${i + 1}. ${color(`[${dim.weightPct}%]`)} ${dim.hint}`);
 	}
 
 	lines.push("");
