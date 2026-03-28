@@ -22,8 +22,21 @@ function makePage(overrides: Partial<ScannedPage> = {}): ScannedPage {
 			},
 			{ "@type": "Article", author: { name: "Jane" } },
 			{ "@type": "BreadcrumbList" },
+			{
+				"@type": "Person",
+				name: "Jane Smith",
+				jobTitle: "Data Scientist",
+				sameAs: ["https://twitter.com/janesmith", "https://linkedin.com/in/janesmith"],
+			},
 		],
-		links: [],
+		links: [
+			{ href: "/about", text: "About", internal: true },
+			{ href: "/blog", text: "Blog", internal: true },
+			{ href: "/contact", text: "Contact", internal: true },
+			{ href: "/pricing", text: "Pricing", internal: true },
+			{ href: "/docs", text: "Docs", internal: true },
+			{ href: "/faq", text: "FAQ", internal: true },
+		],
 		canonical: "https://example.com",
 		robotsMeta: "index, follow",
 		language: "en",
@@ -88,7 +101,7 @@ describe("calculateAeoScore", () => {
 		const pages = [makePage(), makePage({ url: "https://example.com/about" })];
 		const result = calculateAeoScore(pages, makePerfectMeta());
 		expect(result.score).toBeGreaterThanOrEqual(70);
-		expect(result.dimensions).toHaveLength(25);
+		expect(result.dimensions).toHaveLength(27);
 		expect(result.grade).toMatch(/^[A-F][+]?$/);
 	});
 
@@ -108,9 +121,9 @@ describe("calculateAeoScore", () => {
 		expect(result.grade).toBe("F");
 	});
 
-	it("returns exactly 25 dimensions", () => {
+	it("returns exactly 27 dimensions", () => {
 		const result = calculateAeoScore([makePage()], makePerfectMeta());
-		expect(result.dimensions).toHaveLength(25);
+		expect(result.dimensions).toHaveLength(27);
 
 		const ids = result.dimensions.map((d) => d.id);
 		expect(ids).toContain("llms-txt");
