@@ -5,6 +5,7 @@ import {
 	scoreCitationReadyWriting,
 	scoreContentStructure,
 	scoreCrossPageDuplication,
+	scoreDirectAnswerDensity,
 	scoreDuplicateContent,
 	scoreEeatSignals,
 	scoreEvidencePackaging,
@@ -13,6 +14,8 @@ import {
 	scoreLlmsTxt,
 	scoreMetaDescriptions,
 	scoreOriginalData,
+	scoreQaFormat,
+	scoreQueryAnswerAlignment,
 	scoreSchemaMarkup,
 	scoreTopicCoherence,
 } from "../scorer/dimensions.js";
@@ -639,5 +642,135 @@ describe("scoreCitationReadyWriting", () => {
 		const result = scoreCitationReadyWriting([page], makeMeta());
 		expect(result.score).toBeGreaterThan(0);
 		expect(result.score).toBeLessThan(10);
+	});
+});
+
+describe("scoreQaFormat", () => {
+	it("returns 0 for empty pages array", () => {
+		const result = scoreQaFormat([], makeMeta());
+		expect(result.score).toBe(0);
+	});
+
+	it("returns 0 for pages with no question headings", () => {
+		const page = makePage({
+			headings: [
+				{ level: 1, text: "Getting Started", id: null },
+				{ level: 2, text: "Overview", id: null },
+			],
+			questionHeadings: [],
+		});
+		const result = scoreQaFormat([page], makeMeta());
+		expect(result.score).toBe(0);
+	});
+
+	it("returns >= 8 for pages with high ratio of question headings", () => {
+		const page = makePage({
+			headings: [
+				{ level: 1, text: "FAQ Page", id: null },
+				{ level: 2, text: "What is AEO?", id: null },
+				{ level: 2, text: "How does it work?", id: null },
+				{ level: 2, text: "Why is it important?", id: null },
+				{ level: 2, text: "When should I start?", id: null },
+				{ level: 2, text: "Who benefits most?", id: null },
+			],
+			questionHeadings: [
+				{ text: "What is AEO?", level: 2 },
+				{ text: "How does it work?", level: 2 },
+				{ text: "Why is it important?", level: 2 },
+				{ text: "When should I start?", level: 2 },
+				{ text: "Who benefits most?", level: 2 },
+			],
+		});
+		const result = scoreQaFormat([page], makeMeta());
+		expect(result.score).toBeGreaterThanOrEqual(8);
+	});
+
+	it("has id 'qa-format' and weight 'medium'", () => {
+		const result = scoreQaFormat([makePage()], makeMeta());
+		expect(result.id).toBe("qa-format");
+		expect(result.weight).toBe("medium");
+	});
+});
+
+describe("scoreDirectAnswerDensity", () => {
+	it("returns 0 for empty pages array", () => {
+		const result = scoreDirectAnswerDensity([], makeMeta());
+		expect(result.score).toBe(0);
+	});
+
+	it("returns 0 for pages with no question headings", () => {
+		const page = makePage({
+			questionHeadings: [],
+			paragraphs: ["This is a paragraph.", "Another paragraph here with content."],
+		});
+		const result = scoreDirectAnswerDensity([page], makeMeta());
+		expect(result.score).toBe(0);
+	});
+
+	it("returns >= 8 for pages with question headings and high direct-answer paragraph ratio", () => {
+		const page = makePage({
+			questionHeadings: [{ text: "What is AEO?", level: 2 }],
+			paragraphs: [
+				"AEO is Answer Engine Optimization for AI readability.",
+				"It improves AI citation rates significantly.",
+				"Most sites see measurable improvements quickly.",
+			],
+		});
+		const result = scoreDirectAnswerDensity([page], makeMeta());
+		expect(result.score).toBeGreaterThanOrEqual(8);
+	});
+
+	it("has id 'direct-answer-density' and weight 'medium'", () => {
+		const result = scoreDirectAnswerDensity([makePage()], makeMeta());
+		expect(result.id).toBe("direct-answer-density");
+		expect(result.weight).toBe("medium");
+	});
+});
+
+describe("scoreQueryAnswerAlignment", () => {
+	it("returns 0 for empty pages array", () => {
+		const result = scoreQueryAnswerAlignment([], makeMeta());
+		expect(result.score).toBe(0);
+	});
+
+	it("returns 0 for pages where question headings exceed paragraphs", () => {
+		const page = makePage({
+			questionHeadings: [
+				{ text: "What is AEO?", level: 2 },
+				{ text: "How does it work?", level: 2 },
+				{ text: "Why use it?", level: 2 },
+			],
+			paragraphs: [],
+		});
+		const result = scoreQueryAnswerAlignment([page], makeMeta());
+		expect(result.score).toBe(0);
+	});
+
+	it("returns >= 8 for pages where paragraphs >= questionHeadings count", () => {
+		const page = makePage({
+			questionHeadings: [
+				{ text: "What is AEO?", level: 2 },
+				{ text: "How does it work?", level: 2 },
+			],
+			paragraphs: [
+				"AEO stands for Answer Engine Optimization for websites.",
+				"It works by structuring content for AI extraction engines.",
+				"This ensures better citation rates in AI-generated answers.",
+			],
+		});
+		const result = scoreQueryAnswerAlignment([page], makeMeta());
+		expect(result.score).toBeGreaterThanOrEqual(8);
+	});
+
+	it("returns 0 when no pages have question headings", () => {
+		const page = makePage({ questionHeadings: [], paragraphs: ["Some content here."] });
+		const result = scoreQueryAnswerAlignment([page], makeMeta());
+		expect(result.score).toBe(0);
+	});
+
+	it("has id 'query-answer-alignment' and weight 'low'", () => {
+		const result = scoreQueryAnswerAlignment([makePage()], makeMeta());
+		expect(result.id).toBe("query-answer-alignment");
+		expect(result.weight).toBe("low");
 	});
 });

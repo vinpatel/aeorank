@@ -58,10 +58,10 @@ describe("determinism", () => {
 			status: d.status,
 		}));
 
-		// All 19 dimensions should be present
-		expect(results[0].dimensions).toHaveLength(19);
+		// All 22 dimensions should be present
+		expect(results[0].dimensions).toHaveLength(22);
 
-		// All 7 new Answer Readiness dimensions should appear in results
+		// All new dimensions should appear in results
 		const newDimIds = [
 			"topic-coherence",
 			"original-data",
@@ -70,6 +70,9 @@ describe("determinism", () => {
 			"cross-page-duplication",
 			"evidence-packaging",
 			"citation-ready-writing",
+			"qa-format",
+			"direct-answer-density",
+			"query-answer-alignment",
 		];
 		for (const id of newDimIds) {
 			const dim = results[0].dimensions.find((d) => d.id === id);
