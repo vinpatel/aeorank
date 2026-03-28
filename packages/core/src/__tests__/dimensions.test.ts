@@ -1,7 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
 	scoreAiCrawlerAccess,
-	scoreAuthorSchema,
 	scoreCanonicalUrls,
 	scoreCitationAnchors,
 	scoreCitationReadyWriting,
@@ -30,7 +29,6 @@ import {
 	scoreSchemaMarkup,
 	scoreSchemaCoverage,
 	scoreSemanticHtml,
-	scoreSpeakableSchema,
 	scoreTablesLists,
 	scoreTopicCoherence,
 	scoreVisibleDates,
@@ -238,7 +236,7 @@ describe("scoreFaqSpeakable", () => {
 		expect(result.score).toBe(3);
 	});
 
-	it("returns 10 for FAQPage schema with 3+ Q&As", () => {
+	it("returns 8 for FAQPage schema with 3+ Q&As (no speakable)", () => {
 		const page = makePage({
 			schemaOrg: [
 				{
@@ -252,7 +250,38 @@ describe("scoreFaqSpeakable", () => {
 			],
 		});
 		const result = scoreFaqSpeakable([page], makeMeta());
+		expect(result.score).toBe(8);
+	});
+
+	it("returns 10 for FAQPage schema with 3+ Q&As and SpeakableSpecification", () => {
+		const page = makePage({
+			schemaOrg: [
+				{
+					"@context": "https://schema.org",
+					"@graph": [
+						{
+							"@type": "FAQPage",
+							mainEntity: [
+								{ "@type": "Question", name: "Q1" },
+								{ "@type": "Question", name: "Q2" },
+								{ "@type": "Question", name: "Q3" },
+							],
+						},
+						{ "@type": "SpeakableSpecification", cssSelector: [".article-body"] },
+					],
+				},
+			],
+		});
+		const result = scoreFaqSpeakable([page], makeMeta());
 		expect(result.score).toBe(10);
+	});
+
+	it("returns 4 for SpeakableSpecification alone (no FAQ schema)", () => {
+		const page = makePage({
+			schemaOrg: [{ "@type": "SpeakableSpecification", cssSelector: [".body"] }],
+		});
+		const result = scoreFaqSpeakable([page], makeMeta());
+		expect(result.score).toBe(4);
 	});
 });
 
@@ -262,13 +291,64 @@ describe("scoreEeatSignals", () => {
 		expect(result.score).toBe(0);
 	});
 
-	it("returns 10 with author + dates + about page", () => {
+	it("returns 7 with author + dates + about page (content signals only)", () => {
 		const pages = [
 			makePage({ authorName: "Jane", hasDatePublished: true }),
 			makePage({ url: "https://example.com/about" }),
 		];
 		const result = scoreEeatSignals(pages, makeMeta());
+		expect(result.score).toBe(7);
+	});
+
+	it("returns 10 with Article+author schema and Person schema with credentials+sameAs", () => {
+		const page = makePage({
+			authorName: "Dr. Jane Smith",
+			hasDatePublished: true,
+			schemaOrg: [
+				{
+					"@context": "https://schema.org",
+					"@graph": [
+						{
+							"@type": "Article",
+							headline: "AEO Guide",
+							author: { "@type": "Person", name: "Dr. Jane Smith" },
+						},
+						{
+							"@type": "Person",
+							name: "Dr. Jane Smith",
+							jobTitle: "Data Scientist",
+							sameAs: ["https://twitter.com/janesmith", "https://linkedin.com/in/janesmith"],
+						},
+					],
+				},
+			],
+		});
+		const result = scoreEeatSignals([page], makeMeta());
 		expect(result.score).toBe(10);
+	});
+
+	it("returns 8 with Article+author schema and Person schema (no credentials)", () => {
+		const page = makePage({
+			schemaOrg: [
+				{
+					"@type": "Article",
+					headline: "Guide",
+					author: { "@type": "Person", name: "Jane Smith" },
+				},
+				{
+					"@type": "Person",
+					name: "Jane Smith",
+				},
+			],
+		});
+		const result = scoreEeatSignals([page], makeMeta());
+		expect(result.score).toBe(8);
+	});
+
+	it("has id 'eeat-signals' and weightPct 6", () => {
+		const result = scoreEeatSignals([makePage()], makeMeta());
+		expect(result.id).toBe("eeat-signals");
+		expect(result.weightPct).toBe(6);
 	});
 });
 
@@ -1009,87 +1089,6 @@ describe("scoreInternalLinking", () => {
 	});
 });
 
-describe("scoreAuthorSchema", () => {
-	it("returns 0 for empty pages array", () => {
-		const result = scoreAuthorSchema([], makeMeta());
-		expect(result.score).toBe(0);
-		expect(result.hint).toContain("Person schema");
-	});
-
-	it("returns 0 when pages have no Person schema", () => {
-		const page = makePage({
-			schemaOrg: [{ "@type": "Organization", name: "Acme" }],
-		});
-		const result = scoreAuthorSchema([page], makeMeta());
-		expect(result.score).toBe(0);
-	});
-
-	it("returns 3 when pages have Person schema but no jobTitle/credentials", () => {
-		const page = makePage({
-			schemaOrg: [{ "@type": "Person", name: "Jane Smith" }],
-		});
-		const result = scoreAuthorSchema([page], makeMeta());
-		expect(result.score).toBe(3);
-	});
-
-	it("returns 6 when pages have Person schema + jobTitle", () => {
-		const page = makePage({
-			schemaOrg: [{ "@type": "Person", name: "Jane Smith", jobTitle: "Data Scientist" }],
-		});
-		const result = scoreAuthorSchema([page], makeMeta());
-		expect(result.score).toBe(6);
-	});
-
-	it("returns 6 when pages have Person schema + hasCredential", () => {
-		const page = makePage({
-			schemaOrg: [{ "@type": "Person", name: "Jane Smith", hasCredential: "PhD in Computer Science" }],
-		});
-		const result = scoreAuthorSchema([page], makeMeta());
-		expect(result.score).toBe(6);
-	});
-
-	it("returns 10 when pages have Person schema + jobTitle + sameAs URLs", () => {
-		const page = makePage({
-			schemaOrg: [
-				{
-					"@type": "Person",
-					name: "Dr. Jane Smith",
-					jobTitle: "Data Scientist",
-					sameAs: ["https://twitter.com/janesmith", "https://linkedin.com/in/janesmith"],
-				},
-			],
-		});
-		const result = scoreAuthorSchema([page], makeMeta());
-		expect(result.score).toBe(10);
-	});
-
-	it("detects Person inside @graph array", () => {
-		const page = makePage({
-			schemaOrg: [
-				{
-					"@context": "https://schema.org",
-					"@graph": [
-						{
-							"@type": "Person",
-							name: "Dr. Jane Smith",
-							jobTitle: "Data Scientist",
-							sameAs: ["https://twitter.com/janesmith"],
-						},
-					],
-				},
-			],
-		});
-		const result = scoreAuthorSchema([page], makeMeta());
-		expect(result.score).toBe(10);
-	});
-
-	it("has id 'author-schema' and weightPct 2", () => {
-		const result = scoreAuthorSchema([makePage()], makeMeta());
-		expect(result.id).toBe("author-schema");
-		expect(result.weightPct).toBe(2);
-	});
-});
-
 describe("scoreSemanticHtml", () => {
 	it("returns 0 for empty pages array", () => {
 		const result = scoreSemanticHtml([], makeMeta());
@@ -1283,64 +1282,6 @@ describe("scoreSchemaCoverage", () => {
 		});
 		const result = scoreSchemaCoverage([page], makeMeta());
 		expect(result.score).toBe(5);
-	});
-});
-
-describe("scoreSpeakableSchema", () => {
-	it("returns score 0, weightPct 1, id 'speakable-schema' for empty pages array", () => {
-		const result = scoreSpeakableSchema([], makeMeta());
-		expect(result.score).toBe(0);
-		expect(result.id).toBe("speakable-schema");
-		expect(result.weightPct).toBe(1);
-	});
-
-	it("returns score 0 for pages with no SpeakableSpecification markup", () => {
-		const page = makePage({ schemaOrg: [{ "@type": "Article" }] });
-		const result = scoreSpeakableSchema([page], makeMeta());
-		expect(result.score).toBe(0);
-	});
-
-	it("returns score 10 for page with SpeakableSpecification @type", () => {
-		const page = makePage({ schemaOrg: [{ "@type": "SpeakableSpecification", cssSelector: [".body"] }] });
-		const result = scoreSpeakableSchema([page], makeMeta());
-		expect(result.score).toBe(10);
-	});
-
-	it("returns score 10 for page with speakable property containing SpeakableSpecification", () => {
-		const page = makePage({
-			schemaOrg: [{ "@type": "Article", speakable: { "@type": "SpeakableSpecification", cssSelector: [".body"] } }],
-		});
-		const result = scoreSpeakableSchema([page], makeMeta());
-		expect(result.score).toBe(10);
-	});
-
-	it("returns score 10 for SpeakableSpecification in @graph array", () => {
-		const page = makePage({
-			schemaOrg: [
-				{
-					"@context": "https://schema.org",
-					"@graph": [{ "@type": "SpeakableSpecification", cssSelector: [".article-body"] }],
-				},
-			],
-		});
-		const result = scoreSpeakableSchema([page], makeMeta());
-		expect(result.score).toBe(10);
-	});
-
-	it("returns score 3-5 for 1 page with speakable out of 5 (partial coverage)", () => {
-		const pages = [
-			makePage({
-				url: "https://example.com",
-				schemaOrg: [{ "@type": "SpeakableSpecification", cssSelector: [".body"] }],
-			}),
-			makePage({ url: "https://example.com/about", schemaOrg: [] }),
-			makePage({ url: "https://example.com/blog", schemaOrg: [] }),
-			makePage({ url: "https://example.com/pricing", schemaOrg: [] }),
-			makePage({ url: "https://example.com/faq", schemaOrg: [] }),
-		];
-		const result = scoreSpeakableSchema(pages, makeMeta());
-		expect(result.score).toBeGreaterThanOrEqual(2);
-		expect(result.score).toBeLessThanOrEqual(5);
 	});
 });
 

@@ -213,25 +213,41 @@ export function scoreAnswerFirst(pages: ScannedPage[], _meta: ScanMeta): Dimensi
 	);
 }
 
-/** Dimension 6: FAQ & Speakable (medium weight) */
+/** Dimension 6: FAQ & Speakable — absorbs speakable-schema scoring */
 export function scoreFaqSpeakable(pages: ScannedPage[], _meta: ScanMeta): DimensionScore {
 	let hasFaqSchema = false;
 	let faqQaPairs = 0;
 	let hasFaqContent = false;
+	let hasSpeakable = false;
 
 	const sortedPages = [...pages].sort((a, b) => a.url.localeCompare(b.url));
 
 	for (const page of sortedPages) {
 		// Check for FAQPage schema
-		for (const schema of page.schemaOrg) {
-			const s = schema as Record<string, unknown>;
-			if (s["@type"] === "FAQPage") {
+		const checkFaqSchema = (obj: Record<string, unknown>) => {
+			if (obj["@type"] === "FAQPage") {
 				hasFaqSchema = true;
-				const mainEntity = s.mainEntity;
+				const mainEntity = obj.mainEntity;
 				if (Array.isArray(mainEntity)) {
 					faqQaPairs += mainEntity.length;
 				}
 			}
+		};
+
+		for (const schema of page.schemaOrg) {
+			const s = schema as Record<string, unknown>;
+			checkFaqSchema(s);
+
+			// Detect SpeakableSpecification (absorbed from speakable-schema scorer)
+			if (s["@type"] === "SpeakableSpecification") hasSpeakable = true;
+			if (Array.isArray(s["@graph"])) {
+				for (const item of s["@graph"] as Record<string, unknown>[]) {
+					checkFaqSchema(item);
+					if (item["@type"] === "SpeakableSpecification") hasSpeakable = true;
+				}
+			}
+			const speakable = s["speakable"] as Record<string, unknown> | undefined;
+			if (speakable && speakable["@type"] === "SpeakableSpecification") hasSpeakable = true;
 		}
 
 		// Check for FAQ-like headings
@@ -240,8 +256,12 @@ export function scoreFaqSpeakable(pages: ScannedPage[], _meta: ScanMeta): Dimens
 	}
 
 	let score: number;
-	if (hasFaqSchema && faqQaPairs >= 3) score = 10;
+	if (hasFaqSchema && faqQaPairs >= 3 && hasSpeakable) score = 10;
+	else if (hasFaqSchema && faqQaPairs >= 3) score = 8;
+	else if (hasFaqSchema && hasSpeakable) score = 7;
 	else if (hasFaqSchema) score = 6;
+	else if (hasFaqContent && hasSpeakable) score = 5;
+	else if (hasSpeakable) score = 4;
 	else if (hasFaqContent) score = 3;
 	else score = 0;
 
@@ -251,8 +271,8 @@ export function scoreFaqSpeakable(pages: ScannedPage[], _meta: ScanMeta): Dimens
 		score,
 		5,
 		score < 10
-			? "Add FAQPage schema markup with 3+ question-answer pairs"
-			: "FAQ schema is well-implemented",
+			? "Add FAQPage schema markup with 3+ Q&A pairs and SpeakableSpecification markup"
+			: "Excellent FAQ & Speakable implementation",
 	);
 }
 
@@ -262,18 +282,70 @@ export function scoreEeatSignals(pages: ScannedPage[], _meta: ScanMeta): Dimensi
 	let hasAuthor = false;
 	let hasDates = false;
 	let hasAboutPage = false;
+	// Absorbed from author-schema: Person schema with credentials/sameAs
+	let hasPersonSchema = false;
+	let hasCredentials = false;
+	let hasSameAs = false;
 
 	for (const page of sortedPages) {
 		if (page.authorName) hasAuthor = true;
 		if (page.hasDatePublished) hasDates = true;
 		if (/\/about/i.test(page.url)) hasAboutPage = true;
+
+		// Person schema detection (absorbed from scoreAuthorSchema)
+		for (const schema of page.schemaOrg) {
+			const s = schema as Record<string, unknown>;
+
+			const checkPerson = (obj: Record<string, unknown>) => {
+				if (obj["@type"] !== "Person") return;
+				hasPersonSchema = true;
+				if (obj["jobTitle"] || obj["hasCredential"]) hasCredentials = true;
+				if (Array.isArray(obj["sameAs"]) && (obj["sameAs"] as unknown[]).length > 0)
+					hasSameAs = true;
+			};
+
+			checkPerson(s);
+			if (Array.isArray(s["@graph"])) {
+				for (const item of s["@graph"] as Record<string, unknown>[]) {
+					checkPerson(item);
+				}
+			}
+		}
 	}
 
+	// Check if page has Article+author markup (article schema with author field)
+	let hasArticleWithAuthor = false;
+	for (const page of sortedPages) {
+		for (const schema of page.schemaOrg) {
+			const s = schema as Record<string, unknown>;
+			const checkArticle = (obj: Record<string, unknown>) => {
+				if (
+					(obj["@type"] === "Article" ||
+						obj["@type"] === "BlogPosting" ||
+						obj["@type"] === "NewsArticle") &&
+					obj["author"]
+				) {
+					hasArticleWithAuthor = true;
+				}
+			};
+			checkArticle(s);
+			if (Array.isArray(s["@graph"])) {
+				for (const item of s["@graph"] as Record<string, unknown>[]) {
+					checkArticle(item);
+				}
+			}
+		}
+	}
+
+	const contentSignals = [hasAuthor, hasDates, hasAboutPage].filter(Boolean).length;
+
 	let score: number;
-	const signals = [hasAuthor, hasDates, hasAboutPage].filter(Boolean).length;
-	if (signals >= 3) score = 10;
-	else if (signals >= 2) score = 7;
-	else if (signals >= 1) score = 4;
+	if (hasArticleWithAuthor && hasPersonSchema && hasCredentials && hasSameAs) score = 10;
+	else if (hasArticleWithAuthor && hasPersonSchema && hasCredentials) score = 9;
+	else if (hasArticleWithAuthor && hasPersonSchema) score = 8;
+	else if (contentSignals >= 3) score = 7;
+	else if (contentSignals >= 2 || hasPersonSchema) score = 5;
+	else if (contentSignals >= 1) score = 3;
 	else score = 0;
 
 	return makeDimension(
@@ -282,8 +354,8 @@ export function scoreEeatSignals(pages: ScannedPage[], _meta: ScanMeta): Dimensi
 		score,
 		6,
 		score < 10
-			? "Add author names, publication dates, and an About page with credentials"
-			: "Strong E-E-A-T signals",
+			? "Add author names, publication dates, About page, and Person schema with credentials and sameAs links"
+			: "Strong E-E-A-T signals with Person schema and credentials",
 	);
 }
 
@@ -1213,60 +1285,6 @@ export function scoreInternalLinking(pages: ScannedPage[], _meta: ScanMeta): Dim
 	);
 }
 
-/** Dimension 27: Author & Expert Schema (low weight) */
-export function scoreAuthorSchema(pages: ScannedPage[], _meta: ScanMeta): DimensionScore {
-	if (pages.length === 0) {
-		return makeDimension(
-			"author-schema",
-			"Author & Expert Schema",
-			0,
-			2,
-			"Add Person schema with jobTitle/credentials and sameAs links to author profiles",
-		);
-	}
-
-	let hasPersonSchema = false;
-	let hasCredentials = false;
-	let hasSameAs = false;
-
-	for (const page of pages) {
-		for (const schema of page.schemaOrg) {
-			const s = schema as Record<string, unknown>;
-
-			const checkPerson = (obj: Record<string, unknown>) => {
-				if (obj["@type"] !== "Person") return;
-				hasPersonSchema = true;
-				if (obj["jobTitle"] || obj["hasCredential"]) hasCredentials = true;
-				if (Array.isArray(obj["sameAs"]) && (obj["sameAs"] as unknown[]).length > 0)
-					hasSameAs = true;
-			};
-
-			checkPerson(s);
-			if (Array.isArray(s["@graph"])) {
-				for (const item of s["@graph"] as Record<string, unknown>[]) {
-					checkPerson(item);
-				}
-			}
-		}
-	}
-
-	let score: number;
-	if (hasPersonSchema && hasCredentials && hasSameAs) score = 10;
-	else if (hasPersonSchema && hasCredentials) score = 6;
-	else if (hasPersonSchema) score = 3;
-	else score = 0;
-
-	return makeDimension(
-		"author-schema",
-		"Author & Expert Schema",
-		score,
-		2,
-		score < 10
-			? "Add Person schema with jobTitle/credentials and sameAs links to author profiles"
-			: "Strong author schema with credentials and authority links",
-	);
-}
-
 /** Dimension 28: Semantic HTML (low weight) */
 export function scoreSemanticHtml(pages: ScannedPage[], _meta: ScanMeta): DimensionScore {
 	const hint = "Use semantic HTML5 elements (main, article, nav, aside) and add lang attribute to html tag";
@@ -1457,52 +1475,6 @@ export function scoreSchemaCoverage(pages: ScannedPage[], _meta: ScanMeta): Dime
 	else score = 0;
 
 	return makeDimension("schema-coverage", "Schema Coverage", score, 1, hint);
-}
-
-/** Dimension 32: Speakable Schema (low weight) */
-export function scoreSpeakableSchema(pages: ScannedPage[], _meta: ScanMeta): DimensionScore {
-	const hint =
-		"Add SpeakableSpecification markup to indicate content suitable for text-to-speech and voice assistants";
-
-	if (pages.length === 0) {
-		return makeDimension("speakable-schema", "Speakable Schema", 0, 1, hint);
-	}
-
-	// Sort pages by URL for determinism
-	const sorted = [...pages].sort((a, b) => a.url.localeCompare(b.url));
-
-	function pageHasSpeakable(page: ScannedPage): boolean {
-		for (const schema of page.schemaOrg) {
-			const s = schema as Record<string, unknown>;
-
-			// Direct @type === "SpeakableSpecification"
-			if (s["@type"] === "SpeakableSpecification") return true;
-
-			// In @graph array
-			if (Array.isArray(s["@graph"])) {
-				for (const item of s["@graph"] as Record<string, unknown>[]) {
-					if (item["@type"] === "SpeakableSpecification") return true;
-				}
-			}
-
-			// As nested speakable property
-			const speakable = s["speakable"] as Record<string, unknown> | undefined;
-			if (speakable && speakable["@type"] === "SpeakableSpecification") return true;
-		}
-		return false;
-	}
-
-	const pagesWithSpeakable = sorted.filter(pageHasSpeakable).length;
-	const ratio = pagesWithSpeakable / sorted.length;
-
-	let score: number;
-	if (ratio >= 0.5) score = 10;
-	else if (ratio >= 0.3) score = 7;
-	else if (ratio >= 0.1) score = 4;
-	else if (ratio > 0) score = 2;
-	else score = 0;
-
-	return makeDimension("speakable-schema", "Speakable Schema", score, 1, hint);
 }
 
 /** Dimension 33: Content Cannibalization (low weight) */
@@ -1857,12 +1829,10 @@ export const DIMENSION_SCORERS: Record<string, DimensionScorer> = {
 	"definition-patterns": scoreDefinitionPatterns,
 	"entity-disambiguation": scoreEntityDisambiguation,
 	"internal-linking": scoreInternalLinking,
-	"author-schema": scoreAuthorSchema,
 	"semantic-html": scoreSemanticHtml,
 	"extraction-friction": scoreExtractionFriction,
 	"image-context": scoreImageContext,
 	"schema-coverage": scoreSchemaCoverage,
-	"speakable-schema": scoreSpeakableSchema,
 	"content-cannibalization": scoreContentCannibalization,
 	"publishing-velocity": scorePublishingVelocity,
 	"content-licensing": scoreContentLicensing,
