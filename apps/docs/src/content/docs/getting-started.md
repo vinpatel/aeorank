@@ -50,7 +50,7 @@ Citation Anchors        10    ✗ fail
 → 8 files written to ./aeo-output/
 ```
 
-Each dimension is scored 0-10 and weighted by importance. See [12 Dimensions](/scoring/dimensions/) for details on what each one measures.
+Each criterion is scored 0-10 and weighted by percentage importance. See [36 Criteria](/scoring/dimensions/) for details on what each one measures.
 
 ## Step 3: Check your generated files
 
@@ -84,7 +84,7 @@ Run the scan again after deploying to see your score improve.
 ## Next steps
 
 - [Configure AEOrank](/cli/configuration/) for your specific needs
-- [Understand your score](/scoring/dimensions/) across all 12 dimensions
+- [Understand your score](/scoring/dimensions/) across all 36 criteria
 - [Learn about each generated file](/files/llms-txt/) in detail
 
 :::tip
