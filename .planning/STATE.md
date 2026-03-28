@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: Competitive Parity
 status: executing
-stopped_at: Completed 15-dashboard-docs-updates-02-PLAN.md
-last_updated: "2026-03-28T20:54:04.335Z"
+stopped_at: Completed 15-01-PLAN.md
+last_updated: "2026-03-28T20:56:19.892Z"
 last_activity: 2026-03-28
 progress:
   total_phases: 9
   completed_phases: 7
   total_plans: 15
-  completed_plans: 13
+  completed_plans: 14
 ---
 
 # Project State
@@ -25,7 +25,7 @@ See: .planning/PROJECT.md (updated 2026-03-28)
 ## Current Position
 
 Phase: 15 (dashboard-docs-updates) — EXECUTING
-Plan: 2 of 3
+Plan: 3 of 3
 Milestone: v2.0 Competitive Parity — Phases 8-16
 Status: Ready to execute
 Last activity: 2026-03-28
@@ -84,6 +84,7 @@ Progress: [####################] (Phase 7 — 2/3 plans done)
 | Phase 13 P02 | 361 | 2 tasks | 11 files |
 | Phase 14-new-file-generators P01 | 8m | 2 tasks | 6 files |
 | Phase 15-dashboard-docs-updates P02 | 10 | 2 tasks | 10 files |
+| Phase 15-dashboard-docs-updates P01 | 1min | 2 tasks | 4 files |
 
 ## Phase 4 Deliverables
 
@@ -269,6 +270,8 @@ Recent decisions affecting current work:
 - [Phase 14-new-file-generators]: Q&A pairs question headings with paragraphs by index; Key Entities section only shows terms with 2+ bodyText occurrences
 - [Phase 15-dashboard-docs-updates]: Replaced 12-point radar chart with 5-pillar stacked bar visualization for clearer weight communication
 - [Phase 15-dashboard-docs-updates]: Grouped all 36 criteria into pillar sections in dimensions.md for navigability and added Score Gates section to calculation.md
+- [Phase 15-dashboard-docs-updates]: Split ScoreBreakdown server/client: PILLAR_GROUPS imported server-side to avoid bundling playwright in browser via @aeorank/core chunk
+- [Phase 15-dashboard-docs-updates]: PILLAR_GROUPS in @aeorank/core/constants.ts as single source of truth for 5-pillar grouping of 36 dimensions
 
 ### Pending Todos
 
@@ -284,6 +287,6 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-03-28T20:54:04.333Z
-Stopped at: Completed 15-dashboard-docs-updates-02-PLAN.md
+Last session: 2026-03-28T20:56:19.889Z
+Stopped at: Completed 15-01-PLAN.md
 Resume file: None
