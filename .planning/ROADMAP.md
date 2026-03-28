@@ -168,9 +168,9 @@ Plans:
   3. `aeorank scan <url> --page /about` outputs score for a single page
   4. API scan result JSON includes `pages[]` array with per-page dimension scores
   5. All existing + new tests pass
-**Plans:** 2 plans
+**Plans:** 1/2 plans executed
 Plans:
-- [ ] 16-01-PLAN.md — Core scoring 0-75 scale + export PAGE_LEVEL_DIMENSIONS + tests
+- [x] 16-01-PLAN.md — Core scoring 0-75 scale + export PAGE_LEVEL_DIMENSIONS + tests
 - [ ] 16-02-PLAN.md — CLI --page flag + Dashboard expandable per-page dimensions
 
 ## Progress
@@ -192,4 +192,4 @@ Plans:
 | 13. Weight Migration | v2.0 | 2/2 | Complete    | 2026-03-28 |
 | 14. New File Generators | v2.0 | 1/1 | Complete    | 2026-03-28 |
 | 15. Dashboard & Docs | v2.0 | 3/3 | Complete    | 2026-03-28 |
-| 16. Per-Page Scoring | v2.0 | 0/2 | Planning    | -- |
+| 16. Per-Page Scoring | v2.0 | 1/2 | In Progress|  |

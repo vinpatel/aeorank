@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: Competitive Parity
-status: verifying
-stopped_at: Completed 15-03-PLAN.md
-last_updated: "2026-03-28T21:01:38.003Z"
+status: executing
+stopped_at: Completed 16-01-PLAN.md
+last_updated: "2026-03-28T21:10:09.394Z"
 last_activity: 2026-03-28
 progress:
   total_phases: 9
   completed_phases: 8
-  total_plans: 15
-  completed_plans: 15
+  total_plans: 17
+  completed_plans: 16
 ---
 
 # Project State
@@ -20,14 +20,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-28)
 
 **Core value:** A developer runs `npx aeorank-cli scan <url>` with zero config and gets an AEO score plus all 8 generated files needed for AI visibility — in under 30 seconds.
-**Current focus:** Phase 15 — dashboard-docs-updates
+**Current focus:** Phase 16 — per-page-scoring
 
 ## Current Position
 
-Phase: 16
-Plan: Not started
+Phase: 16 (per-page-scoring) — EXECUTING
+Plan: 2 of 2
 Milestone: v2.0 Competitive Parity — Phases 8-16
-Status: Phase complete — ready for verification
+Status: Ready to execute
 Last activity: 2026-03-28
 
 Progress: [####################] (Phase 7 — 2/3 plans done)
@@ -86,6 +86,7 @@ Progress: [####################] (Phase 7 — 2/3 plans done)
 | Phase 15-dashboard-docs-updates P02 | 10 | 2 tasks | 10 files |
 | Phase 15-dashboard-docs-updates P01 | 1min | 2 tasks | 4 files |
 | Phase 15-dashboard-docs-updates P03 | 194s | 2 tasks | 5 files |
+| Phase 16-per-page-scoring P01 | 139 | 2 tasks | 5 files |
 
 ## Phase 4 Deliverables
 
@@ -274,6 +275,9 @@ Recent decisions affecting current work:
 - [Phase 15-dashboard-docs-updates]: Split ScoreBreakdown server/client: PILLAR_GROUPS imported server-side to avoid bundling playwright in browser via @aeorank/core chunk
 - [Phase 15-dashboard-docs-updates]: PILLAR_GROUPS in @aeorank/core/constants.ts as single source of truth for 5-pillar grouping of 36 dimensions
 - [Phase 15-dashboard-docs-updates]: Use real dimension IDs in tests so pillar grouping works; fix vi.mock to use importOriginal to preserve PILLAR_GROUPS
+- [Phase 16-per-page-scoring]: PAGE_LEVEL_DIMENSIONS moved to constants.ts as exported const — single source of truth for CLI/dashboard consumers
+- [Phase 16-per-page-scoring]: PAGE_SCORE_MAX = 75 constant used throughout scorer to eliminate magic numbers and stay proportional (duplication gate = round(75*0.35) = 26)
+- [Phase 16-per-page-scoring]: getGrade() called with score*(100/75) to keep letter grade thresholds on 0-100 scale when computing grades for 0-75 page scores
 
 ### Pending Todos
 
@@ -289,6 +293,6 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-03-28T21:01:06.818Z
-Stopped at: Completed 15-03-PLAN.md
+Last session: 2026-03-28T21:10:09.392Z
+Stopped at: Completed 16-01-PLAN.md
 Resume file: None
