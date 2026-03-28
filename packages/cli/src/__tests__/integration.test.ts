@@ -256,7 +256,7 @@ describe("CLI Integration Tests", () => {
 		expect(parsed.score).toBe(65);
 		expect(parsed.grade).toBe("C");
 		expect(parsed.dimensions).toHaveLength(12);
-		expect(parsed.files).toHaveLength(8);
+		expect(parsed.files).toHaveLength(9);
 		expect(parsed.url).toBe("https://example.com");
 
 		// Verify no ANSI codes in JSON output

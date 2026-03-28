@@ -1,4 +1,5 @@
 import type { GeneratedFile, ScanResult } from "../types.js";
+import { generateAiTxt } from "./ai-txt.js";
 import { generateCitationAnchors } from "./citation-anchors.js";
 import { generateClaudeMd } from "./claude-md.js";
 import { generateFaqBlocks } from "./faq-blocks.js";
@@ -17,9 +18,10 @@ export {
 	generateFaqBlocks,
 	generateCitationAnchors,
 	generateSitemapAi,
+	generateAiTxt,
 };
 
-/** Generate all 8 AI readability files from scan result */
+/** Generate all 9 AI readability files from scan result */
 export function generateFiles(result: ScanResult): GeneratedFile[] {
 	return [
 		{ name: "llms.txt", content: generateLlmsTxt(result) },
@@ -30,5 +32,6 @@ export function generateFiles(result: ScanResult): GeneratedFile[] {
 		{ name: "faq-blocks.html", content: generateFaqBlocks(result) },
 		{ name: "citation-anchors.html", content: generateCitationAnchors(result) },
 		{ name: "sitemap-ai.xml", content: generateSitemapAi(result) },
+		{ name: "ai.txt", content: generateAiTxt(result) },
 	];
 }

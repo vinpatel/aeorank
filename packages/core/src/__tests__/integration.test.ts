@@ -68,14 +68,14 @@ describe("scan() full pipeline", () => {
 		}
 	});
 
-	it("generates exactly 8 files", async () => {
+	it("generates exactly 9 files", async () => {
 		const result = await scan(
 			"https://example.com",
 			{ maxPages: 3 },
 			createMockFetcher(defaultResponses),
 		);
 
-		expect(result.files).toHaveLength(8);
+		expect(result.files).toHaveLength(9);
 		const names = result.files.map((f) => f.name);
 		expect(names).toEqual([
 			"llms.txt",
@@ -86,6 +86,7 @@ describe("scan() full pipeline", () => {
 			"faq-blocks.html",
 			"citation-anchors.html",
 			"sitemap-ai.xml",
+			"ai.txt",
 		]);
 
 		for (const file of result.files) {
@@ -158,7 +159,7 @@ describe("scan() full pipeline", () => {
 
 		expect(result.pagesScanned).toBe(1);
 		expect(result.score).toBeGreaterThanOrEqual(0);
-		expect(result.files).toHaveLength(8);
+		expect(result.files).toHaveLength(9);
 	});
 
 	it("works when robots.txt and sitemap are missing", async () => {
@@ -177,7 +178,7 @@ describe("scan() full pipeline", () => {
 
 		expect(result.pagesScanned).toBe(1);
 		expect(result.score).toBeGreaterThanOrEqual(0);
-		expect(result.files).toHaveLength(8);
+		expect(result.files).toHaveLength(9);
 		expect(result.meta.robotsTxt.raw).toBeNull();
 	});
 
