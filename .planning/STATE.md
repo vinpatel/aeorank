@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: Competitive Parity
-status: verifying
-stopped_at: Completed 12-02-PLAN.md — canonical-urls, rss-feed, visible-dates scorers added, DIMENSION_DEFS at 38, all 598 tests passing
-last_updated: "2026-03-28T19:53:18.401Z"
+status: executing
+stopped_at: Completed 13-01-PLAN.md
+last_updated: "2026-03-28T20:23:11.241Z"
 last_activity: 2026-03-28
 progress:
   total_phases: 9
   completed_phases: 5
-  total_plans: 9
-  completed_plans: 9
+  total_plans: 11
+  completed_plans: 10
 ---
 
 # Project State
@@ -20,14 +20,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-28)
 
 **Core value:** A developer runs `npx aeorank-cli scan <url>` with zero config and gets an AEO score plus all 8 generated files needed for AI visibility — in under 30 seconds.
-**Current focus:** Phase 12 — ai-discovery-expansion
+**Current focus:** Phase 13 — weight-migration-score-gates
 
 ## Current Position
 
-Phase: 13
-Plan: Not started
+Phase: 13 (weight-migration-score-gates) — EXECUTING
+Plan: 2 of 2
 Milestone: v2.0 Competitive Parity — Phases 8-16
-Status: Phase complete — ready for verification
+Status: Ready to execute
 Last activity: 2026-03-28
 
 Progress: [####################] (Phase 7 — 2/3 plans done)
@@ -80,6 +80,7 @@ Progress: [####################] (Phase 7 — 2/3 plans done)
 | Phase 11-technical-foundation-expansion P02 | 178s | 2 tasks | 7 files |
 | Phase 12 P01 | 346s | 2 tasks | 11 files |
 | Phase 12-ai-discovery-expansion P02 | 232s | 2 tasks | 7 files |
+| Phase 13 P01 | 40m | 2 tasks | 12 files |
 
 ## Phase 4 Deliverables
 
@@ -255,6 +256,8 @@ Recent decisions affecting current work:
 - [Phase 12]: content-cannibalization added to PAGE_LEVEL_DIMENSIONS; publishing-velocity and content-licensing are site-level only
 - [Phase 12-02]: scoreVisibleDates base score uses dateRatio >= 1.0 -> 9 so all-pages-with-dates hits 9+ without meta bonus
 - [Phase 12-02]: canonical-urls and visible-dates in PAGE_LEVEL_DIMENSIONS; rss-feed is site-level only (homepage check)
+- [Phase 13]: weightPct values must sum to exactly 100 across all 36 dimensions; publishing-velocity and content-licensing reduced to 1% each to correct sum
+- [Phase 13]: speakable-schema merged into faq-speakable; author-schema merged into eeat-signals; both old scorers removed
 
 ### Pending Todos
 
@@ -270,6 +273,6 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-03-28T19:52:42.680Z
-Stopped at: Completed 12-02-PLAN.md — canonical-urls, rss-feed, visible-dates scorers added, DIMENSION_DEFS at 38, all 598 tests passing
+Last session: 2026-03-28T20:23:11.239Z
+Stopped at: Completed 13-01-PLAN.md
 Resume file: None
