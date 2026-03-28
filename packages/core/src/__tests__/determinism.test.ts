@@ -30,6 +30,8 @@ const enhancedPageHtml = `<!DOCTYPE html>
 <head>
   <title>AEO Optimization Guide</title>
   <meta name="description" content="Comprehensive guide to AEO optimization.">
+  <link rel="canonical" href="https://example.com/guide">
+  <link rel="alternate" type="application/rss+xml" title="Blog RSS" href="/feed.xml">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -74,6 +76,8 @@ const enhancedPageHtml = `<!DOCTYPE html>
       <p>AEO is defined as the practice of optimizing content for AI answer extraction.</p>
       <h2>How does optimization work?</h2>
       <p>Optimization refers to the process of making content more accessible to AI systems.</p>
+      <time datetime="2026-03-15">March 15, 2026</time>
+      <time datetime="2026-01-10">January 10, 2026</time>
       <table>
         <tr><th>Dimension</th><th>Score</th></tr>
         <tr><td>Content</td><td>8</td></tr>
@@ -88,7 +92,7 @@ const enhancedPageHtml = `<!DOCTYPE html>
         <figcaption>Figure 1: Score distribution</figcaption>
       </figure>
       <img src="logo.png" alt="AEOrank logo">
-      <p>AEO optimization scores are calculated across 32 dimensions.</p>
+      <p>AEO optimization scores are calculated across 38 dimensions.</p>
       <p>The AEO optimization framework provides comprehensive analysis.</p>
     </article>
     <aside>
@@ -104,6 +108,10 @@ const enhancedPageHtml = `<!DOCTYPE html>
 const defaultResponses: Record<string, Partial<FetchResult>> = {
 	"https://example.com/robots.txt": { html: robotsTxtContent },
 	"https://example.com/llms.txt": { status: 404 },
+	"https://example.com/ai.txt": {
+		html: "User-agent: *\nAllow: /\n# AI content licensing\nLicense: CC-BY-4.0",
+		status: 200,
+	},
 	"https://example.com/sitemap.xml": { html: sitemapXml },
 	"https://example.com": { html: enhancedPageHtml },
 	"https://example.com/about": { html: enhancedPageHtml },
@@ -135,8 +143,8 @@ describe("determinism", () => {
 			status: d.status,
 		}));
 
-		// All 35 dimensions should be present
-		expect(results[0].dimensions).toHaveLength(35);
+		// All 38 dimensions should be present
+		expect(results[0].dimensions).toHaveLength(38);
 
 		// All new dimensions should appear in results
 		const newDimIds = [
@@ -160,6 +168,12 @@ describe("determinism", () => {
 			"image-context",
 			"schema-coverage",
 			"speakable-schema",
+			"content-cannibalization",
+			"publishing-velocity",
+			"content-licensing",
+			"canonical-urls",
+			"rss-feed",
+			"visible-dates",
 		];
 		for (const id of newDimIds) {
 			const dim = results[0].dimensions.find((d) => d.id === id);
