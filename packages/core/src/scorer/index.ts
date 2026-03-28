@@ -30,10 +30,38 @@ export function calculateAeoScore(
 	}
 
 	// weightedSum is already on 0-100 scale since weightPct sums to 100
-	const score = Math.round(weightedSum);
+	let score = Math.round(weightedSum);
+
+	// Coherence gate: topic-coherence < 6 caps the final score at coherence_score * 10
+	// e.g., coherence=4 -> score cannot exceed 40
+	const coherenceDim = dimensions.find((d) => d.id === "topic-coherence");
+	const coherenceGated = coherenceDim !== undefined && coherenceDim.score < 6;
+	if (coherenceGated && coherenceDim) {
+		const cap = coherenceDim.score * 10;
+		score = Math.min(score, cap);
+	}
+
 	const grade = getGrade(score);
 
 	return { score, grade, dimensions };
+}
+
+/**
+ * Count duplicate paragraph blocks within a single page.
+ * Normalizes paragraph text and counts repeated occurrences.
+ */
+function countDuplicateBlocks(page: ScannedPage): number {
+	const seen = new Set<string>();
+	let dupeCount = 0;
+	for (const para of page.paragraphs) {
+		const normalized = para.toLowerCase().replace(/\s+/g, " ").trim();
+		if (seen.has(normalized)) {
+			dupeCount++;
+		} else {
+			seen.add(normalized);
+		}
+	}
+	return dupeCount;
 }
 
 /** Dimensions that can be scored per-page (excludes site-level dimensions) */
@@ -85,7 +113,13 @@ export function scorePerPage(pages: ScannedPage[], meta: ScanMeta): PageScore[] 
 		}
 
 		// Normalize to 0-100 since page-level dims don't sum to 100
-		const score = totalPageWeight > 0 ? Math.round((weightedSum / totalPageWeight) * 100) : 0;
+		let score = totalPageWeight > 0 ? Math.round((weightedSum / totalPageWeight) * 100) : 0;
+
+		// Duplication gate: 3+ duplicate blocks on a page caps the page score at 35
+		const dupeCount = countDuplicateBlocks(page);
+		if (dupeCount >= 3) {
+			score = Math.min(score, 35);
+		}
 
 		return {
 			url: page.url,
