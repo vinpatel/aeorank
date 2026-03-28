@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
 	scoreAiCrawlerAccess,
+	scoreAuthorSchema,
 	scoreCitationAnchors,
 	scoreCitationReadyWriting,
 	scoreContentStructure,
@@ -13,6 +14,7 @@ import {
 	scoreEvidencePackaging,
 	scoreFactDensity,
 	scoreFaqSpeakable,
+	scoreInternalLinking,
 	scoreLlmsTxt,
 	scoreMetaDescriptions,
 	scoreOriginalData,
@@ -883,6 +885,186 @@ describe("scoreEntityDisambiguation", () => {
 	it("has id 'entity-disambiguation' and weight 'low'", () => {
 		const result = scoreEntityDisambiguation([makePage()], makeMeta());
 		expect(result.id).toBe("entity-disambiguation");
+		expect(result.weight).toBe("low");
+	});
+});
+
+describe("scoreInternalLinking", () => {
+	it("returns 0 for empty pages array", () => {
+		const result = scoreInternalLinking([], makeMeta());
+		expect(result.score).toBe(0);
+		expect(result.hint).toContain("internal link");
+	});
+
+	it("returns 0 when pages have zero internal links", () => {
+		const page = makePage({
+			links: [
+				{ href: "https://other.com/page", text: "External", internal: false },
+			],
+		});
+		const result = scoreInternalLinking([page], makeMeta());
+		expect(result.score).toBe(0);
+	});
+
+	it("returns 3 when pages have 1-2 internal links avg", () => {
+		const page = makePage({
+			links: [
+				{ href: "/about", text: "About", internal: true },
+				{ href: "/blog", text: "Blog", internal: true },
+			],
+		});
+		const result = scoreInternalLinking([page], makeMeta());
+		expect(result.score).toBe(3);
+	});
+
+	it("returns 6 when pages have 3-4 internal links avg", () => {
+		const page = makePage({
+			links: [
+				{ href: "/about", text: "About", internal: true },
+				{ href: "/blog", text: "Blog", internal: true },
+				{ href: "/contact", text: "Contact", internal: true },
+				{ href: "/pricing", text: "Pricing", internal: true },
+			],
+		});
+		const result = scoreInternalLinking([page], makeMeta());
+		expect(result.score).toBe(6);
+	});
+
+	it("returns 8 when pages have 5+ internal links avg but no breadcrumbs", () => {
+		const page = makePage({
+			links: [
+				{ href: "/about", text: "About", internal: true },
+				{ href: "/blog", text: "Blog", internal: true },
+				{ href: "/contact", text: "Contact", internal: true },
+				{ href: "/pricing", text: "Pricing", internal: true },
+				{ href: "/docs", text: "Docs", internal: true },
+				{ href: "/faq", text: "FAQ", internal: true },
+			],
+		});
+		const result = scoreInternalLinking([page], makeMeta());
+		expect(result.score).toBe(8);
+	});
+
+	it("returns 10 when pages have 5+ internal links avg AND BreadcrumbList schema", () => {
+		const page = makePage({
+			links: [
+				{ href: "/about", text: "About", internal: true },
+				{ href: "/blog", text: "Blog", internal: true },
+				{ href: "/contact", text: "Contact", internal: true },
+				{ href: "/pricing", text: "Pricing", internal: true },
+				{ href: "/docs", text: "Docs", internal: true },
+				{ href: "/faq", text: "FAQ", internal: true },
+			],
+			schemaOrg: [{ "@type": "BreadcrumbList", itemListElement: [] }],
+		});
+		const result = scoreInternalLinking([page], makeMeta());
+		expect(result.score).toBe(10);
+	});
+
+	it("detects BreadcrumbList inside @graph array", () => {
+		const page = makePage({
+			links: [
+				{ href: "/about", text: "About", internal: true },
+				{ href: "/blog", text: "Blog", internal: true },
+				{ href: "/contact", text: "Contact", internal: true },
+				{ href: "/pricing", text: "Pricing", internal: true },
+				{ href: "/docs", text: "Docs", internal: true },
+			],
+			schemaOrg: [
+				{
+					"@context": "https://schema.org",
+					"@graph": [{ "@type": "BreadcrumbList", itemListElement: [] }],
+				},
+			],
+		});
+		const result = scoreInternalLinking([page], makeMeta());
+		expect(result.score).toBe(10);
+	});
+
+	it("has id 'internal-linking' and weight 'medium'", () => {
+		const result = scoreInternalLinking([makePage()], makeMeta());
+		expect(result.id).toBe("internal-linking");
+		expect(result.weight).toBe("medium");
+	});
+});
+
+describe("scoreAuthorSchema", () => {
+	it("returns 0 for empty pages array", () => {
+		const result = scoreAuthorSchema([], makeMeta());
+		expect(result.score).toBe(0);
+		expect(result.hint).toContain("Person schema");
+	});
+
+	it("returns 0 when pages have no Person schema", () => {
+		const page = makePage({
+			schemaOrg: [{ "@type": "Organization", name: "Acme" }],
+		});
+		const result = scoreAuthorSchema([page], makeMeta());
+		expect(result.score).toBe(0);
+	});
+
+	it("returns 3 when pages have Person schema but no jobTitle/credentials", () => {
+		const page = makePage({
+			schemaOrg: [{ "@type": "Person", name: "Jane Smith" }],
+		});
+		const result = scoreAuthorSchema([page], makeMeta());
+		expect(result.score).toBe(3);
+	});
+
+	it("returns 6 when pages have Person schema + jobTitle", () => {
+		const page = makePage({
+			schemaOrg: [{ "@type": "Person", name: "Jane Smith", jobTitle: "Data Scientist" }],
+		});
+		const result = scoreAuthorSchema([page], makeMeta());
+		expect(result.score).toBe(6);
+	});
+
+	it("returns 6 when pages have Person schema + hasCredential", () => {
+		const page = makePage({
+			schemaOrg: [{ "@type": "Person", name: "Jane Smith", hasCredential: "PhD in Computer Science" }],
+		});
+		const result = scoreAuthorSchema([page], makeMeta());
+		expect(result.score).toBe(6);
+	});
+
+	it("returns 10 when pages have Person schema + jobTitle + sameAs URLs", () => {
+		const page = makePage({
+			schemaOrg: [
+				{
+					"@type": "Person",
+					name: "Dr. Jane Smith",
+					jobTitle: "Data Scientist",
+					sameAs: ["https://twitter.com/janesmith", "https://linkedin.com/in/janesmith"],
+				},
+			],
+		});
+		const result = scoreAuthorSchema([page], makeMeta());
+		expect(result.score).toBe(10);
+	});
+
+	it("detects Person inside @graph array", () => {
+		const page = makePage({
+			schemaOrg: [
+				{
+					"@context": "https://schema.org",
+					"@graph": [
+						{
+							"@type": "Person",
+							name: "Dr. Jane Smith",
+							jobTitle: "Data Scientist",
+							sameAs: ["https://twitter.com/janesmith"],
+						},
+					],
+				},
+			],
+		});
+		const result = scoreAuthorSchema([page], makeMeta());
+		expect(result.score).toBe(10);
+	});
+
+	it("has id 'author-schema' and weight 'low'", () => {
+		const result = scoreAuthorSchema([makePage()], makeMeta());
+		expect(result.id).toBe("author-schema");
 		expect(result.weight).toBe("low");
 	});
 });

@@ -55,6 +55,8 @@ const PAGE_LEVEL_DIMENSIONS = [
 	"tables-lists",
 	"definition-patterns",
 	"entity-disambiguation",
+	"internal-linking",
+	"author-schema",
 ];
 
 /** Score each page individually across page-level dimensions */
