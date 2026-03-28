@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: Competitive Parity
-status: verifying
-stopped_at: Completed 14-01-PLAN.md
-last_updated: "2026-03-28T20:43:06.241Z"
+status: executing
+stopped_at: Completed 15-dashboard-docs-updates-02-PLAN.md
+last_updated: "2026-03-28T20:54:04.335Z"
 last_activity: 2026-03-28
 progress:
   total_phases: 9
   completed_phases: 7
-  total_plans: 12
-  completed_plans: 12
+  total_plans: 15
+  completed_plans: 13
 ---
 
 # Project State
@@ -20,14 +20,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-28)
 
 **Core value:** A developer runs `npx aeorank-cli scan <url>` with zero config and gets an AEO score plus all 8 generated files needed for AI visibility — in under 30 seconds.
-**Current focus:** Phase 14 — new-file-generators
+**Current focus:** Phase 15 — dashboard-docs-updates
 
 ## Current Position
 
-Phase: 15
-Plan: Not started
+Phase: 15 (dashboard-docs-updates) — EXECUTING
+Plan: 2 of 3
 Milestone: v2.0 Competitive Parity — Phases 8-16
-Status: Phase complete — ready for verification
+Status: Ready to execute
 Last activity: 2026-03-28
 
 Progress: [####################] (Phase 7 — 2/3 plans done)
@@ -83,6 +83,7 @@ Progress: [####################] (Phase 7 — 2/3 plans done)
 | Phase 13 P01 | 40m | 2 tasks | 12 files |
 | Phase 13 P02 | 361 | 2 tasks | 11 files |
 | Phase 14-new-file-generators P01 | 8m | 2 tasks | 6 files |
+| Phase 15-dashboard-docs-updates P02 | 10 | 2 tasks | 10 files |
 
 ## Phase 4 Deliverables
 
@@ -266,6 +267,8 @@ Recent decisions affecting current work:
 - [Phase 14-new-file-generators]: DEFINITION_PATTERNS and ENTITY_STOPWORDS duplicated in llms-full.ts to keep generators dependency-free
 - [Phase 14-new-file-generators]: Entity count uses split/join technique instead of indexOf loop to satisfy Biome noAssignInExpressions
 - [Phase 14-new-file-generators]: Q&A pairs question headings with paragraphs by index; Key Entities section only shows terms with 2+ bodyText occurrences
+- [Phase 15-dashboard-docs-updates]: Replaced 12-point radar chart with 5-pillar stacked bar visualization for clearer weight communication
+- [Phase 15-dashboard-docs-updates]: Grouped all 36 criteria into pillar sections in dimensions.md for navigability and added Score Gates section to calculation.md
 
 ### Pending Todos
 
@@ -281,6 +284,6 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-03-28T20:41:47.543Z
-Stopped at: Completed 14-01-PLAN.md
+Last session: 2026-03-28T20:54:04.333Z
+Stopped at: Completed 15-dashboard-docs-updates-02-PLAN.md
 Resume file: None
