@@ -19,6 +19,12 @@ export interface ScannedPage {
 	sentences: string[];
 	/** SHA-256-like hash of normalized paragraph text for cross-page dedup */
 	contentHash: string;
+	/** Headings that start with a question word or contain "?" */
+	questionHeadings: { text: string; level: number }[];
+	/** Count of <table> elements with at least one <th> or <thead> */
+	tableCount: number;
+	/** Count of <ol> and <ul> elements with at least 2 <li> children */
+	listCount: number;
 }
 
 export interface Heading {
