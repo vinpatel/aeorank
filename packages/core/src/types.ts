@@ -37,6 +37,10 @@ export interface ScannedPage {
 	imgsWithAlt: number;
 	/** Average sentence length in words across all sentences */
 	avgSentenceLength: number;
+	/** RSS/Atom feed links found in <link> tags */
+	rssFeeds: { href: string; type: string }[];
+	/** Count of <time> elements with a datetime attribute */
+	timeElementCount: number;
 }
 
 export interface Heading {
@@ -63,6 +67,10 @@ export interface ScanMeta {
 	existingLlmsTxt: string | null;
 	platform: string | null;
 	responseTimeMs: number;
+	/** Contents of /ai.txt file (null if not found) */
+	aiTxt: string | null;
+	/** lastmod dates extracted from sitemap.xml entries (ISO strings) */
+	sitemapLastmods: string[];
 }
 
 /** Complete scan result with score, dimensions, and generated files */

@@ -56,6 +56,17 @@ export function parsePage(url: string, html: string, baseUrl: string): ScannedPa
 		}
 	});
 
+	// Extract RSS/Atom feed links (BEFORE DOM mutation)
+	const rssFeeds: { href: string; type: string }[] = [];
+	$('link[type="application/rss+xml"], link[type="application/atom+xml"]').each((_, el) => {
+		const href = $(el).attr("href");
+		const type = $(el).attr("type") || "";
+		if (href) rssFeeds.push({ href, type });
+	});
+
+	// Count <time> elements with datetime attribute (BEFORE DOM mutation)
+	const timeElementCount = $("time[datetime]").length;
+
 	// Extract paragraphs BEFORE removing nav/footer/header (which mutates DOM)
 	const paragraphs = extractParagraphs($);
 	const sentences = extractSentences(paragraphs);
@@ -128,6 +139,8 @@ export function parsePage(url: string, html: string, baseUrl: string): ScannedPa
 		imgCount,
 		imgsWithAlt,
 		avgSentenceLength,
+		rssFeeds,
+		timeElementCount,
 	};
 }
 
