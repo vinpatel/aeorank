@@ -56,6 +56,11 @@ export function parsePage(url: string, html: string, baseUrl: string): ScannedPa
 		}
 	});
 
+	// Extract paragraphs BEFORE removing nav/footer/header (which mutates DOM)
+	const paragraphs = extractParagraphs($);
+	const sentences = extractSentences(paragraphs);
+	const contentHash = hashText(paragraphs.join("\n"));
+
 	// Extract body text
 	// Remove script, style, nav, and footer for cleaner text
 	$("script, style, nav, footer, header").remove();
@@ -86,7 +91,40 @@ export function parsePage(url: string, html: string, baseUrl: string): ScannedPa
 		wordCount,
 		hasDatePublished,
 		authorName,
+		paragraphs,
+		sentences,
+		contentHash,
 	};
+}
+
+function extractParagraphs($: cheerio.CheerioAPI): string[] {
+	const paras: string[] = [];
+	$("p").each((_, el) => {
+		const text = $(el).text().trim();
+		if (text.length >= 20) paras.push(text);
+	});
+	return paras;
+}
+
+function extractSentences(paragraphs: string[]): string[] {
+	const sentences: string[] = [];
+	for (const para of paragraphs) {
+		const parts = para.split(/(?<=[.!?])\s+/);
+		for (const s of parts) {
+			const trimmed = s.trim();
+			if (trimmed.length >= 10) sentences.push(trimmed);
+		}
+	}
+	return sentences;
+}
+
+function hashText(text: string): string {
+	const normalized = text.toLowerCase().replace(/\s+/g, " ").trim();
+	let hash = 5381;
+	for (let i = 0; i < normalized.length; i++) {
+		hash = ((hash << 5) + hash + normalized.charCodeAt(i)) & 0xffffffff;
+	}
+	return (hash >>> 0).toString(16).padStart(8, "0");
 }
 
 function detectAuthor($: cheerio.CheerioAPI, schemaOrg: object[]): string | null {

@@ -26,6 +26,9 @@ function makePage(overrides: Partial<ScannedPage> = {}): ScannedPage {
 		wordCount: 100,
 		hasDatePublished: false,
 		authorName: null,
+		paragraphs: [],
+		sentences: [],
+		contentHash: "00000000",
 		...overrides,
 	};
 }
