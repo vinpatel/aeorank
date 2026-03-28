@@ -29,7 +29,7 @@
 Expands scoring from 12 dimensions to 36 criteria across 5 pillars, matching AEO Content Inc's coverage while keeping our plugin generation advantage.
 
 - [ ] **Phase 8: Answer Readiness** — +7 dimensions (topic coherence, original data, fact density, duplicate content, evidence packaging, citation-ready writing)
-- [ ] **Phase 9: Content Structure Expansion** — +6 dimensions (Q&A format, direct answer density, tables & lists, definition patterns, entity disambiguation)
+- [x] **Phase 9: Content Structure Expansion** — +6 dimensions (Q&A format, direct answer density, tables & lists, definition patterns, entity disambiguation) (completed 2026-03-28)
 - [ ] **Phase 10: Trust & Authority Expansion** — +2 dimensions (internal linking, author schema)
 - [ ] **Phase 11: Technical Foundation Expansion** — +5 dimensions (semantic HTML, extraction friction, image context, schema coverage, speakable)
 - [ ] **Phase 12: AI Discovery Expansion** — +6 dimensions (content cannibalization, publishing velocity, content licensing, canonical URLs, RSS feed, visible dates)
@@ -65,10 +65,10 @@ Plans:
   3. A FAQ-style page scores significantly higher on qa-format and direct-answer-density than a narrative page
   4. All existing + new tests pass with zero failures
   5. Determinism test passes for all 6 new dimensions
-**Plans:** 1/2 plans executed
+**Plans:** 2/2 plans complete
 Plans:
 - [x] 09-01-PLAN.md — Parser extensions (question headings, table/list counts) + first 3 scorers (qa-format, direct-answer-density, query-answer-alignment)
-- [ ] 09-02-PLAN.md — Last 3 scorers (tables-lists, definition-patterns, entity-disambiguation) + determinism tests
+- [x] 09-02-PLAN.md — Last 3 scorers (tables-lists, definition-patterns, entity-disambiguation) + determinism tests
 
 ### Phase 10: Trust & Authority Expansion
 **Goal**: Add 2 Trust & Authority dimensions for internal linking analysis and author/expert schema detection. Parser counts internal vs external links per page, detects breadcrumb markup, and extracts Person schema properties.
@@ -165,7 +165,7 @@ Plans:
 | 6. Retroactive Verification | v1.0 | 3/3 | Complete | 2026-03-15 |
 | 7. Marketing Content | v1.0 | 2/2 | Complete | 2026-03-15 |
 | 8. Answer Readiness | v2.0 | 2/2 | Complete |  |
-| 9. Content Structure | v2.0 | 1/2 | In Progress|  |
+| 9. Content Structure | v2.0 | 2/2 | Complete   | 2026-03-28 |
 | 10. Trust & Authority | v2.0 | 0/? | Not Started | — |
 | 11. Technical Foundation | v2.0 | 0/? | Not Started | — |
 | 12. AI Discovery | v2.0 | 0/? | Not Started | — |

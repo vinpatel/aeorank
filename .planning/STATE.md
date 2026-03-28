@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: Competitive Parity
-status: executing
-stopped_at: Completed 09-01-PLAN.md — 3 Q&A Content Structure scorers added, DIMENSION_DEFS at 22 entries, all 167 tests passing
-last_updated: "2026-03-28T19:00:28.284Z"
+status: verifying
+stopped_at: Completed 09-02-PLAN.md — 3 final Content Structure scorers added (tables-lists, definition-patterns, entity-disambiguation), DIMENSION_DEFS at 25 entries, all 180 tests passing
+last_updated: "2026-03-28T19:05:09.493Z"
 last_activity: 2026-03-28
 progress:
   total_phases: 9
-  completed_phases: 1
+  completed_phases: 2
   total_plans: 4
-  completed_plans: 3
+  completed_plans: 4
 ---
 
 # Project State
@@ -27,7 +27,7 @@ See: .planning/PROJECT.md (updated 2026-03-28)
 Phase: 09 (content-structure-expansion) — EXECUTING
 Plan: 2 of 2
 Milestone: v2.0 Competitive Parity — Phases 8-16
-Status: Ready to execute
+Status: Phase complete — ready for verification
 Last activity: 2026-03-28
 
 Progress: [####################] (Phase 7 — 2/3 plans done)
@@ -74,6 +74,7 @@ Progress: [####################] (Phase 7 — 2/3 plans done)
 | Phase 08 P01 | 8min | 2 tasks | 8 files |
 | Phase 08 P02 | 5min | 2 tasks | 7 files |
 | Phase 09 P01 | 5min | 2 tasks | 10 files |
+| Phase 09 P02 | 3min | 2 tasks | 7 files |
 
 ## Phase 4 Deliverables
 
@@ -231,6 +232,9 @@ Recent decisions affecting current work:
 - [Phase 09]: scoreDirectAnswerDensity only analyzes pages with question headings; 40-300 char capital-start paragraphs count as direct answers
 - [Phase 09]: scoreQueryAnswerAlignment checks paragraphs.length >= questionHeadings.length per page as alignment signal
 - [Phase 09]: QUESTION_WORD_REGEX extracts headings starting with What/How/Why/When/Where/Who/Is/Are/Do/Does/Did/Can/Could/Should OR containing ?
+- [Phase 09]: DEFINITION_SENTENCE_PATTERNS uses specific anchors (is defined as, refers to, means/describes + the/a/an) to avoid matching generic sentences
+- [Phase 09]: scoreEntityDisambiguation tokenizes page title into entity terms (>= 4 chars, not stopwords), checks first paragraph and 3+ total bodyText occurrences
+- [Phase 09]: ENTITY_STOPWORDS excludes common English words and generic web terms to improve entity term extraction quality
 
 ### Pending Todos
 
@@ -246,6 +250,6 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-03-28T19:00:28.281Z
-Stopped at: Completed 09-01-PLAN.md — 3 Q&A Content Structure scorers added, DIMENSION_DEFS at 22 entries, all 167 tests passing
+Last session: 2026-03-28T19:05:09.491Z
+Stopped at: Completed 09-02-PLAN.md — 3 final Content Structure scorers added (tables-lists, definition-patterns, entity-disambiguation), DIMENSION_DEFS at 25 entries, all 180 tests passing
 Resume file: None
