@@ -50,8 +50,8 @@ Requirements for Competitive Parity milestone. Expands scoring from 12 to 36 cri
 
 ### Weight System
 
-- [ ] **WGHT-01**: Scoring uses percentage-based weights (not high/medium/low) for all 36 criteria summing to 100%
-- [ ] **WGHT-02**: Existing 12 dimensions redistributed into new percentage system without breaking existing scores
+- [x] **WGHT-01**: Scoring uses percentage-based weights (not high/medium/low) for all 36 criteria summing to 100%
+- [x] **WGHT-02**: Existing 12 dimensions redistributed into new percentage system without breaking existing scores
 - [x] **WGHT-03**: Coherence gate caps site score when topic-coherence < 6/10
 - [x] **WGHT-04**: Duplication gate caps page score at 35% when 3+ duplicate blocks detected
 
@@ -132,8 +132,8 @@ Deferred beyond v2.0.
 | DISC-04 | Phase 12 | Complete |
 | DISC-05 | Phase 12 | Complete |
 | DISC-06 | Phase 12 | Complete |
-| WGHT-01 | Phase 13 | Pending |
-| WGHT-02 | Phase 13 | Pending |
+| WGHT-01 | Phase 13 | Complete |
+| WGHT-02 | Phase 13 | Complete |
 | WGHT-03 | Phase 13 | Complete |
 | WGHT-04 | Phase 13 | Complete |
 | FGEN-01 | Phase 14 | Complete |
