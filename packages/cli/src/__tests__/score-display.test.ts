@@ -14,7 +14,7 @@ function makeDimension(overrides: Partial<DimensionScore> = {}): DimensionScore 
 		name: "Test Dimension",
 		score: 7,
 		maxScore: 10,
-		weight: "medium",
+		weightPct: 3,
 		status: "pass",
 		hint: "Everything looks good",
 		...overrides,
@@ -38,7 +38,10 @@ function makeScanResult(overrides: Partial<ScanResult> = {}): ScanResult {
 			existingLlmsTxt: null,
 			platform: null,
 			responseTimeMs: 200,
+			aiTxt: null,
+			sitemapLastmods: [],
 		},
+		pageScores: [],
 		pagesScanned: 5,
 		duration: 3200,
 		scannedAt: "2026-03-14T00:00:00.000Z",
@@ -110,16 +113,16 @@ describe("renderDimensionTable", () => {
 		expect(output).toContain("3/10");
 	});
 
-	it("shows weight label", () => {
+	it("shows weightPct percentage label", () => {
 		const dims = [
-			makeDimension({ weight: "high", name: "High Dim" }),
-			makeDimension({ weight: "medium", name: "Med Dim" }),
-			makeDimension({ weight: "low", name: "Low Dim" }),
+			makeDimension({ weightPct: 5, name: "High Dim" }),
+			makeDimension({ weightPct: 3, name: "Med Dim" }),
+			makeDimension({ weightPct: 1, name: "Low Dim" }),
 		];
 		const output = stripAnsi(renderDimensionTable(dims));
-		expect(output).toContain("[HIGH]");
-		expect(output).toContain("[MEDIUM]");
-		expect(output).toContain("[LOW]");
+		expect(output).toContain("[5%]");
+		expect(output).toContain("[3%]");
+		expect(output).toContain("[1%]");
 	});
 
 	it("shows hint only for non-pass dimensions", () => {
@@ -132,16 +135,16 @@ describe("renderDimensionTable", () => {
 		expect(output).toContain("Fix this thing");
 	});
 
-	it("sorts by weight (high first) then score ascending", () => {
+	it("sorts by weightPct (high first) then score ascending", () => {
 		const dims = [
-			makeDimension({ id: "low-good", weight: "low", score: 8, name: "Low Good" }),
-			makeDimension({ id: "high-bad", weight: "high", score: 2, name: "High Bad" }),
-			makeDimension({ id: "high-ok", weight: "high", score: 5, name: "High OK" }),
-			makeDimension({ id: "med", weight: "medium", score: 6, name: "Medium" }),
+			makeDimension({ id: "low-good", weightPct: 1, score: 8, name: "Low Good" }),
+			makeDimension({ id: "high-bad", weightPct: 5, score: 2, name: "High Bad" }),
+			makeDimension({ id: "high-ok", weightPct: 5, score: 5, name: "High OK" }),
+			makeDimension({ id: "med", weightPct: 3, score: 6, name: "Medium" }),
 		];
 		const output = stripAnsi(renderDimensionTable(dims));
 		const lines = output.split("\n").filter((l) => l.trim().length > 0);
-		// High weight dims should come first
+		// High weightPct dims should come first
 		const highBadIdx = lines.findIndex((l) => l.includes("High Bad"));
 		const highOkIdx = lines.findIndex((l) => l.includes("High OK"));
 		const medIdx = lines.findIndex((l) => l.includes("Medium"));
@@ -150,7 +153,7 @@ describe("renderDimensionTable", () => {
 		expect(highBadIdx).toBeLessThan(medIdx);
 		expect(highOkIdx).toBeLessThan(medIdx);
 		expect(medIdx).toBeLessThan(lowIdx);
-		// Within high weight, worse score first
+		// Within same weightPct, worse score first
 		expect(highBadIdx).toBeLessThan(highOkIdx);
 	});
 });
@@ -167,11 +170,11 @@ describe("renderNextSteps", () => {
 
 	it("limits to top 3 recommendations", () => {
 		const dims = [
-			makeDimension({ status: "fail", weight: "high", score: 0, hint: "Fix A" }),
-			makeDimension({ status: "fail", weight: "high", score: 1, hint: "Fix B" }),
-			makeDimension({ status: "warn", weight: "medium", score: 4, hint: "Fix C" }),
-			makeDimension({ status: "fail", weight: "low", score: 0, hint: "Fix D" }),
-			makeDimension({ status: "warn", weight: "low", score: 5, hint: "Fix E" }),
+			makeDimension({ status: "fail", weightPct: 5, score: 0, hint: "Fix A" }),
+			makeDimension({ status: "fail", weightPct: 5, score: 1, hint: "Fix B" }),
+			makeDimension({ status: "warn", weightPct: 3, score: 4, hint: "Fix C" }),
+			makeDimension({ status: "fail", weightPct: 1, score: 0, hint: "Fix D" }),
+			makeDimension({ status: "warn", weightPct: 1, score: 5, hint: "Fix E" }),
 		];
 		const output = stripAnsi(renderNextSteps(dims));
 		// Should contain top 3 fixes
@@ -183,11 +186,11 @@ describe("renderNextSteps", () => {
 		expect(output).not.toContain("Fix E");
 	});
 
-	it("sorts by weight priority then score ascending", () => {
+	it("sorts by weightPct priority then score ascending", () => {
 		const dims = [
-			makeDimension({ status: "fail", weight: "low", score: 0, hint: "Low fix" }),
-			makeDimension({ status: "fail", weight: "high", score: 2, hint: "High fix" }),
-			makeDimension({ status: "warn", weight: "medium", score: 4, hint: "Med fix" }),
+			makeDimension({ status: "fail", weightPct: 1, score: 0, hint: "Low fix" }),
+			makeDimension({ status: "fail", weightPct: 5, score: 2, hint: "High fix" }),
+			makeDimension({ status: "warn", weightPct: 3, score: 4, hint: "Med fix" }),
 		];
 		const output = stripAnsi(renderNextSteps(dims));
 		const highIdx = output.indexOf("High fix");
@@ -197,15 +200,15 @@ describe("renderNextSteps", () => {
 		expect(medIdx).toBeLessThan(lowIdx);
 	});
 
-	it("labels recommendations with priority", () => {
+	it("labels recommendations with percentage weight", () => {
 		const dims = [
-			makeDimension({ status: "fail", weight: "high", score: 0, hint: "Fix schema" }),
-			makeDimension({ status: "warn", weight: "medium", score: 4, hint: "Fix meta" }),
-			makeDimension({ status: "fail", weight: "low", score: 0, hint: "Fix sitemap" }),
+			makeDimension({ status: "fail", weightPct: 5, score: 0, hint: "Fix schema" }),
+			makeDimension({ status: "warn", weightPct: 3, score: 4, hint: "Fix meta" }),
+			makeDimension({ status: "fail", weightPct: 1, score: 0, hint: "Fix sitemap" }),
 		];
 		const output = stripAnsi(renderNextSteps(dims));
-		expect(output).toContain("[HIGH]");
-		expect(output).toContain("[MEDIUM]");
-		expect(output).toContain("[LOW]");
+		expect(output).toContain("[5%]");
+		expect(output).toContain("[3%]");
+		expect(output).toContain("[1%]");
 	});
 });

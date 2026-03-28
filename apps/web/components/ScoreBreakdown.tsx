@@ -24,19 +24,16 @@ function statusTextClass(status: "pass" | "warn" | "fail"): string {
 	return "font-medium text-xs text-red";
 }
 
-function weightLabel(weight: "high" | "medium" | "low"): string {
-	if (weight === "high") return "High";
-	if (weight === "medium") return "Med";
-	return "Low";
-}
-
-function weightBadgeClass(weight: "high" | "medium" | "low"): string {
-	if (weight === "high") return "badge badge-red";
-	if (weight === "medium") return "badge badge-amber";
+function weightBadgeClass(weightPct: number): string {
+	if (weightPct >= 5) return "badge badge-red";
+	if (weightPct >= 3) return "badge badge-amber";
 	return "badge badge-green";
 }
 
 export function ScoreBreakdown({ score, grade, dimensions }: ScoreBreakdownProps) {
+	// Sort dimensions by weightPct descending
+	const sorted = [...dimensions].sort((a, b) => b.weightPct - a.weightPct);
+
 	return (
 		<div>
 			{/* Score header */}
@@ -65,15 +62,15 @@ export function ScoreBreakdown({ score, grade, dimensions }: ScoreBreakdownProps
 						</tr>
 					</thead>
 					<tbody>
-						{dimensions.map((dim) => (
+						{sorted.map((dim) => (
 							<tr key={dim.id}>
 								<td className="font-medium">{dim.name}</td>
 								<td className={`text-center tabular-nums font-semibold ${scoreColorClass(Math.round((dim.score / dim.maxScore) * 100))}`}>
 									{dim.score}/{dim.maxScore}
 								</td>
 								<td className="text-center">
-									<span className={weightBadgeClass(dim.weight)}>
-										{weightLabel(dim.weight)}
+									<span className={weightBadgeClass(dim.weightPct)}>
+										{dim.weightPct}%
 									</span>
 								</td>
 								<td className="text-center">

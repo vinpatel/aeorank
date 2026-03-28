@@ -45,7 +45,7 @@ const mockResult: ScanResult = {
 			name: "llms.txt Presence",
 			score: 0,
 			maxScore: 10,
-			weight: "high",
+			weightPct: 5,
 			status: "fail",
 			hint: "Create /llms.txt with H1 title and sections",
 		},
@@ -54,7 +54,7 @@ const mockResult: ScanResult = {
 			name: "Schema.org Markup",
 			score: 7,
 			maxScore: 10,
-			weight: "high",
+			weightPct: 4,
 			status: "pass",
 			hint: "Comprehensive schema.org markup present",
 		},
@@ -63,7 +63,7 @@ const mockResult: ScanResult = {
 			name: "AI Crawler Access",
 			score: 4,
 			maxScore: 10,
-			weight: "medium",
+			weightPct: 3,
 			status: "warn",
 			hint: "Allow AI crawlers in robots.txt",
 		},
@@ -72,7 +72,7 @@ const mockResult: ScanResult = {
 			name: "Content Structure",
 			score: 10,
 			maxScore: 10,
-			weight: "high",
+			weightPct: 5,
 			status: "pass",
 			hint: "Strong content structure",
 		},
@@ -81,7 +81,7 @@ const mockResult: ScanResult = {
 			name: "Answer-First Formatting",
 			score: 6,
 			maxScore: 10,
-			weight: "medium",
+			weightPct: 4,
 			status: "warn",
 			hint: "Start pages with concise lead paragraphs",
 		},
@@ -90,7 +90,7 @@ const mockResult: ScanResult = {
 			name: "FAQ & Speakable",
 			score: 0,
 			maxScore: 10,
-			weight: "medium",
+			weightPct: 5,
 			status: "fail",
 			hint: "Add FAQPage schema markup with 3+ Q&A pairs",
 		},
@@ -99,7 +99,7 @@ const mockResult: ScanResult = {
 			name: "E-E-A-T Signals",
 			score: 7,
 			maxScore: 10,
-			weight: "medium",
+			weightPct: 6,
 			status: "pass",
 			hint: "Strong E-E-A-T signals",
 		},
@@ -108,7 +108,7 @@ const mockResult: ScanResult = {
 			name: "Meta Descriptions",
 			score: 7,
 			maxScore: 10,
-			weight: "medium",
+			weightPct: 2,
 			status: "pass",
 			hint: "Meta descriptions are optimal",
 		},
@@ -117,7 +117,7 @@ const mockResult: ScanResult = {
 			name: "Sitemap Presence",
 			score: 8,
 			maxScore: 10,
-			weight: "low",
+			weightPct: 1,
 			status: "pass",
 			hint: "Sitemap is up to date",
 		},
@@ -126,7 +126,7 @@ const mockResult: ScanResult = {
 			name: "HTTPS & Redirects",
 			score: 10,
 			maxScore: 10,
-			weight: "low",
+			weightPct: 2,
 			status: "pass",
 			hint: "HTTPS and canonical URLs configured",
 		},
@@ -135,7 +135,7 @@ const mockResult: ScanResult = {
 			name: "Page Freshness",
 			score: 6,
 			maxScore: 10,
-			weight: "low",
+			weightPct: 2,
 			status: "warn",
 			hint: "Add publication and last-modified dates",
 		},
@@ -144,7 +144,7 @@ const mockResult: ScanResult = {
 			name: "Citation Anchors",
 			score: 6,
 			maxScore: 10,
-			weight: "medium",
+			weightPct: 2,
 			status: "warn",
 			hint: "Add id attributes to H2 and H3 headings",
 		},
@@ -163,6 +163,7 @@ const mockResult: ScanResult = {
 		{ name: "sitemap-ai.xml", content: '<?xml version="1.0"?><urlset></urlset>' },
 	],
 	pages: [],
+	pageScores: [],
 	meta: {
 		url: "https://example.com",
 		robotsTxt: { raw: null, crawlerAccess: {}, crawlDelay: null },
@@ -170,6 +171,8 @@ const mockResult: ScanResult = {
 		existingLlmsTxt: null,
 		platform: null,
 		responseTimeMs: 200,
+		aiTxt: null,
+		sitemapLastmods: [],
 	},
 	pagesScanned: 5,
 	duration: 3200,
@@ -319,21 +322,21 @@ describe("CLI Integration Tests", () => {
 		expect(allOutput).toContain("--max-pages");
 	});
 
-	// CLI-05: Fix recommendations ranked High/Medium/Low
-	it("CLI-05: dimension output includes priority labels", async () => {
+	// CLI-05: Fix recommendations ranked by percentage weight
+	it("CLI-05: dimension output includes percentage weight labels", async () => {
 		const { scanCommand } = await import("../commands/scan.js");
 
 		await scanCommand.parseAsync(["node", "scan", "https://example.com", "--no-files"]);
 
 		const allOutput = logSpy.mock.calls.map((c) => stripAnsi(String(c[0]))).join("\n");
 
-		// Next steps should have priority labels
-		expect(allOutput).toContain("[HIGH]");
+		// Next steps should have percentage priority labels
+		expect(allOutput).toContain("[5%]");
 
-		// Dimension table should have weight labels
-		expect(allOutput).toContain("[HIGH]");
-		expect(allOutput).toContain("[MEDIUM]");
-		expect(allOutput).toContain("[LOW]");
+		// Dimension table should have percentage weight labels
+		expect(allOutput).toContain("[6%]");
+		expect(allOutput).toContain("[3%]");
+		expect(allOutput).toContain("[1%]");
 	});
 
 	// File writing integration
