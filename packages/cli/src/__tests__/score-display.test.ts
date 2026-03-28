@@ -1,6 +1,6 @@
-import type { DimensionScore, ScanResult } from "@aeorank/core";
+import type { DimensionScore, PageScore, ScanResult } from "@aeorank/core";
 import { describe, expect, it } from "vitest";
-import { renderDimensionTable, renderNextSteps, renderScore } from "../ui/score-display.js";
+import { renderDimensionTable, renderNextSteps, renderPageScore, renderScore } from "../ui/score-display.js";
 
 // Strip ANSI color codes for assertions
 function stripAnsi(str: string): string {
@@ -233,6 +233,83 @@ describe("renderDimensionTable", () => {
 		const dims = [makeDimension({ id: "topic-coherence", name: "Topical Authority" })];
 		const output = stripAnsi(renderDimensionTable(dims, "invalid-pillar"));
 		expect(output.toLowerCase()).toMatch(/invalid|unknown|not found|valid pillar/i);
+	});
+});
+
+describe("renderPageScore", () => {
+	function makePageScore(overrides: Partial<PageScore> = {}): PageScore {
+		return {
+			url: "https://example.com/about",
+			title: "About Us",
+			score: 52,
+			maxScore: 75,
+			grade: "C",
+			dimensions: [
+				{ id: "content-structure", score: 8, status: "pass" },
+				{ id: "answer-first", score: 3, status: "fail" },
+				{ id: "meta-descriptions", score: 6, status: "warn" },
+			],
+			...overrides,
+		};
+	}
+
+	it("renders page title and URL", () => {
+		const page = makePageScore();
+		const output = stripAnsi(renderPageScore(page));
+		expect(output).toContain("About Us");
+		expect(output).toContain("https://example.com/about");
+	});
+
+	it("renders score out of 75", () => {
+		const page = makePageScore({ score: 52, maxScore: 75 });
+		const output = stripAnsi(renderPageScore(page));
+		expect(output).toContain("52/75");
+	});
+
+	it("renders the grade", () => {
+		const page = makePageScore({ grade: "C" });
+		const output = stripAnsi(renderPageScore(page));
+		expect(output).toContain("C");
+	});
+
+	it("renders pass/warn/fail icons for each dimension", () => {
+		const page = makePageScore();
+		const output = stripAnsi(renderPageScore(page));
+		expect(output).toContain("✓");
+		expect(output).toContain("⚠");
+		expect(output).toContain("✗");
+	});
+
+	it("renders dimension names from DIMENSION_DEFS", () => {
+		const page = makePageScore();
+		const output = stripAnsi(renderPageScore(page));
+		expect(output).toContain("Content Structure");
+		expect(output).toContain("Answer-First Formatting");
+		expect(output).toContain("Meta Descriptions");
+	});
+
+	it("renders dimension score per dimension", () => {
+		const page = makePageScore();
+		const output = stripAnsi(renderPageScore(page));
+		expect(output).toContain("8/10");
+		expect(output).toContain("3/10");
+		expect(output).toContain("6/10");
+	});
+
+	it("sorts dimensions by score ascending (worst first)", () => {
+		const page = makePageScore({
+			dimensions: [
+				{ id: "content-structure", score: 8, status: "pass" },
+				{ id: "answer-first", score: 2, status: "fail" },
+				{ id: "meta-descriptions", score: 5, status: "warn" },
+			],
+		});
+		const output = stripAnsi(renderPageScore(page));
+		const answerIdx = output.indexOf("Answer-First");
+		const metaIdx = output.indexOf("Meta Descriptions");
+		const contentIdx = output.indexOf("Content Structure");
+		expect(answerIdx).toBeLessThan(metaIdx);
+		expect(metaIdx).toBeLessThan(contentIdx);
 	});
 });
 

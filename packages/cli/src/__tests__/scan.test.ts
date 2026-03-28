@@ -145,7 +145,30 @@ const mockResult: ScanResult = {
 		{ name: "schema.json", content: '{"@context":"https://schema.org"}' },
 	],
 	pages: [],
-	pageScores: [],
+	pageScores: [
+		{
+			url: "https://example.com/",
+			title: "Home",
+			score: 60,
+			maxScore: 75,
+			grade: "C",
+			dimensions: [
+				{ id: "content-structure", score: 8, status: "pass" as const },
+				{ id: "answer-first", score: 4, status: "warn" as const },
+			],
+		},
+		{
+			url: "https://example.com/about",
+			title: "About Us",
+			score: 45,
+			maxScore: 75,
+			grade: "D",
+			dimensions: [
+				{ id: "content-structure", score: 5, status: "warn" as const },
+				{ id: "answer-first", score: 3, status: "fail" as const },
+			],
+		},
+	],
 	meta: {
 		url: "https://example.com",
 		robotsTxt: { raw: null, crawlerAccess: {}, crawlDelay: null },
@@ -357,6 +380,119 @@ describe("scan command", () => {
 				"https://example.com",
 				expect.objectContaining({ browser: true }),
 			);
+		});
+	});
+
+	describe("--page flag", () => {
+		it("outputs page-specific score when --page matches a page URL", async () => {
+			const { scan } = await import("@aeorank/core");
+			(scan as ReturnType<typeof vi.fn>).mockResolvedValue(mockResult);
+
+			const { scanCommand } = await import("../commands/scan.js");
+
+			await scanCommand.parseAsync([
+				"node",
+				"scan",
+				"https://example.com",
+				"--page",
+				"/about",
+				"--no-files",
+			]);
+
+			const allOutput = logSpy.mock.calls.map((c) => String(c[0])).join("\n");
+			expect(allOutput).toContain("About Us");
+			expect(allOutput).toContain("45/75");
+		});
+
+		it("matches page URL by pathname including leading slash", async () => {
+			const { scan } = await import("@aeorank/core");
+			(scan as ReturnType<typeof vi.fn>).mockResolvedValue(mockResult);
+
+			const { scanCommand } = await import("../commands/scan.js");
+
+			await scanCommand.parseAsync([
+				"node",
+				"scan",
+				"https://example.com",
+				"--page",
+				"about",
+				"--no-files",
+			]);
+
+			const allOutput = logSpy.mock.calls.map((c) => String(c[0])).join("\n");
+			expect(allOutput).toContain("About Us");
+		});
+
+		it("shows error and available pages when --page path not found", async () => {
+			const { scan } = await import("@aeorank/core");
+			(scan as ReturnType<typeof vi.fn>).mockResolvedValue(mockResult);
+
+			const { scanCommand } = await import("../commands/scan.js");
+
+			await scanCommand.parseAsync([
+				"node",
+				"scan",
+				"https://example.com",
+				"--page",
+				"/nonexistent",
+				"--no-files",
+			]);
+
+			expect(exitSpy).toHaveBeenCalledWith(1);
+			const allErrors = errorSpy.mock.calls.map((c) => String(c[0])).join("\n");
+			expect(allErrors).toContain("/nonexistent");
+		});
+
+		it("outputs only matching pageScore as JSON when --format json and --page are combined", async () => {
+			const { scan } = await import("@aeorank/core");
+			(scan as ReturnType<typeof vi.fn>).mockResolvedValue(mockResult);
+
+			const { scanCommand } = await import("../commands/scan.js");
+
+			await scanCommand.parseAsync([
+				"node",
+				"scan",
+				"https://example.com",
+				"--format",
+				"json",
+				"--page",
+				"/about",
+				"--no-files",
+			]);
+
+			const jsonCall = logSpy.mock.calls.find((c) => {
+				try {
+					const parsed = JSON.parse(String(c[0]));
+					return parsed.url !== undefined && parsed.score !== undefined;
+				} catch {
+					return false;
+				}
+			});
+
+			expect(jsonCall).toBeTruthy();
+			const parsed = JSON.parse(String(jsonCall?.[0]));
+			expect(parsed.url).toBe("https://example.com/about");
+			expect(parsed.score).toBe(45);
+		});
+
+		it("skips normal renderScore output when --page flag is set", async () => {
+			const { scan } = await import("@aeorank/core");
+			(scan as ReturnType<typeof vi.fn>).mockResolvedValue(mockResult);
+
+			const { scanCommand } = await import("../commands/scan.js");
+
+			await scanCommand.parseAsync([
+				"node",
+				"scan",
+				"https://example.com",
+				"--page",
+				"/about",
+				"--no-files",
+			]);
+
+			const allOutput = logSpy.mock.calls.map((c) => String(c[0])).join("\n");
+			// Should NOT show site-level score
+			expect(allOutput).not.toContain("65/100");
 		});
 	});
 });
