@@ -46,30 +46,20 @@ const enhancedPageHtml = `<!DOCTYPE html>
         "name": "Dr. Jane Smith",
         "jobTitle": "Data Scientist",
         "sameAs": ["https://twitter.com/janesmith", "https://linkedin.com/in/janesmith"]
+      },
+      {
+        "@type": "SpeakableSpecification",
+        "cssSelector": [".article-body"]
       }
     ]
   }
   </script>
 </head>
 <body>
-  <h1>AEO Optimization Guide</h1>
-  <p>AEO optimization is a platform for improving AI visibility. AEO optimization helps businesses achieve better results.</p>
-  <h2>What is AEO?</h2>
-  <p>AEO is defined as the practice of optimizing content for AI answer extraction.</p>
-  <h2>How does optimization work?</h2>
-  <p>Optimization refers to the process of making content more accessible to AI systems.</p>
-  <table>
-    <tr><th>Dimension</th><th>Score</th></tr>
-    <tr><td>Content</td><td>8</td></tr>
-  </table>
-  <ul>
-    <li>Item one</li>
-    <li>Item two</li>
-    <li>Item three</li>
-  </ul>
-  <p>AEO optimization scores are calculated across 27 dimensions.</p>
-  <p>The AEO optimization framework provides comprehensive analysis.</p>
-  <nav>
+  <header>
+    <h1>AEO Optimization Guide</h1>
+  </header>
+  <nav role="navigation">
     <a href="/about">About</a>
     <a href="/blog">Blog</a>
     <a href="/contact">Contact</a>
@@ -77,6 +67,37 @@ const enhancedPageHtml = `<!DOCTYPE html>
     <a href="/docs">Docs</a>
     <a href="/faq">FAQ</a>
   </nav>
+  <main>
+    <article class="article-body">
+      <p>AEO optimization is a platform for improving AI visibility. AEO optimization helps businesses achieve better results.</p>
+      <h2>What is AEO?</h2>
+      <p>AEO is defined as the practice of optimizing content for AI answer extraction.</p>
+      <h2>How does optimization work?</h2>
+      <p>Optimization refers to the process of making content more accessible to AI systems.</p>
+      <table>
+        <tr><th>Dimension</th><th>Score</th></tr>
+        <tr><td>Content</td><td>8</td></tr>
+      </table>
+      <ul>
+        <li>Item one</li>
+        <li>Item two</li>
+        <li>Item three</li>
+      </ul>
+      <figure>
+        <img src="chart.png" alt="AEO score distribution chart">
+        <figcaption>Figure 1: Score distribution</figcaption>
+      </figure>
+      <img src="logo.png" alt="AEOrank logo">
+      <p>AEO optimization scores are calculated across 32 dimensions.</p>
+      <p>The AEO optimization framework provides comprehensive analysis.</p>
+    </article>
+    <aside>
+      <p>Related resources for AEO optimization.</p>
+    </aside>
+  </main>
+  <footer>
+    <p>AEOrank - AI Visibility Platform</p>
+  </footer>
 </body>
 </html>`;
 
@@ -114,8 +135,8 @@ describe("determinism", () => {
 			status: d.status,
 		}));
 
-		// All 30 dimensions should be present
-		expect(results[0].dimensions).toHaveLength(30);
+		// All 32 dimensions should be present
+		expect(results[0].dimensions).toHaveLength(32);
 
 		// All new dimensions should appear in results
 		const newDimIds = [
@@ -134,6 +155,11 @@ describe("determinism", () => {
 			"entity-disambiguation",
 			"internal-linking",
 			"author-schema",
+			"semantic-html",
+			"extraction-friction",
+			"image-context",
+			"schema-coverage",
+			"speakable-schema",
 		];
 		for (const id of newDimIds) {
 			const dim = results[0].dimensions.find((d) => d.id === id);
