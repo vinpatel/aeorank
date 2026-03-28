@@ -63,6 +63,8 @@ const PAGE_LEVEL_DIMENSIONS = [
 	"schema-coverage",
 	"speakable-schema",
 	"content-cannibalization",
+	"canonical-urls",
+	"visible-dates",
 ];
 
 /** Score each page individually across page-level dimensions */

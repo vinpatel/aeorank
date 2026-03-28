@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
 	scoreAiCrawlerAccess,
 	scoreAuthorSchema,
+	scoreCanonicalUrls,
 	scoreCitationAnchors,
 	scoreCitationReadyWriting,
 	scoreContentCannibalization,
@@ -25,12 +26,14 @@ import {
 	scorePublishingVelocity,
 	scoreQaFormat,
 	scoreQueryAnswerAlignment,
+	scoreRssFeed,
 	scoreSchemaMarkup,
 	scoreSchemaCoverage,
 	scoreSemanticHtml,
 	scoreSpeakableSchema,
 	scoreTablesLists,
 	scoreTopicCoherence,
+	scoreVisibleDates,
 } from "../scorer/dimensions.js";
 import type { ScanMeta, ScannedPage } from "../types.js";
 
@@ -1480,6 +1483,171 @@ describe("scoreContentLicensing", () => {
 			schemaOrg: [{ "@type": "Article", license: "https://creativecommons.org/licenses/by/4.0/" }],
 		});
 		const result = scoreContentLicensing([page], makeMeta({ aiTxt }));
+		expect(result.score).toBe(10);
+	});
+});
+
+describe("scoreCanonicalUrls", () => {
+	it("returns score 0, weight 'low', id 'canonical-urls' for empty pages", () => {
+		const result = scoreCanonicalUrls([], makeMeta());
+		expect(result.score).toBe(0);
+		expect(result.id).toBe("canonical-urls");
+		expect(result.weight).toBe("low");
+	});
+
+	it("returns score 10 when all pages have self-referencing canonical", () => {
+		const pages = [
+			makePage({ url: "https://example.com/a", canonical: "https://example.com/a" }),
+			makePage({ url: "https://example.com/b", canonical: "https://example.com/b" }),
+			makePage({ url: "https://example.com/c", canonical: "https://example.com/c" }),
+		];
+		const result = scoreCanonicalUrls(pages, makeMeta());
+		expect(result.score).toBe(10);
+	});
+
+	it("returns score 10 for a single page with self-referencing canonical", () => {
+		const page = makePage({ url: "https://example.com/page", canonical: "https://example.com/page" });
+		const result = scoreCanonicalUrls([page], makeMeta());
+		expect(result.score).toBe(10);
+	});
+
+	it("returns score 5-7 when all pages have canonical but not self-referencing", () => {
+		const pages = [
+			makePage({ url: "https://example.com/a", canonical: "https://example.com/other" }),
+			makePage({ url: "https://example.com/b", canonical: "https://example.com/other2" }),
+			makePage({ url: "https://example.com/c", canonical: "https://example.com/other3" }),
+		];
+		const result = scoreCanonicalUrls(pages, makeMeta());
+		expect(result.score).toBeGreaterThanOrEqual(3);
+		expect(result.score).toBeLessThanOrEqual(7);
+	});
+
+	it("returns score 4-6 when half the pages have canonical (half null)", () => {
+		const pages = [
+			makePage({ url: "https://example.com/a", canonical: "https://example.com/a" }),
+			makePage({ url: "https://example.com/b", canonical: null }),
+			makePage({ url: "https://example.com/c", canonical: "https://example.com/c" }),
+			makePage({ url: "https://example.com/d", canonical: null }),
+		];
+		const result = scoreCanonicalUrls(pages, makeMeta());
+		expect(result.score).toBeGreaterThanOrEqual(4);
+		expect(result.score).toBeLessThanOrEqual(7);
+	});
+
+	it("returns score 0 when no pages have canonical", () => {
+		const pages = [
+			makePage({ url: "https://example.com/a", canonical: null }),
+			makePage({ url: "https://example.com/b", canonical: null }),
+		];
+		const result = scoreCanonicalUrls(pages, makeMeta());
+		expect(result.score).toBe(0);
+	});
+
+	it("handles trailing slash normalization correctly (treats as self-referencing)", () => {
+		const page = makePage({ url: "https://example.com/page/", canonical: "https://example.com/page" });
+		const result = scoreCanonicalUrls([page], makeMeta());
+		expect(result.score).toBe(10);
+	});
+});
+
+describe("scoreRssFeed", () => {
+	it("returns score 0, weight 'low', id 'rss-feed' for empty pages", () => {
+		const result = scoreRssFeed([], makeMeta());
+		expect(result.score).toBe(0);
+		expect(result.id).toBe("rss-feed");
+		expect(result.weight).toBe("low");
+	});
+
+	it("returns score 10 when homepage has RSS feed", () => {
+		const pages = [
+			makePage({
+				url: "https://example.com",
+				rssFeeds: [{ href: "/feed.xml", type: "application/rss+xml" }],
+			}),
+			makePage({ url: "https://example.com/about", rssFeeds: [] }),
+		];
+		const result = scoreRssFeed(pages, makeMeta());
+		expect(result.score).toBe(10);
+	});
+
+	it("returns score 10 when homepage has Atom feed", () => {
+		const page = makePage({
+			url: "https://example.com",
+			rssFeeds: [{ href: "/feed.atom", type: "application/atom+xml" }],
+		});
+		const result = scoreRssFeed([page], makeMeta());
+		expect(result.score).toBe(10);
+	});
+
+	it("returns score 0 when no pages have rssFeeds", () => {
+		const pages = [
+			makePage({ url: "https://example.com", rssFeeds: [] }),
+			makePage({ url: "https://example.com/about", rssFeeds: [] }),
+		];
+		const result = scoreRssFeed(pages, makeMeta());
+		expect(result.score).toBe(0);
+	});
+
+	it("returns score 3-5 when only non-homepage pages have rssFeeds", () => {
+		const pages = [
+			makePage({ url: "https://example.com", rssFeeds: [] }),
+			makePage({
+				url: "https://example.com/blog",
+				rssFeeds: [{ href: "/blog/feed.xml", type: "application/rss+xml" }],
+			}),
+		];
+		const result = scoreRssFeed(pages, makeMeta());
+		expect(result.score).toBeGreaterThanOrEqual(3);
+		expect(result.score).toBeLessThanOrEqual(5);
+	});
+});
+
+describe("scoreVisibleDates", () => {
+	it("returns score 0, weight 'low', id 'visible-dates' for empty pages", () => {
+		const result = scoreVisibleDates([], makeMeta());
+		expect(result.score).toBe(0);
+		expect(result.id).toBe("visible-dates");
+		expect(result.weight).toBe("low");
+	});
+
+	it("returns score 9-10 when all pages have timeElementCount >= 1", () => {
+		const pages = [
+			makePage({ url: "https://example.com/a", timeElementCount: 2 }),
+			makePage({ url: "https://example.com/b", timeElementCount: 1 }),
+			makePage({ url: "https://example.com/c", timeElementCount: 3 }),
+		];
+		const result = scoreVisibleDates(pages, makeMeta());
+		expect(result.score).toBeGreaterThanOrEqual(9);
+		expect(result.score).toBeLessThanOrEqual(10);
+	});
+
+	it("returns score 4-6 when half the pages have timeElementCount >= 1", () => {
+		const pages = [
+			makePage({ url: "https://example.com/a", timeElementCount: 1 }),
+			makePage({ url: "https://example.com/b", timeElementCount: 0 }),
+			makePage({ url: "https://example.com/c", timeElementCount: 1 }),
+			makePage({ url: "https://example.com/d", timeElementCount: 0 }),
+		];
+		const result = scoreVisibleDates(pages, makeMeta());
+		expect(result.score).toBeGreaterThanOrEqual(4);
+		expect(result.score).toBeLessThanOrEqual(6);
+	});
+
+	it("returns score 0 when no pages have timeElementCount > 0", () => {
+		const pages = [
+			makePage({ url: "https://example.com/a", timeElementCount: 0 }),
+			makePage({ url: "https://example.com/b", timeElementCount: 0 }),
+		];
+		const result = scoreVisibleDates(pages, makeMeta());
+		expect(result.score).toBe(0);
+	});
+
+	it("returns score 10 for pages with high timeElementCount (3+) plus hasDatePublished", () => {
+		const pages = [
+			makePage({ url: "https://example.com/a", timeElementCount: 3, hasDatePublished: true }),
+			makePage({ url: "https://example.com/b", timeElementCount: 4, hasDatePublished: true }),
+		];
+		const result = scoreVisibleDates(pages, makeMeta());
 		expect(result.score).toBe(10);
 	});
 });

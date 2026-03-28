@@ -1703,6 +1703,132 @@ export function scoreContentLicensing(pages: ScannedPage[], meta: ScanMeta): Dim
 	);
 }
 
+/** Dimension 36: Canonical URLs (low weight) */
+export function scoreCanonicalUrls(pages: ScannedPage[], _meta: ScanMeta): DimensionScore {
+	const hint = "Add self-referencing <link rel='canonical'> tags to all pages to prevent duplicate content issues";
+
+	if (pages.length === 0) {
+		return makeDimension("canonical-urls", "Canonical URLs", 0, "low", hint);
+	}
+
+	// Sort pages by URL for determinism
+	const sorted = [...pages].sort((a, b) => a.url.localeCompare(b.url));
+
+	function normalize(url: string): string {
+		return url.toLowerCase().replace(/\/+$/, "");
+	}
+
+	let selfRefCount = 0;
+	let hasCanonicalCount = 0;
+
+	for (const page of sorted) {
+		if (page.canonical && page.canonical.trim().length > 0) {
+			hasCanonicalCount++;
+			if (normalize(page.url) === normalize(page.canonical)) {
+				selfRefCount++;
+			}
+		}
+	}
+
+	const selfRefRatio = selfRefCount / sorted.length;
+	const canonicalRatio = hasCanonicalCount / sorted.length;
+
+	let score: number;
+	if (selfRefRatio >= 0.9) score = 10;
+	else if (selfRefRatio >= 0.7) score = 8;
+	else if (selfRefRatio >= 0.5) score = 6;
+	else if (canonicalRatio >= 0.5) score = 4;
+	else if (canonicalRatio >= 0.3) score = 2;
+	else score = 0;
+
+	return makeDimension(
+		"canonical-urls",
+		"Canonical URLs",
+		score,
+		"low",
+		score < 10 ? hint : "All pages have self-referencing canonical tags",
+	);
+}
+
+/** Dimension 37: RSS/Atom Feed (low weight) */
+export function scoreRssFeed(pages: ScannedPage[], _meta: ScanMeta): DimensionScore {
+	const hint = "Add RSS/Atom feed and link it from the homepage with <link rel='alternate' type='application/rss+xml'>";
+
+	if (pages.length === 0) {
+		return makeDimension("rss-feed", "RSS/Atom Feed", 0, "low", hint);
+	}
+
+	// Sort pages by URL for determinism; identify homepage as shortest path
+	const sorted = [...pages].sort((a, b) => a.url.localeCompare(b.url));
+
+	function getPathLength(url: string): number {
+		try {
+			return new URL(url).pathname.length;
+		} catch {
+			return url.length;
+		}
+	}
+
+	// Homepage: shortest path (usually "/" or the root)
+	const homepage = sorted.reduce((min, page) =>
+		getPathLength(page.url) < getPathLength(min.url) ? page : min,
+	);
+
+	const homepageHasFeed = homepage.rssFeeds.length > 0;
+	const anyPageHasFeed = sorted.some((p) => p.rssFeeds.length > 0);
+
+	let score: number;
+	if (homepageHasFeed) score = 10;
+	else if (anyPageHasFeed) score = 4;
+	else score = 0;
+
+	return makeDimension(
+		"rss-feed",
+		"RSS/Atom Feed",
+		score,
+		"low",
+		score < 10 ? hint : "RSS/Atom feed linked from homepage",
+	);
+}
+
+/** Dimension 38: Visible Date Signals (low weight) */
+export function scoreVisibleDates(pages: ScannedPage[], _meta: ScanMeta): DimensionScore {
+	const hint = "Add <time datetime='...'> elements to show publication and update dates visibly on content pages";
+
+	if (pages.length === 0) {
+		return makeDimension("visible-dates", "Visible Date Signals", 0, "low", hint);
+	}
+
+	// Sort pages by URL for determinism
+	const sorted = [...pages].sort((a, b) => a.url.localeCompare(b.url));
+
+	const pagesWithDates = sorted.filter((p) => p.timeElementCount > 0).length;
+	const dateRatio = pagesWithDates / sorted.length;
+
+	let baseDateScore: number;
+	if (dateRatio >= 1.0) baseDateScore = 9;
+	else if (dateRatio >= 0.8) baseDateScore = 7;
+	else if (dateRatio >= 0.6) baseDateScore = 6;
+	else if (dateRatio >= 0.4) baseDateScore = 4;
+	else if (dateRatio >= 0.2) baseDateScore = 2;
+	else if (dateRatio > 0) baseDateScore = 1;
+	else baseDateScore = 0;
+
+	// Bonus: pages with hasDatePublished (meta/schema dates)
+	const pagesWithMetaDate = sorted.filter((p) => p.hasDatePublished).length;
+	const metaBonus = pagesWithMetaDate / sorted.length >= 0.5 ? 2 : 0;
+
+	const score = Math.min(10, baseDateScore + metaBonus);
+
+	return makeDimension(
+		"visible-dates",
+		"Visible Date Signals",
+		score,
+		"low",
+		score < 10 ? hint : "Excellent visible date signals with time elements on all pages",
+	);
+}
+
 /** Registry mapping dimension IDs to scorer functions */
 export const DIMENSION_SCORERS: Record<string, DimensionScorer> = {
 	"llms-txt": scoreLlmsTxt,
@@ -1740,6 +1866,9 @@ export const DIMENSION_SCORERS: Record<string, DimensionScorer> = {
 	"content-cannibalization": scoreContentCannibalization,
 	"publishing-velocity": scorePublishingVelocity,
 	"content-licensing": scoreContentLicensing,
+	"canonical-urls": scoreCanonicalUrls,
+	"rss-feed": scoreRssFeed,
+	"visible-dates": scoreVisibleDates,
 };
 
 function makeDimension(
