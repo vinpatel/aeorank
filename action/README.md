@@ -10,7 +10,7 @@ Scan any URL for AI Engine Optimization (AEO) score and post results as a GitHub
 ## Quick Start
 
 ```yaml
-- uses: aeorank/action@v1
+- uses: vinpatel/aeorank-action@v1
   with:
     url: https://example.com
 ```
@@ -71,7 +71,7 @@ jobs:
   aeorank:
     runs-on: ubuntu-latest
     steps:
-      - uses: aeorank/action@v1
+      - uses: vinpatel/aeorank-action@v1
         with:
           url: https://example.com
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -149,7 +149,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-npm-
 
-      - uses: aeorank/action@v1
+      - uses: vinpatel/aeorank-action@v1
         with:
           url: https://example.com
 ```
