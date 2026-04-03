@@ -144,7 +144,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
-      - uses: vinpatel/aeorank@v1
+      - uses: vinpatel/aeorank-action@v1
         with:
           url: https://your-site.com
           fail-below: 50
