@@ -9,6 +9,7 @@ const isProtectedRoute = createRouteMatcher([
 const isPublicApiRoute = createRouteMatcher([
 	"/api/scan/process",
 	"/api/webhooks/(.*)",
+	"/api/github/(.*)",
 ]);
 
 export default clerkMiddleware((auth, req) => {
