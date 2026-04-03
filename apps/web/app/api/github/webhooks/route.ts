@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import { verifyWebhookSignature } from "@/lib/github-app";
+import { verifyWebhookSignature, getInstallationToken, createCheckRun } from "@/lib/github-app";
+import { detectSiteUrl } from "@/lib/detect-site-url";
+import { getQStashClient } from "@/lib/qstash";
 
 /**
  * GitHub App webhook handler — PUBLIC route (excluded from Clerk auth in proxy.ts).
@@ -96,25 +98,13 @@ async function handlePullRequest(payload: PullRequestPayload): Promise<void> {
 		`GitHub App: PR #${prNumber} ${payload.action} on ${repo.owner.login}/${repo.name} (sha: ${pr.head.sha.slice(0, 7)})`,
 	);
 
-	// Enqueue scan via QStash — implemented in S03
-	// For now, just log that we would scan
-	const scanPayload = {
+	await enqueueScan({
 		installationId: installation.id,
 		owner: repo.owner.login,
 		repo: repo.name,
 		prNumber,
 		headSha: pr.head.sha,
-		defaultBranch: repo.default_branch,
-	};
-
-	console.log("GitHub App: would enqueue scan:", JSON.stringify(scanPayload));
-
-	// TODO (S03): Enqueue QStash job to /api/github/scan
-	// const qstash = getQStashClient();
-	// await qstash.publishJSON({
-	//   url: `${process.env.NEXT_PUBLIC_APP_URL}/api/github/scan`,
-	//   body: scanPayload,
-	// });
+	});
 }
 
 interface PushPayload {
@@ -135,16 +125,111 @@ async function handlePush(payload: PushPayload): Promise<void> {
 		`GitHub App: push to ${ref} on ${repo.owner.login}/${repo.name} (sha: ${after.slice(0, 7)})`,
 	);
 
-	// Enqueue scan via QStash — implemented in S03
-	const scanPayload = {
+	await enqueueScan({
 		installationId: installation.id,
 		owner: repo.owner.login,
 		repo: repo.name,
 		headSha: after,
-		defaultBranch: repo.default_branch,
-	};
-
-	console.log("GitHub App: would enqueue scan:", JSON.stringify(scanPayload));
-
-	// TODO (S03): Enqueue QStash job to /api/github/scan
+	});
 }
+
+// ─── Scan Enqueue ──────────────────────────────────────────────────
+
+interface EnqueueParams {
+	installationId: number;
+	owner: string;
+	repo: string;
+	headSha: string;
+	prNumber?: number;
+}
+
+async function enqueueScan(params: EnqueueParams): Promise<void> {
+	const { installationId, owner, repo, headSha, prNumber } = params;
+
+	// Rate limit: 10 scans per day per installation
+	const rateLimitKey = `github-app:${installationId}`;
+	const now = Date.now();
+	const dayAgo = now - 24 * 60 * 60 * 1000;
+
+	// Simple in-memory rate limiter (per-process — good enough for single Vercel instance)
+	if (!rateLimitMap.has(rateLimitKey)) {
+		rateLimitMap.set(rateLimitKey, []);
+	}
+	const timestamps = rateLimitMap.get(rateLimitKey)!;
+	// Prune old entries
+	const recent = timestamps.filter((t) => t > dayAgo);
+	rateLimitMap.set(rateLimitKey, recent);
+
+	if (recent.length >= RATE_LIMIT_PER_DAY) {
+		console.log(`GitHub App: rate limit hit for installation ${installationId} (${recent.length}/${RATE_LIMIT_PER_DAY})`);
+		// Post a neutral Check Run informing the user
+		try {
+			const token = await getInstallationToken(installationId);
+			await createCheckRun({
+				token,
+				owner,
+				repo,
+				headSha,
+				name: "AEOrank Score",
+				conclusion: "neutral",
+				title: "Rate Limit Reached",
+				summary: `AEOrank free tier allows ${RATE_LIMIT_PER_DAY} scans per day. Try again tomorrow or upgrade at [app.aeorank.dev](https://app.aeorank.dev).`,
+			});
+		} catch (err) {
+			console.error("Failed to post rate limit Check Run:", err);
+		}
+		return;
+	}
+
+	// Detect site URL
+	let token: string;
+	try {
+		token = await getInstallationToken(installationId);
+	} catch (err) {
+		console.error("Failed to get installation token for URL detection:", err);
+		return;
+	}
+
+	const url = await detectSiteUrl({ token, owner, repo });
+
+	if (!url) {
+		console.log(`GitHub App: no URL found for ${owner}/${repo}`);
+		try {
+			await createCheckRun({
+				token,
+				owner,
+				repo,
+				headSha,
+				name: "AEOrank Score",
+				conclusion: "neutral",
+				title: "No Site URL Configured",
+				summary: "AEOrank couldn't detect your site URL. Add a `.aeorank` file with `{\"url\": \"https://your-site.com\"}` to your repo root, or set `homepage` in package.json.",
+			});
+		} catch (err) {
+			console.error("Failed to post no-URL Check Run:", err);
+		}
+		return;
+	}
+
+	// Record scan timestamp for rate limiting
+	recent.push(now);
+
+	// Enqueue via QStash
+	const qstash = getQStashClient();
+	await qstash.publishJSON({
+		url: `${process.env.NEXT_PUBLIC_APP_URL}/api/github/scan`,
+		body: {
+			installationId,
+			owner,
+			repo,
+			headSha,
+			url,
+			prNumber,
+		},
+	});
+
+	console.log(`GitHub App: enqueued scan for ${owner}/${repo} → ${url}`);
+}
+
+const RATE_LIMIT_PER_DAY = 10;
+const rateLimitMap = new Map<string, number[]>();
