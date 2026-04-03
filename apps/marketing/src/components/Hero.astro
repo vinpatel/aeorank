@@ -2,230 +2,98 @@
 import TerminalDemo from "./TerminalDemo.tsx";
 ---
 
-<section id="hero" class="relative overflow-hidden pt-20 pb-24 md:pt-32 md:pb-32 px-6">
-	<!-- === Background decorative elements === -->
-
-	<!-- Grid pattern overlay -->
-	<div
-		class="pointer-events-none absolute inset-0 opacity-[0.03]"
-		style="background-image: url('data:image/svg+xml,%3Csvg%20width%3D%2260%22%20height%3D%2260%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M60%200H0v60%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%220.5%22%2F%3E%3C%2Fsvg%3E'); background-size: 60px 60px;"
-	>
-	</div>
-
-	<!-- Gradient orbs -->
-	<div
-		class="pointer-events-none absolute -top-[300px] left-1/2 -translate-x-1/2 h-[600px] w-[900px] rounded-full opacity-[0.07]"
-		style="background: radial-gradient(ellipse, #E8590C 0%, transparent 70%);"
-	>
-	</div>
-	<div
-		class="pointer-events-none absolute top-[60%] -right-[200px] h-[500px] w-[500px] rounded-full opacity-[0.05]"
-		style="background: radial-gradient(circle, #E8590C 0%, transparent 70%);"
-	>
-	</div>
-	<div
-		class="pointer-events-none absolute top-[30%] -left-[150px] h-[400px] w-[400px] rounded-full opacity-[0.04]"
-		style="background: radial-gradient(circle, #FF7A3D 0%, transparent 70%);"
-	>
-	</div>
-
-	<!-- Floating decorative dots -->
-	<div class="pointer-events-none absolute top-32 left-[15%] h-1 w-1 rounded-full bg-accent-warm/30 animate-pulse"></div>
-	<div class="pointer-events-none absolute top-48 right-[20%] h-1.5 w-1.5 rounded-full bg-accent-warm/20 animate-pulse" style="animation-delay: 1s;"></div>
-	<div class="pointer-events-none absolute top-[60%] left-[10%] h-1 w-1 rounded-full bg-accent-warm/25 animate-pulse" style="animation-delay: 2s;"></div>
-	<div class="pointer-events-none absolute top-[45%] right-[12%] h-0.5 w-0.5 rounded-full bg-white/20 animate-pulse" style="animation-delay: 0.5s;"></div>
+<section id="hero" class="relative overflow-hidden pt-20 pb-24 md:pt-28 md:pb-28 px-6">
+	<!-- Background -->
+	<div class="pointer-events-none absolute inset-0 opacity-[0.03]" style="background-image: url('data:image/svg+xml,%3Csvg%20width%3D%2260%22%20height%3D%2260%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M60%200H0v60%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%220.5%22%2F%3E%3C%2Fsvg%3E'); background-size: 60px 60px;"></div>
+	<div class="pointer-events-none absolute -top-[300px] left-1/2 -translate-x-1/2 h-[600px] w-[900px] rounded-full opacity-[0.08]" style="background: radial-gradient(ellipse, #E8590C 0%, transparent 70%);"></div>
 
 	<div class="relative mx-auto max-w-6xl">
-		<!-- Eyebrow badge -->
-		<div class="flex justify-center mb-8 animate-fade-in">
-			<div
-				class="inline-flex items-center gap-2 rounded-full border border-accent-warm/20 bg-accent-warm/[0.06] px-4 py-1.5 backdrop-blur-sm"
+		<!-- Eyebrow -->
+		<div class="flex justify-center mb-6 animate-fade-in">
+			<a
+				href="https://github.com/vinpatel/aeorank"
+				class="inline-flex items-center gap-2.5 rounded-full border border-accent-warm/20 bg-accent-warm/[0.06] px-4 py-1.5 text-sm font-medium text-accent-warm hover:bg-accent-warm/[0.1] transition-colors"
+				target="_blank"
 			>
-				<span class="relative flex h-2 w-2">
-					<span
-						class="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent-warm opacity-75"
-					></span>
-					<span class="relative inline-flex h-2 w-2 rounded-full bg-accent-warm"></span>
-				</span>
-				<span class="text-sm font-medium tracking-wide text-accent-warm">
-					AI Engine Optimization
-				</span>
-			</div>
+				<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" class="opacity-80">
+					<path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
+				</svg>
+				<span>Open source on GitHub</span>
+				<span class="text-accent-warm/60">·</span>
+				<span>Star us ★</span>
+			</a>
 		</div>
 
 		<!-- Headline -->
 		<div class="text-center animate-fade-in-up">
-			<h1 class="heading-xl mx-auto max-w-4xl text-text">
-				Your site is invisible to AI.
+			<h1 class="heading-xl mx-auto max-w-4xl text-text leading-[1.1]">
+				Your site ranks on Google.
 				<br />
-				<span class="gradient-text">Fix it in 30 seconds.</span>
+				<span class="gradient-text">AI can't find it.</span>
 			</h1>
 		</div>
 
 		<!-- Subheadline -->
-		<p
-			class="body-lg mt-8 mx-auto max-w-2xl text-center text-text-muted animate-fade-in-up"
-			style="animation-delay: 0.1s;"
-		>
-			AI engines power 40% of web discovery. AEOrank scans your site, scores
-			your AI visibility across 36 criteria, and generates the 8 files that
-			get you cited by ChatGPT, Perplexity, and Claude.
+		<p class="body-lg mt-6 mx-auto max-w-2xl text-center text-text-muted animate-fade-in-up" style="animation-delay: 0.1s;">
+			AEOrank scores your AI visibility 0–100 across 36 criteria. See exactly what ChatGPT, Perplexity, Claude, and Gemini can find — and what they can't. One command. Zero config.
 		</p>
 
-		<!-- CTAs -->
-		<div
-			class="mt-10 flex flex-wrap items-center justify-center gap-4 animate-fade-in-up"
-			style="animation-delay: 0.2s;"
-		>
-			<a
-				href="https://app.aeorank.dev/sign-up"
-				class="btn-primary group"
-			>
-				Get Started Free
-				<svg
-					width="16"
-					height="16"
-					viewBox="0 0 16 16"
-					fill="none"
-					class="ml-2 transition-transform duration-200 group-hover:translate-x-0.5"
-				>
-					<path
-						d="M3 8h10m0 0L9 4m4 4L9 12"
-						stroke="currentColor"
-						stroke-width="1.5"
-						stroke-linecap="round"
-						stroke-linejoin="round"></path>
-				</svg>
+		<!-- Two CTAs -->
+		<div class="mt-8 flex flex-wrap items-center justify-center gap-3 animate-fade-in-up" style="animation-delay: 0.2s;">
+			<a href="https://github.com/apps/aeorank" class="btn-primary group">
+				Install GitHub App
+				<span class="ml-1.5 text-white/60 text-xs font-normal">— zero config</span>
 			</a>
-			<a
-				href="#how-it-works"
-				class="btn-secondary group"
-			>
+			<a href="#how-it-works" class="btn-secondary group">
 				See How It Works
-				<svg
-					width="16"
-					height="16"
-					viewBox="0 0 16 16"
-					fill="none"
-					class="ml-2 transition-transform duration-200 group-hover:translate-y-0.5"
-				>
-					<path
-						d="M8 3v10m0 0l-4-4m4 4l4-4"
-						stroke="currentColor"
-						stroke-width="1.5"
-						stroke-linecap="round"
-						stroke-linejoin="round"></path>
+				<svg width="16" height="16" viewBox="0 0 16 16" fill="none" class="ml-1.5 transition-transform duration-200 group-hover:translate-y-0.5">
+					<path d="M8 3v10m0 0l-4-4m4 4l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
 				</svg>
 			</a>
 		</div>
 
-		<!-- Trust badges -->
-		<div
-			class="mt-8 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-sm text-text-muted animate-fade-in-up"
-			style="animation-delay: 0.3s;"
-		>
-			<span class="flex items-center gap-2">
-				<svg
-					width="16"
-					height="16"
-					viewBox="0 0 16 16"
-					fill="none"
-					class="text-green"
-				>
-					<circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1"></circle>
-					<path
-						d="M5.5 8L7.2 9.7L10.5 6.3"
-						stroke="currentColor"
-						stroke-width="1.5"
-						stroke-linecap="round"
-						stroke-linejoin="round"></path>
-				</svg>
-				Free plan available
-			</span>
-			<span class="flex items-center gap-2">
-				<svg
-					width="16"
-					height="16"
-					viewBox="0 0 16 16"
-					fill="none"
-					class="text-green"
-				>
-					<circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1"></circle>
-					<path
-						d="M5.5 8L7.2 9.7L10.5 6.3"
-						stroke="currentColor"
-						stroke-width="1.5"
-						stroke-linecap="round"
-						stroke-linejoin="round"></path>
-				</svg>
-				No credit card required
-			</span>
-			<span class="flex items-center gap-2">
-				<svg
-					width="16"
-					height="16"
-					viewBox="0 0 16 16"
-					fill="none"
-					class="text-green"
-				>
-					<circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1"></circle>
-					<path
-						d="M5.5 8L7.2 9.7L10.5 6.3"
-						stroke="currentColor"
-						stroke-width="1.5"
-						stroke-linecap="round"
-						stroke-linejoin="round"></path>
-				</svg>
-				Results in 30 seconds
-			</span>
-		</div>
-
-		<!-- Social proof stats -->
-		<div
-			class="mt-16 flex flex-wrap items-center justify-center gap-8 md:gap-12 animate-fade-in-up"
-			style="animation-delay: 0.4s;"
-		>
-			<div class="text-center">
-				<div class="font-display text-4xl font-bold tracking-tight text-text">
-					2,400<span class="text-accent-warm">+</span>
+		<!-- Stats bar -->
+		<div class="mt-14 flex flex-wrap items-center justify-center gap-6 md:gap-10 animate-fade-in-up" style="animation-delay: 0.3s;">
+			<div class="flex items-center gap-2.5">
+				<div class="flex h-9 w-9 items-center justify-center rounded-lg bg-accent-warm/10">
+					<span class="text-accent-warm font-bold text-sm">36</span>
 				</div>
-				<div class="mt-1 text-sm text-text-muted">Sites scanned</div>
+				<span class="text-sm text-text-muted">AI Criteria</span>
 			</div>
-			<div class="hidden sm:block h-10 w-px bg-border"></div>
-			<div class="text-center">
-				<div class="font-display text-4xl font-bold tracking-tight text-text">
-					36
+			<div class="hidden sm:block h-8 w-px bg-white/[0.08]"></div>
+			<div class="flex items-center gap-2.5">
+				<div class="flex h-9 w-9 items-center justify-center rounded-lg bg-accent-warm/10">
+					<span class="text-accent-warm font-bold text-sm">5</span>
 				</div>
-				<div class="mt-1 text-sm text-text-muted">AI criteria scored</div>
+				<span class="text-sm text-text-muted">Pillars</span>
 			</div>
-			<div class="hidden sm:block h-10 w-px bg-border"></div>
-			<div class="text-center">
-				<div class="font-display text-4xl font-bold tracking-tight text-text">
-					8
+			<div class="hidden sm:block h-8 w-px bg-white/[0.08]"></div>
+			<div class="flex items-center gap-2.5">
+				<div class="flex h-9 w-9 items-center justify-center rounded-lg bg-accent-warm/10">
+					<span class="text-accent-warm font-bold text-sm">9</span>
 				</div>
-				<div class="mt-1 text-sm text-text-muted">Files generated</div>
+				<span class="text-sm text-text-muted">Files Generated</span>
+			</div>
+			<div class="hidden sm:block h-8 w-px bg-white/[0.08]"></div>
+			<div class="flex items-center gap-2.5">
+				<div class="flex h-9 w-9 items-center justify-center rounded-lg bg-green/10">
+					<span class="text-green font-bold text-sm">$0</span>
+				</div>
+				<span class="text-sm text-text-muted">Open Source</span>
+			</div>
+			<div class="hidden sm:block h-8 w-px bg-white/[0.08]"></div>
+			<div class="flex items-center gap-2.5">
+				<div class="flex h-9 w-9 items-center justify-center rounded-lg bg-accent-warm/10">
+					<span class="text-accent-warm font-bold text-sm">13</span>
+				</div>
+				<span class="text-sm text-text-muted">Framework Plugins</span>
 			</div>
 		</div>
 
 		<!-- Terminal demo -->
-		<div
-			class="mt-20 mx-auto max-w-4xl animate-fade-in-up"
-			style="animation-delay: 0.5s;"
-		>
-			<!-- Glow behind terminal -->
-			<div
-				class="pointer-events-none absolute left-1/2 -translate-x-1/2 bottom-[10%] h-[300px] w-[600px] rounded-full opacity-[0.06]"
-				style="background: radial-gradient(ellipse, #E8590C 0%, transparent 70%);"
-			>
-			</div>
-			<div
-				class="relative rounded-xl border border-border bg-bg-card/80 p-1 shadow-2xl shadow-black/40 backdrop-blur-sm"
-			>
-				<div
-					class="absolute -inset-px rounded-xl opacity-30"
-					style="background: linear-gradient(135deg, rgba(232,89,12,0.15) 0%, transparent 50%, rgba(232,89,12,0.08) 100%);"
-				>
-				</div>
+		<div class="mt-16 mx-auto max-w-4xl animate-fade-in-up" style="animation-delay: 0.4s;">
+			<div class="relative rounded-xl border border-border bg-bg-card/80 p-1 shadow-2xl shadow-black/40 backdrop-blur-sm">
+				<div class="absolute -inset-px rounded-xl opacity-30" style="background: linear-gradient(135deg, rgba(232,89,12,0.15) 0%, transparent 50%, rgba(232,89,12,0.08) 100%);"></div>
 				<div class="relative">
 					<TerminalDemo client:visible />
 				</div>
@@ -234,32 +102,63 @@ import TerminalDemo from "./TerminalDemo.tsx";
 	</div>
 </section>
 
+<!-- With vs Without comparison -->
+<section class="relative px-6 py-20 md:py-24 border-t border-white/[0.04]">
+	<div class="mx-auto max-w-5xl">
+		<div class="text-center mb-14">
+			<h2 class="heading-lg text-text">The difference</h2>
+			<p class="mt-3 text-text-muted">What changes when you add AEOrank to your workflow.</p>
+		</div>
+
+		<div class="grid md:grid-cols-2 gap-6">
+			<!-- Without -->
+			<div class="rounded-xl border border-white/[0.06] bg-white/[0.02] p-8">
+				<div class="flex items-center gap-2.5 mb-6">
+					<div class="flex h-7 w-7 items-center justify-center rounded-full bg-red-500/10">
+						<span class="text-red-400 text-sm">✗</span>
+					</div>
+					<span class="text-sm font-semibold text-text-muted uppercase tracking-wider">Without AEOrank</span>
+				</div>
+				<ul class="space-y-4 text-sm text-text-muted">
+					<li class="flex gap-3"><span class="text-red-400/60 shrink-0">✗</span> <span>Your site is invisible to ChatGPT, Perplexity, Claude</span></li>
+					<li class="flex gap-3"><span class="text-red-400/60 shrink-0">✗</span> <span>No llms.txt, no ai.txt — AI crawlers skip you</span></li>
+					<li class="flex gap-3"><span class="text-red-400/60 shrink-0">✗</span> <span>GPTBot and ClaudeBot blocked in robots.txt by default</span></li>
+					<li class="flex gap-3"><span class="text-red-400/60 shrink-0">✗</span> <span>Content not structured for AI extraction</span></li>
+					<li class="flex gap-3"><span class="text-red-400/60 shrink-0">✗</span> <span>Competitors get cited in AI answers — you don't</span></li>
+					<li class="flex gap-3"><span class="text-red-400/60 shrink-0">✗</span> <span>No way to measure AI visibility or track progress</span></li>
+				</ul>
+			</div>
+
+			<!-- With -->
+			<div class="rounded-xl border border-accent-warm/20 bg-accent-warm/[0.03] p-8">
+				<div class="flex items-center gap-2.5 mb-6">
+					<div class="flex h-7 w-7 items-center justify-center rounded-full bg-green/10">
+						<span class="text-green text-sm">✓</span>
+					</div>
+					<span class="text-sm font-semibold text-accent-warm uppercase tracking-wider">With AEOrank</span>
+				</div>
+				<ul class="space-y-4 text-sm text-text">
+					<li class="flex gap-3"><span class="text-green shrink-0">✓</span> <span>Score 0–100 tells you exactly where you stand</span></li>
+					<li class="flex gap-3"><span class="text-green shrink-0">✓</span> <span>9 AI-readable files generated automatically</span></li>
+					<li class="flex gap-3"><span class="text-green shrink-0">✓</span> <span>AI crawler access configured correctly</span></li>
+					<li class="flex gap-3"><span class="text-green shrink-0">✓</span> <span>36 criteria check every aspect AI engines evaluate</span></li>
+					<li class="flex gap-3"><span class="text-green shrink-0">✓</span> <span>Check Runs on every PR — catch regressions in CI</span></li>
+					<li class="flex gap-3"><span class="text-green shrink-0">✓</span> <span>Actionable recommendations tell you exactly what to fix</span></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</section>
+
 <style>
 	@keyframes fade-in {
-		from {
-			opacity: 0;
-		}
-		to {
-			opacity: 1;
-		}
+		from { opacity: 0; }
+		to { opacity: 1; }
 	}
-
 	@keyframes fade-in-up {
-		from {
-			opacity: 0;
-			transform: translateY(16px);
-		}
-		to {
-			opacity: 1;
-			transform: translateY(0);
-		}
+		from { opacity: 0; transform: translateY(16px); }
+		to { opacity: 1; transform: translateY(0); }
 	}
-
-	.animate-fade-in {
-		animation: fade-in 0.6s ease-out both;
-	}
-
-	.animate-fade-in-up {
-		animation: fade-in-up 0.7s ease-out both;
-	}
+	.animate-fade-in { animation: fade-in 0.6s ease-out both; }
+	.animate-fade-in-up { animation: fade-in-up 0.7s ease-out both; }
 </style>
