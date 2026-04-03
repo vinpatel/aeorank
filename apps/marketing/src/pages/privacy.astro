@@ -1,0 +1,68 @@
+---
+import Base from "../layouts/Base.astro";
+---
+
+<Base title="Privacy Policy — AEOrank" description="AEOrank privacy policy. What data we collect and how we use it.">
+	<section class="px-6 py-20 md:py-32">
+		<div class="mx-auto max-w-3xl prose prose-invert prose-headings:text-text prose-p:text-text-muted prose-li:text-text-muted prose-a:text-accent-warm prose-strong:text-text">
+			<h1 class="heading-lg mb-4">Privacy Policy</h1>
+			<p class="text-sm text-text-muted mb-12">Last updated: April 3, 2026</p>
+
+			<h2>Overview</h2>
+			<p>AEOrank is an open-source tool that scans websites for AI Engine Optimization (AEO). This policy explains what data we collect and how we use it.</p>
+
+			<h2>What We Collect</h2>
+
+			<h3>GitHub App</h3>
+			<p>When you install the AEOrank GitHub App, we receive:</p>
+			<ul>
+				<li><strong>Repository metadata</strong> — repository name, owner, default branch (used to detect your site URL)</li>
+				<li><strong>Pull request metadata</strong> — PR number, head SHA (used to post Check Runs and comments)</li>
+				<li><strong>Installation ID</strong> — identifies which repositories the App is installed on</li>
+			</ul>
+			<p>We do <strong>not</strong> access your source code, commits, issues, or any private repository content beyond the files needed for URL detection (.aeorank, CNAME, package.json, aeorank.config.js).</p>
+
+			<h3>Website Scans</h3>
+			<p>When a scan runs, we fetch your publicly accessible website URL and analyze its HTML structure. We do not store the full HTML content. We store only the computed AEO score, dimension breakdown, and generated file content.</p>
+
+			<h3>SaaS Dashboard</h3>
+			<p>If you use the dashboard at app.aeorank.dev, we collect:</p>
+			<ul>
+				<li><strong>Account information</strong> — email address and name via Clerk authentication</li>
+				<li><strong>Sites you add</strong> — URLs you submit for scanning</li>
+				<li><strong>Scan results</strong> — scores, dimensions, and generated files</li>
+				<li><strong>Payment information</strong> — processed by Stripe; we do not store card numbers</li>
+			</ul>
+
+			<h3>CLI</h3>
+			<p>The CLI tool (<code>npx aeorank-cli scan</code>) runs entirely on your machine. It sends no data to our servers.</p>
+
+			<h2>How We Use Your Data</h2>
+			<ul>
+				<li>To scan websites and compute AEO scores</li>
+				<li>To post Check Runs and PR comments on your repositories</li>
+				<li>To display scan history on the dashboard</li>
+				<li>To process payments via Stripe</li>
+			</ul>
+			<p>We do <strong>not</strong> sell your data. We do <strong>not</strong> use your data for advertising. We do <strong>not</strong> share your data with third parties except as required for the services above (Clerk for auth, Supabase for storage, Stripe for payments, QStash for async processing).</p>
+
+			<h2>Data Storage</h2>
+			<p>Data is stored in Supabase (PostgreSQL) with row-level security. Each user can only access their own sites, scans, and subscription data.</p>
+
+			<h2>Data Deletion</h2>
+			<p>You can delete your sites and scan data at any time from the dashboard. To request full account deletion, email <a href="mailto:vinpatel.pro@gmail.com">vinpatel.pro@gmail.com</a>.</p>
+
+			<h2>Cookies</h2>
+			<p>The dashboard uses essential cookies for authentication (Clerk). We use Sentry for error tracking. No advertising cookies.</p>
+
+			<h2>Open Source</h2>
+			<p>The AEOrank scoring engine, CLI, and all framework plugins are open source under the MIT license. You can audit the code at <a href="https://github.com/vinpatel/aeorank">github.com/vinpatel/aeorank</a>.</p>
+
+			<h2>Changes</h2>
+			<p>We may update this policy. Changes will be posted to this page with an updated date.</p>
+
+			<h2>Contact</h2>
+			<p>For privacy questions: <a href="mailto:vinpatel.pro@gmail.com">vinpatel.pro@gmail.com</a></p>
+		</div>
+	</section>
+</Base>
