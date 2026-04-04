@@ -1,124 +1,26 @@
 ---
 ---
-
-<nav
-	class="sticky top-0 z-50 border-b border-white/[0.06] bg-[#09090B]/80 backdrop-blur-xl backdrop-saturate-150"
-	id="main-nav"
->
-	<div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-3.5">
-		<!-- Left: Logo -->
-		<a href="/" class="group flex items-center gap-2.5">
-			<svg
-				width="30"
-				height="30"
-				viewBox="0 0 32 32"
-				fill="none"
-				xmlns="http://www.w3.org/2000/svg"
-				class="transition-transform duration-200 group-hover:scale-110"
-			>
-				<rect width="32" height="32" rx="7" fill="#E8590C" />
-				<path d="M8 22L13.5 10H18.5L24 22" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
-				<path d="M10.5 18H21.5" stroke="#fff" stroke-width="2.5" stroke-linecap="round" />
-			</svg>
-			<span class="text-lg font-bold tracking-tight text-text font-display">AEOrank</span>
+<nav class="sticky top-0 z-50 border-b border-border bg-bg/90 backdrop-blur-lg">
+	<div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-3">
+		<a href="/" class="flex items-center gap-2.5">
+			<svg width="28" height="28" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="7" fill="#E8590C"/><path d="M8 22L13.5 10H18.5L24 22" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M10.5 18H21.5" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/></svg>
+			<span class="text-lg font-bold tracking-tight">AEOrank</span>
 		</a>
-
-		<!-- Center: Nav links -->
 		<div class="hidden md:flex items-center gap-7">
-			<a href="#how-it-works" class="text-sm font-medium text-text-muted hover:text-text transition-colors">How It Works</a>
-			<a href="#scoring" class="text-sm font-medium text-text-muted hover:text-text transition-colors">Scoring</a>
-			<a href="#integrations" class="text-sm font-medium text-text-muted hover:text-text transition-colors">Integrations</a>
-			<a href="#pricing" class="text-sm font-medium text-text-muted hover:text-text transition-colors">Pricing</a>
-			<a href="https://docs.aeorank.dev" class="text-sm font-medium text-text-muted hover:text-text transition-colors">Docs</a>
+			<a href="#how-it-works" class="text-sm text-text-muted hover:text-text transition-colors">How It Works</a>
+			<a href="#scoring" class="text-sm text-text-muted hover:text-text transition-colors">Scoring</a>
+			<a href="#pricing" class="text-sm text-text-muted hover:text-text transition-colors">Pricing</a>
+			<a href="https://docs.aeorank.dev" class="text-sm text-text-muted hover:text-text transition-colors">Docs</a>
 		</div>
-
-		<!-- Right: GitHub stars + CTA -->
 		<div class="flex items-center gap-3">
-			<!-- GitHub stars badge -->
-			<a
-				href="https://github.com/vinpatel/aeorank"
-				class="hidden sm:inline-flex items-center gap-2 rounded-lg border border-white/[0.08] bg-white/[0.03] px-3 py-1.5 text-sm font-medium text-text-muted hover:text-text hover:border-white/[0.14] transition-all"
-				target="_blank"
-			>
-				<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" class="opacity-70">
-					<path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
-				</svg>
-				<span id="star-count" class="tabular-nums">★</span>
-				<span>Stars</span>
+			<a href="https://github.com/vinpatel/aeorank" class="hidden sm:inline-flex items-center gap-2 rounded-lg border border-border bg-bg-card px-3 py-1.5 text-sm text-text-muted hover:text-text hover:border-border-strong transition-all" target="_blank">
+				<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+				<span id="star-count">★ Star</span>
 			</a>
-
-			<!-- Install App CTA -->
-			<a
-				href="https://github.com/apps/aeorank"
-				class="relative overflow-hidden inline-flex items-center gap-2 rounded-lg bg-accent-warm px-4 py-2 text-sm font-semibold text-white transition-all duration-200 hover:shadow-[0_0_24px_rgba(232,89,12,0.4)] hover:bg-accent-hover"
-			>
-				Install GitHub App
-			</a>
-
-			<!-- Mobile hamburger -->
-			<button
-				class="ml-1 flex md:hidden items-center justify-center rounded-md p-2 text-text-muted hover:bg-bg-raised hover:text-text transition-colors"
-				id="mobile-menu-toggle"
-				aria-label="Toggle menu"
-				aria-expanded="false"
-			>
-				<svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" id="hamburger-icon">
-					<path d="M3 5h14M3 10h14M3 15h14" />
-				</svg>
-				<svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" class="hidden" id="close-icon">
-					<path d="M5 5l10 10M15 5L5 15" />
-				</svg>
-			</button>
-		</div>
-	</div>
-
-	<!-- Mobile menu -->
-	<div class="hidden md:hidden border-t border-white/[0.06] bg-[#09090B]/95 backdrop-blur-xl" id="mobile-menu">
-		<div class="flex flex-col gap-1 px-6 py-4">
-			<a href="#how-it-works" class="rounded-lg px-3 py-2.5 text-sm font-medium text-text-muted hover:bg-bg-raised hover:text-text transition-colors">How It Works</a>
-			<a href="#scoring" class="rounded-lg px-3 py-2.5 text-sm font-medium text-text-muted hover:bg-bg-raised hover:text-text transition-colors">Scoring</a>
-			<a href="#integrations" class="rounded-lg px-3 py-2.5 text-sm font-medium text-text-muted hover:bg-bg-raised hover:text-text transition-colors">Integrations</a>
-			<a href="#pricing" class="rounded-lg px-3 py-2.5 text-sm font-medium text-text-muted hover:bg-bg-raised hover:text-text transition-colors">Pricing</a>
-			<a href="https://docs.aeorank.dev" class="rounded-lg px-3 py-2.5 text-sm font-medium text-text-muted hover:bg-bg-raised hover:text-text transition-colors">Docs</a>
-			<a href="https://github.com/vinpatel/aeorank" class="rounded-lg px-3 py-2.5 text-sm font-medium text-text-muted hover:bg-bg-raised hover:text-text transition-colors">GitHub</a>
-			<div class="my-2 h-px bg-border"></div>
-			<a href="https://github.com/apps/aeorank" class="mt-1 btn-primary !py-2.5 !text-sm text-center">Install GitHub App</a>
+			<a href="https://github.com/apps/aeorank" class="btn-primary !py-1.5 !px-4 !text-sm">Install Free</a>
 		</div>
 	</div>
 </nav>
-
 <script>
-	// Fetch GitHub star count
-	fetch("https://api.github.com/repos/vinpatel/aeorank")
-		.then(r => r.json())
-		.then(data => {
-			const el = document.getElementById("star-count");
-			if (el && data.stargazers_count != null) {
-				const count = data.stargazers_count;
-				el.textContent = count >= 1000 ? `★ ${(count / 1000).toFixed(1)}k` : `★ ${count}`;
-			}
-		})
-		.catch(() => {});
-
-	// Mobile menu toggle
-	const toggle = document.getElementById("mobile-menu-toggle");
-	const menu = document.getElementById("mobile-menu");
-	const hamburger = document.getElementById("hamburger-icon");
-	const closeIcon = document.getElementById("close-icon");
-
-	toggle?.addEventListener("click", () => {
-		const isOpen = menu?.classList.toggle("hidden") === false;
-		hamburger?.classList.toggle("hidden", isOpen);
-		closeIcon?.classList.toggle("hidden", !isOpen);
-		toggle?.setAttribute("aria-expanded", String(isOpen));
-	});
-
-	menu?.querySelectorAll("a").forEach((link) => {
-		link.addEventListener("click", () => {
-			menu?.classList.add("hidden");
-			hamburger?.classList.remove("hidden");
-			closeIcon?.classList.add("hidden");
-			toggle?.setAttribute("aria-expanded", "false");
-		});
-	});
+	fetch("https://api.github.com/repos/vinpatel/aeorank").then(r=>r.json()).then(d=>{const el=document.getElementById("star-count");if(el&&d.stargazers_count!=null){const c=d.stargazers_count;el.textContent=c>=1000?`★ ${(c/1000).toFixed(1)}k`:`★ ${c}`}}).catch(()=>{});
 </script>

@@ -1,94 +1,29 @@
 ---
 const files = [
-	{
-		name: "llms.txt",
-		description: "The new robots.txt for AI. Tells language models what your site is about, in their language.",
-		icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#E8590C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>`,
-	},
-	{
-		name: "llms-full.txt",
-		description: "Extended version with complete content for models that want the full picture.",
-		icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#E8590C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>`,
-	},
-	{
-		name: "CLAUDE.md",
-		description: "Repository context file. Helps AI coding assistants understand your codebase instantly.",
-		icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#E8590C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>`,
-	},
-	{
-		name: "schema.json",
-		description: "Organization, WebSite, and FAQ structured data in JSON-LD format.",
-		icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#E8590C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>`,
-	},
-	{
-		name: "robots-patch.txt",
-		description: "Allow directives for GPTBot, ClaudeBot, PerplexityBot, and Google-Extended.",
-		icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#E8590C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="3"/><path d="M12 8v3"/><circle cx="8" cy="16" r="1" fill="#E8590C"/><circle cx="16" cy="16" r="1" fill="#E8590C"/></svg>`,
-	},
-	{
-		name: "faq-blocks.html",
-		description: "Speakable FAQ markup that AI engines love to quote and cite directly.",
-		icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#E8590C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><circle cx="12" cy="17" r=".5" fill="#E8590C"/></svg>`,
-	},
-	{
-		name: "citation-anchors.html",
-		description: "Heading anchors that make your content directly linkable by AI responses.",
-		icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#E8590C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>`,
-	},
-	{
-		name: "sitemap-ai.xml",
-		description: "AI-optimized sitemap with content type hints and freshness signals.",
-		icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#E8590C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>`,
-	},
+	{ name: "llms.txt", desc: "Site summary for ChatGPT, Claude, Perplexity, and Gemini crawlers. The llmstxt.org standard." },
+	{ name: "llms-full.txt", desc: "Extended version with Q&A pairs, entity disambiguation, and key definitions." },
+	{ name: "ai.txt", desc: "AI usage permissions and content licensing for responsible crawling." },
+	{ name: "CLAUDE.md", desc: "Markdown context file that helps AI coding assistants understand your codebase." },
+	{ name: "schema.json", desc: "Organization, WebSite, and FAQPage JSON-LD structured data for AI citation." },
+	{ name: "robots-patch.txt", desc: "AI-specific crawler directives — allow GPTBot, ClaudeBot, PerplexityBot." },
+	{ name: "faq-blocks.html", desc: "FAQ markup with schema.org and speakable annotations for voice and AI." },
+	{ name: "citation-anchors.html", desc: "Heading anchors that make your content directly linkable by AI responses." },
+	{ name: "sitemap-ai.xml", desc: "AI-optimized sitemap with content type hints and freshness signals." },
 ];
 ---
+<section id="files" class="px-6 py-20 md:py-28 border-t border-border">
+	<div class="mx-auto max-w-5xl">
+		<p class="eyebrow text-center">Output</p>
+		<h2 class="heading-lg text-center mt-3">9 files that get you cited</h2>
+		<p class="body-lg text-center max-w-2xl mx-auto mt-4">Every file AI engines look for — generated automatically, tailored to your site.</p>
 
-<section id="files" class="relative py-28 px-6 overflow-hidden">
-	<!-- Background accent glow -->
-	<div class="absolute inset-0 pointer-events-none" aria-hidden="true">
-		<div class="absolute top-0 right-1/4 w-[500px] h-[500px] rounded-full bg-accent-warm/[0.02] blur-[100px]"></div>
-		<div class="absolute bottom-0 left-1/4 w-[400px] h-[400px] rounded-full bg-accent-warm/[0.015] blur-[100px]"></div>
-	</div>
-
-	<div class="relative mx-auto max-w-5xl">
-		<!-- Section header -->
-		<div class="text-center">
-			<span class="inline-block text-xs font-semibold tracking-[0.2em] uppercase text-accent-warm mb-4">Output</span>
-			<h2 class="text-4xl font-bold tracking-tight text-text sm:text-5xl">
-				8 Files That Get You Cited
-			</h2>
-			<p class="mt-4 text-lg text-text-muted max-w-2xl mx-auto leading-relaxed">
-				Every file AI engines look for, generated and tailored to your site.
-			</p>
-		</div>
-
-		<!-- Files grid -->
-		<div class="mt-16 grid grid-cols-1 gap-4 sm:grid-cols-2">
-			{
-				files.map((file, i) => (
-					<div class="group relative rounded-2xl border border-border/50 bg-bg-card/60 backdrop-blur-sm transition-all duration-400 hover:border-accent-warm/20 hover:bg-bg-card/90 hover:shadow-[0_4px_30px_-10px_rgba(232,89,12,0.08)]">
-						<!-- Top glass highlight -->
-						<div class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/[0.04] to-transparent rounded-t-2xl"></div>
-
-						<div class="relative px-7 py-6">
-							<div class="flex items-start gap-4">
-								<!-- Icon container with glow -->
-								<div class="relative flex-shrink-0 mt-0.5">
-									<div class="flex items-center justify-center w-11 h-11 rounded-xl bg-accent-warm/10 border border-accent-warm/15 transition-all duration-300 group-hover:bg-accent-warm/15 group-hover:border-accent-warm/25 group-hover:shadow-[0_0_16px_-4px_rgba(232,89,12,0.2)]">
-										<Fragment set:html={file.icon} />
-									</div>
-								</div>
-
-								<!-- Text content -->
-								<div class="min-w-0">
-									<code class="font-mono text-[0.938rem] font-semibold text-accent-warm tracking-tight">{file.name}</code>
-									<p class="mt-1.5 text-sm text-text-muted leading-relaxed">{file.description}</p>
-								</div>
-							</div>
-						</div>
-					</div>
-				))
-			}
+		<div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-14">
+			{files.map((f) => (
+				<div class="card p-6 group">
+					<code class="text-sm !bg-accent-muted !text-accent !border-accent/20">{f.name}</code>
+					<p class="text-sm text-text-muted mt-3 leading-relaxed">{f.desc}</p>
+				</div>
+			))}
 		</div>
 	</div>
 </section>
