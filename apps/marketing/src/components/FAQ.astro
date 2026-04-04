@@ -1,84 +1,54 @@
 ---
 const faqs = [
 	{
-		question: "What is AEO?",
-		answer: "Answer Engine Optimization. The practice of making your website visible and citable by AI engines like ChatGPT, Perplexity, and Claude. As AI-powered search grows, optimized sites get cited — the rest get ignored.",
+		q: "What is AEO?",
+		a: "Answer Engine Optimization. It's how you make your site visible to ChatGPT, Perplexity, Claude, Gemini, and Google AI Overviews. AI search converts 5× better than Google organic — AEO is how you get into those answers."
 	},
 	{
-		question: "Is AEOrank free?",
-		answer: "The CLI is free and MIT-licensed. Run unlimited scans, generate all 8 files, pipe JSON to CI — no account needed. The web dashboard has paid tiers starting at $29/month for score history, charts, and file downloads.",
+		q: "How is this different from SEO tools?",
+		a: "SEO tools check Google rankings. AEOrank checks what AI engines look for: llms.txt, ai.txt, schema markup, AI crawler access, content structure for extraction, and 30 more criteria. No overlap."
 	},
 	{
-		question: "What are the 8 generated files?",
-		answer: "llms.txt, llms-full.txt, CLAUDE.md, schema.json, robots-patch.txt, faq-blocks.html, citation-anchors.html, and sitemap-ai.xml. Each one targets a different aspect of AI visibility.",
+		q: "Is it really free?",
+		a: "Yes. The CLI, core engine, GitHub App, GitHub Action, and all 13 framework plugins are MIT licensed. The GitHub App gives you 10 free scans per day. The SaaS dashboard at app.aeorank.dev has a free tier with paid plans for monitoring."
 	},
 	{
-		question: "How is the AEO score calculated?",
-		answer: "36 criteria across 5 pillars, each scored 0–10 with percentage weights summing to 100%. Pillars: Answer Readiness, Content Structure, Trust & Authority, Technical Foundation, AI Discovery. Grades from A+ (95+) to F (below 40).",
+		q: "How is this different from Scrunch, Profound, or Peec AI?",
+		a: "Those are $89–$500/month SaaS tools that track brand mentions in AI answers. AEOrank is free, open source, and does something they can't: it scores your site's technical AI readiness AND generates the 9 files AI engines need. Different tool, different job."
 	},
 	{
-		question: "Does this replace SEO?",
-		answer: "No. AEO complements SEO. Traditional search engines still matter. AEOrank focuses on the signals that AI engines use to find and cite your content — a different surface entirely.",
+		q: "Does llms.txt actually work?",
+		a: "Studies show llms.txt alone doesn't impact AI citations yet. That's exactly why AEOrank scores 36 criteria, not just llms.txt. Your overall content structure, schema markup, and AI crawler access matter far more. AEOrank checks all of it."
 	},
 	{
-		question: "Can I use this in CI?",
-		answer: "Yes. Run npx aeorank-cli scan --format json in any CI pipeline. You can also use the official GitHub Action (vinpatel/aeorank-action@v1) to post scores as Check Runs and PR comments automatically.",
+		q: "Can I use this in CI?",
+		a: "Yes. Install the GitHub App for zero-config PR checks, or use the GitHub Action (vinpatel/aeorank-action@v1) for full CI control with fail-below thresholds. Both post Check Runs and PR comments."
 	},
 	{
-		question: "How long does a scan take?",
-		answer: "Under 30 seconds for most sites. AEOrank crawls up to 50 pages with 3 concurrent requests by default. Adjustable with --max-pages and --concurrency flags.",
+		q: "What AI engines does it check for?",
+		a: "AEOrank checks your visibility across ChatGPT (GPTBot), Claude (ClaudeBot), Perplexity (PerplexityBot), Gemini (Google-Extended), and Google AI Overviews. All 36 criteria are tuned for what these engines actually evaluate."
+	},
+	{
+		q: "How long does a scan take?",
+		a: "Under 30 seconds for a typical site. AEOrank crawls up to 50 pages, analyzes structure, and scores all 36 criteria. Deterministic — same score every time, no LLM calls."
 	},
 ];
 ---
-
-<section id="faq" class="py-24 sm:py-32 border-t border-[--color-border] px-6">
+<section id="faq" class="px-6 py-20 md:py-28 border-t border-border">
 	<div class="mx-auto max-w-3xl">
-		<h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-[--color-text] font-[family-name:var(--font-display)]">Frequently Asked Questions</h2>
-		<div class="mt-12 space-y-0 divide-y divide-[--color-border]">
-			{
-				faqs.map((faq) => (
-					<details class="group">
-						<summary class="flex cursor-pointer items-center justify-between py-6 text-lg font-medium text-[--color-text] select-none list-none [&::-webkit-details-marker]:hidden">
-							{faq.question}
-							<svg
-								width="20"
-								height="20"
-								viewBox="0 0 20 20"
-								fill="none"
-								class="ml-4 shrink-0 text-[--color-text-muted] transition-transform duration-300 ease-out group-open:rotate-45"
-							>
-								<path d="M10 4v12m-6-6h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-							</svg>
-						</summary>
-						<div class="overflow-hidden">
-							<p class="pb-6 text-[--color-text-muted] text-base leading-relaxed -mt-1">{faq.answer}</p>
-						</div>
-					</details>
-				))
-			}
+		<p class="eyebrow text-center">FAQ</p>
+		<h2 class="heading-lg text-center mt-3">Common questions</h2>
+
+		<div class="mt-14 space-y-0">
+			{faqs.map((faq) => (
+				<details class="group border-b border-border">
+					<summary class="flex items-center justify-between py-5 cursor-pointer text-text hover:text-accent transition-colors">
+						<span class="text-[0.9375rem] font-medium pr-4">{faq.q}</span>
+						<span class="text-text-muted group-open:rotate-45 transition-transform text-lg shrink-0">+</span>
+					</summary>
+					<p class="pb-5 text-sm text-text-secondary leading-relaxed">{faq.a}</p>
+				</details>
+			))}
 		</div>
 	</div>
 </section>
-
-<style>
-	details summary {
-		list-style: none;
-	}
-
-	details[open] > div {
-		animation: faq-slide-down 0.25s ease-out;
-	}
-
-	@keyframes faq-slide-down {
-		from {
-			opacity: 0;
-			max-height: 0;
-			transform: translateY(-4px);
-		}
-		to {
-			opacity: 1;
-			max-height: 200px;
-			transform: translateY(0);
-		}
-	}
-</style>

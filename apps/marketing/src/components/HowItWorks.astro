@@ -1,98 +1,60 @@
 ---
-const steps = [
-	{
-		number: "01",
-		title: "Scan",
-		description: "Point AEOrank at any URL. It crawls up to 50 pages, analyzes structure, schema markup, and AI readiness signals.",
-		detail: "Under 30 seconds. Zero config.",
-		icon: `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#E8590C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/><path d="M11 8v6M8 11h6"/></svg>`,
-	},
-	{
-		number: "02",
-		title: "Score",
-		description: "Get an AEO score from 0 to 100 across 12 weighted dimensions. See exactly what's strong, what's weak, and what to fix first.",
-		detail: "Grades from A+ to F.",
-		icon: `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#E8590C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>`,
-	},
-	{
-		number: "03",
-		title: "Generate",
-		description: "Get 8 files tailored to your site — llms.txt, schema.json, robots directives, FAQ markup, and more. Deploy them and watch your AI visibility climb.",
-		detail: "All 8 files, ready to deploy.",
-		icon: `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#E8590C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>`,
-	},
-];
 ---
+<section id="how-it-works" class="px-6 py-20 md:py-28 border-t border-border">
+	<div class="mx-auto max-w-5xl">
+		<p class="eyebrow text-center">Get started in 30 seconds</p>
+		<h2 class="heading-lg text-center mt-3">Three ways to use AEOrank</h2>
+		<p class="body-lg text-center max-w-2xl mx-auto mt-4">Pick the one that fits your workflow. All three produce the same 36-criteria score.</p>
 
-<section id="how-it-works" class="relative py-28 px-6 overflow-hidden">
-	<!-- Subtle background radial glow -->
-	<div class="absolute inset-0 pointer-events-none" aria-hidden="true">
-		<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] rounded-full bg-accent-warm/[0.03] blur-[120px]"></div>
-	</div>
-
-	<div class="relative mx-auto max-w-5xl">
-		<!-- Section header -->
-		<div class="text-center">
-			<span class="inline-block text-xs font-semibold tracking-[0.2em] uppercase text-accent-warm mb-4">How It Works</span>
-			<h2 class="text-4xl font-bold tracking-tight text-text sm:text-5xl">
-				One command. Three steps.
-			</h2>
-			<p class="mt-4 text-lg text-text-muted max-w-2xl mx-auto leading-relaxed">
-				Eight deployment-ready files that make your site visible to every AI engine.
-			</p>
-		</div>
-
-		<!-- CLI command box -->
-		<div class="mt-12 flex justify-center">
-			<div class="group relative rounded-2xl border border-border/60 bg-bg-card/80 backdrop-blur-sm px-8 py-5 inline-flex items-center gap-4 transition-all duration-300 hover:border-accent-warm/30 hover:shadow-[0_0_30px_-10px_rgba(232,89,12,0.15)]">
-				<div class="flex items-center justify-center w-8 h-8 rounded-lg bg-accent-warm/10 border border-accent-warm/20">
-					<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#E8590C" stroke-width="2" stroke-linecap="round"><path d="M4 17l6-6-6-6M12 19h8"/></svg>
+		<div class="grid md:grid-cols-3 gap-6 mt-14">
+			<!-- GitHub App -->
+			<div class="card p-8 flex flex-col">
+				<div class="flex items-center gap-3 mb-5">
+					<div class="w-10 h-10 rounded-lg bg-accent-muted flex items-center justify-center">
+						<svg width="20" height="20" viewBox="0 0 16 16" fill="#E8590C"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+					</div>
+					<h3 class="heading-sm">GitHub App</h3>
 				</div>
-				<code class="font-mono text-base text-text/90 select-all">npx aeorank-cli scan https://your-site.com</code>
-				<div class="absolute inset-0 rounded-2xl bg-accent-warm/[0.02] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-			</div>
-		</div>
-
-		<!-- Steps grid with connecting line -->
-		<div class="relative mt-20">
-			<!-- Connecting line (desktop only) -->
-			<div class="hidden md:block absolute top-[4.5rem] left-[16.666%] right-[16.666%] h-px" aria-hidden="true">
-				<div class="h-full w-full bg-gradient-to-r from-transparent via-accent-warm/25 to-transparent"></div>
-				<!-- Animated dots on the line -->
-				<div class="absolute top-1/2 left-1/4 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-accent-warm/40"></div>
-				<div class="absolute top-1/2 left-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-accent-warm/40"></div>
-				<div class="absolute top-1/2 left-3/4 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-accent-warm/40"></div>
+				<p class="text-text-secondary text-sm leading-relaxed mb-6">One-click install. Every PR gets a Check Run with your AEO score. No YAML. No config.</p>
+				<div class="mt-auto">
+					<a href="https://github.com/apps/aeorank" class="btn-primary w-full justify-center !text-sm">Install App Free →</a>
+				</div>
 			</div>
 
-			<div class="grid grid-cols-1 gap-6 md:grid-cols-3 md:gap-8">
-				{
-					steps.map((step, i) => (
-						<div class="group relative">
-							<!-- Card -->
-							<div class="relative rounded-2xl border border-border/50 bg-bg-card/60 backdrop-blur-sm p-8 h-full transition-all duration-500 hover:border-accent-warm/20 hover:bg-bg-card/90 hover:shadow-[0_8px_40px_-12px_rgba(232,89,12,0.1)]">
-								<!-- Glassmorphism top highlight -->
-								<div class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent rounded-t-2xl"></div>
+			<!-- CLI -->
+			<div class="card p-8 flex flex-col">
+				<div class="flex items-center gap-3 mb-5">
+					<div class="w-10 h-10 rounded-lg bg-accent-muted flex items-center justify-center">
+						<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#E8590C" stroke-width="2" stroke-linecap="round"><path d="M4 17l6-5-6-5"/><path d="M12 19h8"/></svg>
+					</div>
+					<h3 class="heading-sm">CLI</h3>
+				</div>
+				<p class="text-text-secondary text-sm leading-relaxed mb-4">Scan any URL from your terminal. Instant score with colored output and recommendations.</p>
+				<div class="rounded-lg bg-[#0A0A0C] border border-border px-4 py-3 font-mono text-sm text-text-muted mb-6">
+					<span class="text-text-muted">$</span> <span class="text-accent">npx aeorank-cli scan</span> <span class="text-text">https://your-site.com</span>
+				</div>
+				<div class="mt-auto">
+					<a href="https://docs.aeorank.dev/getting-started" class="btn-secondary w-full justify-center !text-sm">Read the docs →</a>
+				</div>
+			</div>
 
-								<!-- Step number with gradient glow -->
-								<div class="relative mb-6">
-									<span class="text-[5rem] font-extrabold leading-none tracking-tighter bg-gradient-to-b from-border/80 to-border/20 bg-clip-text text-transparent select-none transition-all duration-500 group-hover:from-accent-warm/40 group-hover:to-accent-warm/10">{step.number}</span>
-									<!-- Glow behind number on hover -->
-									<div class="absolute -top-2 -left-2 w-24 h-24 rounded-full bg-accent-warm/[0.05] blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-								</div>
-
-								<!-- Icon in glowing circle -->
-								<div class="relative inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-accent-warm/10 border border-accent-warm/15 mb-5 transition-all duration-300 group-hover:bg-accent-warm/15 group-hover:border-accent-warm/25 group-hover:shadow-[0_0_20px_-4px_rgba(232,89,12,0.2)]">
-									<Fragment set:html={step.icon} />
-								</div>
-
-								<!-- Content -->
-								<h3 class="text-xl font-bold text-text tracking-tight">{step.title}</h3>
-								<p class="mt-3 text-[0.938rem] leading-relaxed text-text-muted">{step.description}</p>
-								<p class="mt-4 text-sm font-semibold text-accent-warm tracking-wide">{step.detail}</p>
-							</div>
-						</div>
-					))
-				}
+			<!-- GitHub Action -->
+			<div class="card p-8 flex flex-col">
+				<div class="flex items-center gap-3 mb-5">
+					<div class="w-10 h-10 rounded-lg bg-accent-muted flex items-center justify-center">
+						<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#E8590C" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+					</div>
+					<h3 class="heading-sm">GitHub Action</h3>
+				</div>
+				<p class="text-text-secondary text-sm leading-relaxed mb-4">CI pipeline control. Set fail-below thresholds. Block PRs that drop your AEO score.</p>
+				<div class="rounded-lg bg-[#0A0A0C] border border-border px-4 py-3 font-mono text-xs text-text-muted mb-6 leading-relaxed">
+					<span class="text-green">- uses:</span> vinpatel/aeorank-action@v1<br/>
+					&nbsp;&nbsp;<span class="text-green">with:</span><br/>
+					&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-text-muted">url:</span> <span class="text-text">https://your-site.com</span>
+				</div>
+				<div class="mt-auto">
+					<a href="https://github.com/marketplace/actions/aeorank-aeo-scanner" class="btn-secondary w-full justify-center !text-sm">View on Marketplace →</a>
+				</div>
 			</div>
 		</div>
 	</div>

@@ -1,202 +1,58 @@
 ---
-const pillars = [
-	{
-		name: "Answer Readiness",
-		weight: "26%",
-		weightNum: 26,
-		criteria: [
-			{ name: "Topical Authority", weight: "7%" },
-			{ name: "Original Research & Data", weight: "5%" },
-			{ name: "Fact & Data Density", weight: "4%" },
-			{ name: "Duplicate Content", weight: "4%" },
-			{ name: "Cross-Page Duplication", weight: "2%" },
-			{ name: "Evidence Packaging", weight: "2%" },
-			{ name: "Citation-Ready Writing", weight: "2%" },
-		],
-	},
-	{
-		name: "Content Structure",
-		weight: "25%",
-		weightNum: 25,
-		criteria: [
-			{ name: "Content Structure", weight: "5%" },
-			{ name: "Answer-First Formatting", weight: "4%" },
-			{ name: "Q&A Content Format", weight: "4%" },
-			{ name: "Direct Answer Density", weight: "4%" },
-			{ name: "Query-Answer Alignment", weight: "2%" },
-			{ name: "Tables & Lists", weight: "2%" },
-			{ name: "Definition Patterns", weight: "2%" },
-			{ name: "Entity Disambiguation", weight: "2%" },
-		],
-	},
-	{
-		name: "Trust & Authority",
-		weight: "12%",
-		weightNum: 12,
-		criteria: [
-			{ name: "E-E-A-T Signals", weight: "6%" },
-			{ name: "Internal Linking", weight: "4%" },
-			{ name: "Citation Anchors", weight: "2%" },
-		],
-	},
-	{
-		name: "Technical Foundation",
-		weight: "25%",
-		weightNum: 25,
-		criteria: [
-			{ name: "llms.txt Presence", weight: "5%" },
-			{ name: "FAQ & Speakable", weight: "5%" },
-			{ name: "Schema.org Markup", weight: "4%" },
-			{ name: "AI Crawler Access", weight: "3%" },
-			{ name: "Meta Descriptions", weight: "2%" },
-			{ name: "Semantic HTML", weight: "2%" },
-			{ name: "Extraction Friction", weight: "2%" },
-			{ name: "Image Context for AI", weight: "1%" },
-			{ name: "Schema Coverage", weight: "1%" },
-		],
-	},
-	{
-		name: "AI Discovery",
-		weight: "12%",
-		weightNum: 12,
-		criteria: [
-			{ name: "Content Cannibalization", weight: "2%" },
-			{ name: "HTTPS & Redirects", weight: "2%" },
-			{ name: "Page Freshness", weight: "2%" },
-			{ name: "Publishing Velocity", weight: "1%" },
-			{ name: "Content Licensing", weight: "1%" },
-			{ name: "Canonical URLs", weight: "1%" },
-			{ name: "Sitemap Presence", weight: "1%" },
-			{ name: "RSS/Atom Feed", weight: "1%" },
-			{ name: "Visible Date Signals", weight: "1%" },
-		],
-	},
-];
-
-// Pillar colors — warm to cool gradient across 5 pillars
-const pillarColors = [
-	"#E8590C", // Answer Readiness — warm accent
-	"#D4470A", // Content Structure — slightly deeper
-	"#8B5CF6", // Trust & Authority — purple
-	"#0EA5E9", // Technical Foundation — sky blue
-	"#6366F1", // AI Discovery — indigo
-];
-
-const grades = [
-	{ grade: "A+", range: "95–100", color: "#16a34a" },
-	{ grade: "A", range: "85–94", color: "#22c55e" },
-	{ grade: "B", range: "70–84", color: "#84cc16" },
-	{ grade: "C", range: "55–69", color: "#eab308" },
-	{ grade: "D", range: "40–54", color: "#f97316" },
-	{ grade: "F", range: "0–39", color: "#ef4444" },
-];
-
-// Stacked bar — cumulative offsets
-let cumulativeOffset = 0;
-const barSegments = pillars.map((p, i) => {
-	const segment = {
-		pillar: p.name,
-		weight: p.weightNum,
-		color: pillarColors[i],
-		offset: cumulativeOffset,
-	};
-	cumulativeOffset += p.weightNum;
-	return segment;
-});
 ---
-
-<section id="scoring" class="py-24 sm:py-32 border-t border-[--color-border] px-6">
+<section id="scoring" class="px-6 py-20 md:py-28 border-t border-border">
 	<div class="mx-auto max-w-5xl">
-		<h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-[--color-text] font-[family-name:var(--font-display)]">36 Criteria. 5 Pillars. One Score.</h2>
-		<p class="mt-4 text-lg text-[--color-text-muted] max-w-2xl leading-relaxed">
-			We measure what actually matters for AI engine visibility. Not vanity metrics.
-		</p>
+		<p class="eyebrow text-center">36 criteria</p>
+		<h2 class="heading-lg text-center mt-3">Five pillars of AI visibility</h2>
+		<p class="body-lg text-center max-w-2xl mx-auto mt-4">Every check is deterministic. No LLM calls. No AI scoring AI. Same score every time you run it.</p>
 
-		<!-- Stacked Bar Visualization + Pillar List -->
-		<div class="mt-14 flex flex-col items-center lg:flex-row lg:items-start lg:gap-16">
-
-			<!-- Stacked Bar Chart -->
-			<div class="w-full max-w-md shrink-0 rounded-2xl border border-[--color-border] bg-[--color-bg-card] p-6 shadow-lg shadow-black/20">
-				<p class="text-xs font-semibold uppercase tracking-widest text-[--color-text-muted] mb-5">Score Composition</p>
-
-				<!-- Horizontal stacked bar -->
-				<div class="relative h-8 w-full rounded-lg overflow-hidden flex">
-					{barSegments.map((seg) => (
-						<div
-							class="h-full flex items-center justify-center transition-all"
-							style={`width: ${seg.weight}%; background-color: ${seg.color};`}
-							title={`${seg.pillar}: ${seg.weight}%`}
-						>
-							{seg.weight >= 12 && (
-								<span class="text-white text-[10px] font-bold leading-none select-none">{seg.weight}%</span>
-							)}
-						</div>
-					))}
+		<div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-14">
+			<div class="card p-7">
+				<div class="flex items-center justify-between mb-3">
+					<span class="text-2xl">🎯</span>
+					<span class="text-xs font-bold text-accent bg-accent-muted px-2.5 py-1 rounded-full">30%</span>
 				</div>
-
-				<!-- Pillar labels below bar -->
-				<div class="mt-4 space-y-2">
-					{pillars.map((p, i) => (
-						<div class="flex items-center gap-2.5">
-							<span class="inline-block w-2.5 h-2.5 rounded-full shrink-0" style={`background-color: ${pillarColors[i]};`}></span>
-							<span class="text-sm text-[--color-text] font-medium flex-1">{p.name}</span>
-							<span class="text-sm font-bold tabular-nums" style={`color: ${pillarColors[i]};`}>{p.weight}</span>
-						</div>
-					))}
-				</div>
-
-				<div class="mt-6 pt-5 border-t border-[--color-border]">
-					<p class="text-xs text-[--color-text-muted] leading-relaxed">
-						36 criteria across 5 pillars. Each criterion scored 0–10.
-						All percentage weights sum to 100%.
-					</p>
-				</div>
+				<h3 class="heading-sm mb-2">Answer Readiness</h3>
+				<p class="text-sm text-text-muted leading-relaxed">Topical authority, fact density, citation-ready writing, original research, evidence packaging, duplicate content detection.</p>
 			</div>
-
-			<!-- Pillar breakdown list -->
-			<div class="w-full mt-12 lg:mt-0 space-y-8">
-				{pillars.map((p, i) => (
-					<div>
-						<div class="flex items-center gap-3 mb-3">
-							<span
-								class="inline-flex items-center px-2.5 py-1 text-white text-xs font-bold rounded tracking-wide font-[family-name:var(--font-display)]"
-								style={`background-color: ${pillarColors[i]};`}
-							>
-								{p.weight}
-							</span>
-							<span class="text-sm font-semibold text-[--color-text]">{p.name}</span>
-						</div>
-						<div class="space-y-0 divide-y divide-[--color-border-light]">
-							{p.criteria.map((c) => (
-								<div class="flex items-baseline justify-between py-2.5">
-									<span class="text-sm text-[--color-text]">{c.name}</span>
-									<span class="text-xs text-[--color-text-muted] ml-4 tabular-nums">{c.weight}</span>
-								</div>
-							))}
-						</div>
-					</div>
-				))}
+			<div class="card p-7">
+				<div class="flex items-center justify-between mb-3">
+					<span class="text-2xl">📐</span>
+					<span class="text-xs font-bold text-accent bg-accent-muted px-2.5 py-1 rounded-full">21%</span>
+				</div>
+				<h3 class="heading-sm mb-2">Content Structure</h3>
+				<p class="text-sm text-text-muted leading-relaxed">Q&A format, direct answer density, tables and lists, definition patterns, entity disambiguation, heading hierarchy.</p>
+			</div>
+			<div class="card p-7">
+				<div class="flex items-center justify-between mb-3">
+					<span class="text-2xl">🏛️</span>
+					<span class="text-xs font-bold text-accent bg-accent-muted px-2.5 py-1 rounded-full">16%</span>
+				</div>
+				<h3 class="heading-sm mb-2">Trust & Authority</h3>
+				<p class="text-sm text-text-muted leading-relaxed">E-E-A-T signals, internal linking, author schema, meta descriptions, answer-first formatting.</p>
+			</div>
+			<div class="card p-7">
+				<div class="flex items-center justify-between mb-3">
+					<span class="text-2xl">⚙️</span>
+					<span class="text-xs font-bold text-accent bg-accent-muted px-2.5 py-1 rounded-full">14%</span>
+				</div>
+				<h3 class="heading-sm mb-2">Technical Foundation</h3>
+				<p class="text-sm text-text-muted leading-relaxed">Schema.org coverage, semantic HTML, speakable markup, image context for AI, extraction friction analysis.</p>
+			</div>
+			<div class="card p-7">
+				<div class="flex items-center justify-between mb-3">
+					<span class="text-2xl">🔍</span>
+					<span class="text-xs font-bold text-accent bg-accent-muted px-2.5 py-1 rounded-full">19%</span>
+				</div>
+				<h3 class="heading-sm mb-2">AI Discovery</h3>
+				<p class="text-sm text-text-muted leading-relaxed">llms.txt, ai.txt, AI crawler access (GPTBot, ClaudeBot, PerplexityBot), content licensing, RSS feeds, sitemap freshness.</p>
+			</div>
+			<div class="card p-7 flex flex-col items-center justify-center text-center">
+				<span class="text-4xl font-bold text-accent">411</span>
+				<p class="text-sm text-text-muted mt-2">tests verify scoring accuracy</p>
+				<span class="text-4xl font-bold text-accent mt-4">&lt;30s</span>
+				<p class="text-sm text-text-muted mt-2">scan time for a 50-page site</p>
 			</div>
 		</div>
-
-		<!-- Grade Scale -->
-		<div class="mt-14">
-			<h3 class="text-xl sm:text-2xl font-bold tracking-tight text-[--color-text] font-[family-name:var(--font-display)]">Grade Scale</h3>
-			<div class="mt-6 flex flex-wrap gap-3">
-				{
-					grades.map((g) => (
-						<div class="flex items-center gap-3 rounded-xl border border-[--color-border-light] bg-[--color-bg-card] px-5 py-3 shadow-sm shadow-black/10">
-							<span class="text-xl font-bold" style={`color: ${g.color}`}>{g.grade}</span>
-							<span class="text-sm text-[--color-text-muted]">{g.range}</span>
-						</div>
-					))
-				}
-			</div>
-		</div>
-
-		<a href="https://docs.aeorank.dev/scoring/dimensions/" class="inline-flex items-center gap-1.5 mt-10 text-base font-medium text-[--color-accent-warm] hover:brightness-110 transition-all">
-			Read the full scoring methodology
-			<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-		</a>
 	</div>
 </section>

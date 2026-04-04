@@ -1,78 +1,40 @@
 ---
-const features = [
-	{
-		title: "Smart Page Sampling",
-		description: "Large sites with hundreds of pages? AEOrank stratifies URLs by section — blog, docs, products — and picks a representative sample. Every scan covers every part of your site, not just the first pages found.",
-		icon: `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#E8590C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>`,
-		badge: "New",
-	},
-	{
-		title: "Dimension Trend Charts",
-		description: "Track every scoring dimension over time with interactive trend charts. See which areas are improving, which are slipping, and where to focus next — all at a glance.",
-		icon: `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#E8590C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 16l4-8 4 5 5-9"/></svg>`,
-		badge: "New",
-	},
-	{
-		title: "Async Scanning",
-		description: "Scans run in the background via a job queue. Submit a URL and watch real-time progress — no waiting on a loading spinner. Retry failed scans with one click.",
-		icon: `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#E8590C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>`,
-	},
-	{
-		title: "Score History",
-		description: "30-day sparkline charts show your overall AEO score trajectory. See the impact of every change you deploy, right in your dashboard.",
-		icon: `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#E8590C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>`,
-	},
-	{
-		title: "8 Generated Files",
-		description: "llms.txt, schema.json, robots directives, FAQ markup, citation anchors, AI sitemap — generated from your scan and ready to deploy.",
-		icon: `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#E8590C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>`,
-	},
-	{
-		title: "Error Monitoring",
-		description: "Sentry integration catches and reports scan failures automatically. When something breaks, we know before you do.",
-		icon: `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#E8590C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>`,
-	},
-];
 ---
+<section id="difference" class="px-6 py-20 md:py-28 border-t border-border">
+	<div class="mx-auto max-w-5xl">
+		<p class="eyebrow text-center">The difference</p>
+		<h2 class="heading-lg text-center mt-3">AI search converts 5× better than Google.<br/>Are you visible?</h2>
+		<p class="body-lg text-center max-w-2xl mx-auto mt-4">AI assistants generate 45 billion sessions monthly. ChatGPT alone drives 19.5% of global search traffic. Your site is either in the answer — or it's not.</p>
 
-<section id="features" class="relative py-28 px-6 overflow-hidden border-t border-[--color-border]">
-	<div class="absolute inset-0 pointer-events-none" aria-hidden="true">
-		<div class="absolute top-1/3 left-1/4 w-[600px] h-[400px] rounded-full bg-accent-warm/[0.02] blur-[120px]"></div>
-	</div>
-
-	<div class="relative mx-auto max-w-5xl">
-		<div class="text-center">
-			<span class="inline-block text-xs font-semibold tracking-[0.2em] uppercase text-accent-warm mb-4">Dashboard</span>
-			<h2 class="text-4xl font-bold tracking-tight text-text sm:text-5xl">
-				Everything you need to improve.
-			</h2>
-			<p class="mt-4 text-lg text-text-muted max-w-2xl mx-auto leading-relaxed">
-				Scan, score, track, and fix — all from one dashboard. No spreadsheets required.
-			</p>
-		</div>
-
-		<div class="grid grid-cols-1 gap-6 mt-16 sm:grid-cols-2 lg:grid-cols-3">
-			{
-				features.map((feature) => (
-					<div class="group relative rounded-2xl border border-border/50 bg-bg-card/60 backdrop-blur-sm p-7 transition-all duration-500 hover:border-accent-warm/20 hover:bg-bg-card/90 hover:shadow-[0_8px_40px_-12px_rgba(232,89,12,0.1)]">
-						<div class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent rounded-t-2xl"></div>
-
-						<div class="flex items-start gap-4 mb-4">
-							<div class="relative inline-flex items-center justify-center w-12 h-12 rounded-xl bg-accent-warm/10 border border-accent-warm/15 shrink-0 transition-all duration-300 group-hover:bg-accent-warm/15 group-hover:border-accent-warm/25 group-hover:shadow-[0_0_20px_-4px_rgba(232,89,12,0.2)]">
-								<Fragment set:html={feature.icon} />
-							</div>
-							{feature.badge && (
-								<span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-accent-warm/15 text-accent-warm border border-accent-warm/20">
-									{feature.badge}
-								</span>
-							)}
-						</div>
-
-						<h3 class="text-lg font-bold text-text tracking-tight">{feature.title}</h3>
-						<p class="mt-2 text-[0.875rem] leading-relaxed text-text-muted">{feature.description}</p>
-					</div>
-				))
-			}
+		<div class="grid md:grid-cols-2 gap-6 mt-14">
+			<div class="card p-8 border-red/20">
+				<div class="flex items-center gap-2 mb-6">
+					<span class="w-6 h-6 rounded-full bg-red-muted flex items-center justify-center text-red text-xs font-bold">✗</span>
+					<span class="text-sm font-semibold text-text-muted uppercase tracking-wider">Without AEOrank</span>
+				</div>
+				<ul class="space-y-3.5 text-sm text-text-muted">
+					<li class="flex gap-3"><span class="text-red/60 shrink-0">✗</span>Invisible to ChatGPT, Perplexity, Claude, Gemini, Google AI Overviews</li>
+					<li class="flex gap-3"><span class="text-red/60 shrink-0">✗</span>No llms.txt, no ai.txt — AI crawlers have nothing to read</li>
+					<li class="flex gap-3"><span class="text-red/60 shrink-0">✗</span>GPTBot and ClaudeBot blocked in robots.txt by default</li>
+					<li class="flex gap-3"><span class="text-red/60 shrink-0">✗</span>Content structured for Google, not for AI extraction</li>
+					<li class="flex gap-3"><span class="text-red/60 shrink-0">✗</span>Competitors cited in AI answers — you're not mentioned</li>
+					<li class="flex gap-3"><span class="text-red/60 shrink-0">✗</span>No way to measure AI visibility or track regressions</li>
+				</ul>
+			</div>
+			<div class="card p-8 border-accent/20">
+				<div class="flex items-center gap-2 mb-6">
+					<span class="w-6 h-6 rounded-full bg-green-muted flex items-center justify-center text-green text-xs font-bold">✓</span>
+					<span class="text-sm font-semibold text-accent uppercase tracking-wider">With AEOrank</span>
+				</div>
+				<ul class="space-y-3.5 text-sm text-text">
+					<li class="flex gap-3"><span class="text-green shrink-0">✓</span>Score 0–100 across 36 criteria tells you exactly where you stand</li>
+					<li class="flex gap-3"><span class="text-green shrink-0">✓</span>9 AI-readable files generated — llms.txt, ai.txt, schema.json, more</li>
+					<li class="flex gap-3"><span class="text-green shrink-0">✓</span>AI crawler access configured correctly for every engine</li>
+					<li class="flex gap-3"><span class="text-green shrink-0">✓</span>Content analyzed for AI extractability across 5 pillars</li>
+					<li class="flex gap-3"><span class="text-green shrink-0">✓</span>Check Runs on every PR — catch AI visibility regressions in CI</li>
+					<li class="flex gap-3"><span class="text-green shrink-0">✓</span>Actionable recommendations — not just scores, but exactly what to fix</li>
+				</ul>
+			</div>
 		</div>
 	</div>
 </section>

@@ -1,101 +1,36 @@
 ---
-const tiers = [
-	{
-		name: "Free",
-		price: "$0",
-		period: "forever",
-		description: "Try the dashboard with basic limits.",
-		features: ["1 site", "3 scans per month", "All 8 generated files", "Community support"],
-		cta: "Get Started Free",
-		ctaLink: "https://app.aeorank.dev/sign-up",
-		highlighted: false,
-	},
-	{
-		name: "Pro",
-		price: "$29",
-		period: "/mo",
-		description: "Dashboard with history and insights.",
-		features: ["Up to 5 sites", "50 scans per month", "Score history charts", "Priority support"],
-		cta: "Start Free Trial",
-		ctaLink: "https://app.aeorank.dev/sign-up",
-		highlighted: true,
-	},
-	{
-		name: "API",
-		price: "$99",
-		period: "/mo",
-		description: "Programmatic access and webhooks.",
-		features: ["Up to 50 sites", "500 scans per month", "REST API access", "Webhook notifications"],
-		cta: "Start Free Trial",
-		ctaLink: "https://app.aeorank.dev/sign-up",
-		highlighted: false,
-	},
-	{
-		name: "Agency",
-		price: "$499",
-		period: "/mo",
-		description: "White-label reports for your clients.",
-		features: ["Unlimited sites", "Unlimited scans", "White-label PDF reports", "Priority support"],
-		cta: "Start Free Trial",
-		ctaLink: "https://app.aeorank.dev/sign-up",
-		highlighted: false,
-	},
-];
 ---
-
-<section id="pricing" class="py-24 sm:py-32 border-t border-[--color-border] px-6">
+<section id="frameworks" class="px-6 py-20 md:py-28 border-t border-border">
 	<div class="mx-auto max-w-5xl">
-		<h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-[--color-text] font-[family-name:var(--font-display)]">Simple, Honest Pricing</h2>
-		<p class="mt-4 text-lg text-[--color-text-muted] max-w-2xl leading-relaxed">
-			The CLI is free forever. Pay when you need the dashboard.
-		</p>
-		<div class="mt-14 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
-			{
-				tiers.map((tier) => (
-					<div
-						class:list={[
-							"relative flex flex-col rounded-2xl p-7 transition-all duration-200",
-							tier.highlighted
-								? "border-2 border-[--color-accent-warm] bg-[--color-bg-card] shadow-[0_0_40px_-8px_rgba(232,89,12,0.3)] scale-[1.02]"
-								: "border border-[--color-border] bg-[--color-bg-card] hover:border-[--color-border]/80 hover:shadow-lg hover:shadow-black/20",
-						]}
-					>
-						{tier.highlighted && (
-							<span class="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-[--color-accent-warm] text-white text-xs font-semibold px-4 py-1 rounded-full shadow-lg shadow-[--color-accent-warm]/25">
-								Recommended
-							</span>
-						)}
-						<h3 class="text-lg font-bold text-[--color-text] font-[family-name:var(--font-display)]">{tier.name}</h3>
-						<div class="mt-3 flex items-baseline gap-1">
-							<span class="text-4xl font-bold tracking-tight text-[--color-text] font-[family-name:var(--font-display)]">{tier.price}</span>
-							<span class="text-sm text-[--color-text-muted]">{tier.period}</span>
-						</div>
-						<p class="mt-3 text-sm text-[--color-text-muted]">{tier.description}</p>
-						<ul class="mt-6 flex-1 space-y-3">
-							{tier.features.map((f) => (
-								<li class="flex items-start gap-2.5 text-sm text-[--color-text]">
-									<svg width="16" height="16" viewBox="0 0 16 16" fill="none" class="mt-0.5 shrink-0">
-										<circle cx="8" cy="8" r="7" fill="rgba(22, 163, 74, 0.12)"/>
-										<path d="M5.5 8L7.2 9.7L10.5 6.3" stroke="#22c55e" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-									</svg>
-									{f}
-								</li>
-							))}
-						</ul>
-						<a
-							href={tier.ctaLink}
-							class:list={[
-								"mt-7 block text-center rounded-lg px-4 py-2.5 text-sm font-semibold transition-all duration-200",
-								tier.highlighted
-									? "bg-[--color-accent-warm] text-white hover:brightness-110 shadow-lg shadow-[--color-accent-warm]/20"
-									: "bg-[--color-bg-elevated] text-[--color-text] border border-[--color-border] hover:bg-[--color-border] hover:border-[--color-border]",
-							]}
-						>
-							{tier.cta}
-						</a>
-					</div>
-				))
-			}
+		<p class="eyebrow text-center">Integrations</p>
+		<h2 class="heading-lg text-center mt-3">Works with your stack</h2>
+		<p class="body-lg text-center max-w-2xl mx-auto mt-4">Drop-in plugins for 13 frameworks. One config, 9 files, zero maintenance.</p>
+
+		<div class="flex flex-wrap justify-center gap-3 mt-12">
+			<a href="https://docs.aeorank.dev/frameworks/next/" class="card px-5 py-3 text-sm text-text-muted hover:text-text flex items-center gap-2">Next.js</a>
+			<a href="https://docs.aeorank.dev/frameworks/astro/" class="card px-5 py-3 text-sm text-text-muted hover:text-text flex items-center gap-2">Astro</a>
+			<a href="https://docs.aeorank.dev/frameworks/nuxt/" class="card px-5 py-3 text-sm text-text-muted hover:text-text flex items-center gap-2">Nuxt</a>
+			<a href="https://docs.aeorank.dev/frameworks/remix/" class="card px-5 py-3 text-sm text-text-muted hover:text-text flex items-center gap-2">Remix</a>
+			<a href="https://docs.aeorank.dev/frameworks/sveltekit/" class="card px-5 py-3 text-sm text-text-muted hover:text-text flex items-center gap-2">SvelteKit</a>
+			<a href="https://docs.aeorank.dev/frameworks/gatsby/" class="card px-5 py-3 text-sm text-text-muted hover:text-text flex items-center gap-2">Gatsby</a>
+			<a href="https://docs.aeorank.dev/frameworks/shopify/" class="card px-5 py-3 text-sm text-text-muted hover:text-text flex items-center gap-2">Shopify</a>
+			<a href="https://docs.aeorank.dev/frameworks/11ty/" class="card px-5 py-3 text-sm text-text-muted hover:text-text flex items-center gap-2">11ty</a>
+			<a href="https://docs.aeorank.dev/frameworks/vitepress/" class="card px-5 py-3 text-sm text-text-muted hover:text-text flex items-center gap-2">VitePress</a>
+			<a href="https://docs.aeorank.dev/frameworks/docusaurus/" class="card px-5 py-3 text-sm text-text-muted hover:text-text flex items-center gap-2">Docusaurus</a>
+			<a href="https://docs.aeorank.dev/frameworks/wordpress/" class="card px-5 py-3 text-sm text-text-muted hover:text-text flex items-center gap-2">WordPress</a>
+		</div>
+
+		<div class="mt-10 max-w-lg mx-auto rounded-xl bg-[#0A0A0C] border border-border overflow-hidden">
+			<div class="px-4 py-2.5 border-b border-border text-xs text-text-muted font-mono">next.config.ts</div>
+			<div class="p-5 font-mono text-sm leading-relaxed text-text-muted">
+				<span class="text-accent">import</span> {'{'} withAeorank {'}'} <span class="text-accent">from</span> <span class="text-green">"@aeorank/next"</span>;<br/><br/>
+				<span class="text-accent">export default</span> withAeorank({'{'}<br/>
+				&nbsp;&nbsp;siteName: <span class="text-green">"My Site"</span>,<br/>
+				&nbsp;&nbsp;siteUrl: <span class="text-green">"https://example.com"</span>,<br/>
+				&nbsp;&nbsp;description: <span class="text-green">"What my site does."</span>,<br/>
+				{'}'});<br/>
+				<span class="text-text-muted">// → All 9 AEO files served at your site root</span>
+			</div>
 		</div>
 	</div>
 </section>
