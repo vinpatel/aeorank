@@ -1,5 +1,4 @@
-import { createHmac, timingSafeEqual } from "node:crypto";
-import { SignJWT, importPKCS8 } from "jose";
+import { createHmac, timingSafeEqual, sign as cryptoSign } from "node:crypto";
 
 // ─── Webhook Signature Verification ────────────────────────────────
 
@@ -25,9 +24,9 @@ export function verifyWebhookSignature(
 
 /**
  * Generate a JWT for GitHub App authentication.
- * JWTs expire after 10 minutes (GitHub maximum).
+ * Uses Node.js crypto instead of jose to support both PKCS#1 (RSA) and PKCS#8 key formats.
  */
-async function createAppJwt(): Promise<string> {
+function createAppJwt(): string {
 	const appId = process.env.GITHUB_APP_ID;
 	const privateKey = process.env.GITHUB_APP_PRIVATE_KEY;
 
@@ -37,16 +36,20 @@ async function createAppJwt(): Promise<string> {
 
 	// Handle private key that may be JSON-escaped (newlines as \n)
 	const normalizedKey = privateKey.replace(/\\n/g, "\n");
-	const key = await importPKCS8(normalizedKey, "RS256");
 
 	const now = Math.floor(Date.now() / 1000);
+	const header = Buffer.from(JSON.stringify({ alg: "RS256", typ: "JWT" })).toString("base64url");
+	const payload = Buffer.from(
+		JSON.stringify({
+			iss: appId,
+			iat: now - 60,
+			exp: now + 600,
+		}),
+	).toString("base64url");
 
-	return new SignJWT({})
-		.setProtectedHeader({ alg: "RS256" })
-		.setIssuer(appId)
-		.setIssuedAt(now - 60) // 60s clock drift allowance
-		.setExpirationTime(now + 600) // 10 minute maximum
-		.sign(key);
+	const signature = cryptoSign("RSA-SHA256", Buffer.from(`${header}.${payload}`), normalizedKey).toString("base64url");
+
+	return `${header}.${payload}.${signature}`;
 }
 
 /**
@@ -54,7 +57,7 @@ async function createAppJwt(): Promise<string> {
  * This token can make API calls on behalf of the installed app.
  */
 export async function getInstallationToken(installationId: number): Promise<string> {
-	const jwt = await createAppJwt();
+	const jwt = createAppJwt();
 
 	const response = await fetch(
 		`https://api.github.com/app/installations/${installationId}/access_tokens`,
