@@ -39,6 +39,13 @@ export default defineConfig({
 					],
 				},
 				{
+					label: "GitHub Integration",
+					items: [
+						{ label: "GitHub App", slug: "github-app" },
+						{ label: "GitHub Action", slug: "github-action" },
+					],
+				},
+				{
 					label: "CLI Reference",
 					items: [
 						{ label: "scan", slug: "cli/scan" },
