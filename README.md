@@ -17,6 +17,11 @@
   <a href="https://github.com/vinpatel/aeorank/stargazers"><img src="https://img.shields.io/github/stars/vinpatel/aeorank?style=flat-square&color=E8590C" alt="GitHub Stars"></a>
 </p>
 
+<!-- STATS_START -->
+![npm downloads](https://img.shields.io/badge/monthly%20downloads-0-blue)
+![GitHub stars](https://img.shields.io/github/stars/vinpatel/aeorank?style=social)
+<!-- STATS_END -->
+
 <p align="center">
   <a href="https://aeorank.dev">Website</a> &nbsp;·&nbsp;
   <a href="https://docs.aeorank.dev">Docs</a> &nbsp;·&nbsp;
@@ -187,6 +192,12 @@ Track your AEO score over time at [app.aeorank.dev](https://app.aeorank.dev):
 | [`@aeorank/11ty`](https://www.npmjs.com/package/@aeorank/11ty) | Eleventy plugin |
 | [`@aeorank/vitepress`](https://www.npmjs.com/package/@aeorank/vitepress) | VitePress plugin |
 | [`@aeorank/docusaurus`](https://www.npmjs.com/package/@aeorank/docusaurus) | Docusaurus plugin |
+
+## Live Demo
+
+See [DEMO.md](./DEMO.md) for today's auto-generated scan.
+
+Last updated: April 08, 2026
 
 ## Contributing
 

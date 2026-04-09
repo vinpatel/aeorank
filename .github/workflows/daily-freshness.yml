@@ -1,0 +1,34 @@
+name: Daily Repo Freshness
+on:
+  schedule:
+    - cron: '0 14 * * *' # 9am EST daily
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-badges:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Update scan counter badge
+        run: |
+          DATE=$(date +"%Y-%m-%d")
+          COUNT=$(cat .github/scan-count.txt 2>/dev/null || echo "0")
+          NEW_COUNT=$((COUNT + 1))
+          echo $NEW_COUNT > .github/scan-count.txt
+          echo "SCAN_DATE=$DATE" >> $GITHUB_ENV
+
+      - name: Update README timestamp
+        run: |
+          sed -i "s/Last updated: .*/Last updated: $(date +'%B %d, %Y')/" README.md
+
+      - name: Commit changes
+        run: |
+          git config --global user.name 'aeorank-bot'
+          git config --global user.email 'bot@aeorank.dev'
+          git add -A
+          git diff --staged --quiet || git commit -m "chore: daily badge refresh [skip ci]"
+          git push
