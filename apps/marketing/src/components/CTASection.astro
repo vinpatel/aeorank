@@ -1,13 +1,49 @@
 ---
 ---
 <section class="px-6 py-24 md:py-32 border-t border-border">
-	<div class="mx-auto max-w-3xl text-center">
-		<h2 class="heading-lg">Your competitors are already being cited by AI.<br/><span class="text-accent">You're not.</span></h2>
-		<p class="body-lg mt-4">Every AI answer without your name is revenue walking to a competitor. One scan. 30 seconds. Free forever.</p>
-		<div class="flex flex-wrap justify-center gap-3 mt-8">
-			<a href="https://github.com/apps/aeorank" class="btn-primary !px-8 !py-3.5 text-base">Start Free — Install App</a>
-			<a href="https://app.aeorank.dev/sign-in" class="btn-secondary !px-8 !py-3.5 text-base">Sign In to Dashboard</a>
+	<div class="mx-auto max-w-5xl">
+		<h2 class="heading-lg text-center">Your competitors are being cited by AI.<br/><span class="text-accent">You're not.</span></h2>
+		<p class="body-lg text-center max-w-2xl mx-auto mt-4">Every AI answer without your name is revenue walking to a competitor. Pick your path.</p>
+
+		<div class="grid md:grid-cols-3 gap-6 mt-12">
+			<!-- Developer -->
+			<div class="card p-8 border-l-4 border-l-accent flex flex-col animate-on-scroll">
+				<p class="eyebrow text-xs">Developers</p>
+				<h3 class="heading-sm mt-2">Run it in your terminal</h3>
+				<p class="text-text-muted text-sm mt-2 flex-1">CLI, GitHub App, GitHub Action. MIT licensed. Free forever.</p>
+				<div class="mt-4 rounded-lg bg-[#0A0A0C] border border-border px-4 py-3 font-mono text-xs text-text-muted">
+					<span class="text-accent">$</span> npx aeorank-cli scan https://your-site.com
+				</div>
+				<a href="https://github.com/apps/aeorank" class="btn-primary justify-center mt-4 !text-sm">Install GitHub App</a>
+				<a href="https://docs.aeorank.dev/getting-started" class="btn-secondary justify-center mt-3 !text-sm">Read the Docs</a>
+			</div>
+
+			<!-- Agency -->
+			<div class="card p-8 border-l-4 border-l-[#6366F1] flex flex-col animate-on-scroll">
+				<p class="eyebrow text-xs" style="color: #6366F1">Agencies</p>
+				<h3 class="heading-sm mt-2">Scan any client site</h3>
+				<p class="text-text-muted text-sm mt-2 flex-1">Unlimited scans. Benchmark against 100 funded startups. No per-seat cost.</p>
+				<div class="mt-4 p-4 rounded-lg bg-white/[0.04] border border-border text-center">
+					<span class="text-3xl font-bold text-accent">42</span>
+					<span class="text-text-muted text-sm">/100 avg across 100 startups</span>
+				</div>
+				<a href="https://docs.aeorank.dev/getting-started" class="btn-primary justify-center mt-4 !text-sm" style="background: #6366F1">Start Client Report</a>
+				<a href="/scoreboard" class="btn-secondary justify-center mt-3 !text-sm">View Benchmarks</a>
+			</div>
+
+			<!-- Founder -->
+			<div class="card p-8 border-l-4 border-l-[#FFD700] flex flex-col animate-on-scroll">
+				<p class="eyebrow text-xs" style="color: #FFD700">Founders</p>
+				<h3 class="heading-sm mt-2">Find out if AI sees you</h3>
+				<p class="text-text-muted text-sm mt-2 flex-1">Score 0–100. See exactly what's broken. Get the fix files. 30 seconds.</p>
+				<div class="mt-4 p-4 rounded-lg bg-white/[0.04] border border-border text-sm text-text-muted italic">
+					"Went from 31 to 68 in one afternoon. Now showing up in Perplexity."
+				</div>
+				<a href="https://github.com/apps/aeorank" class="btn-primary justify-center mt-4 !text-sm" style="background: #CA8A04">Check My Score — Free</a>
+				<a href="https://app.aeorank.dev/sign-in" class="btn-secondary justify-center mt-3 !text-sm">Open Dashboard</a>
+			</div>
 		</div>
-		<p class="text-text-muted text-sm mt-6">Open source · MIT licensed · 411 tests · Free forever · No credit card</p>
+
+		<p class="text-center text-text-muted text-sm mt-8">Open source · MIT licensed · No credit card · Free forever · No install needed to scan</p>
 	</div>
 </section>

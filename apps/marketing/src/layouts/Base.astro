@@ -29,9 +29,13 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? "https://aeorank.
 	<Nav />
 	<main><slot /></main>
 	<Footer />
+	<!-- Mobile sticky CTA -->
+	<div class="fixed bottom-0 left-0 right-0 z-40 p-3 bg-bg/95 backdrop-blur-lg border-t border-border md:hidden">
+		<a href="https://github.com/apps/aeorank" class="btn-primary w-full justify-center !py-3 !text-sm">Get Your Free AEO Score</a>
+	</div>
 	<script>
 		const observer = new IntersectionObserver((entries) => {
-			entries.forEach((e) => { if (e.isIntersecting) e.target.classList.add("is-visible"); });
+			entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("is-visible"); observer.unobserve(e.target); } });
 		}, { threshold: 0.1, rootMargin: "0px 0px -40px 0px" });
 		document.querySelectorAll(".animate-on-scroll").forEach((el) => observer.observe(el));
 	</script>
