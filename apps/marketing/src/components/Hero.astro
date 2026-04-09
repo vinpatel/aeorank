@@ -3,7 +3,7 @@ import TerminalDemo from "./TerminalDemo.tsx";
 ---
 <section class="relative px-6 pt-20 pb-16 md:pt-28 md:pb-24">
 	<div class="mx-auto max-w-6xl">
-		<!-- Two-column hero like ecc.tools -->
+		<!-- Two-column hero -->
 		<div class="grid lg:grid-cols-[1.2fr_1fr] gap-12 lg:gap-16 items-start">
 
 			<!-- LEFT: Headline + CTAs -->
@@ -13,34 +13,32 @@ import TerminalDemo from "./TerminalDemo.tsx";
 					<span class="text-[#FFD700]">★</span>
 					<span id="hero-stars" class="text-[#FFD700] font-semibold tabular-nums">Stars</span>
 					<span class="text-text-muted">·</span>
-					<span class="text-accent">AI visibility scoring</span>
-					<span class="text-text-muted">For ChatGPT, Perplexity, Claude, Gemini, and Google AI Overviews</span>
+					<span class="text-accent">Open source AEO scoring</span>
 				</a>
 
 				<h1 class="heading-xl">
-					<span class="text-accent">Score, fix,</span><br/>
-					<span class="text-accent">and generate</span><br/>
-					<span class="text-text">AI visibility<br/>for any website.</span>
+					<span class="text-text">You rank #1 on Google.</span><br/>
+					<span class="text-accent">AI can't see you.</span>
 				</h1>
 
 				<p class="text-text-secondary text-lg mt-6 leading-relaxed max-w-xl">
-					One command scores your AI visibility 0–100. 36 criteria across 5 pillars. Generates the 9 files ChatGPT, Perplexity, Claude, and Gemini actually look for. Open source. Free.
+					ChatGPT, Perplexity, and Claude now drive 40% of web discovery — and convert at 15.9%. AEOrank scores your AI visibility 0–100, then generates the 9 files that get you cited. Free. Open source. No vendor lock-in.
 				</p>
 
 				<div class="flex flex-wrap gap-3 mt-8">
 					<a href="https://github.com/apps/aeorank" class="btn-primary !px-6 !py-3 text-base">
 						<svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor" class="opacity-80"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-						Install GitHub App Free
+						Start Free — Install App
 					</a>
 					<a href="#scoring" class="btn-secondary !px-6 !py-3 text-base">See 36 Criteria</a>
 				</div>
 
 				<p class="text-text-muted text-sm mt-5">
-					Prefer a local scan? <code class="!text-xs">npx aeorank-cli scan https://your-site.com</code><br/>
-					Want CI control? <a href="https://github.com/marketplace/actions/aeorank-aeo-scanner" class="text-accent hover:underline">Use the GitHub Action</a>.
+					Prefer terminal? <code class="!text-xs">npx aeorank-cli scan https://your-site.com</code><br/>
+					Want CI gating? <a href="https://github.com/marketplace/actions/aeorank-aeo-scanner" class="text-accent hover:underline">Use the GitHub Action</a>.
 				</p>
 
-				<!-- Stats row with numbers -->
+				<!-- Stats row -->
 				<div class="flex flex-wrap items-center gap-x-6 gap-y-2 mt-6 text-xs text-text-muted">
 					<span>36 criteria</span>
 					<span>·</span>
@@ -52,65 +50,62 @@ import TerminalDemo from "./TerminalDemo.tsx";
 				</div>
 			</div>
 
-			<!-- RIGHT: Quick start card like ecc.tools -->
+			<!-- RIGHT: Quick start card -->
 			<div class="rounded-2xl border border-border bg-bg-raised p-8 lg:mt-8">
 				<div class="inline-block rounded-full bg-accent-muted border border-accent/20 px-4 py-1 text-xs font-semibold text-accent uppercase tracking-wider mb-6">
-					Get started in 30 seconds
+					30 seconds to your first score
 				</div>
 
-				<h3 class="text-xl font-bold mb-2">Score any site. Fix what AI can't see.</h3>
-				<p class="text-text-muted text-sm mb-6 leading-relaxed">Install the App or run the CLI. Get a score, see what's missing, generate the files. Every AI engine covered.</p>
+				<h3 class="text-xl font-bold mb-2">Score. Fix. Ship.</h3>
+				<p class="text-text-muted text-sm mb-6 leading-relaxed">Other tools charge $129/mo to tell you what's wrong. AEOrank tells you what's wrong, then fixes it — for free.</p>
 
 				<!-- Numbered steps -->
 				<div class="space-y-5">
 					<div class="flex gap-4">
 						<span class="flex-shrink-0 w-8 h-8 rounded-full bg-accent/10 border border-accent/20 flex items-center justify-center text-accent text-sm font-bold">1</span>
 						<div>
-							<p class="font-semibold text-sm">Install the app or run the CLI</p>
-							<p class="text-text-muted text-xs mt-0.5">One click or <code class="!text-[10px]">npx aeorank-cli scan</code></p>
+							<p class="font-semibold text-sm">Scan your site</p>
+							<p class="text-text-muted text-xs mt-0.5">GitHub App, CLI, or GitHub Action — pick one</p>
 						</div>
 					</div>
 					<div class="flex gap-4">
 						<span class="flex-shrink-0 w-8 h-8 rounded-full bg-accent/10 border border-accent/20 flex items-center justify-center text-accent text-sm font-bold">2</span>
 						<div>
 							<p class="font-semibold text-sm">Get your AEO score (0–100)</p>
-							<p class="text-text-muted text-xs mt-0.5">36 criteria across 5 pillars, graded A+ through F</p>
+							<p class="text-text-muted text-xs mt-0.5">36 criteria, 5 pillars, graded A+ through F</p>
 						</div>
 					</div>
 					<div class="flex gap-4">
 						<span class="flex-shrink-0 w-8 h-8 rounded-full bg-accent/10 border border-accent/20 flex items-center justify-center text-accent text-sm font-bold">3</span>
 						<div>
 							<p class="font-semibold text-sm">Deploy the generated files</p>
-							<p class="text-text-muted text-xs mt-0.5">llms.txt, ai.txt, schema.json — 9 files, ready to serve</p>
+							<p class="text-text-muted text-xs mt-0.5">9 files — llms.txt, ai.txt, schema.json, and more</p>
 						</div>
 					</div>
 				</div>
 
 				<a href="https://github.com/apps/aeorank" class="btn-primary w-full justify-center mt-8">Install App →</a>
 
-				<p class="text-text-muted text-xs text-center mt-3">Free · 10 scans/day · No credit card</p>
+				<p class="text-text-muted text-xs text-center mt-3">Free forever · No credit card · MIT licensed</p>
 			</div>
 		</div>
 
-		<!-- Three feature cards below hero (like ecc.tools) -->
+		<!-- Three feature cards -->
 		<div class="grid md:grid-cols-3 gap-4 mt-16">
 			<div class="card p-6">
-				<span class="eyebrow text-green text-[11px]">Scoring</span>
-				<h3 class="font-bold mt-2 mb-2">36-criteria analysis</h3>
-				<p class="text-text-muted text-sm leading-relaxed">Deterministic scoring across 5 pillars. No LLM calls. Same result every time. Covers what ChatGPT, Perplexity, Claude, Gemini, and Google AI Overviews evaluate.</p>
-				<p class="text-text-muted text-xs mt-4">36 criteria · 5 pillars · 411 tests</p>
+				<span class="eyebrow text-green text-[11px]">Score</span>
+				<h3 class="font-bold mt-2 mb-2">36 criteria. Zero guesswork.</h3>
+				<p class="text-text-muted text-sm leading-relaxed">Deterministic scoring — no LLM calls, no AI scoring AI. Same result every run. Covers what ChatGPT, Perplexity, Claude, Gemini, and Google AI Overviews actually evaluate.</p>
 			</div>
 			<div class="card p-6">
-				<span class="eyebrow text-[11px]">Generation</span>
-				<h3 class="font-bold mt-2 mb-2">9 AI-readable files</h3>
-				<p class="text-text-muted text-sm leading-relaxed">Generates llms.txt, ai.txt, CLAUDE.md, schema.json, robots-patch.txt, faq-blocks.html, citation-anchors.html, sitemap-ai.xml. Tailored to your site.</p>
-				<p class="text-accent text-xs mt-4">Free → 13 framework plugins</p>
+				<span class="eyebrow text-[11px]">Fix</span>
+				<h3 class="font-bold mt-2 mb-2">9 files. Auto-generated.</h3>
+				<p class="text-text-muted text-sm leading-relaxed">llms.txt, ai.txt, CLAUDE.md, schema.json, robots-patch, FAQ blocks, citation anchors, AI sitemap. Tailored to your site. No other tool generates these.</p>
 			</div>
 			<div class="card p-6">
-				<span class="eyebrow text-[#FFD700] text-[11px]">GitHub Native</span>
-				<h3 class="font-bold mt-2 mb-2">Check Runs on every PR</h3>
-				<p class="text-text-muted text-sm leading-relaxed">GitHub App: one-click, zero config. GitHub Action: YAML control with fail-below thresholds. Both post score breakdowns directly on your PRs.</p>
-				<p class="text-text-muted text-xs mt-4"><a href="https://docs.aeorank.dev/github-app" class="text-accent hover:underline">Read the setup guide</a></p>
+				<span class="eyebrow text-[#FFD700] text-[11px]">Ship</span>
+				<h3 class="font-bold mt-2 mb-2">CI-native. Block regressions.</h3>
+				<p class="text-text-muted text-sm leading-relaxed">GitHub App: zero-config PR checks. GitHub Action: fail-below thresholds. Both post score breakdowns on every PR. No other AEO tool lives in your pipeline.</p>
 			</div>
 		</div>
 
@@ -127,11 +122,15 @@ import TerminalDemo from "./TerminalDemo.tsx";
 			</div>
 		</div>
 
-		<!-- Big stat cards (like ecc.tools) -->
+		<!-- Big stat cards -->
 		<div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-16">
 			<div class="card p-6 text-center">
+				<div class="text-4xl font-bold text-accent">$0</div>
+				<div class="text-text-muted text-sm mt-1">vs $129+/mo competitors</div>
+			</div>
+			<div class="card p-6 text-center">
 				<div class="text-4xl font-bold text-[#FFD700]">36</div>
-				<div class="text-text-muted text-sm mt-1">AI Criteria</div>
+				<div class="text-text-muted text-sm mt-1">Scoring Criteria</div>
 			</div>
 			<div class="card p-6 text-center">
 				<div class="text-4xl font-bold text-[#FFD700]">9</div>
@@ -141,15 +140,11 @@ import TerminalDemo from "./TerminalDemo.tsx";
 				<div class="text-4xl font-bold text-[#FFD700]">13</div>
 				<div class="text-text-muted text-sm mt-1">Framework Plugins</div>
 			</div>
-			<div class="card p-6 text-center">
-				<div class="text-4xl font-bold text-green">$0</div>
-				<div class="text-text-muted text-sm mt-1">Open Source (MIT)</div>
-			</div>
 		</div>
 
 		<!-- Engines row -->
 		<div class="text-center mt-12">
-			<p class="eyebrow text-text-muted !text-[11px] !tracking-[0.15em] mb-4">CHECKS VISIBILITY ACROSS ALL MAJOR AI ENGINES</p>
+			<p class="eyebrow text-text-muted !text-[11px] !tracking-[0.15em] mb-4">OPTIMIZES VISIBILITY ACROSS EVERY MAJOR AI ENGINE</p>
 			<div class="flex flex-wrap justify-center gap-6 text-text-secondary text-sm">
 				<span class="flex items-center gap-2"><span class="text-green text-lg">●</span> ChatGPT</span>
 				<span class="flex items-center gap-2"><span class="text-green text-lg">●</span> Perplexity</span>

@@ -1,36 +1,36 @@
 ---
 const faqs = [
 	{
-		q: "What is AEO?",
-		a: "Answer Engine Optimization. It's how you make your site visible to ChatGPT, Perplexity, Claude, Gemini, and Google AI Overviews. AI search converts 5× better than Google organic — AEO is how you get into those answers."
+		q: "What is AEO and why should I care?",
+		a: "Answer Engine Optimization. AI search engines (ChatGPT, Perplexity, Claude, Gemini) now drive 40% of web discovery and convert visitors at 15.9% — higher than Google organic. AEO is how you get into those AI-generated answers. If you're not optimized for AI extraction, your competitors are getting cited instead of you."
 	},
 	{
-		q: "How is this different from SEO tools?",
-		a: "SEO tools check Google rankings. AEOrank checks what AI engines look for: llms.txt, ai.txt, schema markup, AI crawler access, content structure for extraction, and 30 more criteria. No overlap."
+		q: "How is this different from SEO tools like Ahrefs or Semrush?",
+		a: "SEO tools check Google rankings. AEOrank checks what AI engines look for: llms.txt, ai.txt, schema markup, AI crawler access, content structure for extraction, and 30 more criteria that SEO tools don't touch. Then it generates the 9 files AI engines need — no other tool does that."
 	},
 	{
-		q: "Is it really free?",
-		a: "Yes. The CLI, core engine, GitHub App, GitHub Action, and all 13 framework plugins are MIT licensed. The GitHub App gives you 10 free scans per day. The SaaS dashboard at app.aeorank.dev has a free tier with paid plans for monitoring."
+		q: "How is this different from Otterly.ai or Scrunch?",
+		a: "Otterly ($29–99/mo) and Scrunch ($100–500/mo) are monitoring dashboards — they track when AI mentions your brand. AEOrank is a diagnostic and remediation tool: it scores your site's technical AI readiness, tells you exactly what to fix, and generates the fix. Different problem. And free."
 	},
 	{
-		q: "How is this different from Scrunch, Profound, or Ahrefs?",
-		a: "Those are $89–$500/month SaaS tools that track brand mentions in AI answers. AEOrank is free, open source, and does something they can't: it scores your site's technical AI readiness AND generates the 9 files AI engines need. Different tool, different job."
+		q: "Is it really free? What's the catch?",
+		a: "No catch. The CLI, core engine, GitHub App, GitHub Action, and all 13 framework plugins are MIT licensed and free forever. The GitHub App gives you 10 free scans per day. We have an optional SaaS dashboard at app.aeorank.dev with paid plans for monitoring over time — but the core tool is and will remain free."
 	},
 	{
 		q: "Does llms.txt actually work?",
-		a: "Studies show llms.txt alone doesn't impact AI citations yet. That's exactly why AEOrank scores 36 criteria, not just llms.txt. Your overall content structure, schema markup, and AI crawler access matter far more. AEOrank checks all of it."
+		a: "Studies show llms.txt alone doesn't guarantee AI citations yet — which is exactly why AEOrank scores 36 criteria, not just one file. Your content structure, schema markup, AI crawler access, answer formatting, and entity disambiguation all matter. AEOrank checks every factor and generates all 9 files, not just llms.txt."
 	},
 	{
-		q: "Can I use this in CI?",
-		a: "Yes. Install the GitHub App for zero-config PR checks, or use the GitHub Action (vinpatel/aeorank-action@v1) for full CI control with fail-below thresholds. Both post Check Runs and PR comments."
+		q: "Can I use this in CI/CD?",
+		a: "Yes — two ways. Install the GitHub App for zero-config PR checks (one click, no YAML). Or use the GitHub Action (vinpatel/aeorank-action@v1) for full pipeline control with fail-below thresholds. Both post Check Runs and score breakdowns directly on your PRs."
 	},
 	{
-		q: "What AI engines does it check for?",
-		a: "AEOrank checks your visibility across ChatGPT (GPTBot), Claude (ClaudeBot), Perplexity (PerplexityBot), Gemini (Google-Extended), and Google AI Overviews. All 36 criteria are tuned for what these engines actually evaluate."
+		q: "What AI engines does it optimize for?",
+		a: "All of them. AEOrank checks your visibility across ChatGPT (GPTBot), Claude (ClaudeBot), Perplexity (PerplexityBot), Gemini (Google-Extended), and Google AI Overviews. All 36 criteria are tuned for what these engines actually evaluate when deciding what to cite."
 	},
 	{
 		q: "How long does a scan take?",
-		a: "Under 30 seconds for a typical site. AEOrank crawls up to 50 pages, analyzes structure, and scores all 36 criteria. Deterministic — same score every time, no LLM calls."
+		a: "Under 30 seconds for a typical site. AEOrank crawls up to 50 pages, analyzes structure across all 36 criteria, and generates your score and files. Fully deterministic — no LLM calls, same score every time."
 	},
 ];
 ---
