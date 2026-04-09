@@ -7,55 +7,208 @@
 		<p class="body-lg text-center max-w-2xl mx-auto mt-4">Pick the one that fits your workflow. All three produce the same 36-criteria score.</p>
 
 		<div class="grid md:grid-cols-3 gap-6 mt-14">
+
 			<!-- GitHub App -->
-			<div class="card p-8 flex flex-col">
-				<div class="flex items-center gap-3 mb-5">
-					<div class="w-10 h-10 rounded-lg bg-accent-muted flex items-center justify-center">
-						<svg width="20" height="20" viewBox="0 0 16 16" fill="#E8590C"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-					</div>
-					<h3 class="heading-sm">GitHub App</h3>
+			<div class="hiw-card hiw-card--orange flex flex-col">
+				<div class="hiw-card__step">
+					<span class="hiw-step-badge hiw-step-badge--orange">01</span>
 				</div>
-				<p class="text-text-secondary text-sm leading-relaxed mb-6">One-click install. Every PR gets a Check Run with your AEO score. No YAML. No config.</p>
-				<div class="mt-auto">
-					<a href="https://github.com/apps/aeorank" class="btn-primary w-full justify-center !text-sm">Install App Free →</a>
+				<div class="hiw-card__body flex flex-col flex-1 p-7 pt-5">
+					<div class="flex items-center gap-3 mb-4">
+						<div class="hiw-icon hiw-icon--orange">
+							<svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+						</div>
+						<h3 class="font-semibold text-base text-text">GitHub App</h3>
+					</div>
+					<p class="text-text-muted text-sm leading-relaxed mb-5">One-click install. Every PR gets a Check Run with your AEO score. No YAML. No config.</p>
+
+					<div class="hiw-tag hiw-tag--orange mb-5">Zero config · One click install</div>
+
+					<div class="mt-auto">
+						<a href="https://github.com/apps/aeorank" class="btn-primary w-full justify-center !text-sm">Install App Free →</a>
+					</div>
 				</div>
 			</div>
 
 			<!-- CLI -->
-			<div class="card p-8 flex flex-col">
-				<div class="flex items-center gap-3 mb-5">
-					<div class="w-10 h-10 rounded-lg bg-accent-muted flex items-center justify-center">
-						<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#E8590C" stroke-width="2" stroke-linecap="round"><path d="M4 17l6-5-6-5"/><path d="M12 19h8"/></svg>
+			<div class="hiw-card hiw-card--purple flex flex-col">
+				<div class="hiw-card__step">
+					<span class="hiw-step-badge hiw-step-badge--purple">02</span>
+				</div>
+				<div class="hiw-card__body flex flex-col flex-1 p-7 pt-5">
+					<div class="flex items-center gap-3 mb-4">
+						<div class="hiw-icon hiw-icon--purple">
+							<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 17l6-5-6-5"/><path d="M12 19h8"/></svg>
+						</div>
+						<h3 class="font-semibold text-base text-text">CLI</h3>
 					</div>
-					<h3 class="heading-sm">CLI</h3>
-				</div>
-				<p class="text-text-secondary text-sm leading-relaxed mb-4">Scan any URL from your terminal. Instant score with colored output and recommendations.</p>
-				<div class="rounded-lg bg-[#0A0A0C] border border-border px-4 py-3 font-mono text-sm text-text-muted mb-6">
-					<span class="text-text-muted">$</span> <span class="text-accent">npx aeorank-cli scan</span> <span class="text-text">https://your-site.com</span>
-				</div>
-				<div class="mt-auto">
-					<a href="https://docs.aeorank.dev/getting-started" class="btn-secondary w-full justify-center !text-sm">Read the docs →</a>
+					<p class="text-text-muted text-sm leading-relaxed mb-4">Scan any URL from your terminal. Instant score with colored output and recommendations.</p>
+
+					<!-- Code block -->
+					<div class="hiw-code-block mb-5">
+						<div class="hiw-code-block__header">
+							<span class="hiw-code-dot" style="background:#FF5F57"></span>
+							<span class="hiw-code-dot" style="background:#FFBD2E"></span>
+							<span class="hiw-code-dot" style="background:#28C840"></span>
+							<span class="hiw-code-block__label">terminal</span>
+						</div>
+						<div class="hiw-code-block__body">
+							<span class="hiw-code-prompt">$</span>
+							<span class="hiw-code-cmd"> npx aeorank-cli scan</span>
+							<span class="hiw-code-url"> https://your-site.com</span>
+						</div>
+					</div>
+
+					<div class="mt-auto">
+						<a href="https://docs.aeorank.dev/getting-started" class="btn-secondary w-full justify-center !text-sm">Read the Docs →</a>
+					</div>
 				</div>
 			</div>
 
 			<!-- GitHub Action -->
-			<div class="card p-8 flex flex-col">
-				<div class="flex items-center gap-3 mb-5">
-					<div class="w-10 h-10 rounded-lg bg-accent-muted flex items-center justify-center">
-						<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#E8590C" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+			<div class="hiw-card hiw-card--green flex flex-col">
+				<div class="hiw-card__step">
+					<span class="hiw-step-badge hiw-step-badge--green">03</span>
+				</div>
+				<div class="hiw-card__body flex flex-col flex-1 p-7 pt-5">
+					<div class="flex items-center gap-3 mb-4">
+						<div class="hiw-icon hiw-icon--green">
+							<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+						</div>
+						<h3 class="font-semibold text-base text-text">GitHub Action</h3>
 					</div>
-					<h3 class="heading-sm">GitHub Action</h3>
-				</div>
-				<p class="text-text-secondary text-sm leading-relaxed mb-4">CI pipeline control. Set fail-below thresholds. Block PRs that drop your AEO score.</p>
-				<div class="rounded-lg bg-[#0A0A0C] border border-border px-4 py-3 font-mono text-xs text-text-muted mb-6 leading-relaxed">
-					<span class="text-green">- uses:</span> vinpatel/aeorank-action@v1<br/>
-					&nbsp;&nbsp;<span class="text-green">with:</span><br/>
-					&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-text-muted">url:</span> <span class="text-text">https://your-site.com</span>
-				</div>
-				<div class="mt-auto">
-					<a href="https://github.com/marketplace/actions/aeorank-aeo-scanner" class="btn-secondary w-full justify-center !text-sm">View on Marketplace →</a>
+					<p class="text-text-muted text-sm leading-relaxed mb-4">CI pipeline control. Set fail-below thresholds. Block PRs that drop your AEO score.</p>
+
+					<!-- YAML code block -->
+					<div class="hiw-code-block mb-5">
+						<div class="hiw-code-block__header">
+							<span class="hiw-code-dot" style="background:#FF5F57"></span>
+							<span class="hiw-code-dot" style="background:#FFBD2E"></span>
+							<span class="hiw-code-dot" style="background:#28C840"></span>
+							<span class="hiw-code-block__label">aeorank.yml</span>
+						</div>
+						<div class="hiw-code-block__body hiw-code-block__body--yaml">
+							<div><span class="hiw-yaml-key">- uses:</span> <span class="hiw-yaml-val">vinpatel/aeorank-action@v1</span></div>
+							<div class="pl-4"><span class="hiw-yaml-key">with:</span></div>
+							<div class="pl-8"><span class="hiw-yaml-muted">url:</span> <span class="hiw-yaml-string">https://your-site.com</span></div>
+							<div class="pl-8"><span class="hiw-yaml-muted">fail-below:</span> <span class="hiw-yaml-num">70</span></div>
+						</div>
+					</div>
+
+					<div class="mt-auto">
+						<a href="https://github.com/marketplace/actions/aeorank-aeo-scanner" class="btn-secondary w-full justify-center !text-sm">View on Marketplace →</a>
+					</div>
 				</div>
 			</div>
+
 		</div>
 	</div>
 </section>
+
+<style>
+	/* Card shell — gradient top border */
+	.hiw-card {
+		border-radius: 14px;
+		border: 1px solid var(--color-border);
+		background: var(--color-bg-card);
+		overflow: hidden;
+		transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+	}
+	.hiw-card:hover {
+		transform: translateY(-4px);
+		box-shadow: 0 16px 40px rgba(0,0,0,0.35);
+	}
+	.hiw-card--orange:hover  { border-color: rgba(232,89,12,0.3);  box-shadow: 0 16px 40px rgba(0,0,0,0.35), 0 0 0 1px rgba(232,89,12,0.15); }
+	.hiw-card--purple:hover  { border-color: rgba(99,102,241,0.3); box-shadow: 0 16px 40px rgba(0,0,0,0.35), 0 0 0 1px rgba(99,102,241,0.15); }
+	.hiw-card--green:hover   { border-color: rgba(34,197,94,0.3);  box-shadow: 0 16px 40px rgba(0,0,0,0.35), 0 0 0 1px rgba(34,197,94,0.15); }
+
+	/* Step section at top — full-width gradient bar */
+	.hiw-card__step {
+		padding: 1rem 1.75rem 0;
+	}
+	.hiw-step-badge {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		font-size: 0.6875rem;
+		font-weight: 800;
+		letter-spacing: 0.08em;
+		padding: 0.2rem 0.6rem;
+		border-radius: 6px;
+	}
+	.hiw-step-badge--orange { background: rgba(232,89,12,0.15);  color: #E8590C;  border: 1px solid rgba(232,89,12,0.25); }
+	.hiw-step-badge--purple { background: rgba(99,102,241,0.15); color: #818CF8; border: 1px solid rgba(99,102,241,0.25); }
+	.hiw-step-badge--green  { background: rgba(34,197,94,0.15);  color: #22C55E;  border: 1px solid rgba(34,197,94,0.25); }
+
+	/* Icon containers */
+	.hiw-icon {
+		width: 38px;
+		height: 38px;
+		border-radius: 9px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-shrink: 0;
+	}
+	.hiw-icon--orange { background: rgba(232,89,12,0.12);  color: #E8590C;  border: 1px solid rgba(232,89,12,0.2); }
+	.hiw-icon--purple { background: rgba(99,102,241,0.12); color: #818CF8; border: 1px solid rgba(99,102,241,0.2); }
+	.hiw-icon--green  { background: rgba(34,197,94,0.12);  color: #22C55E;  border: 1px solid rgba(34,197,94,0.2); }
+
+	/* Tag pills */
+	.hiw-tag {
+		display: inline-block;
+		font-size: 0.6875rem;
+		font-weight: 600;
+		padding: 0.2rem 0.6rem;
+		border-radius: 9999px;
+	}
+	.hiw-tag--orange { background: rgba(232,89,12,0.1); color: #E8590C; border: 1px solid rgba(232,89,12,0.2); }
+
+	/* Code block */
+	.hiw-code-block {
+		background: #080810;
+		border: 1px solid rgba(255,255,255,0.07);
+		border-radius: 9px;
+		overflow: hidden;
+	}
+	.hiw-code-block__header {
+		display: flex;
+		align-items: center;
+		gap: 5px;
+		padding: 0.5rem 0.75rem;
+		border-bottom: 1px solid rgba(255,255,255,0.06);
+		background: rgba(255,255,255,0.02);
+	}
+	.hiw-code-dot {
+		width: 9px;
+		height: 9px;
+		border-radius: 50%;
+		opacity: 0.8;
+	}
+	.hiw-code-block__label {
+		font-size: 0.6875rem;
+		color: #52525B;
+		font-family: var(--font-mono);
+		margin-left: 4px;
+	}
+	.hiw-code-block__body {
+		padding: 0.75rem 1rem;
+		font-family: var(--font-mono);
+		font-size: 0.8125rem;
+		line-height: 1.5;
+	}
+	.hiw-code-block__body--yaml {
+		font-size: 0.75rem;
+		line-height: 1.8;
+	}
+	.hiw-code-prompt { color: #52525B; }
+	.hiw-code-cmd    { color: #E8590C; }
+	.hiw-code-url    { color: #A1A1AA; }
+
+	/* YAML syntax colors */
+	.hiw-yaml-key    { color: #818CF8; }
+	.hiw-yaml-val    { color: #22C55E; }
+	.hiw-yaml-muted  { color: #71717A; }
+	.hiw-yaml-string { color: #FCD34D; }
+	.hiw-yaml-num    { color: #FB923C; }
+</style>

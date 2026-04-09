@@ -47,16 +47,143 @@ const faqs = [
 		<p class="eyebrow text-center">FAQ</p>
 		<h2 class="heading-lg text-center mt-3">Common questions</h2>
 
-		<div class="mt-14 space-y-0">
-			{faqs.map((faq) => (
-				<details class="group border-b border-border">
-					<summary class="flex items-center justify-between py-5 cursor-pointer text-text hover:text-accent transition-colors">
-						<span class="text-[0.9375rem] font-medium pr-4">{faq.q}</span>
-						<span class="text-text-muted group-open:rotate-45 transition-transform text-lg shrink-0">+</span>
-					</summary>
-					<p class="pb-5 text-sm text-text-secondary leading-relaxed">{faq.a}</p>
-				</details>
+		<div class="mt-14 faq-list">
+			{faqs.map((faq, i) => (
+				<div class="faq-item" data-index={i}>
+					<button
+						class="faq-trigger"
+						aria-expanded="false"
+						aria-controls={`faq-answer-${i}`}
+						id={`faq-btn-${i}`}
+					>
+						<span class="faq-question">{faq.q}</span>
+						<span class="faq-chevron" aria-hidden="true">
+							<svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+								<path d="M4 6l4 4 4-4"/>
+							</svg>
+						</span>
+					</button>
+					<div
+						class="faq-body"
+						id={`faq-answer-${i}`}
+						role="region"
+						aria-labelledby={`faq-btn-${i}`}
+					>
+						<p class="faq-answer">{faq.a}</p>
+					</div>
+				</div>
 			))}
 		</div>
 	</div>
 </section>
+
+<style>
+	.faq-list {
+		display: flex;
+		flex-direction: column;
+		gap: 0;
+	}
+
+	.faq-item {
+		border-bottom: 1px solid var(--color-border);
+		transition: background 0.25s ease;
+		border-radius: 0;
+	}
+
+	.faq-item:first-child {
+		border-top: 1px solid var(--color-border);
+	}
+
+	.faq-item.is-open {
+		background: rgba(232, 89, 12, 0.04);
+		border-color: rgba(232, 89, 12, 0.15);
+	}
+
+	.faq-trigger {
+		width: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1rem;
+		padding: 1.25rem 0;
+		background: none;
+		border: none;
+		cursor: pointer;
+		text-align: left;
+		color: var(--color-text);
+		transition: color 0.15s ease;
+	}
+
+	.faq-trigger:hover {
+		color: var(--color-accent);
+	}
+
+	.faq-question {
+		font-size: 0.9375rem;
+		font-weight: 500;
+		line-height: 1.4;
+		flex: 1;
+	}
+
+	.faq-chevron {
+		flex-shrink: 0;
+		color: var(--color-text-muted);
+		transition: color 0.2s ease, transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+		display: flex;
+		align-items: center;
+	}
+
+	.faq-item.is-open .faq-chevron {
+		transform: rotate(180deg);
+		color: var(--color-accent);
+	}
+
+	/* Smooth height animation via grid trick */
+	.faq-body {
+		display: grid;
+		grid-template-rows: 0fr;
+		transition: grid-template-rows 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+		overflow: hidden;
+	}
+
+	.faq-body > p {
+		overflow: hidden;
+	}
+
+	.faq-item.is-open .faq-body {
+		grid-template-rows: 1fr;
+	}
+
+	.faq-answer {
+		font-size: 0.875rem;
+		line-height: 1.75;
+		color: var(--color-text-secondary);
+		padding-bottom: 1.25rem;
+		margin: 0;
+	}
+</style>
+
+<script>
+	const items = document.querySelectorAll<HTMLElement>('.faq-item');
+
+	items.forEach((item) => {
+		const trigger = item.querySelector<HTMLButtonElement>('.faq-trigger');
+		if (!trigger) return;
+
+		trigger.addEventListener('click', () => {
+			const isOpen = item.classList.contains('is-open');
+
+			// Close all others
+			items.forEach((other) => {
+				if (other !== item) {
+					other.classList.remove('is-open');
+					other.querySelector('.faq-trigger')?.setAttribute('aria-expanded', 'false');
+				}
+			});
+
+			// Toggle current
+			item.classList.toggle('is-open', !isOpen);
+			trigger.setAttribute('aria-expanded', String(!isOpen));
+		});
+	});
+</script>

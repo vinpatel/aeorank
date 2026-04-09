@@ -6,44 +6,136 @@
 		<p class="body-lg text-center max-w-2xl mx-auto mt-4">Every AI answer without your name is revenue walking to a competitor. Pick your path.</p>
 
 		<div class="grid md:grid-cols-3 gap-6 mt-12">
-			<!-- Developer -->
-			<div class="card p-8 border-l-4 border-l-accent flex flex-col animate-on-scroll">
-				<p class="eyebrow text-xs">Developers</p>
-				<h3 class="heading-sm mt-2">Run it in your terminal</h3>
-				<p class="text-text-muted text-sm mt-2 flex-1">CLI, GitHub App, GitHub Action. MIT licensed. Free forever.</p>
-				<div class="mt-4 rounded-lg bg-[#0A0A0C] border border-border px-4 py-3 font-mono text-xs text-text-muted">
-					<span class="text-accent">$</span> npx aeorank-cli scan https://your-site.com
+
+			<!-- Developer card — accent/orange theme -->
+			<div class="cta-card cta-card--dev animate-on-scroll flex flex-col">
+				<div class="cta-card-inner flex flex-col flex-1 p-8">
+					<p class="eyebrow text-xs">Developers</p>
+					<h3 class="heading-sm mt-2">Run it in your terminal</h3>
+					<p class="text-text-muted text-sm mt-2 flex-1">CLI, GitHub App, GitHub Action. MIT licensed. Free forever.</p>
+
+					<!-- Terminal block -->
+					<div class="mt-5 rounded-lg overflow-hidden border border-white/[0.07] bg-[#0A0A0C]">
+						<div class="flex items-center gap-1.5 px-3 py-2 border-b border-white/[0.05]">
+							<span class="w-2.5 h-2.5 rounded-full bg-[#FF5F57]/70"></span>
+							<span class="w-2.5 h-2.5 rounded-full bg-[#FFBD2E]/70"></span>
+							<span class="w-2.5 h-2.5 rounded-full bg-[#28C840]/70"></span>
+							<span class="ml-2 text-[11px] text-text-muted font-mono">terminal</span>
+						</div>
+						<div class="px-4 py-3 font-mono text-xs leading-relaxed">
+							<div class="flex items-start gap-2">
+								<span class="text-accent select-none mt-px">$</span>
+								<span class="text-[#86EFAC]">npx</span>
+								<span class="text-text-secondary">aeorank-cli scan</span>
+								<span class="text-[#7DD3FC]">https://your-site.com</span>
+							</div>
+							<div class="mt-2 text-text-muted/70 text-[11px]">
+								<span class="text-green">✓</span> Score: <span class="text-text font-semibold">73/100</span> · 9 files generated
+							</div>
+						</div>
+					</div>
+
+					<a href="https://github.com/apps/aeorank" class="btn-primary justify-center mt-5 !text-sm">Install GitHub App</a>
+					<a href="https://docs.aeorank.dev/getting-started" class="btn-secondary justify-center mt-3 !text-sm">Read the Docs</a>
 				</div>
-				<a href="https://github.com/apps/aeorank" class="btn-primary justify-center mt-4 !text-sm">Install GitHub App</a>
-				<a href="https://docs.aeorank.dev/getting-started" class="btn-secondary justify-center mt-3 !text-sm">Read the Docs</a>
 			</div>
 
-			<!-- Agency -->
-			<div class="card p-8 border-l-4 border-l-[#6366F1] flex flex-col animate-on-scroll">
-				<p class="eyebrow text-xs" style="color: #6366F1">Agencies</p>
-				<h3 class="heading-sm mt-2">Scan any client site</h3>
-				<p class="text-text-muted text-sm mt-2 flex-1">Unlimited scans. Benchmark against 100 funded startups. No per-seat cost.</p>
-				<div class="mt-4 p-4 rounded-lg bg-white/[0.04] border border-border text-center">
-					<span class="text-3xl font-bold text-accent">42</span>
-					<span class="text-text-muted text-sm">/100 avg across 100 startups</span>
+			<!-- Agency card — indigo theme -->
+			<div class="cta-card cta-card--agency animate-on-scroll flex flex-col">
+				<div class="cta-card-inner flex flex-col flex-1 p-8">
+					<p class="eyebrow text-xs" style="color: #818CF8">Agencies</p>
+					<h3 class="heading-sm mt-2">Scan any client site</h3>
+					<p class="text-text-muted text-sm mt-2 flex-1">Unlimited scans. Benchmark against 100 funded startups. No per-seat cost.</p>
+
+					<!-- Stat display -->
+					<div class="mt-5 p-4 rounded-lg bg-white/[0.03] border border-white/[0.07] text-center">
+						<div class="flex items-baseline justify-center gap-1">
+							<span class="text-4xl font-bold text-[#818CF8]" style="font-variant-numeric: tabular-nums;">42</span>
+							<span class="text-text-muted text-sm">/100</span>
+						</div>
+						<p class="text-text-muted text-xs mt-1">avg across 100 funded startups</p>
+						<div class="mt-3 h-1.5 rounded-full bg-white/[0.06] overflow-hidden">
+							<div class="h-full rounded-full bg-gradient-to-r from-[#6366F1] to-[#818CF8]" style="width: 42%"></div>
+						</div>
+					</div>
+
+					<a href="https://docs.aeorank.dev/getting-started" class="btn-primary justify-center mt-5 !text-sm" style="background: #6366F1; box-shadow: 0 4px 16px rgba(99,102,241,0.3)">Start Client Report</a>
+					<a href="/scoreboard" class="btn-secondary justify-center mt-3 !text-sm">View Benchmarks</a>
 				</div>
-				<a href="https://docs.aeorank.dev/getting-started" class="btn-primary justify-center mt-4 !text-sm" style="background: #6366F1">Start Client Report</a>
-				<a href="/scoreboard" class="btn-secondary justify-center mt-3 !text-sm">View Benchmarks</a>
 			</div>
 
-			<!-- Founder -->
-			<div class="card p-8 border-l-4 border-l-[#FFD700] flex flex-col animate-on-scroll">
-				<p class="eyebrow text-xs" style="color: #FFD700">Founders</p>
-				<h3 class="heading-sm mt-2">Find out if AI sees you</h3>
-				<p class="text-text-muted text-sm mt-2 flex-1">Score 0–100. See exactly what's broken. Get the fix files. 30 seconds.</p>
-				<div class="mt-4 p-4 rounded-lg bg-white/[0.04] border border-border text-sm text-text-muted italic">
-					"Went from 31 to 68 in one afternoon. Now showing up in Perplexity."
+			<!-- Founder card — amber theme -->
+			<div class="cta-card cta-card--founder animate-on-scroll flex flex-col">
+				<div class="cta-card-inner flex flex-col flex-1 p-8">
+					<p class="eyebrow text-xs" style="color: #FCD34D">Founders</p>
+					<h3 class="heading-sm mt-2">Find out if AI sees you</h3>
+					<p class="text-text-muted text-sm mt-2 flex-1">Score 0–100. See exactly what's broken. Get the fix files. 30 seconds.</p>
+
+					<!-- Social proof quote -->
+					<blockquote class="mt-5 relative">
+						<div class="absolute -top-1 -left-1 text-[#FCD34D]/30 text-4xl font-serif leading-none select-none">&ldquo;</div>
+						<div class="p-4 rounded-lg bg-white/[0.03] border border-white/[0.07] pl-5">
+							<p class="text-text-secondary text-sm leading-relaxed italic">
+								Went from 31 to 68 in one afternoon. Now showing up in Perplexity.
+							</p>
+							<footer class="mt-2 text-[11px] text-text-muted not-italic">— Verified user</footer>
+						</div>
+					</blockquote>
+
+					<a href="https://github.com/apps/aeorank" class="btn-primary justify-center mt-5 !text-sm" style="background: #B45309; box-shadow: 0 4px 16px rgba(180,83,9,0.3)">Check My Score — Free</a>
+					<a href="https://app.aeorank.dev/sign-in" class="btn-secondary justify-center mt-3 !text-sm">Open Dashboard</a>
 				</div>
-				<a href="https://github.com/apps/aeorank" class="btn-primary justify-center mt-4 !text-sm" style="background: #CA8A04">Check My Score — Free</a>
-				<a href="https://app.aeorank.dev/sign-in" class="btn-secondary justify-center mt-3 !text-sm">Open Dashboard</a>
 			</div>
+
 		</div>
 
 		<p class="text-center text-text-muted text-sm mt-8">Open source · MIT licensed · No credit card · Free forever · No install needed to scan</p>
 	</div>
 </section>
+
+<style>
+	.cta-card {
+		border-radius: 16px;
+		position: relative;
+		overflow: hidden;
+	}
+
+	/* Shared inner surface */
+	.cta-card-inner {
+		border-radius: 16px;
+		border: 1px solid rgba(255,255,255,0.08);
+		background: rgba(255,255,255,0.025);
+		transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+	}
+
+	/* Gradient tints */
+	.cta-card--dev .cta-card-inner {
+		background: linear-gradient(145deg, rgba(232,89,12,0.08) 0%, rgba(255,255,255,0.02) 60%);
+		border-color: rgba(232,89,12,0.18);
+	}
+	.cta-card--agency .cta-card-inner {
+		background: linear-gradient(145deg, rgba(99,102,241,0.1) 0%, rgba(255,255,255,0.02) 60%);
+		border-color: rgba(99,102,241,0.2);
+	}
+	.cta-card--founder .cta-card-inner {
+		background: linear-gradient(145deg, rgba(180,83,9,0.1) 0%, rgba(255,255,255,0.02) 60%);
+		border-color: rgba(180,83,9,0.18);
+	}
+
+	/* Hover lifts */
+	.cta-card:hover .cta-card-inner {
+		transform: translateY(-3px);
+	}
+	.cta-card--dev:hover .cta-card-inner {
+		border-color: rgba(232,89,12,0.35);
+		box-shadow: 0 12px 40px rgba(232,89,12,0.12), 0 2px 8px rgba(0,0,0,0.4);
+	}
+	.cta-card--agency:hover .cta-card-inner {
+		border-color: rgba(99,102,241,0.4);
+		box-shadow: 0 12px 40px rgba(99,102,241,0.14), 0 2px 8px rgba(0,0,0,0.4);
+	}
+	.cta-card--founder:hover .cta-card-inner {
+		border-color: rgba(180,83,9,0.35);
+		box-shadow: 0 12px 40px rgba(180,83,9,0.12), 0 2px 8px rgba(0,0,0,0.4);
+	}
+</style>
