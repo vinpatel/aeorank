@@ -8,12 +8,13 @@ import TerminalDemo from "./TerminalDemo.tsx";
 
 			<!-- LEFT: Headline + CTAs -->
 			<div>
-				<!-- Star badge -->
-				<a href="https://github.com/vinpatel/aeorank" target="_blank" class="inline-flex items-center gap-2 rounded-full bg-[#1A1600] border border-[#3D3500] px-4 py-1.5 text-sm mb-8 hover:border-[#5C5200] transition-colors">
-					<span class="text-[#FFD700]">★</span>
-					<span id="hero-stars" class="text-[#FFD700] font-semibold tabular-nums">Stars</span>
+				<!-- Badge -->
+				<a href="https://github.com/vinpatel/aeorank" target="_blank" class="inline-flex items-center gap-2 rounded-full bg-accent-muted border border-accent/20 px-4 py-1.5 text-sm mb-8 hover:border-accent/40 transition-colors">
+					<span class="text-accent font-semibold">Open source</span>
 					<span class="text-text-muted">·</span>
-					<span class="text-accent">Open source AEO scoring</span>
+					<span class="text-text-muted">MIT licensed</span>
+					<span class="text-text-muted">·</span>
+					<span class="text-text-muted">Free forever</span>
 				</a>
 
 				<h1 class="heading-xl">
@@ -156,9 +157,3 @@ import TerminalDemo from "./TerminalDemo.tsx";
 	</div>
 </section>
 
-<script>
-	fetch("https://api.github.com/repos/vinpatel/aeorank").then(r=>r.json()).then(d=>{
-		const el=document.getElementById("hero-stars");
-		if(el&&d.stargazers_count!=null){const c=d.stargazers_count;el.textContent=c>=1000?`${(c/1000).toFixed(1)}k stars`:`${c} stars`}
-	}).catch(()=>{});
-</script>
