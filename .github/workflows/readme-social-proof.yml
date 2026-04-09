@@ -1,0 +1,58 @@
+name: Update Social Proof
+on:
+  schedule:
+    - cron: '0 12 * * 0' # Sunday noon UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-stats:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch npm download stats
+        run: |
+          DOWNLOADS=$(curl -s "https://api.npmjs.org/downloads/point/last-month/aeorank-cli" | jq -r '.downloads // 0')
+          echo "NPM_DOWNLOADS=$DOWNLOADS" >> $GITHUB_ENV
+
+      - name: Fetch GitHub star count
+        run: |
+          STARS=$(curl -s "https://api.github.com/repos/vinpatel/aeorank" \
+            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            | jq -r '.stargazers_count // 0')
+          echo "STAR_COUNT=$STARS" >> $GITHUB_ENV
+
+      - name: Update README stats section
+        run: |
+          python3 << 'PYEOF'
+          import re, os
+
+          with open('README.md', 'r') as f:
+              content = f.read()
+
+          stats_block = f"""<!-- STATS_START -->
+          ![npm downloads](https://img.shields.io/badge/monthly%20downloads-{os.environ['NPM_DOWNLOADS']}-blue)
+          ![GitHub stars](https://img.shields.io/github/stars/vinpatel/aeorank?style=social)
+          <!-- STATS_END -->"""
+
+          content = re.sub(
+              r'<!-- STATS_START -->.*?<!-- STATS_END -->',
+              stats_block,
+              content,
+              flags=re.DOTALL
+          )
+
+          with open('README.md', 'w') as f:
+              f.write(content)
+          PYEOF
+
+      - name: Commit
+        run: |
+          git config --global user.name 'aeorank-bot'
+          git config --global user.email 'bot@aeorank.dev'
+          git add README.md
+          git diff --staged --quiet || git commit -m "chore: update social proof stats [skip ci]"
+          git push

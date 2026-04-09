@@ -1,0 +1,46 @@
+name: Awesome List Submissions
+on:
+  schedule:
+    - cron: '0 15 * * 1' # Monday 10am EST
+  workflow_dispatch:
+
+jobs:
+  submit-to-awesome-seo:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Git
+        run: |
+          git config --global user.name 'aeorank-bot'
+          git config --global user.email 'bot@aeorank.dev'
+
+      - name: Fork and PR awesome-seo
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.AWESOME_LIST_PAT }}
+          script: |
+            // Fork the repo
+            await github.rest.repos.createFork({
+              owner: 'madawei2699',
+              repo: 'awesome-seo'
+            });
+
+            // Wait for fork
+            await new Promise(r => setTimeout(r, 5000));
+
+            // Create branch
+            const ref = await github.rest.git.getRef({
+              owner: context.actor,
+              repo: 'awesome-seo',
+              ref: 'heads/main'
+            });
+
+            await github.rest.git.createRef({
+              owner: context.actor,
+              repo: 'awesome-seo',
+              ref: 'refs/heads/add-aeorank',
+              sha: ref.data.object.sha
+            });
+
+            // Note: File edit step should be done manually or via a more specific
+            // script that understands the target repo's README format.
+            console.log('Fork created. Manual PR submission recommended for quality control.');
