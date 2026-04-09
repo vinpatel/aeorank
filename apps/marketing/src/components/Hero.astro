@@ -1,15 +1,37 @@
 ---
 import TerminalDemo from "./TerminalDemo.tsx";
 ---
-<section class="relative px-6 pt-20 pb-16 md:pt-28 md:pb-24">
-	<div class="mx-auto max-w-6xl">
+<section class="relative px-6 pt-24 pb-20 md:pt-36 md:pb-32 overflow-hidden">
+
+	<!-- Background orbs (Vercel-style ambient glow) -->
+	<div aria-hidden="true" class="pointer-events-none select-none absolute inset-0 overflow-hidden">
+		<!-- Primary orange orb, top-center -->
+		<div class="absolute -top-40 left-1/2 -translate-x-1/2 w-[900px] h-[600px] rounded-full opacity-[0.18]"
+			style="background: radial-gradient(ellipse at center, #E8590C 0%, transparent 68%); filter: blur(72px);"></div>
+		<!-- Secondary warm orb, upper-left -->
+		<div class="absolute top-0 -left-48 w-[600px] h-[500px] rounded-full opacity-[0.08]"
+			style="background: radial-gradient(ellipse at center, #FF9A5C 0%, transparent 70%); filter: blur(96px);"></div>
+		<!-- Neutral blue-grey orb, right -->
+		<div class="absolute top-32 -right-64 w-[700px] h-[500px] rounded-full opacity-[0.06]"
+			style="background: radial-gradient(ellipse at center, #6366F1 0%, transparent 70%); filter: blur(120px);"></div>
+	</div>
+
+	<div class="mx-auto max-w-6xl relative">
+
 		<!-- Two-column hero -->
-		<div class="grid lg:grid-cols-[1.2fr_1fr] gap-12 lg:gap-16 items-start">
+		<div class="grid lg:grid-cols-[1.2fr_1fr] gap-12 lg:gap-20 items-start">
 
 			<!-- LEFT: Headline + CTAs -->
-			<div>
+			<div class="animate-fade-in-up">
+
 				<!-- Badge -->
-				<a href="https://github.com/vinpatel/aeorank" target="_blank" class="inline-flex items-center gap-2 rounded-full bg-accent-muted border border-accent/20 px-4 py-1.5 text-sm mb-8 hover:border-accent/40 transition-colors">
+				<a
+					href="https://github.com/vinpatel/aeorank"
+					target="_blank"
+					class="inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-sm mb-10 transition-all duration-200 hover:border-accent/40 glow-pulse"
+					style="background: rgba(232,89,12,0.08); border-color: rgba(232,89,12,0.22);"
+				>
+					<span class="w-1.5 h-1.5 rounded-full bg-accent animate-float" style="animation-duration:2s;"></span>
 					<span class="text-accent font-semibold">Open source</span>
 					<span class="text-text-muted">·</span>
 					<span class="text-text-muted">40% of discovery is now AI</span>
@@ -17,55 +39,72 @@ import TerminalDemo from "./TerminalDemo.tsx";
 					<span class="text-text-muted">Free forever</span>
 				</a>
 
+				<!-- Headline — gradient text on key line -->
 				<h1 class="heading-xl">
-					<span class="text-text">You rank #1 on Google.</span><br/>
-					<span class="text-accent">AI can't see you.</span>
+					<span class="gradient-text">You rank #1 on Google.</span><br/>
+					<span class="gradient-text-accent">AI can't see you.</span>
 				</h1>
 
-				<p class="text-text-secondary text-lg mt-6 leading-relaxed max-w-xl">
+				<p class="text-text-secondary text-lg mt-7 leading-relaxed max-w-xl" style="font-size: clamp(1rem, 1.25vw, 1.175rem); line-height: 1.75;">
 					AI answers now drive 40% of web discovery — and they only cite sites they can read. AEOrank scores your AI visibility in 30 seconds, shows you exactly what's broken, then generates the 9 files that fix it. Free forever. Open source. No vendor lock-in.
 				</p>
 
-				<div class="flex flex-wrap gap-3 mt-8">
-					<a href="https://github.com/apps/aeorank" class="btn-primary !px-6 !py-3 text-base">Get Your Free AEO Score</a>
-					<a href="#scoring" class="btn-secondary !px-6 !py-3 text-base">See How Scoring Works</a>
+				<div class="flex flex-wrap gap-3 mt-9">
+					<a href="https://github.com/apps/aeorank" class="btn-primary !px-7 !py-3.5 text-base">
+						Get Your Free AEO Score
+						<svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 7h12M8 2l5 5-5 5"/></svg>
+					</a>
+					<a href="#scoring" class="btn-secondary !px-7 !py-3.5 text-base">See How Scoring Works</a>
 				</div>
 
-				<p class="text-text-muted text-sm mt-5">
-					Prefer terminal? <code class="!text-xs">npx aeorank-cli scan https://your-site.com</code><br/>
-					Want CI gating? <a href="https://github.com/marketplace/actions/aeorank-aeo-scanner" class="text-accent hover:underline">Use the GitHub Action</a>.
-				</p>
+				<div class="mt-6 space-y-1.5">
+					<p class="text-text-muted text-sm">
+						Prefer terminal? <code class="!text-xs">npx aeorank-cli scan https://your-site.com</code>
+					</p>
+					<p class="text-text-muted text-sm">
+						Want CI gating? <a href="https://github.com/marketplace/actions/aeorank-aeo-scanner" class="text-accent hover:text-accent-hover underline underline-offset-2 transition-colors">Use the GitHub Action →</a>
+					</p>
+				</div>
 
-				<p class="text-text-muted text-xs mt-4 italic">If ChatGPT is asked about your category, your name should appear. Right now, it probably doesn't.</p>
+				<p class="text-text-muted text-xs mt-5 italic opacity-70">
+					If ChatGPT is asked about your category, your name should appear. Right now, it probably doesn't.
+				</p>
 			</div>
 
-			<!-- RIGHT: Quick start card -->
-			<div class="rounded-2xl border border-border bg-bg-raised p-8 lg:mt-8">
-				<div class="inline-block rounded-full bg-accent-muted border border-accent/20 px-4 py-1 text-xs font-semibold text-accent uppercase tracking-wider mb-6">
+			<!-- RIGHT: Quick-start glass card -->
+			<div class="card-glass p-8 lg:mt-10 animate-fade-in-up animate-delay-200">
+				<!-- Top accent line -->
+				<div class="absolute top-0 left-8 right-8 h-px" style="background: linear-gradient(90deg, transparent, rgba(232,89,12,0.5), transparent);"></div>
+
+				<div class="inline-flex items-center gap-2 rounded-full px-4 py-1 text-xs font-semibold text-accent uppercase tracking-wider mb-6 shimmer"
+					style="border: 1px solid rgba(232,89,12,0.25);">
 					30 seconds to your first score
 				</div>
 
-				<h3 class="text-xl font-bold mb-2">Score. Fix. Ship.</h3>
-				<p class="text-text-muted text-sm mb-6 leading-relaxed">Other tools charge $129/mo to tell you what's wrong. AEOrank tells you what's wrong, then fixes it — for free.</p>
+				<h3 class="text-xl font-bold mb-2 gradient-text" style="-webkit-text-fill-color: unset; background: none; color: var(--color-text);">Score. Fix. Ship.</h3>
+				<p class="text-text-muted text-sm mb-7 leading-relaxed">Other tools charge $129/mo to tell you what's wrong. AEOrank tells you what's wrong, then fixes it — for free.</p>
 
 				<!-- Numbered steps -->
 				<div class="space-y-5">
-					<div class="flex gap-4">
-						<span class="flex-shrink-0 w-8 h-8 rounded-full bg-accent/10 border border-accent/20 flex items-center justify-center text-accent text-sm font-bold">1</span>
+					<div class="flex gap-4 group">
+						<span class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-accent text-sm font-bold transition-all duration-200 group-hover:scale-110"
+							style="background: rgba(232,89,12,0.1); border: 1px solid rgba(232,89,12,0.25);">1</span>
 						<div>
 							<p class="font-semibold text-sm">Scan your site</p>
 							<p class="text-text-muted text-xs mt-0.5">GitHub App, CLI, or GitHub Action — pick one</p>
 						</div>
 					</div>
-					<div class="flex gap-4">
-						<span class="flex-shrink-0 w-8 h-8 rounded-full bg-accent/10 border border-accent/20 flex items-center justify-center text-accent text-sm font-bold">2</span>
+					<div class="flex gap-4 group">
+						<span class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-accent text-sm font-bold transition-all duration-200 group-hover:scale-110"
+							style="background: rgba(232,89,12,0.1); border: 1px solid rgba(232,89,12,0.25);">2</span>
 						<div>
 							<p class="font-semibold text-sm">Get your AEO score (0–100)</p>
 							<p class="text-text-muted text-xs mt-0.5">36 criteria, 5 pillars, graded A+ through F</p>
 						</div>
 					</div>
-					<div class="flex gap-4">
-						<span class="flex-shrink-0 w-8 h-8 rounded-full bg-accent/10 border border-accent/20 flex items-center justify-center text-accent text-sm font-bold">3</span>
+					<div class="flex gap-4 group">
+						<span class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-accent text-sm font-bold transition-all duration-200 group-hover:scale-110"
+							style="background: rgba(232,89,12,0.1); border: 1px solid rgba(232,89,12,0.25);">3</span>
 						<div>
 							<p class="font-semibold text-sm">Deploy the generated files</p>
 							<p class="text-text-muted text-xs mt-0.5">9 files — llms.txt, ai.txt, schema.json, and more</p>
@@ -73,38 +112,40 @@ import TerminalDemo from "./TerminalDemo.tsx";
 					</div>
 				</div>
 
-				<a href="https://github.com/apps/aeorank" class="btn-primary w-full justify-center mt-8">Install App →</a>
+				<a href="https://github.com/apps/aeorank" class="btn-primary w-full justify-center mt-8">
+					Install App →
+				</a>
 
-				<p class="text-text-muted text-xs text-center mt-3">Free forever · No credit card · MIT licensed</p>
+				<p class="text-text-muted text-xs text-center mt-3 opacity-70">Free forever · No credit card · MIT licensed</p>
 			</div>
 		</div>
 
-		<!-- Three feature cards -->
-		<div class="grid md:grid-cols-3 gap-4 mt-16">
-			<div class="card p-6">
-				<span class="eyebrow text-green text-[11px]">Score</span>
-				<h3 class="font-bold mt-2 mb-2">Know exactly where AI ignores you.</h3>
+		<!-- Three feature cards — score / fix / ship -->
+		<div class="grid md:grid-cols-3 gap-4 mt-20">
+			<div class="card p-6 animate-on-scroll">
+				<span class="eyebrow !text-green !text-[11px]">Score</span>
+				<h3 class="font-bold mt-3 mb-2">Know exactly where AI ignores you.</h3>
 				<p class="text-text-muted text-sm leading-relaxed">36 deterministic checks across every major AI engine. No LLM calls, no black-box scores — same result every run, so you can track progress with confidence.</p>
 			</div>
-			<div class="card p-6">
-				<span class="eyebrow text-[11px]">Fix</span>
-				<h3 class="font-bold mt-2 mb-2">Get the 9 files AI engines actually read.</h3>
+			<div class="card p-6 animate-on-scroll">
+				<span class="eyebrow !text-[11px]">Fix</span>
+				<h3 class="font-bold mt-3 mb-2">Get the 9 files AI engines actually read.</h3>
 				<p class="text-text-muted text-sm leading-relaxed">llms.txt, ai.txt, CLAUDE.md, schema.json, robots-patch, FAQ blocks, citation anchors, AI sitemap — all tailored to your site. No other tool generates these.</p>
 			</div>
-			<div class="card p-6">
-				<span class="eyebrow text-[#FFD700] text-[11px]">Ship</span>
-				<h3 class="font-bold mt-2 mb-2">Never accidentally break your AI visibility.</h3>
+			<div class="card p-6 animate-on-scroll">
+				<span class="eyebrow !text-[#FFD700] !text-[11px]">Ship</span>
+				<h3 class="font-bold mt-3 mb-2">Never accidentally break your AI visibility.</h3>
 				<p class="text-text-muted text-sm leading-relaxed">GitHub App posts AEO scores on every PR. GitHub Action blocks deploys that drop your score. One install. No YAML required.</p>
 			</div>
 		</div>
 
 		<!-- Demo terminal -->
-		<div class="mt-16">
-			<div class="rounded-xl border border-border bg-[#0A0A0C] overflow-hidden shadow-2xl shadow-black/50">
-				<div class="flex items-center gap-2 px-4 py-3 border-b border-border bg-white/[0.02]">
-					<div class="w-2.5 h-2.5 rounded-full bg-[#FF5F57]"></div>
-					<div class="w-2.5 h-2.5 rounded-full bg-[#FFBD2E]"></div>
-					<div class="w-2.5 h-2.5 rounded-full bg-[#28C840]"></div>
+		<div class="mt-16 animate-on-scroll">
+			<div class="rounded-xl border overflow-hidden" style="background: #07070A; border-color: rgba(255,255,255,0.08); box-shadow: 0 32px 64px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.04) inset;">
+				<div class="flex items-center gap-2 px-4 py-3 border-b" style="border-color: rgba(255,255,255,0.07); background: rgba(255,255,255,0.015);">
+					<div class="w-2.5 h-2.5 rounded-full" style="background: #FF5F57;"></div>
+					<div class="w-2.5 h-2.5 rounded-full" style="background: #FFBD2E;"></div>
+					<div class="w-2.5 h-2.5 rounded-full" style="background: #28C840;"></div>
 					<span class="text-xs text-text-muted ml-2 font-mono">aeorank — terminal</span>
 				</div>
 				<TerminalDemo client:visible />
@@ -113,35 +154,50 @@ import TerminalDemo from "./TerminalDemo.tsx";
 
 		<!-- Big stat cards -->
 		<div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-16">
-			<div class="card p-6 text-center animate-on-scroll">
-				<div class="text-4xl font-bold text-accent">$0</div>
-				<div class="text-text-muted text-sm mt-1">vs $129+/mo competitors</div>
+			<div class="card p-6 text-center animate-on-scroll" style="background: rgba(232,89,12,0.04); border-color: rgba(232,89,12,0.15);">
+				<div class="text-4xl font-extrabold text-accent tracking-tight">$0</div>
+				<div class="text-text-muted text-sm mt-1.5">vs $129+/mo competitors</div>
 			</div>
 			<div class="card p-6 text-center animate-on-scroll">
-				<div class="text-4xl font-bold text-[#FFD700]">36</div>
-				<div class="text-text-muted text-sm mt-1">Criteria. More than any competitor.</div>
+				<div class="text-4xl font-extrabold tracking-tight" style="color: #FFD700;">36</div>
+				<div class="text-text-muted text-sm mt-1.5">Criteria. More than any competitor.</div>
 			</div>
 			<div class="card p-6 text-center animate-on-scroll">
-				<div class="text-4xl font-bold text-[#FFD700]">9</div>
-				<div class="text-text-muted text-sm mt-1">AI files generated. None do this.</div>
+				<div class="text-4xl font-extrabold tracking-tight" style="color: #FFD700;">9</div>
+				<div class="text-text-muted text-sm mt-1.5">AI files generated. None do this.</div>
 			</div>
 			<div class="card p-6 text-center animate-on-scroll">
-				<div class="text-4xl font-bold text-[#FFD700]">13</div>
-				<div class="text-text-muted text-sm mt-1">Framework plugins. Zero config.</div>
+				<div class="text-4xl font-extrabold tracking-tight" style="color: #FFD700;">13</div>
+				<div class="text-text-muted text-sm mt-1.5">Framework plugins. Zero config.</div>
 			</div>
 		</div>
 
 		<!-- Engines row -->
-		<div class="text-center mt-12">
-			<p class="eyebrow text-text-muted !text-[11px] !tracking-[0.15em] mb-4">OPTIMIZES VISIBILITY ACROSS EVERY MAJOR AI ENGINE</p>
-			<div class="flex flex-wrap justify-center gap-6 text-text-secondary text-sm">
-				<span class="flex items-center gap-2"><span class="text-green text-lg">●</span> ChatGPT</span>
-				<span class="flex items-center gap-2"><span class="text-green text-lg">●</span> Perplexity</span>
-				<span class="flex items-center gap-2"><span class="text-green text-lg">●</span> Claude</span>
-				<span class="flex items-center gap-2"><span class="text-green text-lg">●</span> Gemini</span>
-				<span class="flex items-center gap-2"><span class="text-green text-lg">●</span> Google AI Overviews</span>
+		<div class="text-center mt-14">
+			<p class="eyebrow !text-text-muted !text-[11px] !tracking-[0.15em] mb-5">OPTIMIZES VISIBILITY ACROSS EVERY MAJOR AI ENGINE</p>
+			<div class="flex flex-wrap justify-center gap-8 text-text-secondary text-sm">
+				<span class="flex items-center gap-2 opacity-80 hover:opacity-100 transition-opacity">
+					<span class="w-1.5 h-1.5 rounded-full bg-green"></span>
+					ChatGPT
+				</span>
+				<span class="flex items-center gap-2 opacity-80 hover:opacity-100 transition-opacity">
+					<span class="w-1.5 h-1.5 rounded-full bg-green"></span>
+					Perplexity
+				</span>
+				<span class="flex items-center gap-2 opacity-80 hover:opacity-100 transition-opacity">
+					<span class="w-1.5 h-1.5 rounded-full bg-green"></span>
+					Claude
+				</span>
+				<span class="flex items-center gap-2 opacity-80 hover:opacity-100 transition-opacity">
+					<span class="w-1.5 h-1.5 rounded-full bg-green"></span>
+					Gemini
+				</span>
+				<span class="flex items-center gap-2 opacity-80 hover:opacity-100 transition-opacity">
+					<span class="w-1.5 h-1.5 rounded-full bg-green"></span>
+					Google AI Overviews
+				</span>
 			</div>
 		</div>
+
 	</div>
 </section>
-

@@ -1,5 +1,53 @@
 ---
+const pillars = [
+	{
+		icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/><path d="M3.05 11a9 9 0 0 1 .5-2.3"/></svg>`,
+		color: "#E8590C",
+		glow: "rgba(232,89,12,0.18)",
+		border: "rgba(232,89,12,0.25)",
+		weight: "30%",
+		label: "Answer Readiness",
+		desc: "Topical authority, fact density, citation-ready writing, original research, evidence packaging, duplicate content detection.",
+	},
+	{
+		icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h10M4 18h14"/></svg>`,
+		color: "#6366F1",
+		glow: "rgba(99,102,241,0.18)",
+		border: "rgba(99,102,241,0.25)",
+		weight: "21%",
+		label: "Content Structure",
+		desc: "Q&A format, direct answer density, tables and lists, definition patterns, entity disambiguation, heading hierarchy.",
+	},
+	{
+		icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`,
+		color: "#22C55E",
+		glow: "rgba(34,197,94,0.18)",
+		border: "rgba(34,197,94,0.25)",
+		weight: "16%",
+		label: "Trust & Authority",
+		desc: "E-E-A-T signals, internal linking, author schema, meta descriptions, answer-first formatting.",
+	},
+	{
+		icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>`,
+		color: "#F59E0B",
+		glow: "rgba(245,158,11,0.18)",
+		border: "rgba(245,158,11,0.25)",
+		weight: "14%",
+		label: "Technical Foundation",
+		desc: "Schema.org coverage, semantic HTML, speakable markup, image context for AI, extraction friction analysis.",
+	},
+	{
+		icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>`,
+		color: "#EC4899",
+		glow: "rgba(236,72,153,0.18)",
+		border: "rgba(236,72,153,0.25)",
+		weight: "19%",
+		label: "AI Discovery",
+		desc: "llms.txt, ai.txt, AI crawler access (GPTBot, ClaudeBot, PerplexityBot), content licensing, RSS feeds, sitemap freshness.",
+	},
+];
 ---
+
 <section id="scoring" class="px-6 py-20 md:py-28 border-t border-border">
 	<div class="mx-auto max-w-5xl">
 		<p class="eyebrow text-center">36 criteria</p>
@@ -7,52 +55,122 @@
 		<p class="body-lg text-center max-w-2xl mx-auto mt-4">Every check is deterministic. No LLM calls. No AI scoring AI. Same score every time you run it.</p>
 
 		<div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-14">
-			<div class="card p-7">
-				<div class="flex items-center justify-between mb-3">
-					<span class="text-2xl">🎯</span>
-					<span class="text-xs font-bold text-accent bg-accent-muted px-2.5 py-1 rounded-full">30%</span>
+			{pillars.map((p) => (
+				<div class="pillar-card group relative p-7 rounded-xl overflow-hidden" style={`--card-color: ${p.color}; --card-glow: ${p.glow}; --card-border: ${p.border};`}>
+					<!-- Gradient border via pseudo-element -->
+					<div class="pillar-card-inner">
+						<!-- Icon container with glow -->
+						<div class="flex items-start justify-between mb-5">
+							<div class="icon-container" style={`background: ${p.glow}; border-color: ${p.border}; color: ${p.color};`}>
+								<Fragment set:html={p.icon} />
+							</div>
+							<div class="weight-badge" style={`background: ${p.glow}; color: ${p.color}; border-color: ${p.border};`}>
+								{p.weight}
+							</div>
+						</div>
+						<h3 class="heading-sm mb-2" style={`color: #FAFAFA;`}>{p.label}</h3>
+						<p class="text-sm text-text-muted leading-relaxed">{p.desc}</p>
+					</div>
 				</div>
-				<h3 class="heading-sm mb-2">Answer Readiness</h3>
-				<p class="text-sm text-text-muted leading-relaxed">Topical authority, fact density, citation-ready writing, original research, evidence packaging, duplicate content detection.</p>
-			</div>
-			<div class="card p-7">
-				<div class="flex items-center justify-between mb-3">
-					<span class="text-2xl">📐</span>
-					<span class="text-xs font-bold text-accent bg-accent-muted px-2.5 py-1 rounded-full">21%</span>
+			))}
+
+			<!-- Stats card -->
+			<div class="stats-card relative p-7 rounded-xl overflow-hidden flex flex-col items-center justify-center text-center gap-6">
+				<div>
+					<div class="stats-number" style="--stat-color: #E8590C;">411</div>
+					<p class="text-sm text-text-muted mt-2 font-medium">tests verify scoring accuracy</p>
 				</div>
-				<h3 class="heading-sm mb-2">Content Structure</h3>
-				<p class="text-sm text-text-muted leading-relaxed">Q&A format, direct answer density, tables and lists, definition patterns, entity disambiguation, heading hierarchy.</p>
-			</div>
-			<div class="card p-7">
-				<div class="flex items-center justify-between mb-3">
-					<span class="text-2xl">🏛️</span>
-					<span class="text-xs font-bold text-accent bg-accent-muted px-2.5 py-1 rounded-full">16%</span>
+				<div class="stats-divider"></div>
+				<div>
+					<div class="stats-number" style="--stat-color: #22C55E;">&lt;30s</div>
+					<p class="text-sm text-text-muted mt-2 font-medium">scan time for a 50-page site</p>
 				</div>
-				<h3 class="heading-sm mb-2">Trust & Authority</h3>
-				<p class="text-sm text-text-muted leading-relaxed">E-E-A-T signals, internal linking, author schema, meta descriptions, answer-first formatting.</p>
-			</div>
-			<div class="card p-7">
-				<div class="flex items-center justify-between mb-3">
-					<span class="text-2xl">⚙️</span>
-					<span class="text-xs font-bold text-accent bg-accent-muted px-2.5 py-1 rounded-full">14%</span>
-				</div>
-				<h3 class="heading-sm mb-2">Technical Foundation</h3>
-				<p class="text-sm text-text-muted leading-relaxed">Schema.org coverage, semantic HTML, speakable markup, image context for AI, extraction friction analysis.</p>
-			</div>
-			<div class="card p-7">
-				<div class="flex items-center justify-between mb-3">
-					<span class="text-2xl">🔍</span>
-					<span class="text-xs font-bold text-accent bg-accent-muted px-2.5 py-1 rounded-full">19%</span>
-				</div>
-				<h3 class="heading-sm mb-2">AI Discovery</h3>
-				<p class="text-sm text-text-muted leading-relaxed">llms.txt, ai.txt, AI crawler access (GPTBot, ClaudeBot, PerplexityBot), content licensing, RSS feeds, sitemap freshness.</p>
-			</div>
-			<div class="card p-7 flex flex-col items-center justify-center text-center">
-				<span class="text-4xl font-bold text-accent">411</span>
-				<p class="text-sm text-text-muted mt-2">tests verify scoring accuracy</p>
-				<span class="text-4xl font-bold text-accent mt-4">&lt;30s</span>
-				<p class="text-sm text-text-muted mt-2">scan time for a 50-page site</p>
+				<div class="stats-corner-glow"></div>
 			</div>
 		</div>
 	</div>
 </section>
+
+<style>
+	/* Pillar cards — gradient border via background-clip trick */
+	.pillar-card {
+		background: linear-gradient(var(--color-bg-card), var(--color-bg-card)) padding-box,
+		            linear-gradient(135deg, var(--card-border), transparent 60%) border-box;
+		border: 1px solid transparent;
+		transition: transform 0.2s ease, box-shadow 0.2s ease;
+	}
+	.pillar-card:hover {
+		transform: translateY(-3px);
+		box-shadow: 0 0 0 1px var(--card-border), 0 12px 32px rgba(0,0,0,0.4), 0 0 40px var(--card-glow);
+	}
+	.pillar-card-inner {
+		position: relative;
+		z-index: 1;
+	}
+	/* Subtle corner glow on hover */
+	.pillar-card::before {
+		content: '';
+		position: absolute;
+		top: -40%;
+		right: -30%;
+		width: 200px;
+		height: 200px;
+		background: radial-gradient(circle, var(--card-glow) 0%, transparent 70%);
+		opacity: 0;
+		transition: opacity 0.3s ease;
+		pointer-events: none;
+	}
+	.pillar-card:hover::before {
+		opacity: 1;
+	}
+
+	.icon-container {
+		width: 44px;
+		height: 44px;
+		border-radius: 10px;
+		border: 1px solid;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-shrink: 0;
+	}
+
+	.weight-badge {
+		font-size: 0.75rem;
+		font-weight: 700;
+		padding: 0.25rem 0.625rem;
+		border-radius: 9999px;
+		border: 1px solid;
+		letter-spacing: 0.02em;
+	}
+
+	/* Stats card */
+	.stats-card {
+		background: linear-gradient(135deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.015) 100%);
+		border: 1px solid rgba(255,255,255,0.1);
+		transition: box-shadow 0.2s ease, transform 0.2s ease;
+	}
+	.stats-card:hover {
+		transform: translateY(-3px);
+		box-shadow: 0 12px 32px rgba(0,0,0,0.4);
+	}
+	.stats-number {
+		font-size: clamp(2.5rem, 4vw, 3.25rem);
+		font-weight: 800;
+		letter-spacing: -0.04em;
+		line-height: 1;
+		color: var(--stat-color);
+		text-shadow: 0 0 30px color-mix(in srgb, var(--stat-color) 40%, transparent);
+	}
+	.stats-divider {
+		width: 40px;
+		height: 1px;
+		background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+	}
+	.stats-corner-glow {
+		position: absolute;
+		inset: 0;
+		background: radial-gradient(ellipse at 50% 100%, rgba(232,89,12,0.07) 0%, transparent 60%);
+		pointer-events: none;
+	}
+</style>
