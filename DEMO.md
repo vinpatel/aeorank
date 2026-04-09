@@ -2,7 +2,26 @@
 
 > Auto-generated daily scan. See your own score at [aeorank.dev](https://aeorank.dev)
 
-*Waiting for first automated scan to run...*
+**Scanned:** https://sumhealth.org  
+**Date:** April 09, 2026  
+**Score:** 23/100 (F)
+
+## Dimension Scores
+
+| Dimension | Score | Pass |
+|-----------|-------|------|
+| llms.txt Presence | 0 | ❌ |
+| Schema.org Markup | 0 | ❌ |
+| AI Crawler Access | 10 | ❌ |
+| Content Structure | 3 | ❌ |
+| Answer-First Formatting | 0 | ❌ |
+| FAQ & Speakable | 3 | ❌ |
+| E-E-A-T Signals | 0 | ❌ |
+| Meta Descriptions | 7 | ❌ |
+| Sitemap Presence | 0 | ❌ |
+| HTTPS & Redirects | 5 | ❌ |
+| Page Freshness | 0 | ❌ |
+| Citation Anchors | 0 | ❌ |
 
 ---
 
