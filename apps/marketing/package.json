@@ -9,12 +9,14 @@
 		"preview": "astro preview"
 	},
 	"dependencies": {
-		"astro": "^5.18.0",
+		"@aeorank/astro": "workspace:*",
 		"@astrojs/preact": "^4.0.0",
+		"@astrojs/sitemap": "^3.7.2",
+		"astro": "^5.18.0",
 		"preact": "^10.25.0"
 	},
 	"devDependencies": {
-		"tailwindcss": "^4.0.0",
-		"@tailwindcss/vite": "^4.0.0"
+		"@tailwindcss/vite": "^4.0.0",
+		"tailwindcss": "^4.0.0"
 	}
 }
