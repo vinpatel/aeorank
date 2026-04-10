@@ -41,7 +41,7 @@ import TerminalDemo from "./TerminalDemo.tsx";
 
 		<!-- CTAs -->
 		<div class="flex flex-wrap items-center justify-center gap-3 mt-9 animate-fade-in-up animate-delay-300">
-			<a href="https://app.aeorank.dev/sign-up" class="btn-primary text-base !px-7 !py-3.5">
+			<a href="https://app.aeorank.dev/sign-up" class="btn-primary text-base !px-7 !py-3.5 animate-cta-glow">
 				Get Your AEO Score
 				<svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
 					<path d="M1 7h12M8 2l5 5-5 5"/>
@@ -58,7 +58,7 @@ import TerminalDemo from "./TerminalDemo.tsx";
 	</div>
 
 	<!-- Terminal demo -->
-	<div class="mx-auto max-w-3xl mt-16 animate-fade-in-up animate-delay-500">
+	<div class="mx-auto max-w-3xl mt-16 animate-fade-in-up animate-delay-500 animate-border-sweep" style="border-radius: 12px;">
 		<div
 			class="rounded-xl border overflow-hidden"
 			style="background: #07070B; border-color: rgba(255,255,255,0.08); box-shadow: 0 0 0 1px rgba(255,255,255,0.03) inset, 0 32px 64px rgba(0,0,0,0.55);"
@@ -77,22 +77,22 @@ import TerminalDemo from "./TerminalDemo.tsx";
 		</div>
 	</div>
 
-	<!-- Stat cards -->
+	<!-- Stat cards with animated counters -->
 	<div class="mx-auto max-w-3xl mt-10 grid grid-cols-2 md:grid-cols-4 gap-3 stagger-children">
 		<div class="card animate-on-scroll p-5 text-center" style="background: rgba(232,89,12,0.04); border-color: rgba(232,89,12,0.14);">
-			<div class="text-3xl font-extrabold tracking-tight" style="color: #E8590C;">$29</div>
+			<div class="text-3xl font-extrabold tracking-tight" style="color: #E8590C;">$<span class="counter" data-target="29">0</span></div>
 			<div class="text-xs mt-1.5" style="color: var(--color-text-muted);">vs $129+/mo competitors</div>
 		</div>
 		<div class="card animate-on-scroll p-5 text-center">
-			<div class="text-3xl font-extrabold tracking-tight" style="color: #EAB308;">36</div>
+			<div class="text-3xl font-extrabold tracking-tight" style="color: #EAB308;"><span class="counter" data-target="36">0</span></div>
 			<div class="text-xs mt-1.5" style="color: var(--color-text-muted);">criteria checked</div>
 		</div>
 		<div class="card animate-on-scroll p-5 text-center">
-			<div class="text-3xl font-extrabold tracking-tight" style="color: #06B6D4;">9</div>
+			<div class="text-3xl font-extrabold tracking-tight" style="color: #06B6D4;"><span class="counter" data-target="9">0</span></div>
 			<div class="text-xs mt-1.5" style="color: var(--color-text-muted);">AI files generated</div>
 		</div>
 		<div class="card animate-on-scroll p-5 text-center">
-			<div class="text-3xl font-extrabold tracking-tight" style="color: #6366F1;">13</div>
+			<div class="text-3xl font-extrabold tracking-tight" style="color: #6366F1;"><span class="counter" data-target="13">0</span></div>
 			<div class="text-xs mt-1.5" style="color: var(--color-text-muted);">framework plugins</div>
 		</div>
 	</div>
@@ -163,3 +163,31 @@ import TerminalDemo from "./TerminalDemo.tsx";
 	</div>
 
 </section>
+
+<script>
+	// Animated counter — counts up when element scrolls into view
+	const counters = document.querySelectorAll('.counter');
+	const counterObserver = new IntersectionObserver((entries) => {
+		entries.forEach(entry => {
+			if (!entry.isIntersecting) return;
+			const el = entry.target as HTMLElement;
+			const target = parseInt(el.dataset.target || '0');
+			const duration = 1200;
+			const start = performance.now();
+
+			function tick(now: number) {
+				const elapsed = now - start;
+				const progress = Math.min(elapsed / duration, 1);
+				// Ease-out cubic
+				const eased = 1 - Math.pow(1 - progress, 3);
+				el.textContent = String(Math.round(eased * target));
+				if (progress < 1) requestAnimationFrame(tick);
+			}
+
+			requestAnimationFrame(tick);
+			counterObserver.unobserve(el);
+		});
+	}, { threshold: 0.5 });
+
+	counters.forEach(c => counterObserver.observe(c));
+</script>
