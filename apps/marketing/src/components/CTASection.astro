@@ -2,79 +2,79 @@
 ---
 <section class="px-6 py-24 md:py-32 border-t border-border">
 	<div class="mx-auto max-w-5xl">
-		<h2 class="heading-lg text-center">Your competitors are being cited by AI.<br/><span class="text-accent">You're not.</span></h2>
+		<p class="eyebrow text-center">Get started</p>
+		<h2 class="heading-lg text-center mt-3">Your competitors are being cited by AI.<br/><span class="gradient-text-accent">You're not.</span></h2>
 		<p class="body-lg text-center max-w-2xl mx-auto mt-4">Every AI answer without your name is revenue walking to a competitor. Pick your path.</p>
 
-		<div class="grid md:grid-cols-3 gap-6 mt-12">
+		<div class="grid md:grid-cols-3 gap-6 mt-12 stagger-children">
 
-			<!-- Developer card — accent/orange theme -->
-			<div class="cta-card cta-card--dev animate-on-scroll flex flex-col">
-				<div class="cta-card-inner flex flex-col flex-1 p-8">
+			<!-- Developer card — orange theme -->
+			<div class="cta-card cta-card--dev animate-on-scroll">
+				<div class="cta-card__inner flex flex-col p-8">
 					<p class="eyebrow text-xs">Developers</p>
 					<h3 class="heading-sm mt-2">Run it in your terminal</h3>
-					<p class="text-text-muted text-sm mt-2 flex-1">CLI, GitHub App, GitHub Action. MIT licensed. From $0/mo.</p>
+					<p class="text-text-muted text-sm mt-2 leading-relaxed flex-1">CLI, GitHub App, GitHub Action. MIT licensed. From $0/mo.</p>
 
 					<!-- Terminal block -->
-					<div class="mt-5 rounded-lg overflow-hidden border border-white/[0.07] bg-[#0A0A0C]">
-						<div class="flex items-center gap-1.5 px-3 py-2 border-b border-white/[0.05]">
+					<div class="mt-6 rounded-lg overflow-hidden border border-white/[0.07] bg-[#080809]">
+						<div class="flex items-center gap-1.5 px-3 py-2.5 border-b border-white/[0.06]">
 							<span class="w-2.5 h-2.5 rounded-full bg-[#FF5F57]/70"></span>
 							<span class="w-2.5 h-2.5 rounded-full bg-[#FFBD2E]/70"></span>
 							<span class="w-2.5 h-2.5 rounded-full bg-[#28C840]/70"></span>
 							<span class="ml-2 text-[11px] text-text-muted font-mono">terminal</span>
 						</div>
-						<div class="px-4 py-3 font-mono text-xs leading-relaxed">
+						<div class="px-4 py-3.5 font-mono text-xs leading-relaxed">
 							<div class="flex items-start gap-2">
 								<span class="text-accent select-none mt-px">$</span>
-								<span class="text-[#86EFAC]">npx</span>
-								<span class="text-text-secondary">aeorank-cli scan</span>
-								<span class="text-[#7DD3FC]">https://your-site.com</span>
+								<span><span class="text-[#86EFAC]">npx</span> <span class="text-text-secondary">aeorank-cli scan</span> <span class="text-[#7DD3FC]">https://your-site.com</span></span>
 							</div>
-							<div class="mt-2 text-text-muted/70 text-[11px]">
-								<span class="text-green">✓</span> Score: <span class="text-text font-semibold">73/100</span> · 9 files generated
+							<div class="mt-2.5 space-y-1 text-[11px]">
+								<div><span class="text-green">✓</span> <span class="text-text-muted">Score: </span><span class="text-text font-semibold">73/100</span></div>
+								<div><span class="text-green">✓</span> <span class="text-text-muted">9 files generated</span></div>
 							</div>
 						</div>
 					</div>
 
-					<a href="https://github.com/apps/aeorank" class="btn-primary justify-center mt-5 !text-sm">Install GitHub App</a>
+					<a href="https://github.com/apps/aeorank" class="btn-primary justify-center mt-6 !text-sm">Install GitHub App</a>
 					<a href="https://docs.aeorank.dev/getting-started" class="btn-secondary justify-center mt-3 !text-sm">Read the Docs</a>
 				</div>
 			</div>
 
 			<!-- Agency card — indigo theme -->
-			<div class="cta-card cta-card--agency animate-on-scroll flex flex-col">
-				<div class="cta-card-inner flex flex-col flex-1 p-8">
-					<p class="eyebrow text-xs" style="color: #818CF8">Agencies</p>
+			<div class="cta-card cta-card--agency animate-on-scroll">
+				<div class="cta-card__inner flex flex-col p-8">
+					<p class="eyebrow text-xs" style="color:#818CF8">Agencies</p>
 					<h3 class="heading-sm mt-2">Scan any client site</h3>
-					<p class="text-text-muted text-sm mt-2 flex-1">Unlimited scans. Benchmark against 100 funded startups. No per-seat cost.</p>
+					<p class="text-text-muted text-sm mt-2 leading-relaxed flex-1">Unlimited scans. Benchmark against 100 funded startups. No per-seat cost.</p>
 
 					<!-- Stat display -->
-					<div class="mt-5 p-4 rounded-lg bg-white/[0.03] border border-white/[0.07] text-center">
+					<div class="mt-6 p-5 rounded-lg bg-white/[0.03] border border-white/[0.07] text-center">
 						<div class="flex items-baseline justify-center gap-1">
-							<span class="text-4xl font-bold text-[#818CF8]" style="font-variant-numeric: tabular-nums;">42</span>
+							<span class="text-4xl font-bold tracking-tight" style="color:#818CF8;font-variant-numeric:tabular-nums">42</span>
 							<span class="text-text-muted text-sm">/100</span>
 						</div>
-						<p class="text-text-muted text-xs mt-1">avg across 100 funded startups</p>
-						<div class="mt-3 h-1.5 rounded-full bg-white/[0.06] overflow-hidden">
-							<div class="h-full rounded-full bg-gradient-to-r from-[#6366F1] to-[#818CF8]" style="width: 42%"></div>
+						<p class="text-text-muted text-xs mt-1.5">avg across 100 funded startups</p>
+						<div class="mt-3.5 h-1.5 rounded-full bg-white/[0.06] overflow-hidden">
+							<div class="h-full rounded-full bg-gradient-to-r from-[#6366F1] to-[#818CF8]" style="width:42%"></div>
 						</div>
 					</div>
 
-					<a href="https://docs.aeorank.dev/getting-started" class="btn-primary justify-center mt-5 !text-sm" style="background: #6366F1; box-shadow: 0 4px 16px rgba(99,102,241,0.3)">Start Client Report</a>
+					<a href="https://docs.aeorank.dev/getting-started" class="btn-agency justify-center mt-6 !text-sm">Start Client Report</a>
 					<a href="/scoreboard" class="btn-secondary justify-center mt-3 !text-sm">View Benchmarks</a>
 				</div>
 			</div>
 
 			<!-- Founder card — amber theme -->
-			<div class="cta-card cta-card--founder animate-on-scroll flex flex-col">
-				<div class="cta-card-inner flex flex-col flex-1 p-8">
-					<p class="eyebrow text-xs" style="color: #FCD34D">Founders</p>
+			<div class="cta-card cta-card--founder animate-on-scroll">
+				<div class="cta-card__inner flex flex-col p-8">
+					<p class="eyebrow text-xs" style="color:#FCD34D">Founders</p>
 					<h3 class="heading-sm mt-2">Find out if AI sees you</h3>
-					<p class="text-text-muted text-sm mt-2 flex-1">Score 0–100. See exactly what's broken. Get the fix files. 30 seconds.</p>
+					<p class="text-text-muted text-sm mt-2 leading-relaxed flex-1">Score 0–100. See exactly what's broken. Get the fix files. 30 seconds.</p>
 
 					<!-- Social proof quote -->
-					<blockquote class="mt-5 relative">
-						<div class="absolute -top-1 -left-1 text-[#FCD34D]/30 text-4xl font-serif leading-none select-none">&ldquo;</div>
-						<div class="p-4 rounded-lg bg-white/[0.03] border border-white/[0.07] pl-5">
+					<blockquote class="mt-6 relative">
+						<div class="absolute -top-1.5 -left-0.5 text-[#FCD34D]/25 text-5xl font-serif leading-none select-none" aria-hidden="true">&ldquo;</div>
+						<div class="p-4 pl-5 rounded-lg bg-white/[0.03] border border-white/[0.07]">
 							<p class="text-text-secondary text-sm leading-relaxed italic">
 								Went from 31 to 68 in one afternoon. Now showing up in Perplexity.
 							</p>
@@ -82,14 +82,14 @@
 						</div>
 					</blockquote>
 
-					<a href="https://github.com/apps/aeorank" class="btn-primary justify-center mt-5 !text-sm" style="background: #B45309; box-shadow: 0 4px 16px rgba(180,83,9,0.3)">Check My Score — Free</a>
+					<a href="https://github.com/apps/aeorank" class="btn-founder justify-center mt-6 !text-sm">Check My Score — Free</a>
 					<a href="https://app.aeorank.dev/sign-in" class="btn-secondary justify-center mt-3 !text-sm">Open Dashboard</a>
 				</div>
 			</div>
 
 		</div>
 
-		<p class="text-center text-text-muted text-sm mt-8">Open source CLI · MIT licensed · No credit card to start · Plans from $29/mo</p>
+		<p class="text-center text-text-muted text-sm mt-10">Open source CLI &middot; MIT licensed &middot; No credit card to start &middot; Plans from $29/mo</p>
 	</div>
 </section>
 
@@ -100,42 +100,92 @@
 		overflow: hidden;
 	}
 
-	/* Shared inner surface */
-	.cta-card-inner {
+	.cta-card__inner {
 		border-radius: 16px;
-		border: 1px solid rgba(255,255,255,0.08);
+		border: 1px solid rgba(255,255,255,0.07);
 		background: rgba(255,255,255,0.025);
+		height: 100%;
 		transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+		position: relative;
+		overflow: hidden;
 	}
 
-	/* Gradient tints */
-	.cta-card--dev .cta-card-inner {
-		background: linear-gradient(145deg, rgba(232,89,12,0.08) 0%, rgba(255,255,255,0.02) 60%);
+	/* Top-left gradient tints */
+	.cta-card--dev .cta-card__inner {
+		background: linear-gradient(145deg, rgba(232,89,12,0.09) 0%, rgba(255,255,255,0.02) 55%);
 		border-color: rgba(232,89,12,0.18);
 	}
-	.cta-card--agency .cta-card-inner {
-		background: linear-gradient(145deg, rgba(99,102,241,0.1) 0%, rgba(255,255,255,0.02) 60%);
+	.cta-card--agency .cta-card__inner {
+		background: linear-gradient(145deg, rgba(99,102,241,0.1) 0%, rgba(255,255,255,0.02) 55%);
 		border-color: rgba(99,102,241,0.2);
 	}
-	.cta-card--founder .cta-card-inner {
-		background: linear-gradient(145deg, rgba(180,83,9,0.1) 0%, rgba(255,255,255,0.02) 60%);
+	.cta-card--founder .cta-card__inner {
+		background: linear-gradient(145deg, rgba(180,83,9,0.1) 0%, rgba(255,255,255,0.02) 55%);
 		border-color: rgba(180,83,9,0.18);
 	}
 
-	/* Hover lifts */
-	.cta-card:hover .cta-card-inner {
-		transform: translateY(-3px);
+	/* Hover lifts with colored shadows */
+	.cta-card:hover .cta-card__inner {
+		transform: translateY(-4px);
 	}
-	.cta-card--dev:hover .cta-card-inner {
+	.cta-card--dev:hover .cta-card__inner {
 		border-color: rgba(232,89,12,0.35);
-		box-shadow: 0 12px 40px rgba(232,89,12,0.12), 0 2px 8px rgba(0,0,0,0.4);
+		box-shadow: 0 16px 48px rgba(232,89,12,0.13), 0 4px 12px rgba(0,0,0,0.4);
 	}
-	.cta-card--agency:hover .cta-card-inner {
+	.cta-card--agency:hover .cta-card__inner {
 		border-color: rgba(99,102,241,0.4);
-		box-shadow: 0 12px 40px rgba(99,102,241,0.14), 0 2px 8px rgba(0,0,0,0.4);
+		box-shadow: 0 16px 48px rgba(99,102,241,0.15), 0 4px 12px rgba(0,0,0,0.4);
 	}
-	.cta-card--founder:hover .cta-card-inner {
+	.cta-card--founder:hover .cta-card__inner {
 		border-color: rgba(180,83,9,0.35);
-		box-shadow: 0 12px 40px rgba(180,83,9,0.12), 0 2px 8px rgba(0,0,0,0.4);
+		box-shadow: 0 16px 48px rgba(180,83,9,0.13), 0 4px 12px rgba(0,0,0,0.4);
+	}
+
+	/* Agency button — indigo */
+	.btn-agency {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		padding: 0.8125rem 1.75rem;
+		background: #6366F1;
+		color: #fff;
+		font-weight: 600;
+		font-size: 0.9375rem;
+		border-radius: 8px;
+		transition: background 0.16s ease, box-shadow 0.16s ease, transform 0.16s ease;
+		cursor: pointer;
+		border: none;
+		text-decoration: none;
+		white-space: nowrap;
+		box-shadow: 0 4px 16px rgba(99,102,241,0.3);
+	}
+	.btn-agency:hover {
+		background: #818CF8;
+		transform: translateY(-1px);
+		box-shadow: 0 8px 24px rgba(99,102,241,0.38);
+	}
+
+	/* Founder button — amber */
+	.btn-founder {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		padding: 0.8125rem 1.75rem;
+		background: #B45309;
+		color: #fff;
+		font-weight: 600;
+		font-size: 0.9375rem;
+		border-radius: 8px;
+		transition: background 0.16s ease, box-shadow 0.16s ease, transform 0.16s ease;
+		cursor: pointer;
+		border: none;
+		text-decoration: none;
+		white-space: nowrap;
+		box-shadow: 0 4px 16px rgba(180,83,9,0.3);
+	}
+	.btn-founder:hover {
+		background: #D97706;
+		transform: translateY(-1px);
+		box-shadow: 0 8px 24px rgba(180,83,9,0.38);
 	}
 </style>

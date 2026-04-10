@@ -2,9 +2,19 @@
 import "../styles/global.css";
 import Nav from "../components/Nav.astro";
 import Footer from "../components/Footer.astro";
-interface Props { title: string; description?: string; }
-const { title, description = "Score your AI visibility across ChatGPT, Perplexity, Claude, Gemini, and Google AI Overviews. Open source. Free." } = Astro.props;
+
+interface Props {
+	title: string;
+	description?: string;
+}
+
+const {
+	title,
+	description = "Score your AI visibility across ChatGPT, Perplexity, Claude, Gemini, and Google AI Overviews. Open source. Free to start.",
+} = Astro.props;
+
 const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? "https://aeorank.dev");
+const ogImage = new URL("/og-image.png", canonicalURL).toString();
 ---
 <!doctype html>
 <html lang="en" class="dark">
@@ -14,52 +24,78 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? "https://aeorank.
 	<meta name="description" content={description} />
 	<link rel="canonical" href={canonicalURL.toString()} />
 	<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-	<meta property="og:type" content="website" />
-	<meta property="og:url" content={canonicalURL.toString()} />
-	<meta property="og:title" content={title} />
+
+	<!-- Open Graph -->
+	<meta property="og:type"        content="website" />
+	<meta property="og:url"         content={canonicalURL.toString()} />
+	<meta property="og:title"       content={title} />
 	<meta property="og:description" content={description} />
-	<meta property="og:image" content={new URL("/og-image.png", canonicalURL).toString()} />
-	<meta name="twitter:card" content="summary_large_image" />
+	<meta property="og:image"       content={ogImage} />
+
+	<!-- Twitter -->
+	<meta name="twitter:card"        content="summary_large_image" />
+	<meta name="twitter:title"       content={title} />
+	<meta name="twitter:description" content={description} />
+	<meta name="twitter:image"       content={ogImage} />
+
+	<!-- Fonts: Inter + JetBrains Mono -->
 	<link rel="preconnect" href="https://fonts.googleapis.com" />
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-	<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;0,14..32,800;1,14..32,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+	<link
+		href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;0,14..32,800;1,14..32,400&family=JetBrains+Mono:wght@400;500&display=swap"
+		rel="stylesheet"
+	/>
+
 	<title>{title}</title>
 </head>
-<body class="bg-bg text-text font-sans antialiased">
+<body>
 
-	<!-- Sticky nav -->
 	<Nav />
 
-	<!-- Page content -->
 	<main>
 		<slot />
 	</main>
 
-	<!-- Footer -->
 	<Footer />
 
-	<!-- Mobile sticky CTA -->
-	<div class="fixed bottom-0 left-0 right-0 z-40 p-3 border-t md:hidden"
-		style="background: rgba(8,8,9,0.92); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-color: rgba(255,255,255,0.08);">
-		<a href="https://github.com/apps/aeorank" class="btn-primary w-full justify-center !py-3 !text-sm">
-			Get Your Free AEO Score
+	<!-- Mobile sticky CTA — hidden on md+ -->
+	<div
+		id="mobile-cta-bar"
+		class="fixed bottom-0 left-0 right-0 z-40 md:hidden"
+		style="
+			padding: 10px 12px;
+			background: rgba(6,6,10,0.94);
+			backdrop-filter: blur(16px);
+			-webkit-backdrop-filter: blur(16px);
+			border-top: 1px solid rgba(255,255,255,0.07);
+		"
+	>
+		<a
+			href="https://github.com/apps/aeorank"
+			class="btn-primary w-full justify-center !py-3 !text-sm"
+		>
+			Get Your AEO Score — Free
 		</a>
 	</div>
 
-	<!-- Scroll-reveal observer -->
+	<!-- Scroll-reveal: animate-on-scroll → is-visible ─────────────────────── -->
 	<script>
-		const observer = new IntersectionObserver(
+		const scrollObserver = new IntersectionObserver(
 			(entries) => {
-				entries.forEach((e) => {
-					if (e.isIntersecting) {
-						e.target.classList.add("is-visible");
-						observer.unobserve(e.target);
+				entries.forEach((entry) => {
+					if (entry.isIntersecting) {
+						entry.target.classList.add("is-visible");
+						scrollObserver.unobserve(entry.target);
 					}
 				});
 			},
-			{ threshold: 0.08, rootMargin: "0px 0px -48px 0px" }
+			{ threshold: 0.07, rootMargin: "0px 0px -40px 0px" }
 		);
-		document.querySelectorAll(".animate-on-scroll").forEach((el) => observer.observe(el));
+
+		document
+			.querySelectorAll(".animate-on-scroll")
+			.forEach((el) => scrollObserver.observe(el));
 	</script>
+
 </body>
 </html>
