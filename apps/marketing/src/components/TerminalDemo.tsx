@@ -103,70 +103,34 @@ export default function TerminalDemo() {
 
 	return (
 		<div style={{
-			borderRadius: "10px",
-			overflow: "hidden",
-			boxShadow: "0 1px 3px rgba(0,0,0,0.08), 0 8px 30px rgba(0,0,0,0.07)",
-			border: "1px solid #E5E2DD",
-			background: "#FFFFFF",
+			fontFamily: "'JetBrains Mono', ui-monospace, monospace",
+			fontSize: "13px",
+			lineHeight: "1.75",
+			color: "#C8C8D4",
+			padding: "20px 24px",
+			minHeight: "340px",
+			background: "transparent",
 		}}>
-			{/* Title bar */}
-			<div style={{
-				background: "#F5F3F0",
-				padding: "10px 16px",
-				display: "flex",
-				alignItems: "center",
-				gap: "8px",
-				borderBottom: "1px solid #E5E2DD",
-			}}>
-				<div style={{ display: "flex", alignItems: "center", gap: "7px" }}>
-					<div style={{ width: 12, height: 12, borderRadius: "50%", background: "#ff5f57" }} />
-					<div style={{ width: 12, height: 12, borderRadius: "50%", background: "#febc2e" }} />
-					<div style={{ width: 12, height: 12, borderRadius: "50%", background: "#28c840" }} />
-				</div>
-				<span style={{
-					marginLeft: "auto",
-					marginRight: "auto",
-					color: "#999",
-					fontSize: "12px",
-					fontFamily: "'JetBrains Mono', ui-monospace, monospace",
-					letterSpacing: "0.03em",
-					fontWeight: 500,
-				}}>
-					aeorank — terminal
-				</span>
-				<div style={{ width: 52 }} />
+			<div>
+				<span style={{ color: "#E8590C", fontWeight: 600 }}>$</span>{" "}
+				<span style={{ color: "#EDEDF0" }}>{typedCommand}</span>
+				{phase === "typing" && (
+					<span style={{
+						display: "inline-block",
+						width: "7px",
+						height: "15px",
+						background: "#EDEDF0",
+						marginLeft: "2px",
+						verticalAlign: "text-bottom",
+						animation: "blink 1s step-end infinite",
+					}} />
+				)}
 			</div>
-			{/* Terminal body — light theme */}
-			<div style={{
-				background: "#FAFAF8",
-				padding: "20px 24px",
-				fontFamily: "'JetBrains Mono', ui-monospace, monospace",
-				fontSize: "13px",
-				lineHeight: "1.7",
-				color: "#333",
-				minHeight: "360px",
-			}}>
-				<div>
-					<span style={{ color: "#E8590C", fontWeight: 600 }}>$</span>{" "}
-					<span style={{ color: "#111" }}>{typedCommand}</span>
-					{phase === "typing" && (
-						<span style={{
-							display: "inline-block",
-							width: "8px",
-							height: "16px",
-							background: "#111",
-							marginLeft: "2px",
-							verticalAlign: "text-bottom",
-							animation: "blink 1s step-end infinite",
-						}} />
-					)}
+			{OUTPUT_LINES.slice(0, visibleLines).map((line, i) => (
+				<div key={i} style={{ whiteSpace: "pre" }}>
+					{colorize(line)}
 				</div>
-				{OUTPUT_LINES.slice(0, visibleLines).map((line, i) => (
-					<div key={i} style={{ whiteSpace: "pre" }}>
-						{colorize(line)}
-					</div>
-				))}
-			</div>
+			))}
 			<style>{`
 				@keyframes blink {
 					50% { opacity: 0; }
@@ -178,24 +142,24 @@ export default function TerminalDemo() {
 
 function colorize(line: string) {
 	if (line.includes("✓") && !line.includes("Score"))
-		return <span style={{ color: "#16A34A" }}>{line}</span>;
+		return <span style={{ color: "#22C55E" }}>{line}</span>;
 	if (line.includes("✗"))
-		return <span style={{ color: "#DC2626" }}>{line}</span>;
+		return <span style={{ color: "#F87171" }}>{line}</span>;
 	if (line.includes("⚠"))
-		return <span style={{ color: "#CA8A04" }}>{line}</span>;
+		return <span style={{ color: "#EAB308" }}>{line}</span>;
 	if (line.includes("Score:"))
 		return (
 			<span>
 				{"  AEO Score: "}
-				<span style={{ color: "#CA8A04", fontWeight: "bold", fontSize: "15px" }}>42/100</span>
-				<span style={{ color: "#999" }}>{" (D)"}</span>
+				<span style={{ color: "#EAB308", fontWeight: "bold", fontSize: "15px" }}>42/100</span>
+				<span style={{ color: "#5C5C6E" }}>{" (D)"}</span>
 			</span>
 		);
 	if (line.includes("→"))
-		return <span style={{ color: "#2563EB" }}>{line}</span>;
+		return <span style={{ color: "#06B6D4" }}>{line}</span>;
 	if (line.includes("─────"))
-		return <span style={{ color: "#D1CEC8" }}>{line}</span>;
+		return <span style={{ color: "#2A2A3A" }}>{line}</span>;
 	if (line.includes("Pillar"))
-		return <span style={{ color: "#999" }}>{line}</span>;
+		return <span style={{ color: "#5C5C6E" }}>{line}</span>;
 	return <span>{line}</span>;
 }

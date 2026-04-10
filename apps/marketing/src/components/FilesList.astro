@@ -5,6 +5,7 @@ const files = [
 		ext: "txt",
 		icon: "text",
 		color: "#E8590C",
+		colorRgb: "232,89,12",
 		glow: "rgba(232,89,12,0.12)",
 		desc: "Site summary for ChatGPT, Claude, Perplexity, and Gemini crawlers. The llmstxt.org standard.",
 	},
@@ -13,6 +14,7 @@ const files = [
 		ext: "txt",
 		icon: "text",
 		color: "#E8590C",
+		colorRgb: "232,89,12",
 		glow: "rgba(232,89,12,0.12)",
 		desc: "Extended version with Q&A pairs, entity disambiguation, and key definitions.",
 	},
@@ -21,6 +23,7 @@ const files = [
 		ext: "txt",
 		icon: "lock",
 		color: "#6366F1",
+		colorRgb: "99,102,241",
 		glow: "rgba(99,102,241,0.12)",
 		desc: "AI usage permissions and content licensing for responsible crawling.",
 	},
@@ -29,6 +32,7 @@ const files = [
 		ext: "md",
 		icon: "markdown",
 		color: "#22C55E",
+		colorRgb: "34,197,94",
 		glow: "rgba(34,197,94,0.12)",
 		desc: "Markdown context file that helps AI coding assistants understand your codebase.",
 	},
@@ -37,6 +41,7 @@ const files = [
 		ext: "json",
 		icon: "json",
 		color: "#F59E0B",
+		colorRgb: "245,158,11",
 		glow: "rgba(245,158,11,0.12)",
 		desc: "Organization, WebSite, and FAQPage JSON-LD structured data for AI citation.",
 	},
@@ -45,6 +50,7 @@ const files = [
 		ext: "txt",
 		icon: "robot",
 		color: "#EC4899",
+		colorRgb: "236,72,153",
 		glow: "rgba(236,72,153,0.12)",
 		desc: "AI-specific crawler directives — allow GPTBot, ClaudeBot, PerplexityBot.",
 	},
@@ -53,6 +59,7 @@ const files = [
 		ext: "html",
 		icon: "html",
 		color: "#F97316",
+		colorRgb: "249,115,22",
 		glow: "rgba(249,115,22,0.12)",
 		desc: "FAQ markup with schema.org and speakable annotations for voice and AI.",
 	},
@@ -61,6 +68,7 @@ const files = [
 		ext: "html",
 		icon: "html",
 		color: "#F97316",
+		colorRgb: "249,115,22",
 		glow: "rgba(249,115,22,0.12)",
 		desc: "Heading anchors that make your content directly linkable by AI responses.",
 	},
@@ -69,20 +77,20 @@ const files = [
 		ext: "xml",
 		icon: "xml",
 		color: "#14B8A6",
+		colorRgb: "20,184,166",
 		glow: "rgba(20,184,166,0.12)",
 		desc: "AI-optimized sitemap with content type hints and freshness signals.",
 	},
 ];
 
-// SVG icons for each file type
 const icons: Record<string, string> = {
-	text: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>`,
-	lock: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>`,
-	markdown: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M10 13l-2 2 2 2"/><path d="M14 13l2 2-2 2"/></svg>`,
-	json: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M8 13h1a1 1 0 0 1 1 1v1a1 1 0 0 0 2 0v-1a1 1 0 0 1 1-1h1"/></svg>`,
-	robot: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><rect x="3" y="8" width="18" height="14" rx="2"/><path d="M12 8V4"/><circle cx="12" cy="4" r="1"/><path d="M7 13h.01M17 13h.01M7 17h10"/></svg>`,
-	html: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M9 15l-2 2 2 2"/><path d="M15 15l2 2-2 2"/></svg>`,
-	xml: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M8 13l3 4 3-4"/></svg>`,
+	text:     `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>`,
+	lock:     `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>`,
+	markdown: `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M10 13l-2 2 2 2"/><path d="M14 13l2 2-2 2"/></svg>`,
+	json:     `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M8 13h1a1 1 0 0 1 1 1v1a1 1 0 0 0 2 0v-1a1 1 0 0 1 1-1h1"/></svg>`,
+	robot:    `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><rect x="3" y="8" width="18" height="14" rx="2"/><path d="M12 8V4"/><circle cx="12" cy="4" r="1"/><path d="M7 13h.01M17 13h.01M7 17h10"/></svg>`,
+	html:     `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M9 15l-2 2 2 2"/><path d="M15 15l2 2-2 2"/></svg>`,
+	xml:      `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M8 13l3 4 3-4"/></svg>`,
 };
 
 const extColors: Record<string, string> = {
@@ -94,91 +102,101 @@ const extColors: Record<string, string> = {
 };
 ---
 
-<section id="files" class="px-6 py-20 md:py-28 border-t border-border">
+<section id="files" class="px-6 py-20 md:py-28 border-t border-[rgba(255,255,255,0.06)]">
 	<div class="mx-auto max-w-5xl">
-		<p class="eyebrow text-center">Output</p>
-		<h2 class="heading-lg text-center mt-3">9 files that get you cited</h2>
-		<p class="body-lg text-center max-w-2xl mx-auto mt-4">Every file AI engines look for — generated automatically, tailored to your site.</p>
+		<p class="text-[#14B8A6] text-xs font-bold uppercase tracking-[0.12em] text-center">Output</p>
+		<h2 class="text-3xl md:text-4xl font-bold text-white text-center mt-3 tracking-tight leading-tight">
+			9 files that get you cited
+		</h2>
+		<p class="text-[#A1A1AA] text-base md:text-lg text-center max-w-2xl mx-auto mt-4 leading-relaxed">
+			Every file AI engines look for — generated automatically, tailored to your site.
+		</p>
 
 		<div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-14">
 			{files.map((f, i) => (
 				<div
-					class="file-card group animate-on-scroll"
-					style={`--card-color: ${f.color}; --card-glow: ${f.glow}; animation-delay: ${i * 40}ms;`}
+					class="fl-card animate-on-scroll"
+					style={`--fc: ${f.color}; --fc-rgb: ${f.colorRgb}; --fc-glow: ${f.glow}; animation-delay: ${i * 40}ms;`}
 				>
 					<!-- Top row: icon + filename + ext badge -->
-					<div class="file-card__header">
-						<div class="file-icon" style={`background: ${f.glow}; color: ${f.color}; border-color: ${f.color}22;`}>
+					<div class="fl-card__header">
+						<div class="fl-icon" style={`background: ${f.glow}; color: ${f.color}; border-color: rgba(${f.colorRgb},0.22);`}>
 							<Fragment set:html={icons[f.icon]} />
 						</div>
-						<div class="flex-1 min-w-0">
-							<div class="file-name">{f.name}</div>
-						</div>
-						<span class="ext-badge" style={`color: ${extColors[f.ext] ?? '#71717A'}; background: ${extColors[f.ext] ?? '#71717A'}18; border-color: ${extColors[f.ext] ?? '#71717A'}28;`}>
+						<div class="fl-name">{f.name}</div>
+						<span
+							class="fl-ext"
+							style={`color: ${extColors[f.ext] ?? '#71717A'}; background: ${extColors[f.ext] ?? '#71717A'}18; border-color: ${extColors[f.ext] ?? '#71717A'}28;`}
+						>
 							.{f.ext}
 						</span>
 					</div>
 
-					<!-- Divider -->
-					<div class="file-card__divider"></div>
+					<!-- Hairline divider -->
+					<div class="fl-divider"></div>
 
 					<!-- Description -->
-					<p class="file-card__desc">{f.desc}</p>
+					<p class="fl-desc">{f.desc}</p>
 
-					<!-- Bottom hover indicator -->
-					<div class="file-card__glow"></div>
+					<!-- Glow layer (appears on hover) -->
+					<div class="fl-glow"></div>
 				</div>
 			))}
 		</div>
 
-		<!-- Bottom CTA note -->
-		<p class="text-center text-text-muted text-sm mt-10">
+		<p class="text-center text-[#6B6B76] text-sm mt-10">
 			All 9 files generated in one scan &mdash; no templates, no manual editing.
-			<a href="https://docs.aeorank.dev/output-files" class="text-accent hover:text-accent-hover underline underline-offset-2 transition-colors ml-1">See the spec →</a>
+			<a href="https://docs.aeorank.dev/output-files" class="text-[#E8590C] hover:text-[#F97316] underline underline-offset-2 transition-colors ml-1">See the spec &rarr;</a>
 		</p>
 	</div>
 </section>
 
 <style>
-	.file-card {
+	/* ── File card ── */
+	.fl-card {
 		position: relative;
-		background: var(--color-bg-card);
-		border: 1px solid var(--color-border);
+		background: rgba(255,255,255,0.03);
+		border: 1px solid rgba(255,255,255,0.07);
 		border-radius: 12px;
-		padding: 1.25rem;
+		padding: 1.125rem 1.25rem;
 		overflow: hidden;
 		transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease, background 0.22s ease;
 		cursor: default;
 	}
-	.file-card:hover {
+	.fl-card:hover {
 		transform: translateY(-3px);
 		background: rgba(255,255,255,0.05);
-		border-color: var(--card-color, rgba(255,255,255,0.15));
-		box-shadow: 0 8px 28px rgba(0,0,0,0.35), 0 0 0 1px color-mix(in srgb, var(--card-color) 20%, transparent);
+		border-color: rgba(var(--fc-rgb), 0.28);
+		box-shadow:
+			0 10px 30px rgba(0,0,0,0.38),
+			0 0 0 1px rgba(var(--fc-rgb), 0.1),
+			0 0 40px -8px rgba(var(--fc-rgb), 0.2);
 	}
 
-	/* Ambient glow that slides in on hover */
-	.file-card__glow {
+	/* Glow overlay */
+	.fl-glow {
 		position: absolute;
 		inset: 0;
-		background: radial-gradient(ellipse at 0% 100%, var(--card-glow, transparent) 0%, transparent 60%);
+		background: radial-gradient(ellipse at 0% 100%, var(--fc-glow) 0%, transparent 60%);
 		opacity: 0;
 		transition: opacity 0.3s ease;
 		pointer-events: none;
 	}
-	.file-card:hover .file-card__glow {
-		opacity: 1;
-	}
+	.fl-card:hover .fl-glow { opacity: 1; }
 
-	.file-card__header {
+	/* Header row */
+	.fl-card__header {
 		display: flex;
 		align-items: center;
 		gap: 0.625rem;
+		position: relative;
+		z-index: 1;
 	}
 
-	.file-icon {
-		width: 36px;
-		height: 36px;
+	/* Icon box */
+	.fl-icon {
+		width: 34px;
+		height: 34px;
 		border-radius: 8px;
 		border: 1px solid;
 		display: flex;
@@ -187,45 +205,53 @@ const extColors: Record<string, string> = {
 		flex-shrink: 0;
 		transition: box-shadow 0.22s ease;
 	}
-	.file-card:hover .file-icon {
-		box-shadow: 0 0 12px var(--card-glow, transparent);
+	.fl-card:hover .fl-icon {
+		box-shadow: 0 0 14px var(--fc-glow);
 	}
 
-	.file-name {
-		font-family: var(--font-mono);
+	/* Filename */
+	.fl-name {
+		font-family: var(--font-mono, 'Fira Code', monospace);
 		font-size: 0.8125rem;
 		font-weight: 600;
-		color: var(--color-text);
+		color: #E4E4E7;
 		white-space: nowrap;
 		overflow: hidden;
 		text-overflow: ellipsis;
+		flex: 1;
+		min-width: 0;
 	}
 
-	.ext-badge {
-		font-family: var(--font-mono);
-		font-size: 0.625rem;
+	/* Extension badge */
+	.fl-ext {
+		font-family: var(--font-mono, 'Fira Code', monospace);
+		font-size: 0.5625rem;
 		font-weight: 700;
 		padding: 0.15rem 0.4rem;
 		border-radius: 4px;
 		border: 1px solid;
 		flex-shrink: 0;
 		text-transform: uppercase;
-		letter-spacing: 0.04em;
+		letter-spacing: 0.05em;
 	}
 
-	.file-card__divider {
+	/* Divider */
+	.fl-divider {
 		height: 1px;
-		background: var(--color-border);
+		background: rgba(255,255,255,0.06);
 		margin: 0.875rem 0;
 		transition: background 0.22s ease;
+		position: relative;
+		z-index: 1;
 	}
-	.file-card:hover .file-card__divider {
-		background: color-mix(in srgb, var(--card-color) 20%, var(--color-border));
+	.fl-card:hover .fl-divider {
+		background: rgba(var(--fc-rgb), 0.18);
 	}
 
-	.file-card__desc {
+	/* Description */
+	.fl-desc {
 		font-size: 0.8125rem;
-		color: var(--color-text-muted);
+		color: #A1A1AA;
 		line-height: 1.6;
 		position: relative;
 		z-index: 1;
