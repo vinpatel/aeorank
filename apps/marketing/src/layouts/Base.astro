@@ -78,7 +78,7 @@ const ogImage = new URL("/og-image.png", canonicalURL).toString();
 		</a>
 	</div>
 
-	<!-- Scroll-reveal: animate-on-scroll → is-visible ─────────────────────── -->
+	<!-- Scroll-reveal: all animation classes → is-visible ────────────────── -->
 	<script>
 		const scrollObserver = new IntersectionObserver(
 			(entries) => {
@@ -93,7 +93,7 @@ const ogImage = new URL("/og-image.png", canonicalURL).toString();
 		);
 
 		document
-			.querySelectorAll(".animate-on-scroll")
+			.querySelectorAll(".animate-on-scroll, .animate-scale-in, .animate-slide-left, .animate-slide-right")
 			.forEach((el) => scrollObserver.observe(el));
 	</script>
 
