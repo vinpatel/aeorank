@@ -27,6 +27,7 @@ const ogImage = new URL("/og-image.png", canonicalURL).toString();
 
 	<!-- Open Graph -->
 	<meta property="og:type"        content="website" />
+	<meta property="og:site_name"   content="AEOrank" />
 	<meta property="og:url"         content={canonicalURL.toString()} />
 	<meta property="og:title"       content={title} />
 	<meta property="og:description" content={description} />
@@ -34,9 +35,13 @@ const ogImage = new URL("/og-image.png", canonicalURL).toString();
 
 	<!-- Twitter -->
 	<meta name="twitter:card"        content="summary_large_image" />
+	<meta name="twitter:site"        content="@aeorank" />
 	<meta name="twitter:title"       content={title} />
 	<meta name="twitter:description" content={description} />
 	<meta name="twitter:image"       content={ogImage} />
+
+	<!-- SEO -->
+	<meta name="robots" content="index, follow" />
 
 	<!-- Fonts: Inter + JetBrains Mono -->
 	<link rel="preconnect" href="https://fonts.googleapis.com" />
