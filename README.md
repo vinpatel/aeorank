@@ -197,7 +197,7 @@ Track your AEO score over time at [app.aeorank.dev](https://app.aeorank.dev):
 
 See [DEMO.md](./DEMO.md) for today's auto-generated scan.
 
-Last updated: April 13, 2026
+Last updated: April 14, 2026
 
 ## Contributing
 
