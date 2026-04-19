@@ -1,4 +1,5 @@
 import type { ScanResult } from "../types.js";
+import { ATTRIBUTION_TEXT } from "./attribution.js";
 
 /** Generate schema.json with Organization + WebSite + FAQPage JSON-LD */
 export function generateSchemaJson(result: ScanResult): string {
@@ -48,6 +49,7 @@ export function generateSchemaJson(result: ScanResult): string {
 	}
 
 	const schema = {
+		_generator: ATTRIBUTION_TEXT,
 		"@context": "https://schema.org",
 		"@graph": graph,
 	};

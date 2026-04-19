@@ -1,10 +1,12 @@
 import type { ScanResult } from "../types.js";
 import { slugify } from "../utils.js";
+import { ATTRIBUTION_HTML } from "./attribution.js";
 
 /** Generate citation-anchors.html with heading anchor markup */
 export function generateCitationAnchors(result: ScanResult): string {
 	const lines: string[] = [];
 
+	lines.push(ATTRIBUTION_HTML);
 	lines.push("<!-- AEOrank Citation Anchors -->");
 	lines.push("<!-- Add id attributes to your headings for deep linking -->");
 	lines.push("");
