@@ -1,5 +1,26 @@
 # Milestones
 
+## v2 Marketing Redesign — "AEO Inspector" (Shipped: 2026-04-19)
+
+**Scope:** `apps/marketing` only. Version A preserved as git tag `marketing-v1`.
+
+**Concept:** entire site rendered as an exposed developer-tool panel (not a generic SaaS landing). Warm paper-white canvas, monospace-forward chrome, the `/100` motif as structural spine, asymmetric editorial layouts. Open-source / GitHub-star-driving positioning; sharpened against Profound, Scrunch, Otterly, Peec, AthenaHQ.
+
+**Key accomplishments:**
+
+- New design system on Tailwind v4 `@theme` tokens — warm paper, ink, single restrained mark color, Inter + JetBrains Mono + Instrument Serif.
+- Eleven new marketing components: Nav, Hero (split human/AI-crawler view), LiveScan marquee, Anatomy (/100 diagram + grade chart), Files (IDE with 9 real generated files), OpenSource (live GitHub metrics), Install (3-tab code), Leaderboard (tabular), Pricing (report-card tiers + competitor strip), FAQ (paired JSON-LD / prose), Footer (session-end receipt).
+- `scoreboard.astro` and `privacy.astro` rewritten in the new system.
+- Zero fabricated numbers — every metric is either a verified product fact or fetched live from GitHub API (stars/forks/issues/watchers/license/commits/contributors). Hardcoded "2,847 stars", "411 tests", "13 plugins" etc. eliminated.
+- Competition-research agent surveyed the top-5 landscape and pushed three differentiation angles into copy: *others monitor, AEOrank fixes*; *deterministic vs LLM-evaluated*; *MIT + self-hostable vs $89–$499/mo closed SaaS*.
+- GitHub Pages deploy via existing `deploy-marketing.yml` workflow — live at https://aeorank.dev in ~1 minute from push.
+
+**Artifacts:** `.planning/milestones/v2-redesign/` — DESIGN-DIRECTION.md, RETROSPECTIVE.md, PRODUCT-TRUTHS.md, COMPETITION.md, DEPLOYMENT.md, OPEN-ITEMS.md, README.md.
+
+**Commits on main:** `0716f89` → `8a5b1d2` → `66f33e0`.
+
+---
+
 ## v2.0 Competitive Parity (Shipped: 2026-03-28)
 
 **Phases completed:** 9 phases, 17 plans, 24 tasks
