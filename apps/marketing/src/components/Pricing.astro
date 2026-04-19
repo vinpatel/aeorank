@@ -10,7 +10,7 @@ const tiers = [
 		price: "$0",
 		unit: "/mo",
 		hook: "Try everything. No credit card.",
-		note: "Good starting posture. Scans are capped, but every generated file is fully usable.",
+		note: "Good starting posture. Scans are capped, but every generated file is fully usable and the CLI stays unlimited forever. No feature you need lives behind the paywall.",
 		scored: [
 			{ k: "sites",              v: "1",          on: true  },
 			{ k: "dashboard scans",    v: "3/mo",       on: true  },
@@ -33,7 +33,7 @@ const tiers = [
 		price: "$29",
 		unit: "/mo",
 		hook: "Full monitoring + fix generation.",
-		note: "The pragmatic choice for teams shipping a real site. 14× cheaper than the closest competitor.",
+		note: "The pragmatic choice for teams shipping a real site. Roughly 7–14× cheaper than Profound, Scrunch, and Peec — and the only one that writes the 9 fix files for you.",
 		featured: true,
 		scored: [
 			{ k: "sites",              v: "5",          on: true  },
@@ -56,7 +56,7 @@ const tiers = [
 		price: "$99",
 		unit: "/mo",
 		hook: "Manage 50 client sites at scale.",
-		note: "Built for teams delivering AEO as a service. Bulk endpoints, webhooks, client-ready exports.",
+		note: "Built for teams delivering AEO as a service. Bulk endpoints, webhooks, client-ready exports — at a price where a single retainer pays the plan ten times over.",
 		scored: [
 			{ k: "sites",              v: "50",         on: true  },
 			{ k: "dashboard scans",    v: "500/mo",     on: true  },
@@ -72,10 +72,10 @@ const tiers = [
 ];
 
 const competitors = [
-	{ name: "Profound",  price: "$399", note: "monitor only" },
-	{ name: "Otterly",   price: "$99",  note: "monitor only" },
-	{ name: "Scrunch",   price: "$500", note: "monitor only" },
-	{ name: "Semrush",   price: "$129", note: "SEO-first" },
+	{ name: "Profound",  price: "$399", note: "monitor · closed" },
+	{ name: "Scrunch",   price: "$250", note: "monitor · closed" },
+	{ name: "Otterly",   price: "$189", note: "monitor · closed" },
+	{ name: "Semrush",   price: "$129", note: "SEO · not AEO" },
 ];
 ---
 
@@ -89,7 +89,7 @@ const competitors = [
 				<p class="t-label">// pricing</p>
 				<h2 class="t-h1 mt-2">Pricing, rendered as a report card.</h2>
 				<p class="t-body mt-3 max-w-[58ch]">
-					Same scoring engine on every plan. We don't gate the 36 criteria, the 9 generated files, or the CLI. You pay for convenience (history, auto-rescan, APIs), never the product's real work.
+					Same scoring engine on every plan. We don't gate the 36 criteria, the 9 generated files, or the CLI. The product itself is MIT — you pay for convenience (history, auto-rescan, APIs), never for the scoring or the fixes. That's the whole reason this costs $29 instead of $299.
 				</p>
 			</div>
 			<div class="section-meta">
@@ -155,7 +155,7 @@ const competitors = [
 		<div class="pricing-cmp mt-8" data-reveal>
 			<header class="pricing-cmp__hd">
 				<span class="t-label">// what the others charge</span>
-				<span class="font-mono text-[10.5px] ink-3 ml-auto">monitoring only · none generate the 9 files</span>
+				<span class="font-mono text-[10.5px] ink-3 ml-auto">closed SaaS · monitor-only · none generate the 9 files</span>
 			</header>
 			<div class="pricing-cmp__grid">
 				<div class="pricing-cmp__cell pricing-cmp__cell--us">
@@ -172,7 +172,7 @@ const competitors = [
 				))}
 			</div>
 			<footer class="pricing-cmp__ft">
-				<span class="font-mono text-[10.5px] ink-3">Profound raised $58M. We're 14× cheaper, MIT licensed, and self-hostable.</span>
+				<span class="font-mono text-[10.5px] ink-3">They're venture-backed dashboards. We're MIT-licensed, self-hostable, and the only one that writes the 9 files your AI crawlers actually want.</span>
 			</footer>
 		</div>
 	</div>

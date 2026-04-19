@@ -10,23 +10,23 @@ const faqs = [
 	},
 	{
 		q: "What does deterministic scoring actually mean?",
-		a: "Every check is a pure function of HTML, headers, and file presence — no LLM calls, no randomness. Scan the same site twice and you get the same score. That's what lets us run in CI and fail a PR confidently."
+		a: "Every check is a pure function of HTML, headers, and file presence — no LLM calls, no randomness. Scan the same site twice, get the same score. That's how CI works. Tools that prompt GPT-4 to rate your site give you a different number on Tuesday than they did on Monday; you cannot fail a PR on that."
 	},
 	{
 		q: "Is it really MIT?",
-		a: "Yes. The scanner core, all 11 framework plugins, the GitHub App, the GitHub Action, and the file generators are under the MIT license. You can self-host the lot. The hosted app exists to make things convenient — never because the tool requires it."
+		a: "Yes, and this is unusual in the category. Profound, Scrunch, Otterly, Peec, and AthenaHQ are all closed-source SaaS — the scoring logic is a black box on someone else's server. AEOrank's scanner core, all 11 framework plugins, the GitHub App, the GitHub Action, and the file generators are under MIT. You can fork it, audit the checks, and self-host the entire stack."
 	},
 	{
-		q: "How is this different from Ahrefs or Semrush?",
-		a: "Classical SEO tools check ranking signals for Google. AEOrank checks answer-extraction signals for AI engines: llms.txt, ai.txt, schema.org coverage, speakable markup, AI crawler access, content structure for extraction, and 30 more criteria that SEO tools don't touch. Then it generates the 9 actual files — no SEO tool does that."
+		q: "How is this different from Ahrefs, Semrush, or their AI add-ons?",
+		a: "Classical SEO tools check ranking signals for Google's blue-link results. AEOrank checks answer-extraction signals for AI engines: llms.txt, ai.txt, schema.org coverage, speakable markup, AI crawler access (GPTBot, ClaudeBot, PerplexityBot), content structure for extraction, and 30 more criteria SEO tools don't touch. Then it generates the 9 actual files. Semrush's AI add-on and Ahrefs' Brand Radar report on visibility; neither writes a single file you can ship."
 	},
 	{
-		q: "What's the difference vs Profound, Otterly, or Scrunch?",
-		a: "They monitor (what AI says about your brand). AEOrank scores (whether AI can read you) and fixes (by generating the 9 files). Complementary, but AEOrank solves the upstream problem. Also 14× cheaper and open source."
+		q: "What's the difference vs Profound, Scrunch, Otterly, Peec, or AthenaHQ?",
+		a: "They monitor: they run prompts through LLMs and tell you what AI said about your brand this week. AEOrank fixes: it scores whether AI can read your site at all, then writes the 9 files that make it readable. Floor prices there run $89–$295/mo; AEOrank Pro is $29 and the CLI is free. Useful complements, but they solve the downstream question — AEOrank solves the upstream one."
 	},
 	{
 		q: "Can I use this in CI?",
-		a: "Two ways. Install the GitHub App for zero-YAML PR checks, or pin aeorank-action@v1 in a workflow with a fail-below threshold. Both post a check run with the score and the diff of generated files."
+		a: "AEOrank is the only AEO tool designed for CI first. Install the GitHub App for zero-YAML PR checks, or pin aeorank-action@v1 in a workflow with a fail-below threshold. Both post a check run with the score delta and the diff of the 9 regenerated files. Because the scorer is deterministic, the check is safe to block merges on — the opposite of LLM-based evals."
 	},
 	{
 		q: "Does AEOrank send my site to an LLM?",
