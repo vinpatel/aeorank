@@ -61,7 +61,9 @@
 						<path d="M8 .25l2.39 4.84L15.75 6l-3.88 3.78.92 5.34L8 12.6l-4.79 2.52.92-5.34L.25 6l5.36-.91L8 .25z"/>
 					</svg>
 					Star on GitHub
-					<span class="font-mono text-[11px] opacity-70 ml-1" data-gh-stars>· 2,847</span>
+					<span class="font-mono text-[11px] opacity-70 ml-1" data-gh-stars-prefix>
+						<span class="gh-dot">·</span>&nbsp;<span data-gh-stars></span>
+					</span>
 				</a>
 				<a href="https://app.aeorank.dev/sign-up" class="btn btn-outline btn-lg">
 					Get your score
@@ -223,10 +225,6 @@
 		<!-- Inline stat row -->
 		<dl class="hero-stats mt-8" data-reveal>
 			<div class="hero-stats__cell">
-				<dt class="t-label">github stars</dt>
-				<dd class="hero-stats__num font-mono" data-gh-stars>2,847</dd>
-			</div>
-			<div class="hero-stats__cell">
 				<dt class="t-label">criteria checked</dt>
 				<dd class="hero-stats__num font-mono">36</dd>
 			</div>
@@ -236,15 +234,19 @@
 			</div>
 			<div class="hero-stats__cell">
 				<dt class="t-label">framework plugins</dt>
-				<dd class="hero-stats__num font-mono">13</dd>
+				<dd class="hero-stats__num font-mono">11</dd>
 			</div>
 			<div class="hero-stats__cell">
 				<dt class="t-label">tests passing</dt>
-				<dd class="hero-stats__num font-mono">411</dd>
+				<dd class="hero-stats__num font-mono">288</dd>
 			</div>
 			<div class="hero-stats__cell">
 				<dt class="t-label">first scan</dt>
 				<dd class="hero-stats__num font-mono">&lt;30s</dd>
+			</div>
+			<div class="hero-stats__cell">
+				<dt class="t-label">license</dt>
+				<dd class="hero-stats__num font-mono">MIT</dd>
 			</div>
 		</dl>
 	</div>
@@ -560,6 +562,10 @@
 		letter-spacing: -0.02em;
 		color: var(--color-ink);
 	}
+
+	/* Hide the "·" when stars haven't loaded yet so we never render "· " alone */
+	[data-gh-stars-prefix] .gh-dot { opacity: 0; transition: opacity 200ms ease; }
+	[data-gh-stars-prefix]:has([data-gh-stars]:not(:empty)) .gh-dot { opacity: 1; }
 
 	@media (max-width: 880px) {
 		.hero-view__grid { grid-template-columns: 1fr; }

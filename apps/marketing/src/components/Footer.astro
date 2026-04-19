@@ -28,7 +28,9 @@ const nowIso = new Date().toISOString();
 						<a href="https://github.com/vinpatel/aeorank" class="btn btn-ink btn-lg" target="_blank" rel="noopener">
 							<svg width="13" height="13" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25l2.39 4.84L15.75 6l-3.88 3.78.92 5.34L8 12.6l-4.79 2.52.92-5.34L.25 6l5.36-.91L8 .25z"/></svg>
 							Star on GitHub
-							<span class="font-mono text-[11px] opacity-70 ml-1" data-gh-stars>· 2,847</span>
+							<span class="font-mono text-[11px] opacity-70 ml-1" data-gh-stars-prefix>
+								<span class="gh-dot">·</span>&nbsp;<span data-gh-stars></span>
+							</span>
 						</a>
 						<a href="https://app.aeorank.dev/sign-up" class="btn btn-outline btn-lg">
 							Scan my site &nbsp;→
@@ -107,7 +109,7 @@ const nowIso = new Date().toISOString();
 					<span class="font-mono text-[11px] ink-3">·</span>
 					<span class="sig sig-ok"><span class="dot dot-ok"></span>self-hostable</span>
 					<span class="font-mono text-[11px] ink-3">·</span>
-					<span class="font-mono text-[11px] ink-3">made in SF</span>
+					<span class="sig sig-ok"><span class="dot dot-ok"></span>zero lock-in</span>
 				</div>
 			</div>
 
@@ -287,6 +289,9 @@ const nowIso = new Date().toISOString();
 		border-top: 1px dashed var(--color-rule);
 		flex-wrap: wrap;
 	}
+
+	[data-gh-stars-prefix] .gh-dot { opacity: 0; transition: opacity 200ms ease; }
+	[data-gh-stars-prefix]:has([data-gh-stars]:not(:empty)) .gh-dot { opacity: 1; }
 
 	@media (max-width: 980px) {
 		.footer-cta__grid { grid-template-columns: 1fr; }

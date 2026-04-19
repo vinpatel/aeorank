@@ -1,21 +1,8 @@
 ---
-// Open Source manifesto + metrics — the star-worthy section
-// Editorial serif pull-quote, live-feeling metric row, contributor grid, star CTA.
-
-const metrics = [
-	{ k: "stars",        v: "2,847", delta: "+124/wk" },
-	{ k: "forks",        v: "318",   delta: "+19/wk" },
-	{ k: "contributors", v: "42",    delta: "+3/mo" },
-	{ k: "releases",     v: "87",    delta: "v0.9.3" },
-	{ k: "open issues",  v: "21",    delta: "-6/wk" },
-	{ k: "test count",   v: "411",   delta: "100% pass" },
-];
-
-// Contributor seeds — initials only, abstract glyph avatars
-const contributors = [
-	"VP","DL","MK","SR","JN","AC","RO","HM","EW","TB","KF","NL","BS","PA","GR","IL","YM","ZT",
-	"QD","WO","UF","XC","VJ","AT","NR","SP","HK","LB","CF","OM","TG","RM","DE","KY","ME","GS",
-];
+// Open Source — honest edition.
+// Every numeric claim below is either a derivable product fact
+// (MIT, language, 9 files, 36 criteria) OR fetched live from the
+// GitHub API at runtime. Nothing is hardcoded to look bigger than it is.
 ---
 
 <section id="open-source" class="section">
@@ -23,7 +10,6 @@ const contributors = [
 		<span class="rail-tick" style="top:0"></span>
 		<span class="rail-coord" style="top:0">OSS</span>
 
-		<!-- Split: manifesto on the left, metrics panel on the right -->
 		<div class="oss-top">
 
 			<div class="oss-manifesto">
@@ -36,7 +22,7 @@ const contributors = [
 
 				<div class="oss-body">
 					<p class="t-body">
-						The core scanner, 13 framework plugins, the GitHub App, the GitHub Action, and every one of the 9 files we generate — all <a href="https://github.com/vinpatel/aeorank/blob/main/LICENSE" class="ilink" target="_blank" rel="noopener">MIT licensed</a>, all forkable, all self-hostable. You can stand the entire thing up inside your own infra in an afternoon.
+						The core scanner, 11 framework plugins, the GitHub App, the GitHub Action, and every one of the 9 files we generate — all <a href="https://github.com/vinpatel/aeorank/blob/main/LICENSE" class="ilink" target="_blank" rel="noopener">MIT licensed</a>, all forkable, all self-hostable. You can stand the entire thing up inside your own infra in an afternoon.
 					</p>
 					<p class="t-body mt-3">
 						The hosted app at <code>app.aeorank.dev</code> exists to make things convenient — never because the tool needs it to work. If we vanished tomorrow, your CI would keep scoring, your files would keep regenerating, and your team would keep shipping.
@@ -66,7 +52,9 @@ const contributors = [
 					<a href="https://github.com/vinpatel/aeorank" class="btn btn-ink btn-lg" target="_blank" rel="noopener">
 						<svg width="13" height="13" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25l2.39 4.84L15.75 6l-3.88 3.78.92 5.34L8 12.6l-4.79 2.52.92-5.34L.25 6l5.36-.91L8 .25z"/></svg>
 						Star the repo
-						<span class="font-mono text-[11px] opacity-70 ml-1" data-gh-stars>· 2,847</span>
+						<span class="font-mono text-[11px] opacity-70 ml-1" data-gh-stars-prefix>
+							<span class="gh-dot">·</span>&nbsp;<span data-gh-stars></span>
+						</span>
 					</a>
 					<a href="https://github.com/vinpatel/aeorank/fork" class="btn btn-outline btn-lg" target="_blank" rel="noopener">
 						Fork &amp; self-host
@@ -75,6 +63,10 @@ const contributors = [
 						Contribute →
 					</a>
 				</div>
+
+				<p class="t-caption mt-5">
+					Early days. If you star it, you actually move the needle.
+				</p>
 			</div>
 
 			<!-- Live metrics -->
@@ -84,82 +76,70 @@ const contributors = [
 
 				<header class="oss-metrics__hd">
 					<span class="sig sig-ok"><span class="dot dot-ok ping"></span>live</span>
-					<span class="font-mono text-[10.5px] ink-3">github.com/vinpatel/aeorank</span>
+					<a href="https://github.com/vinpatel/aeorank" target="_blank" rel="noopener" class="font-mono text-[10.5px] ink-3 ilink">github.com/vinpatel/aeorank</a>
 				</header>
 
 				<div class="oss-metrics__repo">
 					<span class="font-mono text-[11px] ink-3">repo</span>
 					<span class="font-mono text-[13px] ink">vinpatel/aeorank</span>
-					<span class="t-label ml-auto" style="color: var(--color-mark-ink)">v0.9.3 · 2 days ago</span>
+					<span class="t-label ml-auto" data-gh-updated>&mdash;</span>
 				</div>
 
 				<dl class="oss-metrics__grid">
-					{metrics.map(m => (
-						<div class="oss-metric">
-							<dt class="t-label">{m.k}</dt>
-							<dd class="oss-metric__v font-mono">{m.v}</dd>
-							<dd class="oss-metric__delta font-mono text-[10.5px] ink-3">{m.delta}</dd>
-						</div>
-					))}
+					<div class="oss-metric">
+						<dt class="t-label">stars</dt>
+						<dd class="oss-metric__v font-mono" data-gh-stars>&mdash;</dd>
+						<dd class="oss-metric__delta font-mono text-[10.5px] ink-3">via github.com</dd>
+					</div>
+					<div class="oss-metric">
+						<dt class="t-label">forks</dt>
+						<dd class="oss-metric__v font-mono" data-gh-forks>&mdash;</dd>
+						<dd class="oss-metric__delta font-mono text-[10.5px] ink-3">via github.com</dd>
+					</div>
+					<div class="oss-metric">
+						<dt class="t-label">open issues</dt>
+						<dd class="oss-metric__v font-mono" data-gh-issues>&mdash;</dd>
+						<dd class="oss-metric__delta font-mono text-[10.5px] ink-3">via github.com</dd>
+					</div>
+					<div class="oss-metric">
+						<dt class="t-label">watchers</dt>
+						<dd class="oss-metric__v font-mono" data-gh-watchers>&mdash;</dd>
+						<dd class="oss-metric__delta font-mono text-[10.5px] ink-3">via github.com</dd>
+					</div>
+					<div class="oss-metric">
+						<dt class="t-label">license</dt>
+						<dd class="oss-metric__v font-mono" data-gh-license>MIT</dd>
+						<dd class="oss-metric__delta font-mono text-[10.5px] ink-3">forever free</dd>
+					</div>
+					<div class="oss-metric">
+						<dt class="t-label">test count</dt>
+						<dd class="oss-metric__v font-mono">288</dd>
+						<dd class="oss-metric__delta font-mono text-[10.5px] ink-3">run locally · deterministic</dd>
+					</div>
 				</dl>
 
-				<!-- Star sparkline (hand-drawn path, feels real) -->
-				<figure class="oss-spark">
-					<figcaption class="flex items-baseline justify-between">
-						<span class="t-label">stars · last 14d</span>
-						<span class="font-mono text-[10.5px] sig-ok">+ 172 (+6.4%)</span>
-					</figcaption>
-					<svg viewBox="0 0 260 60" class="mt-2" role="img" aria-label="star growth sparkline">
-						<defs>
-							<linearGradient id="spark-fill" x1="0" x2="0" y1="0" y2="1">
-								<stop offset="0" stop-color="#E8590C" stop-opacity="0.22"/>
-								<stop offset="1" stop-color="#E8590C" stop-opacity="0"/>
-							</linearGradient>
-						</defs>
-						<!-- baseline -->
-						<line x1="0" y1="54" x2="260" y2="54" stroke="rgba(17,17,17,0.08)" stroke-dasharray="2,3"/>
-						<!-- curve -->
-						<path
-							d="M0,48 L20,46 L40,44 L60,42 L80,38 L100,40 L120,34 L140,30 L160,26 L180,22 L200,18 L220,14 L240,12 L260,10"
-							stroke="#E8590C" stroke-width="1.6" fill="none" stroke-linecap="round"
-						/>
-						<path
-							d="M0,48 L20,46 L40,44 L60,42 L80,38 L100,40 L120,34 L140,30 L160,26 L180,22 L200,18 L220,14 L240,12 L260,10 L260,60 L0,60 Z"
-							fill="url(#spark-fill)"
-						/>
-						<!-- last dot -->
-						<circle cx="260" cy="10" r="2.4" fill="#E8590C"/>
-					</svg>
-				</figure>
-
-				<!-- Recent commits — feels alive -->
+				<!-- Real commits pulled from GitHub API -->
 				<div class="oss-commits">
-					<p class="t-label mb-2">// recent</p>
-					<ul>
-						<li><span class="font-mono text-[11px] ink-3">2h</span><span class="font-mono text-[12px] ink">feat(checks): add freshness signal · <span class="sig-ok">#217</span></span></li>
-						<li><span class="font-mono text-[11px] ink-3">9h</span><span class="font-mono text-[12px] ink">fix(cli): handle redirect loops · <span class="sig-ok">#216</span></span></li>
-						<li><span class="font-mono text-[11px] ink-3">1d</span><span class="font-mono text-[12px] ink">docs: llms.txt best practices · <span class="sig-ok">#214</span></span></li>
-						<li><span class="font-mono text-[11px] ink-3">2d</span><span class="font-mono text-[12px] ink">release: v0.9.3 · <span class="sig-warn">tag</span></span></li>
+					<p class="t-label mb-2">// recent commits</p>
+					<ul data-gh-commits>
+						<li class="oss-commit oss-commit--placeholder">
+							<span class="font-mono text-[11px] ink-3">&mdash;</span>
+							<span class="font-mono text-[12px] ink-3">loading from api.github.com&hellip;</span>
+						</li>
 					</ul>
 				</div>
 			</aside>
 		</div>
 
-		<!-- Contributors — tightly packed glyph grid -->
+		<!-- Contributors — real avatars pulled from GitHub API -->
 		<div class="oss-contribs mt-10" data-reveal>
 			<header class="oss-contribs__hd">
-				<span class="t-label">// 42 contributors</span>
-				<span class="font-mono text-[10.5px] ink-3 ml-auto">human-readable · initials only</span>
+				<span class="t-label">// contributors</span>
+				<a href="https://github.com/vinpatel/aeorank/graphs/contributors" target="_blank" rel="noopener" class="font-mono text-[10.5px] ink-3 ml-auto ilink">see all on github&nbsp;→</a>
 			</header>
-			<div class="oss-contribs__grid">
-				{contributors.map(c => (
-					<a href="https://github.com/vinpatel/aeorank/graphs/contributors" class="oss-av" target="_blank" rel="noopener" aria-label={`Contributor ${c}`}>
-						<span class="font-mono">{c}</span>
-					</a>
-				))}
-				<a href="https://github.com/vinpatel/aeorank/graphs/contributors" class="oss-av oss-av--more" target="_blank" rel="noopener">
-					<span class="font-mono">+6</span>
-				</a>
+			<div class="oss-contribs__grid" data-gh-contribs>
+				<!-- Populated client-side. No fake placeholders. -->
+				<p class="font-mono text-[11px] ink-3" data-gh-contribs-empty>Loading contributors from github.com&hellip;</p>
 			</div>
 		</div>
 	</div>
@@ -255,18 +235,20 @@ const contributors = [
 	.oss-metric__v { font-size: 20px; font-weight: 600; letter-spacing: -0.02em; color: var(--color-ink); margin: 2px 0 1px; }
 	.oss-metric__delta { color: var(--color-ink-3); }
 
-	.oss-spark figcaption { margin-bottom: 2px; }
-
 	.oss-commits ul { list-style: none; margin: 0; padding: 0; }
-	.oss-commits li {
+	.oss-commit {
 		display: grid;
-		grid-template-columns: 32px 1fr;
+		grid-template-columns: 44px 1fr;
 		gap: 10px;
 		padding: 6px 0;
 		border-top: 1px dashed var(--color-rule);
 		align-items: baseline;
+		text-decoration: none;
+		color: var(--color-ink);
 	}
-	.oss-commits li:first-child { border-top: none; }
+	.oss-commit:first-child { border-top: none; }
+	.oss-commit:hover { background: var(--color-paper-2); }
+	.oss-commit--placeholder { opacity: 0.65; }
 
 	/* Contributors grid */
 	.oss-contribs {
@@ -283,8 +265,9 @@ const contributors = [
 	}
 	.oss-contribs__grid {
 		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(42px, 1fr));
+		grid-template-columns: repeat(auto-fill, minmax(56px, 1fr));
 		gap: 6px;
+		min-height: 56px;
 	}
 	.oss-av {
 		aspect-ratio: 1 / 1;
@@ -294,22 +277,18 @@ const contributors = [
 		background: var(--color-paper-2);
 		border: 1px solid var(--color-rule);
 		border-radius: 3px;
-		color: var(--color-ink-2);
+		overflow: hidden;
 		text-decoration: none;
-		font-size: 11px;
-		letter-spacing: 0.04em;
-		transition: background 140ms ease, color 140ms ease, border-color 140ms ease;
+		transition: transform 140ms ease, border-color 140ms ease;
 	}
 	.oss-av:hover {
-		background: var(--color-ink);
-		color: var(--color-paper);
+		transform: translateY(-1px);
 		border-color: var(--color-ink);
 	}
-	.oss-av--more {
-		background: var(--color-mark);
-		color: #fff;
-		border-color: var(--color-mark);
-	}
+	.oss-av img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+	[data-gh-stars-prefix] .gh-dot { opacity: 0; transition: opacity 200ms ease; }
+	[data-gh-stars-prefix]:has([data-gh-stars]:not(:empty)) .gh-dot { opacity: 1; }
 
 	@media (max-width: 1000px) {
 		.oss-top { grid-template-columns: 1fr; gap: 32px; }
@@ -321,3 +300,75 @@ const contributors = [
 		.oss-pillar:nth-child(-n+2) { border-bottom: 1px solid var(--color-rule); }
 	}
 </style>
+
+<script>
+	// Real GitHub data. No fallbacks that fabricate numbers.
+	const REPO = "vinpatel/aeorank";
+
+	function setText(sel: string, text: string) {
+		document.querySelectorAll<HTMLElement>(sel).forEach(el => { el.textContent = text; });
+	}
+	function timeAgo(iso: string): string {
+		const d = new Date(iso);
+		const diffMs = Date.now() - d.getTime();
+		const m = Math.round(diffMs / 60000);
+		if (m < 1) return "just now";
+		if (m < 60) return `${m}m ago`;
+		const h = Math.round(m / 60);
+		if (h < 24) return `${h}h ago`;
+		const days = Math.round(h / 24);
+		if (days < 7) return `${days}d ago`;
+		return d.toISOString().slice(0, 10);
+	}
+
+	// Repo metadata
+	fetch(`https://api.github.com/repos/${REPO}`)
+		.then(r => r.ok ? r.json() : null)
+		.then(d => {
+			if (!d) return;
+			if (typeof d.stargazers_count === "number") setText("[data-gh-stars]", d.stargazers_count.toLocaleString());
+			if (typeof d.forks_count === "number")      setText("[data-gh-forks]", d.forks_count.toLocaleString());
+			if (typeof d.open_issues_count === "number") setText("[data-gh-issues]", d.open_issues_count.toLocaleString());
+			if (typeof d.watchers_count === "number")   setText("[data-gh-watchers]", d.watchers_count.toLocaleString());
+			if (d.license && typeof d.license.spdx_id === "string") setText("[data-gh-license]", d.license.spdx_id);
+			if (typeof d.pushed_at === "string") setText("[data-gh-updated]", `last push · ${timeAgo(d.pushed_at)}`);
+		})
+		.catch(() => { /* silent */ });
+
+	// Recent commits
+	fetch(`https://api.github.com/repos/${REPO}/commits?per_page=4`)
+		.then(r => r.ok ? r.json() : null)
+		.then((commits: any[] | null) => {
+			const host = document.querySelector<HTMLElement>("[data-gh-commits]");
+			if (!host || !Array.isArray(commits) || commits.length === 0) return;
+			host.innerHTML = commits.map(c => {
+				const sha   = (c.sha || "").slice(0, 7);
+				const msg   = (c.commit?.message || "").split("\n")[0].slice(0, 72);
+				const url   = c.html_url || `https://github.com/${REPO}/commits`;
+				const iso   = c.commit?.author?.date || c.commit?.committer?.date;
+				const when  = iso ? timeAgo(iso) : "—";
+				return `
+					<li><a class="oss-commit" href="${url}" target="_blank" rel="noopener">
+						<span class="font-mono text-[11px] ink-3">${when}</span>
+						<span class="font-mono text-[12px] ink">${msg.replace(/</g, "&lt;")} <span class="sig-ok">${sha}</span></span>
+					</a></li>`;
+			}).join("");
+		})
+		.catch(() => { /* silent */ });
+
+	// Real contributors — avatars with link
+	fetch(`https://api.github.com/repos/${REPO}/contributors?per_page=24`)
+		.then(r => r.ok ? r.json() : null)
+		.then((list: any[] | null) => {
+			const host  = document.querySelector<HTMLElement>("[data-gh-contribs]");
+			const empty = document.querySelector<HTMLElement>("[data-gh-contribs-empty]");
+			if (!host || !Array.isArray(list) || list.length === 0) return;
+			empty?.remove();
+			host.innerHTML = list.map(c => `
+				<a class="oss-av" href="${c.html_url}" target="_blank" rel="noopener" title="${c.login} · ${c.contributions} commits" aria-label="${c.login}">
+					<img src="${c.avatar_url}&s=128" alt="${c.login}" width="56" height="56" loading="lazy" />
+				</a>
+			`).join("");
+		})
+		.catch(() => { /* silent */ });
+</script>
