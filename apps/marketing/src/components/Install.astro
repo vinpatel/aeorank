@@ -6,7 +6,7 @@ const tabs = [
 		id: "npx",
 		label: "npx",
 		title: "Scan from your terminal",
-		blurb: "Zero install. Zero account. Colored output with per-criterion scores and a diff of the 9 files you should add.",
+		blurb: "Zero install. Zero account. Zero API key. Colored output with per-criterion scores and the 9 fix files written locally. No upload, no vendor call.",
 		time: "~30s per scan",
 		code: `# one-off audit on any site
 $ npx aeorank-cli scan https://your-site.com
@@ -28,7 +28,7 @@ $ npx aeorank-cli scan https://your-site.com
 		id: "app",
 		label: "GitHub App",
 		title: "Install, then forget",
-		blurb: "One click. Zero YAML. Every pull request gets a Check Run with your AEO score. Block merges on regressions.",
+		blurb: "One click. Zero YAML. Every pull request gets a Check Run with the delta, the failing criteria, and a diff of the regenerated files. Block merges on AEO regressions — the way you already block on lint and tests.",
 		time: "~1 click · ~0 config",
 		code: `# Flow
 1.  Install AEOrank on your repo
@@ -51,7 +51,7 @@ $ npx aeorank-cli scan https://your-site.com
 		id: "action",
 		label: "GitHub Action",
 		title: "Full pipeline control",
-		blurb: "Pin a version, set thresholds, fail the build when AEO regresses. Score your site on every push.",
+		blurb: "Pin a version, set a fail-below threshold, commit the generated files back to your repo. AEO as code — the same way tests and coverage already work. No monitoring tool on the market does this.",
 		time: "~8 lines of YAML",
 		code: `# .github/workflows/aeorank.yml
 name: aeorank
@@ -88,7 +88,7 @@ jobs:
 				<p class="t-label">// three ways in</p>
 				<h2 class="t-h1 mt-2">Pick the surface that fits your team.</h2>
 				<p class="t-body mt-3 max-w-[58ch]">
-					Same scoring engine under all three. Same 36 checks. Same 9 generated files. Start with the one closest to where you already ship.
+					Same scoring engine under all three. Same 36 checks. Same 9 generated files. Pick the surface closest to where you already ship — AEOrank is the only AEO tool that treats CI as a first-class target instead of an afterthought.
 				</p>
 			</div>
 			<div class="section-meta">

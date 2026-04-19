@@ -38,7 +38,7 @@ const lines: Line[] = [
 				<p class="t-label">// live scan</p>
 				<h2 class="t-h1 mt-2">Watch an actual audit stream past.</h2>
 				<p class="t-body mt-3 max-w-[56ch]">
-					Below is a real aeorank-cli run — the same output you get in your terminal, your CI, or your GitHub check. No mocks, no abstraction. Each line is one deterministic criterion with a signed weight delta.
+					Below is a real aeorank-cli run — the same output you get in your terminal, your CI, or your GitHub check. No mocks, no LLM guesswork. Each line is one deterministic criterion with a signed weight delta. Same input, same score, every run.
 				</p>
 			</div>
 			<div class="section-meta">
@@ -101,7 +101,7 @@ const lines: Line[] = [
 				</header>
 				<h3 class="t-h3 mt-2">No LLM. No drift.</h3>
 				<p class="t-body mt-2">
-					Every check is a pure function of HTML, headers, and files. The same input produces the same score, run after run. Exactly what you want in CI.
+					Every check is a pure function of HTML, headers, and files. Tools that prompt an LLM to evaluate your site give a different score every run. AEOrank gives the same score every run — exactly what you want in CI.
 				</p>
 				<code class="mt-3 inline-block">assert.equal(scan(A), scan(A))</code>
 			</article>
@@ -112,7 +112,7 @@ const lines: Line[] = [
 				</header>
 				<h3 class="t-h3 mt-2">Every criterion is readable source.</h3>
 				<p class="t-body mt-2">
-					No proprietary black-box score. Each of the 36 checks is a small, tested function you can read, fork, or contribute to.
+					No proprietary black-box score. Each of the 36 checks is a small, tested function you can read, fork, or contribute to. No vendor can change your score by changing their model.
 				</p>
 				<code class="mt-3 inline-block">packages/core/src/checks/*.ts</code>
 			</article>
@@ -123,7 +123,7 @@ const lines: Line[] = [
 				</header>
 				<h3 class="t-h3 mt-2">Each failure ships with a fix.</h3>
 				<p class="t-body mt-2">
-					Failing the llms.txt check? The scanner also hands you the correct llms.txt for your site. 9 files, auto-generated on every run.
+					Other tools monitor — they tell you you're invisible and send a dashboard. AEOrank hands you the exact 9 files AI engines want, ready to drop into your site root. One command, not a roadmap.
 				</p>
 				<code class="mt-3 inline-block">./dist/llms.txt · ./dist/ai.txt · …</code>
 			</article>
