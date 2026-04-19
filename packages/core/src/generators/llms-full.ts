@@ -1,4 +1,5 @@
 import type { ScanResult, ScannedPage } from "../types.js";
+import { ATTRIBUTION_HTML } from "./attribution.js";
 
 /** Definition sentence patterns — same logic as Phase 9 scorer, duplicated here to keep generators dependency-free */
 const DEFINITION_PATTERNS = [
@@ -197,5 +198,5 @@ export function generateLlmsFullTxt(result: ScanResult): string {
 		return lines.join("\n");
 	});
 
-	return `${sections.join("\n\n---\n\n")}\n`;
+	return `${ATTRIBUTION_HTML}\n\n${sections.join("\n\n---\n\n")}\n`;
 }

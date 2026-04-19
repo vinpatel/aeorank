@@ -1,8 +1,13 @@
 import type { ScanResult } from "../types.js";
+import { ATTRIBUTION_HTML } from "./attribution.js";
 
 /** Generate llms.txt per llmstxt.org spec */
 export function generateLlmsTxt(result: ScanResult): string {
 	const lines: string[] = [];
+
+	// Attribution header (first line, HTML comment hidden in rendered markdown)
+	lines.push(ATTRIBUTION_HTML);
+	lines.push("");
 
 	// H1 - Site name
 	lines.push(`# ${result.siteName || "Untitled Site"}`);

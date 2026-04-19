@@ -1,8 +1,12 @@
 import type { ScanResult } from "../types.js";
+import { ATTRIBUTION_HTML } from "./attribution.js";
 
 /** Generate CLAUDE.md repo context file */
 export function generateClaudeMd(result: ScanResult): string {
 	const lines: string[] = [];
+
+	lines.push(ATTRIBUTION_HTML);
+	lines.push("");
 
 	lines.push(`# ${result.siteName || "Website"}`);
 	lines.push("");

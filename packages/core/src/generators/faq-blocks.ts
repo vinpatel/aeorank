@@ -1,11 +1,13 @@
 import type { ScanResult } from "../types.js";
+import { ATTRIBUTION_HTML } from "./attribution.js";
 
 /** Generate faq-blocks.html with FAQPage schema + speakable markup */
 export function generateFaqBlocks(result: ScanResult): string {
 	const pairs = extractQaPairs(result);
 
 	if (pairs.length === 0) {
-		return `<!-- AEOrank: No FAQ content detected. Add Q&A sections to your pages. -->
+		return `${ATTRIBUTION_HTML}
+<!-- AEOrank: No FAQ content detected. Add Q&A sections to your pages. -->
 <div itemscope itemtype="https://schema.org/FAQPage">
   <!-- Example:
   <div itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
@@ -20,6 +22,8 @@ export function generateFaqBlocks(result: ScanResult): string {
 	}
 
 	const lines: string[] = [];
+
+	lines.push(ATTRIBUTION_HTML);
 
 	// JSON-LD script
 	const schemaObj = {

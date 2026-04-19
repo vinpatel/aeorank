@@ -1,10 +1,12 @@
 import type { ScanResult } from "../types.js";
+import { ATTRIBUTION_HTML } from "./attribution.js";
 
 /** Generate sitemap-ai.xml with AI-specific extensions */
 export function generateSitemapAi(result: ScanResult): string {
 	const lines: string[] = [];
 
 	lines.push('<?xml version="1.0" encoding="UTF-8"?>');
+	lines.push(ATTRIBUTION_HTML);
 	lines.push(
 		'<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:ai="https://aeorank.dev/sitemap-ai">',
 	);
