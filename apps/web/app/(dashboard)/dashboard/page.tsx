@@ -86,12 +86,24 @@ export default async function DashboardPage() {
 
 	return (
 		<div className="page-container animate-fade-in">
-			<div className="mb-2">
-				<h1 className="heading-xl mb-1">Your sites</h1>
-				<p className="text-sm text-secondary">Add a site URL to scan its AEO score.</p>
+			<div className="rail" style={{ paddingTop: "4px", paddingBottom: "28px", marginBottom: "24px", borderBottom: "1px solid var(--rule)" }}>
+				<span className="rail-tick" style={{ top: 0 }}></span>
+				<span className="rail-coord" style={{ top: 0 }}>000</span>
+				<div style={{ display: "flex", alignItems: "end", justifyContent: "space-between", gap: "16px", flexWrap: "wrap" }}>
+					<div>
+						<p className="t-label">// your dashboard</p>
+						<h1 className="heading-xl mt-2 mb-1">Your sites</h1>
+						<p className="text-sm text-secondary">Add a site URL and we'll score it against 36 AEO criteria.</p>
+					</div>
+					<div className="section-meta">
+						<span>{sites.length}&nbsp;<b>sites</b></span>
+						<span>36&nbsp;<b>criteria</b></span>
+						<span>9&nbsp;<b>files</b></span>
+					</div>
+				</div>
 			</div>
 
-			<div style={{ margin: "24px 0 36px" }}>
+			<div style={{ marginBottom: "32px" }}>
 				<AddSiteForm />
 			</div>
 
