@@ -23,11 +23,12 @@ export default async function DashboardLayout({
 			<div className="mobile-header">
 				<div className="mobile-header-logo">
 					<svg width="24" height="24" viewBox="0 0 32 32" fill="none">
-						<rect width="32" height="32" rx="7" fill="#E8590C"/>
+						<rect width="32" height="32" rx="7" fill="#111111"/>
 						<path d="M8 22L13.5 10H18.5L24 22" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
 						<path d="M10.5 18H21.5" stroke="#fff" strokeWidth="2.5" strokeLinecap="round"/>
 					</svg>
 					<span className="mobile-header-logo-text">AEOrank</span>
+					<span className="brand-ver">app</span>
 				</div>
 				<div className="mobile-header-nav">
 					<Link href="/dashboard" className="mobile-nav-link">Dashboard</Link>
@@ -39,11 +40,12 @@ export default async function DashboardLayout({
 			<nav className="sidebar sidebar-desktop">
 				<div className="sidebar-logo">
 					<svg width="28" height="28" viewBox="0 0 32 32" fill="none">
-						<rect width="32" height="32" rx="7" fill="#E8590C"/>
+						<rect width="32" height="32" rx="7" fill="#111111"/>
 						<path d="M8 22L13.5 10H18.5L24 22" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
 						<path d="M10.5 18H21.5" stroke="#fff" strokeWidth="2.5" strokeLinecap="round"/>
 					</svg>
 					<span className="sidebar-logo-text">AEOrank</span>
+					<span className="brand-ver">app</span>
 				</div>
 
 				<div className="sidebar-nav">
