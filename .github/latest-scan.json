@@ -8039,9 +8039,9 @@
     "sitemapXml": null,
     "existingLlmsTxt": null,
     "platform": null,
-    "responseTimeMs": 2584
+    "responseTimeMs": 3066
   },
   "pagesScanned": 24,
-  "duration": 6781,
-  "scannedAt": "2026-04-18T15:08:28.543Z"
+  "duration": 7910,
+  "scannedAt": "2026-04-19T15:08:46.476Z"
 }
