@@ -1244,3 +1244,297 @@ body {
 
 .mt-0\.5 { margin-top: 2px; }
 .mb-1\.5 { margin-bottom: 6px; }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   MARKETING DESIGN VOCABULARY — full port from apps/marketing
+   Every primitive from the marketing site available here with the same names,
+   so dashboard components can use .t-h1, .btn-ink, .panel, .codeblock, etc.
+   ══════════════════════════════════════════════════════════════════════════ */
+
+/* ── Ink text utilities ─────────────────────────────────────── */
+.ink   { color: var(--ink); }
+.ink-2 { color: var(--ink-2); }
+.ink-3 { color: var(--ink-3); }
+
+/* ── Marketing typography scale ─────────────────────────────── */
+.t-display {
+	font-family: var(--font-display);
+	font-weight: 640;
+	font-size: clamp(2.25rem, 4.8vw, 3.75rem);
+	line-height: 0.98;
+	letter-spacing: -0.035em;
+}
+.t-h1 {
+	font-family: var(--font-display);
+	font-weight: 620;
+	font-size: clamp(1.75rem, 3.2vw, 2.25rem);
+	line-height: 1.05;
+	letter-spacing: -0.028em;
+}
+.t-h2 {
+	font-family: var(--font-display);
+	font-weight: 600;
+	font-size: clamp(1.25rem, 2vw, 1.5rem);
+	line-height: 1.2;
+	letter-spacing: -0.02em;
+}
+.t-h3 {
+	font-family: var(--font-display);
+	font-size: 1rem;
+	font-weight: 600;
+	line-height: 1.35;
+	letter-spacing: -0.012em;
+}
+.t-body {
+	font-size: 0.9375rem;
+	line-height: 1.65;
+	color: var(--ink-2);
+}
+.t-lead {
+	font-size: clamp(1rem, 1.15vw, 1.0625rem);
+	line-height: 1.6;
+	color: var(--ink-2);
+	letter-spacing: -0.003em;
+}
+.t-caption {
+	font-size: 0.8125rem;
+	line-height: 1.5;
+	color: var(--ink-3);
+}
+.t-mark {
+	font-family: var(--font-mono);
+	font-size: 0.6875rem;
+	letter-spacing: 0.05em;
+	color: var(--mark-ink);
+	background: var(--mark-fog);
+	border: 1px solid rgba(232,89,12,0.24);
+	padding: 2px 7px 1px;
+	border-radius: 3px;
+}
+
+/* ── Panels (paper surfaces) ────────────────────────────────── */
+.panel {
+	background: var(--page);
+	border: 1px solid var(--rule);
+	border-radius: var(--radius-md);
+}
+.panel-soft {
+	background: var(--paper-2);
+	border: 1px solid var(--rule);
+	border-radius: var(--radius-md);
+}
+.panel-inset {
+	background: #F9F7F1;
+	border: 1px solid var(--rule);
+	border-radius: var(--radius-sm);
+}
+
+/* ── Button aliases (marketing names map to existing button classes) ─── */
+.btn-ink {
+	background: var(--ink);
+	color: var(--paper);
+	border-color: var(--ink);
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	padding: 0 14px;
+	height: 36px;
+	font-size: 13.5px;
+	font-weight: 540;
+	font-family: inherit;
+	border: 1px solid var(--ink);
+	border-radius: var(--radius-md);
+	cursor: pointer;
+	white-space: nowrap;
+	text-decoration: none;
+	transition: background var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast);
+	line-height: 1;
+	letter-spacing: -0.003em;
+}
+.btn-ink:hover:not(:disabled) { background: #2A2A2A; border-color: #2A2A2A; transform: translateY(-1px); }
+.btn-ink:active:not(:disabled) { transform: translateY(0); }
+
+.btn-outline {
+	background: var(--page);
+	color: var(--ink);
+	border: 1px solid var(--rule-2);
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	padding: 0 14px;
+	height: 36px;
+	font-size: 13.5px;
+	font-weight: 540;
+	font-family: inherit;
+	border-radius: var(--radius-md);
+	cursor: pointer;
+	white-space: nowrap;
+	text-decoration: none;
+	transition: background var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast);
+	line-height: 1;
+	letter-spacing: -0.003em;
+}
+.btn-outline:hover:not(:disabled) { background: #FCFBF8; border-color: var(--rule-3); transform: translateY(-1px); }
+.btn-outline:active:not(:disabled) { transform: translateY(0); }
+
+/* ── Code blocks with syntax token colors ───────────────────── */
+.codeblock {
+	font-family: var(--font-mono);
+	font-size: 0.8125rem;
+	line-height: 1.65;
+	background: #FBFAF6;
+	border: 1px solid var(--rule);
+	border-radius: var(--radius-sm);
+	padding: 14px 16px;
+	color: var(--ink);
+	overflow-x: auto;
+	white-space: pre;
+	tab-size: 2;
+}
+.codeblock-dark {
+	background: #141416;
+	color: #E6E6E6;
+	border-color: #2A2A2C;
+}
+.tok-k { color: #B8251E; font-weight: 500; }
+.tok-s { color: #0F7D4B; }
+.tok-n { color: #B25B00; }
+.tok-c { color: var(--ink-3); font-style: italic; }
+.tok-p { color: var(--ink-2); }
+.tok-d { color: var(--ink); font-weight: 500; }
+.codeblock-dark .tok-k { color: #F97583; }
+.codeblock-dark .tok-s { color: #9ECBFF; }
+.codeblock-dark .tok-n { color: #FFAB70; }
+.codeblock-dark .tok-c { color: #6A737D; }
+.codeblock-dark .tok-d { color: #E1E4E8; }
+
+/* Inline <code> — unify with marketing */
+code {
+	font-family: var(--font-mono);
+	font-size: 0.85em;
+	background: var(--paper-2);
+	border: 1px solid var(--rule);
+	padding: 1px 5px;
+	border-radius: 3px;
+	color: var(--ink);
+}
+
+/* ── Prose-style inline link ────────────────────────────────── */
+a.ilink,
+.ilink {
+	color: var(--ink);
+	text-decoration: underline;
+	text-decoration-color: var(--rule-2);
+	text-underline-offset: 3px;
+	transition: text-decoration-color var(--transition-fast);
+}
+a.ilink:hover,
+.ilink:hover { text-decoration-color: var(--ink); }
+
+/* ── Container widths ───────────────────────────────────────── */
+.wrap {
+	width: 100%;
+	max-width: 1240px;
+	margin: 0 auto;
+	padding-left: clamp(1rem, 3vw, 2rem);
+	padding-right: clamp(1rem, 3vw, 2rem);
+}
+.wrap-tight { max-width: 980px; }
+
+/* ── Brand version badge (sits next to wordmark) ───────────── */
+.brand-ver {
+	font-family: var(--font-mono);
+	font-size: 10px;
+	color: var(--ink-3);
+	border: 1px solid var(--rule-2);
+	border-radius: 3px;
+	padding: 1px 5px 0;
+	letter-spacing: 0.04em;
+	text-transform: lowercase;
+	line-height: 1.4;
+}
+
+/* ── Star pill (GitHub count) ───────────────────────────────── */
+.star-pill {
+	display: inline-flex;
+	align-items: stretch;
+	border: 1px solid var(--rule-2);
+	border-radius: var(--radius-sm);
+	overflow: hidden;
+	background: var(--page);
+	font-family: var(--font-mono);
+	font-size: 12px;
+	line-height: 1;
+	text-decoration: none;
+	color: var(--ink);
+	transition: border-color var(--transition-fast), transform var(--transition-fast);
+}
+.star-pill:hover { border-color: var(--ink); transform: translateY(-1px); }
+.star-pill__label {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	padding: 6px 10px;
+	background: var(--paper-2);
+	border-right: 1px solid var(--rule-2);
+	color: var(--ink-2);
+}
+.star-pill__count {
+	display: inline-flex;
+	align-items: center;
+	padding: 6px 10px;
+	font-weight: 600;
+	color: var(--ink);
+	letter-spacing: 0.02em;
+}
+
+/* ── Marketing card aliases / alternative card styles ───────── */
+.card-glass {
+	background: rgba(255,255,255,0.55);
+	border: 1px solid var(--rule);
+	border-radius: var(--radius-md);
+	backdrop-filter: blur(10px);
+	-webkit-backdrop-filter: blur(10px);
+	position: relative;
+}
+
+/* ── Marketing animation classes ────────────────────────────── */
+@keyframes rise {
+	from { opacity: 0; transform: translateY(10px); }
+	to   { opacity: 1; transform: translateY(0); }
+}
+.rise { animation: rise 600ms cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+.d-1 { animation-delay: 60ms; }
+.d-2 { animation-delay: 120ms; }
+.d-3 { animation-delay: 180ms; }
+.d-4 { animation-delay: 240ms; }
+.d-5 { animation-delay: 300ms; }
+
+@keyframes softPulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+.animate-soft-pulse { animation: softPulse 2.4s ease-in-out infinite; }
+
+/* ── Utility extensions ─────────────────────────────────────── */
+.max-w-xs { max-width: 320px; }
+.max-w-sm { max-width: 480px; }
+.max-w-md { max-width: 640px; }
+.max-w-lg { max-width: 800px; }
+.rounded-sm { border-radius: var(--radius-sm); }
+.rounded-md { border-radius: var(--radius-md); }
+.rounded-lg { border-radius: var(--radius-lg); }
+.border-rule { border: 1px solid var(--rule); }
+.border-rule-2 { border: 1px solid var(--rule-2); }
+.bg-paper { background: var(--paper); }
+.bg-paper-2 { background: var(--paper-2); }
+.bg-page { background: var(--page); }
+.bg-ink { background: var(--ink); color: var(--paper); }
+
+/* ── Grid helpers ───────────────────────────────────────────── */
+.grid { display: grid; }
+.grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+@media (max-width: 768px) {
+	.grid-cols-md-1 { grid-template-columns: 1fr; }
+}
