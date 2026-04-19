@@ -1,101 +1,94 @@
 ---
-interface Props {
-	route?: string;
-}
-const { route = "/ inspector / home" } = Astro.props;
+// Nav — V1 layout structure, adapted to the v2 light canvas.
+// No scanbar, no mono route crumb, no overloaded link list.
 ---
 
 <nav id="site-nav" class="nav" aria-label="Primary">
-	<div class="wrap nav__inner">
+	<div class="nav__inner">
 
-		<!-- Left: wordmark + route breadcrumb -->
-		<div class="nav__left">
-			<a href="/" class="nav__mark" aria-label="AEOrank home">
-				<span class="nav__logo" aria-hidden="true">
-					<svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-						<!-- Abstract "AEO" in a grid — bespoke mark, not a stock logo -->
-						<rect x="1" y="1" width="22" height="22" rx="2" fill="none" stroke="#111" stroke-width="1.4"/>
-						<path d="M5 17 L8 7 L11 17" stroke="#111" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-						<path d="M6 14 H10" stroke="#111" stroke-width="1.6" stroke-linecap="round"/>
-						<circle cx="17" cy="12" r="3" stroke="#111" stroke-width="1.6" fill="none"/>
-						<path d="M17 12 L20 15" stroke="#E8590C" stroke-width="1.8" stroke-linecap="round"/>
-					</svg>
-				</span>
-				<span class="nav__word">AEOrank</span>
-				<span class="nav__ver" aria-label="version">v2</span>
-			</a>
+		<!-- Wordmark -->
+		<a href="/" class="nav__brand" aria-label="AEOrank home">
+			<svg width="26" height="26" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+				<rect width="32" height="32" rx="7" fill="#111111"/>
+				<path d="M8 22L13.5 10H18.5L24 22" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+				<path d="M10.5 18H21.5" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/>
+			</svg>
+			<span class="nav__word">AEOrank</span>
+		</a>
 
-			<span class="nav__sep" aria-hidden="true"></span>
-
-			<span class="nav__crumb" aria-hidden="true">{route}</span>
+		<!-- Desktop links -->
+		<div class="nav__links">
+			<a href="#anatomy" class="nav__link" data-section="anatomy">How It Works</a>
+			<a href="#files" class="nav__link" data-section="files">Features</a>
+			<a href="#pricing" class="nav__link" data-section="pricing">Pricing</a>
+			<a href="/scoreboard" class="nav__link">Scoreboard</a>
+			<a href="https://docs.aeorank.dev" class="nav__link" target="_blank" rel="noopener">Docs</a>
 		</div>
 
-		<!-- Center: inline links -->
-		<div class="nav__center">
-			<a href="#hero"         class="nav__link" data-sec="hero">hero</a>
-			<a href="#scan"         class="nav__link" data-sec="scan">scan</a>
-			<a href="#anatomy"      class="nav__link" data-sec="anatomy">anatomy</a>
-			<a href="#files"        class="nav__link" data-sec="files">files</a>
-			<a href="#open-source"  class="nav__link" data-sec="open-source">open-source</a>
-			<a href="#install"      class="nav__link" data-sec="install">install</a>
-			<a href="#pricing"      class="nav__link" data-sec="pricing">pricing</a>
-		</div>
-
-		<!-- Right: actions -->
-		<div class="nav__right">
-			<a href="https://docs.aeorank.dev" class="btn btn-ghost btn-sm" target="_blank" rel="noopener">docs&#8599;</a>
-			<a href="https://app.aeorank.dev/sign-in" class="btn btn-ghost btn-sm">sign in</a>
-
-			<a href="https://github.com/vinpatel/aeorank" class="star-pill" target="_blank" rel="noopener" aria-label="Star AEOrank on GitHub">
-				<span class="star-pill__label">
-					<svg width="11" height="11" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
-						<path d="M8 .25l2.39 4.84L15.75 6l-3.88 3.78.92 5.34L8 12.6l-4.79 2.52.92-5.34L.25 6l5.36-.91L8 .25z"/>
-					</svg>
-					<span>star</span>
-				</span>
-				<span class="star-pill__count" data-gh-stars>·&nbsp;2,847</span>
+		<!-- Right actions -->
+		<div class="nav__actions">
+			<a
+				href="https://github.com/vinpatel/aeorank"
+				class="nav__star"
+				target="_blank"
+				rel="noopener"
+				aria-label="Star AEOrank on GitHub"
+			>
+				<svg width="13" height="13" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+					<path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+				</svg>
+				<span class="nav__star-label">Star</span>
+				<span class="nav__star-count" data-gh-stars aria-live="polite"></span>
 			</a>
-
-			<a href="https://app.aeorank.dev/sign-up" class="btn btn-ink btn-sm">get score&nbsp;→</a>
+			<a href="https://app.aeorank.dev/sign-in" class="nav__link nav__link--subtle">Sign In</a>
+			<a href="https://app.aeorank.dev/sign-up" class="nav__cta">
+				Get AEO Score
+				<svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+					<path d="M2 6h8M6.5 2.5L10 6l-3.5 3.5"/>
+				</svg>
+			</a>
 
 			<!-- Mobile hamburger -->
-			<button id="nav-toggle" class="nav__toggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav-mobile">
-				<svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="#111" stroke-width="1.4" aria-hidden="true">
+			<button
+				id="nav-toggle"
+				class="nav__burger"
+				aria-label="Open menu"
+				aria-expanded="false"
+				aria-controls="nav-mobile"
+			>
+				<svg id="burger-icon" width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
 					<path d="M2 5h14M2 9h14M2 13h14"/>
+				</svg>
+				<svg id="close-icon" class="hidden" width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
+					<path d="M4 4l10 10M14 4L4 14"/>
 				</svg>
 			</button>
 		</div>
 	</div>
 
-	<!-- Hair-rule + scan indicator -->
-	<div class="nav__scanbar" aria-hidden="true">
-		<div class="wrap nav__scanbar-inner">
-			<span class="font-mono ink-3 tracking-[0.05em] text-[10px]">SCANNING</span>
-			<span class="nav__scanbar-track"><span class="nav__scanbar-dot"></span></span>
-			<span class="font-mono ink-3 tracking-[0.05em] text-[10px]" data-live-score>LIVE · 76/100</span>
-		</div>
-	</div>
-
 	<!-- Mobile menu -->
 	<div id="nav-mobile" class="nav__mobile" aria-hidden="true">
-		<div class="wrap nav__mobile-inner">
-			<a href="#scan" class="nav__mlink">scan</a>
-			<a href="#anatomy" class="nav__mlink">anatomy</a>
-			<a href="#files" class="nav__mlink">files</a>
-			<a href="#open-source" class="nav__mlink">open-source</a>
-			<a href="#install" class="nav__mlink">install</a>
-			<a href="#pricing" class="nav__mlink">pricing</a>
-			<a href="https://docs.aeorank.dev" class="nav__mlink">docs ↗</a>
-			<hr class="hr-hair" />
-			<div class="flex gap-2 pt-3">
-				<a href="https://github.com/vinpatel/aeorank" class="btn btn-outline w-full justify-center">star on github</a>
-				<a href="https://app.aeorank.dev/sign-up" class="btn btn-ink w-full justify-center">get score →</a>
+		<div class="nav__mobile-inner">
+			<a href="#anatomy" class="nav__mlink" data-closes-menu>How It Works</a>
+			<a href="#files" class="nav__mlink" data-closes-menu>Features</a>
+			<a href="#pricing" class="nav__mlink" data-closes-menu>Pricing</a>
+			<a href="/scoreboard" class="nav__mlink">Scoreboard</a>
+			<a href="https://docs.aeorank.dev" class="nav__mlink" target="_blank" rel="noopener">Docs</a>
+			<hr class="hr-hair my-2" />
+			<div class="flex gap-2">
+				<a href="https://github.com/vinpatel/aeorank" class="btn btn-outline flex-1 justify-center" target="_blank" rel="noopener">
+					<svg width="13" height="13" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+					Star on GitHub
+				</a>
+				<a href="https://app.aeorank.dev/sign-up" class="btn btn-ink flex-1 justify-center">
+					Get AEO Score
+				</a>
 			</div>
 		</div>
 	</div>
 </nav>
 
-<!-- Spacer -->
+<!-- Spacer so content isn't hidden under fixed nav -->
 <div style="height: 64px" aria-hidden="true"></div>
 
 <style>
@@ -103,231 +96,232 @@ const { route = "/ inspector / home" } = Astro.props;
 		position: fixed;
 		top: 0; left: 0; right: 0;
 		z-index: 60;
-		background: rgba(246,244,238,0.86);
-		backdrop-filter: saturate(140%) blur(10px);
-		-webkit-backdrop-filter: saturate(140%) blur(10px);
-		border-bottom: 1px solid var(--color-rule);
+		transition: background 200ms ease, border-color 200ms ease, box-shadow 200ms ease;
+		background: transparent;
+		border-bottom: 1px solid transparent;
+	}
+	.nav.is-scrolled {
+		background: rgba(246,244,238,0.88);
+		backdrop-filter: saturate(140%) blur(14px);
+		-webkit-backdrop-filter: saturate(140%) blur(14px);
+		border-bottom-color: var(--color-rule);
 	}
 
 	.nav__inner {
-		display: grid;
-		grid-template-columns: auto 1fr auto;
-		align-items: center;
-		height: 48px;
-		gap: 1rem;
-	}
-
-	/* Left cluster */
-	.nav__left {
 		display: flex;
 		align-items: center;
-		gap: 12px;
-	}
-	.nav__mark {
-		display: inline-flex;
-		align-items: center;
-		gap: 9px;
-		text-decoration: none;
-		color: var(--color-ink);
-	}
-	.nav__logo {
-		display: inline-flex;
-		width: 24px;
-		height: 24px;
-		align-items: center;
-		justify-content: center;
-	}
-	.nav__word {
-		font-size: 14px;
-		font-weight: 620;
-		letter-spacing: -0.018em;
-	}
-	.nav__ver {
-		font-family: var(--font-mono);
-		font-size: 10px;
-		color: var(--color-ink-3);
-		border: 1px solid var(--color-rule-2);
-		border-radius: 3px;
-		padding: 1px 5px 0;
-		letter-spacing: 0.02em;
-	}
-	.nav__sep {
-		width: 1px;
-		height: 18px;
-		background: var(--color-rule-2);
-	}
-	.nav__crumb {
-		font-family: var(--font-mono);
-		font-size: 11px;
-		color: var(--color-ink-3);
-		letter-spacing: 0.02em;
+		justify-content: space-between;
+		gap: 1rem;
+		height: 64px;
+		max-width: 1240px;
+		margin: 0 auto;
+		padding: 0 clamp(1rem, 3vw, 2rem);
 	}
 
-	/* Center */
-	.nav__center {
+	/* Brand */
+	.nav__brand {
+		display: inline-flex;
+		align-items: center;
+		gap: 10px;
+		text-decoration: none;
+		color: var(--color-ink);
+		flex-shrink: 0;
+	}
+	.nav__word {
+		font-size: 15px;
+		font-weight: 700;
+		letter-spacing: -0.018em;
+	}
+
+	/* Desktop links */
+	.nav__links {
 		display: none;
-		justify-content: center;
+		align-items: center;
 		gap: 2px;
 	}
 	.nav__link {
 		display: inline-flex;
 		align-items: center;
-		height: 28px;
-		padding: 0 9px;
-		font-family: var(--font-mono);
-		font-size: 12px;
-		color: var(--color-ink-3);
+		padding: 6px 11px;
+		font-size: 14px;
+		font-weight: 450;
+		color: var(--color-ink-2);
 		text-decoration: none;
-		border-radius: 4px;
-		transition: color 120ms ease, background 120ms ease;
-		letter-spacing: 0.01em;
+		border-radius: 6px;
+		transition: color 140ms ease, background 140ms ease;
 	}
 	.nav__link:hover { color: var(--color-ink); background: rgba(17,17,17,0.045); }
 	.nav__link.is-active {
 		color: var(--color-ink);
-		background: var(--color-paper-2);
-		box-shadow: inset 0 -1px 0 var(--color-mark);
+		background: rgba(232,89,12,0.09);
 	}
 
 	/* Right cluster */
-	.nav__right {
+	.nav__actions {
 		display: flex;
 		align-items: center;
 		gap: 6px;
-		justify-self: end;
 	}
-	.nav__right .btn-sm { height: 30px; }
+	.nav__link--subtle { padding: 6px 8px; color: var(--color-ink-3); }
+	.nav__link--subtle:hover { color: var(--color-ink); background: transparent; }
 
-	.nav__toggle {
+	/* Star pill */
+	.nav__star {
+		display: inline-flex;
+		align-items: center;
+		gap: 6px;
+		height: 32px;
+		padding: 0 11px;
+		font-size: 13px;
+		font-weight: 500;
+		color: var(--color-ink);
+		background: var(--color-page);
+		border: 1px solid var(--color-rule-2);
+		border-radius: 7px;
+		text-decoration: none;
+		transition: border-color 140ms ease, background 140ms ease, transform 140ms ease;
+	}
+	.nav__star:hover {
+		border-color: var(--color-ink);
+		background: #FCFBF8;
+		transform: translateY(-1px);
+	}
+	.nav__star-count {
+		font-family: var(--font-mono);
+		font-size: 12px;
+		color: var(--color-ink-2);
+		padding-left: 7px;
+		margin-left: 1px;
+		border-left: 1px solid var(--color-rule-2);
+		/* No content until fetched */
+		min-width: 0;
+	}
+	.nav__star-count:empty::before { content: none; }
+	.nav__star-count:not(:empty) { min-width: 22px; text-align: center; }
+
+	/* Primary CTA */
+	.nav__cta {
+		display: inline-flex;
+		align-items: center;
+		gap: 6px;
+		height: 32px;
+		padding: 0 13px;
+		font-size: 13px;
+		font-weight: 600;
+		color: var(--color-paper);
+		background: var(--color-ink);
+		border: 1px solid var(--color-ink);
+		border-radius: 7px;
+		text-decoration: none;
+		transition: background 140ms ease, border-color 140ms ease, transform 140ms ease, box-shadow 140ms ease;
+	}
+	.nav__cta:hover {
+		background: #2A2A2A;
+		transform: translateY(-1px);
+		box-shadow: 0 6px 18px rgba(17,17,17,0.18);
+	}
+	.nav__cta:active { transform: translateY(0); }
+
+	/* Mobile burger */
+	.nav__burger {
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
-		width: 32px;
-		height: 30px;
+		width: 34px; height: 32px;
 		border: 1px solid var(--color-rule-2);
 		background: var(--color-page);
-		border-radius: 4px;
+		border-radius: 6px;
+		color: var(--color-ink);
 		cursor: pointer;
 	}
 
-	/* Scanbar */
-	.nav__scanbar {
-		display: none;
-		border-top: 1px solid var(--color-rule);
-		background: rgba(239,236,228,0.55);
-	}
-	.nav__scanbar-inner {
-		display: flex;
-		align-items: center;
-		gap: 12px;
-		height: 22px;
-	}
-	.nav__scanbar-track {
-		flex: 1;
-		height: 2px;
-		background:
-			repeating-linear-gradient(to right, var(--color-rule) 0, var(--color-rule) 3px, transparent 3px, transparent 7px);
-		position: relative;
-		border-radius: 1px;
-	}
-	.nav__scanbar-dot {
-		position: absolute;
-		top: -2px;
-		left: 0;
-		width: 8px;
-		height: 6px;
-		background: var(--color-mark);
-		box-shadow: 0 0 0 3px rgba(232,89,12,0.14);
-		border-radius: 1px;
-		animation: scan-travel 9s ease-in-out infinite;
-	}
-	@keyframes scan-travel {
-		0%, 100% { left: 0; }
-		50%      { left: calc(100% - 8px); }
-	}
-
-	/* Mobile menu */
+	/* Mobile sheet */
 	.nav__mobile {
-		display: none;
-		border-top: 1px solid var(--color-rule);
-		background: var(--color-paper);
+		overflow: hidden;
+		max-height: 0;
+		transition: max-height 300ms cubic-bezier(0.16, 1, 0.3, 1);
 	}
-	.nav__mobile.is-open { display: block; }
+	.nav__mobile.is-open {
+		max-height: 420px;
+		background: rgba(246,244,238,0.98);
+		backdrop-filter: blur(14px);
+		border-top: 1px solid var(--color-rule);
+	}
 	.nav__mobile-inner {
+		padding: 14px clamp(1rem, 3vw, 2rem) 18px;
 		display: flex;
 		flex-direction: column;
 		gap: 2px;
-		padding: 14px 0 18px;
 	}
 	.nav__mlink {
-		font-family: var(--font-mono);
-		font-size: 14px;
+		font-size: 15px;
 		color: var(--color-ink-2);
 		text-decoration: none;
 		padding: 10px 0;
 	}
 	.nav__mlink:hover { color: var(--color-ink); }
 
+	.hidden { display: none; }
+
 	@media (min-width: 900px) {
-		.nav__center { display: inline-flex; }
-		.nav__toggle { display: none; }
-		.nav__scanbar { display: block; }
+		.nav__links { display: inline-flex; }
+		.nav__burger { display: none; }
 	}
 	@media (max-width: 899px) {
-		.nav__right .btn:not(.btn-ink),
-		.nav__right .star-pill { display: none; }
-		.nav__crumb { display: none; }
+		.nav__link--subtle { display: none; }
+		.nav__star { display: none; }
+		.nav__cta { display: none; }
 	}
 </style>
 
 <script>
-	// Active section highlight — monospace route switches as sections cross viewport
-	const links = document.querySelectorAll<HTMLAnchorElement>('.nav__link[data-sec]');
-	const ids = Array.from(links).map(l => l.dataset.sec!);
-	const setActive = (id: string) => {
-		links.forEach(l => l.classList.toggle('is-active', l.dataset.sec === id));
-	};
-	const secObserver = new IntersectionObserver(
-		(entries) => {
-			entries.forEach(e => {
-				if (e.isIntersecting) setActive((e.target as HTMLElement).id);
-			});
-		},
-		{ rootMargin: '-32% 0px -60% 0px', threshold: 0 }
-	);
-	ids.forEach(id => {
-		const el = document.getElementById(id);
-		if (el) secObserver.observe(el);
+	const nav = document.getElementById('site-nav');
+	const onScroll = () => nav?.classList.toggle('is-scrolled', window.scrollY > 12);
+	window.addEventListener('scroll', onScroll, { passive: true });
+	onScroll();
+
+	// Active section highlight
+	const links = document.querySelectorAll<HTMLAnchorElement>('.nav__link[data-section]');
+	const observer = new IntersectionObserver((entries) => {
+		entries.forEach(e => {
+			if (e.isIntersecting) {
+				const id = (e.target as HTMLElement).id;
+				links.forEach(l => l.classList.toggle('is-active', l.dataset.section === id));
+			}
+		});
+	}, { rootMargin: '-32% 0px -60% 0px', threshold: 0 });
+	links.forEach(l => {
+		const el = document.getElementById(l.dataset.section!);
+		if (el) observer.observe(el);
 	});
 
 	// Mobile toggle
 	const toggle = document.getElementById('nav-toggle');
 	const mobile = document.getElementById('nav-mobile');
-	toggle?.addEventListener('click', () => {
-		const open = mobile?.classList.toggle('is-open');
-		toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+	const burger = document.getElementById('burger-icon');
+	const close  = document.getElementById('close-icon');
+
+	const setMenu = (open: boolean) => {
+		mobile?.classList.toggle('is-open', open);
 		mobile?.setAttribute('aria-hidden', open ? 'false' : 'true');
-	});
+		toggle?.setAttribute('aria-expanded', open ? 'true' : 'false');
+		burger?.classList.toggle('hidden', open);
+		close?.classList.toggle('hidden', !open);
+	};
+	toggle?.addEventListener('click', () => setMenu(!mobile?.classList.contains('is-open')));
+	document.querySelectorAll('[data-closes-menu]').forEach(el => el.addEventListener('click', () => setMenu(false)));
+	window.addEventListener('resize', () => { if (window.innerWidth >= 900) setMenu(false); });
 
-	// Live score ticker — tiny micro-interaction in the scanbar
-	const live = document.querySelector<HTMLElement>('[data-live-score]');
-	if (live) {
-		const scores = [76, 77, 76, 78, 77, 79, 78, 80, 79, 81];
-		let i = 0;
-		setInterval(() => {
-			live.textContent = `LIVE · ${scores[i % scores.length]}/100`;
-			i++;
-		}, 2400);
-	}
-
-	// GitHub stars — try fetching real count, else keep placeholder
-	const starsEl = document.querySelector<HTMLElement>('[data-gh-stars]');
-	if (starsEl) {
+	// Live GitHub star count — fetched, no fallback number.
+	// If the fetch fails, the slot stays empty; no false claim is made.
+	const starEls = document.querySelectorAll<HTMLElement>('[data-gh-stars]');
+	if (starEls.length) {
 		fetch('https://api.github.com/repos/vinpatel/aeorank')
 			.then(r => r.ok ? r.json() : null)
 			.then(d => {
 				if (d && typeof d.stargazers_count === 'number') {
-					starsEl.textContent = `· ${d.stargazers_count.toLocaleString()}`;
+					const n = d.stargazers_count.toLocaleString();
+					starEls.forEach(el => { el.textContent = n; });
 				}
 			})
 			.catch(() => { /* silent */ });
