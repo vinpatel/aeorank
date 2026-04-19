@@ -1,28 +1,28 @@
 ---
 import Base from "../layouts/Base.astro";
 import Hero from "../components/Hero.astro";
-import HowItWorks from "../components/HowItWorks.astro";
-import AudienceSections from "../components/AudienceSections.astro";
-import ScoringExplainer from "../components/ScoringExplainer.astro";
-import Features from "../components/Features.astro";
-import Integrations from "../components/Integrations.astro";
-import FilesList from "../components/FilesList.astro";
-import Frameworks from "../components/Frameworks.astro";
+import LiveScan from "../components/LiveScan.astro";
+import Anatomy from "../components/Anatomy.astro";
+import Files from "../components/Files.astro";
+import OpenSource from "../components/OpenSource.astro";
+import Install from "../components/Install.astro";
+import Leaderboard from "../components/Leaderboard.astro";
 import Pricing from "../components/Pricing.astro";
 import FAQ from "../components/FAQ.astro";
-import CTASection from "../components/CTASection.astro";
 ---
 
-<Base title="AEOrank — AI Visibility Scoring for ChatGPT, Perplexity, Claude, Gemini">
+<Base
+	title="AEOrank — the open-source AEO toolkit"
+	description="Score, fix, and monitor your AI visibility across ChatGPT, Perplexity, Claude, and Gemini. 36 deterministic checks, 9 generated files, MIT licensed."
+	route="/ inspector / home"
+>
 	<Hero />
-	<HowItWorks />
-	<AudienceSections />
-	<ScoringExplainer />
-	<Features />
-	<Integrations />
-	<FilesList />
-	<Frameworks />
+	<LiveScan />
+	<Anatomy />
+	<Files />
+	<OpenSource />
+	<Install />
+	<Leaderboard />
 	<Pricing />
 	<FAQ />
-	<CTASection />
 </Base>

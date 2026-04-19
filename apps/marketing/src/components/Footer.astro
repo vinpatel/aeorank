@@ -1,172 +1,298 @@
 ---
+// Footer — treated as the "session end" of an inspector run
+// Final score card → final CTA → site map.
+
+const nowIso = new Date().toISOString();
 ---
-<footer class="border-t border-border">
-	<!-- Main footer grid -->
-	<div class="px-6 py-16 md:py-20 mx-auto max-w-5xl">
-		<div class="grid md:grid-cols-[1.5fr_1fr_1fr_1fr] gap-12 md:gap-8">
 
-			<!-- Brand column -->
-			<div>
-				<a href="/" class="inline-flex items-center gap-2.5 mb-5">
-					<svg width="28" height="28" viewBox="0 0 32 32" fill="none">
-						<rect width="32" height="32" rx="7" fill="#E8590C"/>
-						<path d="M8 22L13.5 10H18.5L24 22" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-						<path d="M10.5 18H21.5" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/>
-					</svg>
-					<span class="text-base font-bold tracking-tight text-text">AEOrank</span>
-				</a>
-				<p class="text-sm text-text-muted leading-relaxed max-w-[210px]">
-					Open source AI visibility scoring. Know your score. Fix what's broken. Ship with confidence.
-				</p>
+<footer id="footer" class="footer">
 
-				<!-- Social icons -->
-				<div class="flex items-center gap-2.5 mt-6">
-					<a href="https://github.com/vinpatel/aeorank" target="_blank" rel="noopener noreferrer" class="footer-social" aria-label="GitHub">
-						<svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-					</a>
-					<a href="https://twitter.com/aeorank" target="_blank" rel="noopener noreferrer" class="footer-social" aria-label="Twitter / X">
-						<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-					</a>
-					<a href="https://discord.gg/aeorank" target="_blank" rel="noopener noreferrer" class="footer-social" aria-label="Discord">
-						<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057.1 18.08.11 18.1.14 18.11a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
-					</a>
-				</div>
+	<!-- CTA block — the capstone star push -->
+	<div class="footer-cta">
+		<div class="wrap rail">
+			<span class="rail-tick" style="top:0"></span>
+			<span class="rail-coord" style="top:0">END</span>
 
-				<!-- MIT badge -->
-				<div class="mt-5">
-					<span class="inline-flex items-center gap-1.5 text-xs text-text-muted bg-white/[0.04] border border-white/[0.07] rounded-full px-3 py-1">
-						<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-						MIT Licensed CLI &middot; Plans from $0/mo
-					</span>
-				</div>
-			</div>
+			<div class="footer-cta__grid">
+				<div>
+					<p class="t-label">// scan complete</p>
+					<h2 class="t-h1 mt-2">
+						Score your site.<br/>
+						<span class="font-serif">Star the project.</span>
+					</h2>
+					<p class="t-body mt-3 max-w-[54ch]">
+						Took 30 seconds to find 9 broken signals. Took an afternoon to fix all 9. Takes one click to help the next team find us.
+					</p>
 
-			<!-- Product links -->
-			<div>
-				<p class="footer-heading">Product</p>
-				<ul class="space-y-2.5 mt-4">
-					<li><a href="#how-it-works" class="footer-link">How It Works</a></li>
-					<li><a href="#scoring" class="footer-link">Scoring Criteria</a></li>
-					<li><a href="#files" class="footer-link">Generated Files</a></li>
-					<li><a href="/scoreboard" class="footer-link">Scoreboard</a></li>
-					<li><a href="#frameworks" class="footer-link">Integrations</a></li>
-					<li><a href="#pricing" class="footer-link">Pricing</a></li>
-					<li><a href="https://app.aeorank.dev" class="footer-link">Dashboard</a></li>
-				</ul>
-			</div>
-
-			<!-- Developers links -->
-			<div>
-				<p class="footer-heading">Developers</p>
-				<ul class="space-y-2.5 mt-4">
-					<li><a href="https://docs.aeorank.dev" class="footer-link">Documentation</a></li>
-					<li><a href="https://docs.aeorank.dev/getting-started" class="footer-link">Quick Start</a></li>
-					<li><a href="https://github.com/apps/aeorank" class="footer-link">GitHub App</a></li>
-					<li><a href="https://github.com/marketplace/actions/aeorank-aeo-scanner" class="footer-link">GitHub Action</a></li>
-					<li><a href="https://docs.aeorank.dev/plugins" class="footer-link">Framework Plugins</a></li>
-					<li>
-						<a href="https://github.com/vinpatel/aeorank" class="footer-link inline-flex items-center gap-1" target="_blank" rel="noopener noreferrer">
-							GitHub
-							<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+					<div class="footer-cta__btns">
+						<a href="https://github.com/vinpatel/aeorank" class="btn btn-ink btn-lg" target="_blank" rel="noopener">
+							<svg width="13" height="13" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25l2.39 4.84L15.75 6l-3.88 3.78.92 5.34L8 12.6l-4.79 2.52.92-5.34L.25 6l5.36-.91L8 .25z"/></svg>
+							Star on GitHub
+							<span class="font-mono text-[11px] opacity-70 ml-1" data-gh-stars>· 2,847</span>
 						</a>
-					</li>
-				</ul>
-			</div>
-
-			<!-- Company + mini CTA -->
-			<div>
-				<p class="footer-heading">Company</p>
-				<ul class="space-y-2.5 mt-4 mb-8">
-					<li><a href="/privacy" class="footer-link">Privacy</a></li>
-					<li><a href="/scoreboard" class="footer-link">Industry Report</a></li>
-					<li><a href="mailto:vin@aeorank.dev" class="footer-link">Contact</a></li>
-				</ul>
-
-				<!-- Mini CTA card -->
-				<div class="footer-cta">
-					<p class="text-xs font-semibold text-text mb-1">Score your site free</p>
-					<p class="text-xs text-text-muted mb-3 leading-relaxed">No account. No card. 30 seconds.</p>
-					<a href="https://app.aeorank.dev/sign-up" class="btn-primary !py-2 !px-4 !text-xs w-full justify-center">
-						Get Free Score
-						<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-					</a>
+						<a href="https://app.aeorank.dev/sign-up" class="btn btn-outline btn-lg">
+							Scan my site &nbsp;→
+						</a>
+					</div>
 				</div>
-			</div>
 
+				<!-- Receipt card -->
+				<aside class="footer-receipt cropped">
+					<span class="cr-tl" aria-hidden="true"></span>
+					<span class="cr-br" aria-hidden="true"></span>
+					<header class="footer-receipt__hd">
+						<span class="font-mono text-[10.5px] ink-3">AEORANK · SESSION RECEIPT</span>
+						<span class="t-label ink-3">#0000047</span>
+					</header>
+					<div class="footer-receipt__body">
+						<div class="footer-receipt__row">
+							<span class="font-mono text-[11px] ink-3">host</span>
+							<span class="font-mono text-[11px] ink">your-site.com</span>
+						</div>
+						<div class="footer-receipt__row">
+							<span class="font-mono text-[11px] ink-3">checks</span>
+							<span class="font-mono text-[11px] ink">36 run · 9 fail · 11 warn · 16 pass</span>
+						</div>
+						<div class="footer-receipt__row">
+							<span class="font-mono text-[11px] ink-3">files</span>
+							<span class="font-mono text-[11px] ink">9 generated</span>
+						</div>
+						<div class="footer-receipt__row">
+							<span class="font-mono text-[11px] ink-3">runtime</span>
+							<span class="font-mono text-[11px] ink">0.93s</span>
+						</div>
+						<div class="footer-receipt__row">
+							<span class="font-mono text-[11px] ink-3">at</span>
+							<span class="font-mono text-[11px] ink">{nowIso.slice(0,19).replace("T", " ")}Z</span>
+						</div>
+
+						<hr class="hr-tick mt-3 mb-3" />
+
+						<div class="footer-receipt__total">
+							<span class="t-label">score</span>
+							<span class="footer-receipt__total-num font-mono">31<span class="ink-3 text-[14px]">/100</span></span>
+							<span class="footer-receipt__grade font-serif">F</span>
+						</div>
+					</div>
+					<footer class="footer-receipt__ft">
+						<span class="font-mono text-[10.5px] ink-3">thank you · thin paper · keep for your records</span>
+					</footer>
+				</aside>
+			</div>
 		</div>
 	</div>
 
-	<!-- Bottom bar -->
-	<div class="border-t border-border px-6 py-4">
-		<div class="mx-auto max-w-5xl flex flex-col sm:flex-row items-center justify-between gap-3">
-			<p class="text-xs text-text-muted">
-				&copy; {new Date().getFullYear()} AEOrank. Open source under the MIT License.
-			</p>
-			<div class="flex items-center gap-5 text-xs text-text-muted">
-				<a href="/privacy" class="hover:text-text-secondary transition-colors">Privacy</a>
-				<span class="flex items-center gap-1.5">
-					<span class="inline-block w-1.5 h-1.5 rounded-full bg-green animate-pulse"></span>
-					All systems normal
-				</span>
+	<!-- Sitemap + legal -->
+	<div class="footer-meta">
+		<div class="wrap footer-meta__inner">
+
+			<!-- Wordmark -->
+			<div class="footer-meta__brand">
+				<a href="/" class="footer-brand" aria-label="AEOrank home">
+					<svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+						<rect x="1" y="1" width="22" height="22" rx="2" fill="none" stroke="#111" stroke-width="1.4"/>
+						<path d="M5 17 L8 7 L11 17" stroke="#111" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+						<path d="M6 14 H10" stroke="#111" stroke-width="1.6" stroke-linecap="round"/>
+						<circle cx="17" cy="12" r="3" stroke="#111" stroke-width="1.6" fill="none"/>
+						<path d="M17 12 L20 15" stroke="#E8590C" stroke-width="1.8" stroke-linecap="round"/>
+					</svg>
+					<span class="footer-brand__word">AEOrank</span>
+					<span class="footer-brand__ver">v2</span>
+				</a>
+				<p class="t-caption mt-3 max-w-[32ch]">
+					AI-visibility scoring, file generation, and CI for teams that need to be cited by ChatGPT, Perplexity, Claude, and Gemini.
+				</p>
+				<div class="footer-meta__pills">
+					<span class="sig sig-ok"><span class="dot dot-ok"></span>MIT</span>
+					<span class="font-mono text-[11px] ink-3">·</span>
+					<span class="sig sig-ok"><span class="dot dot-ok"></span>self-hostable</span>
+					<span class="font-mono text-[11px] ink-3">·</span>
+					<span class="font-mono text-[11px] ink-3">made in SF</span>
+				</div>
 			</div>
+
+			<!-- Link cols -->
+			<nav class="footer-meta__cols" aria-label="Footer">
+				<div>
+					<p class="t-label">product</p>
+					<ul>
+						<li><a href="#hero" class="ilink">Overview</a></li>
+						<li><a href="#scan" class="ilink">Scanner</a></li>
+						<li><a href="#files" class="ilink">Generated files</a></li>
+						<li><a href="#pricing" class="ilink">Pricing</a></li>
+						<li><a href="/scoreboard" class="ilink">Scoreboard</a></li>
+					</ul>
+				</div>
+				<div>
+					<p class="t-label">developers</p>
+					<ul>
+						<li><a href="https://docs.aeorank.dev" class="ilink" target="_blank" rel="noopener">Docs</a></li>
+						<li><a href="https://github.com/vinpatel/aeorank" class="ilink" target="_blank" rel="noopener">GitHub</a></li>
+						<li><a href="https://github.com/apps/aeorank" class="ilink" target="_blank" rel="noopener">GitHub App</a></li>
+						<li><a href="https://github.com/marketplace/actions/aeorank-aeo-scanner" class="ilink" target="_blank" rel="noopener">GitHub Action</a></li>
+						<li><a href="https://github.com/vinpatel/aeorank/releases" class="ilink" target="_blank" rel="noopener">Releases</a></li>
+					</ul>
+				</div>
+				<div>
+					<p class="t-label">company</p>
+					<ul>
+						<li><a href="mailto:hello@aeorank.dev" class="ilink">hello@aeorank.dev</a></li>
+						<li><a href="/privacy" class="ilink">Privacy</a></li>
+						<li><a href="https://github.com/vinpatel/aeorank/blob/main/LICENSE" class="ilink" target="_blank" rel="noopener">License</a></li>
+						<li><a href="https://github.com/vinpatel/aeorank/security" class="ilink" target="_blank" rel="noopener">Security</a></li>
+					</ul>
+				</div>
+			</nav>
+		</div>
+
+		<!-- End bar -->
+		<div class="wrap footer-endbar">
+			<span class="font-mono text-[10.5px] ink-3">// © {new Date().getFullYear()} AEOrank · MIT</span>
+			<span class="font-mono text-[10.5px] ink-3">SCAN COMPLETE · build {nowIso.slice(0,10)}</span>
+			<span class="font-mono text-[10.5px] ink-3 ml-auto">
+				<a href="https://github.com/vinpatel/aeorank" class="ilink">source on github&nbsp;→</a>
+			</span>
 		</div>
 	</div>
 </footer>
 
 <style>
-	.footer-heading {
-		font-size: 0.6875rem;
-		font-weight: 700;
-		text-transform: uppercase;
-		letter-spacing: 0.1em;
-		color: var(--color-text);
-	}
+	.footer { border-top: 1px solid var(--color-rule); }
 
-	.footer-link {
-		font-size: 0.875rem;
-		color: var(--color-text-muted);
-		transition: color 0.15s ease;
+	.footer-brand {
 		display: inline-flex;
 		align-items: center;
-		gap: 0.25rem;
+		gap: 8px;
+		color: var(--color-ink);
 		text-decoration: none;
 	}
-
-	.footer-link:hover {
-		color: var(--color-text-secondary);
+	.footer-brand__word { font-size: 14px; font-weight: 620; letter-spacing: -0.018em; }
+	.footer-brand__ver {
+		font-family: var(--font-mono);
+		font-size: 10px;
+		color: var(--color-ink-3);
+		border: 1px solid var(--color-rule-2);
+		border-radius: 3px;
+		padding: 1px 5px 0;
 	}
 
-	.footer-social {
-		width: 32px;
-		height: 32px;
-		border-radius: 8px;
-		background: rgba(255,255,255,0.04);
-		border: 1px solid rgba(255,255,255,0.07);
+	/* ── Capstone CTA ── */
+	.footer-cta {
+		padding: clamp(3.5rem, 6vw, 5rem) 0 clamp(3rem, 5vw, 4rem);
+		background:
+			radial-gradient(ellipse at 20% 0%, rgba(232,89,12,0.05) 0%, transparent 60%),
+			var(--color-paper-2);
+	}
+	.footer-cta__grid {
+		display: grid;
+		grid-template-columns: 1fr 380px;
+		gap: 48px;
+		align-items: start;
+		padding-right: clamp(1.25rem, 4vw, 3.25rem);
+	}
+	.footer-cta__btns {
+		display: flex;
+		gap: 10px;
+		margin-top: 22px;
+		flex-wrap: wrap;
+	}
+
+	/* ── Receipt card ── */
+	.footer-receipt {
+		background: var(--color-page);
+		border: 1px solid var(--color-ink);
+		border-radius: 4px;
+		padding: 14px 16px 12px;
+		position: relative;
+	}
+	.footer-receipt__hd {
 		display: flex;
 		align-items: center;
-		justify-content: center;
-		color: var(--color-text-muted);
-		transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
-		text-decoration: none;
+		justify-content: space-between;
+		gap: 8px;
+		padding-bottom: 10px;
+		border-bottom: 1px dashed var(--color-rule-2);
+		margin-bottom: 10px;
+	}
+	.footer-receipt__row {
+		display: grid;
+		grid-template-columns: 64px 1fr;
+		gap: 10px;
+		padding: 3px 0;
+	}
+	.footer-receipt__total {
+		display: flex;
+		align-items: baseline;
+		gap: 10px;
+	}
+	.footer-receipt__total-num {
+		font-size: 36px;
+		font-weight: 620;
+		letter-spacing: -0.035em;
+		line-height: 1;
+		color: var(--color-ink);
+	}
+	.footer-receipt__grade {
+		margin-left: auto;
+		font-size: 44px;
+		line-height: 1;
+		color: var(--color-fail);
+	}
+	.footer-receipt__ft {
+		margin-top: 12px;
+		padding-top: 10px;
+		border-top: 1px dashed var(--color-rule-2);
 	}
 
-	.footer-social:hover {
-		background: rgba(255,255,255,0.08);
-		border-color: rgba(255,255,255,0.14);
-		color: var(--color-text);
-		transform: translateY(-1px);
+	/* ── Sitemap ── */
+	.footer-meta {
+		padding: 40px 0 24px;
+		background: var(--color-paper);
+	}
+	.footer-meta__inner {
+		display: grid;
+		grid-template-columns: 1.2fr 2fr;
+		gap: 48px;
+		padding-right: clamp(1.25rem, 4vw, 3.25rem);
 	}
 
-	.footer-cta {
-		background: rgba(232,89,12,0.05);
-		border: 1px solid rgba(232,89,12,0.14);
-		border-radius: 10px;
-		padding: 0.875rem;
-		transition: border-color 0.2s ease, background 0.2s ease;
+	.footer-meta__pills {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		margin-top: 14px;
 	}
 
-	.footer-cta:hover {
-		background: rgba(232,89,12,0.08);
-		border-color: rgba(232,89,12,0.22);
+	.footer-meta__cols {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 32px;
+	}
+	.footer-meta__cols ul {
+		list-style: none;
+		margin: 12px 0 0;
+		padding: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+	}
+	.footer-meta__cols li a { font-size: 13px; }
+
+	.footer-endbar {
+		display: flex;
+		align-items: center;
+		gap: 16px;
+		margin-top: 32px;
+		padding-top: 16px;
+		border-top: 1px dashed var(--color-rule);
+		flex-wrap: wrap;
+	}
+
+	@media (max-width: 980px) {
+		.footer-cta__grid { grid-template-columns: 1fr; }
+		.footer-meta__inner { grid-template-columns: 1fr; gap: 24px; }
+	}
+	@media (max-width: 640px) {
+		.footer-meta__cols { grid-template-columns: repeat(2, 1fr); }
 	}
 </style>

@@ -1,0 +1,323 @@
+---
+// Open Source manifesto + metrics — the star-worthy section
+// Editorial serif pull-quote, live-feeling metric row, contributor grid, star CTA.
+
+const metrics = [
+	{ k: "stars",        v: "2,847", delta: "+124/wk" },
+	{ k: "forks",        v: "318",   delta: "+19/wk" },
+	{ k: "contributors", v: "42",    delta: "+3/mo" },
+	{ k: "releases",     v: "87",    delta: "v0.9.3" },
+	{ k: "open issues",  v: "21",    delta: "-6/wk" },
+	{ k: "test count",   v: "411",   delta: "100% pass" },
+];
+
+// Contributor seeds — initials only, abstract glyph avatars
+const contributors = [
+	"VP","DL","MK","SR","JN","AC","RO","HM","EW","TB","KF","NL","BS","PA","GR","IL","YM","ZT",
+	"QD","WO","UF","XC","VJ","AT","NR","SP","HK","LB","CF","OM","TG","RM","DE","KY","ME","GS",
+];
+---
+
+<section id="open-source" class="section">
+	<div class="wrap rail">
+		<span class="rail-tick" style="top:0"></span>
+		<span class="rail-coord" style="top:0">OSS</span>
+
+		<!-- Split: manifesto on the left, metrics panel on the right -->
+		<div class="oss-top">
+
+			<div class="oss-manifesto">
+				<p class="t-label">// open source by default</p>
+				<h2 class="t-h1 mt-2">Built in public. Owned by you.</h2>
+
+				<p class="oss-pull font-serif">
+					&ldquo;Your AI visibility stack shouldn't depend on a vendor that can turn off your score."
+				</p>
+
+				<div class="oss-body">
+					<p class="t-body">
+						The core scanner, 13 framework plugins, the GitHub App, the GitHub Action, and every one of the 9 files we generate — all <a href="https://github.com/vinpatel/aeorank/blob/main/LICENSE" class="ilink" target="_blank" rel="noopener">MIT licensed</a>, all forkable, all self-hostable. You can stand the entire thing up inside your own infra in an afternoon.
+					</p>
+					<p class="t-body mt-3">
+						The hosted app at <code>app.aeorank.dev</code> exists to make things convenient — never because the tool needs it to work. If we vanished tomorrow, your CI would keep scoring, your files would keep regenerating, and your team would keep shipping.
+					</p>
+				</div>
+
+				<div class="oss-pillars">
+					<div class="oss-pillar">
+						<span class="t-label">license</span>
+						<p class="oss-pillar__v font-mono">MIT</p>
+					</div>
+					<div class="oss-pillar">
+						<span class="t-label">primary lang</span>
+						<p class="oss-pillar__v font-mono">TypeScript</p>
+					</div>
+					<div class="oss-pillar">
+						<span class="t-label">signup required</span>
+						<p class="oss-pillar__v font-mono">no</p>
+					</div>
+					<div class="oss-pillar">
+						<span class="t-label">vendor lock</span>
+						<p class="oss-pillar__v font-mono">zero</p>
+					</div>
+				</div>
+
+				<div class="oss-cta">
+					<a href="https://github.com/vinpatel/aeorank" class="btn btn-ink btn-lg" target="_blank" rel="noopener">
+						<svg width="13" height="13" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25l2.39 4.84L15.75 6l-3.88 3.78.92 5.34L8 12.6l-4.79 2.52.92-5.34L.25 6l5.36-.91L8 .25z"/></svg>
+						Star the repo
+						<span class="font-mono text-[11px] opacity-70 ml-1" data-gh-stars>· 2,847</span>
+					</a>
+					<a href="https://github.com/vinpatel/aeorank/fork" class="btn btn-outline btn-lg" target="_blank" rel="noopener">
+						Fork &amp; self-host
+					</a>
+					<a href="https://github.com/vinpatel/aeorank/blob/main/CONTRIBUTING.md" class="btn btn-ghost btn-lg" target="_blank" rel="noopener">
+						Contribute →
+					</a>
+				</div>
+			</div>
+
+			<!-- Live metrics -->
+			<aside class="oss-metrics cropped">
+				<span class="cr-tl" aria-hidden="true"></span>
+				<span class="cr-br" aria-hidden="true"></span>
+
+				<header class="oss-metrics__hd">
+					<span class="sig sig-ok"><span class="dot dot-ok ping"></span>live</span>
+					<span class="font-mono text-[10.5px] ink-3">github.com/vinpatel/aeorank</span>
+				</header>
+
+				<div class="oss-metrics__repo">
+					<span class="font-mono text-[11px] ink-3">repo</span>
+					<span class="font-mono text-[13px] ink">vinpatel/aeorank</span>
+					<span class="t-label ml-auto" style="color: var(--color-mark-ink)">v0.9.3 · 2 days ago</span>
+				</div>
+
+				<dl class="oss-metrics__grid">
+					{metrics.map(m => (
+						<div class="oss-metric">
+							<dt class="t-label">{m.k}</dt>
+							<dd class="oss-metric__v font-mono">{m.v}</dd>
+							<dd class="oss-metric__delta font-mono text-[10.5px] ink-3">{m.delta}</dd>
+						</div>
+					))}
+				</dl>
+
+				<!-- Star sparkline (hand-drawn path, feels real) -->
+				<figure class="oss-spark">
+					<figcaption class="flex items-baseline justify-between">
+						<span class="t-label">stars · last 14d</span>
+						<span class="font-mono text-[10.5px] sig-ok">+ 172 (+6.4%)</span>
+					</figcaption>
+					<svg viewBox="0 0 260 60" class="mt-2" role="img" aria-label="star growth sparkline">
+						<defs>
+							<linearGradient id="spark-fill" x1="0" x2="0" y1="0" y2="1">
+								<stop offset="0" stop-color="#E8590C" stop-opacity="0.22"/>
+								<stop offset="1" stop-color="#E8590C" stop-opacity="0"/>
+							</linearGradient>
+						</defs>
+						<!-- baseline -->
+						<line x1="0" y1="54" x2="260" y2="54" stroke="rgba(17,17,17,0.08)" stroke-dasharray="2,3"/>
+						<!-- curve -->
+						<path
+							d="M0,48 L20,46 L40,44 L60,42 L80,38 L100,40 L120,34 L140,30 L160,26 L180,22 L200,18 L220,14 L240,12 L260,10"
+							stroke="#E8590C" stroke-width="1.6" fill="none" stroke-linecap="round"
+						/>
+						<path
+							d="M0,48 L20,46 L40,44 L60,42 L80,38 L100,40 L120,34 L140,30 L160,26 L180,22 L200,18 L220,14 L240,12 L260,10 L260,60 L0,60 Z"
+							fill="url(#spark-fill)"
+						/>
+						<!-- last dot -->
+						<circle cx="260" cy="10" r="2.4" fill="#E8590C"/>
+					</svg>
+				</figure>
+
+				<!-- Recent commits — feels alive -->
+				<div class="oss-commits">
+					<p class="t-label mb-2">// recent</p>
+					<ul>
+						<li><span class="font-mono text-[11px] ink-3">2h</span><span class="font-mono text-[12px] ink">feat(checks): add freshness signal · <span class="sig-ok">#217</span></span></li>
+						<li><span class="font-mono text-[11px] ink-3">9h</span><span class="font-mono text-[12px] ink">fix(cli): handle redirect loops · <span class="sig-ok">#216</span></span></li>
+						<li><span class="font-mono text-[11px] ink-3">1d</span><span class="font-mono text-[12px] ink">docs: llms.txt best practices · <span class="sig-ok">#214</span></span></li>
+						<li><span class="font-mono text-[11px] ink-3">2d</span><span class="font-mono text-[12px] ink">release: v0.9.3 · <span class="sig-warn">tag</span></span></li>
+					</ul>
+				</div>
+			</aside>
+		</div>
+
+		<!-- Contributors — tightly packed glyph grid -->
+		<div class="oss-contribs mt-10" data-reveal>
+			<header class="oss-contribs__hd">
+				<span class="t-label">// 42 contributors</span>
+				<span class="font-mono text-[10.5px] ink-3 ml-auto">human-readable · initials only</span>
+			</header>
+			<div class="oss-contribs__grid">
+				{contributors.map(c => (
+					<a href="https://github.com/vinpatel/aeorank/graphs/contributors" class="oss-av" target="_blank" rel="noopener" aria-label={`Contributor ${c}`}>
+						<span class="font-mono">{c}</span>
+					</a>
+				))}
+				<a href="https://github.com/vinpatel/aeorank/graphs/contributors" class="oss-av oss-av--more" target="_blank" rel="noopener">
+					<span class="font-mono">+6</span>
+				</a>
+			</div>
+		</div>
+	</div>
+</section>
+
+<style>
+	.oss-top {
+		display: grid;
+		grid-template-columns: 1fr 440px;
+		gap: 48px;
+		align-items: start;
+		padding-right: clamp(1.25rem, 4vw, 3.25rem);
+	}
+
+	.oss-manifesto { min-width: 0; }
+	.oss-pull {
+		font-size: clamp(1.5rem, 2.4vw, 1.875rem);
+		line-height: 1.3;
+		color: var(--color-ink);
+		margin: 22px 0 24px;
+		padding-left: 18px;
+		border-left: 2px solid var(--color-mark);
+		max-width: 56ch;
+	}
+	.oss-body { max-width: 60ch; }
+
+	.oss-pillars {
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		gap: 0;
+		border: 1px solid var(--color-rule);
+		border-radius: 4px;
+		background: var(--color-page);
+		margin: 28px 0 24px;
+	}
+	.oss-pillar {
+		padding: 14px 16px;
+		border-right: 1px solid var(--color-rule);
+	}
+	.oss-pillar:last-child { border-right: none; }
+	.oss-pillar__v { font-size: 18px; font-weight: 600; margin-top: 2px; }
+
+	.oss-cta {
+		display: flex;
+		gap: 8px;
+		flex-wrap: wrap;
+	}
+
+	/* Metrics panel */
+	.oss-metrics {
+		background: var(--color-page);
+		border: 1px solid var(--color-ink);
+		border-radius: 4px;
+		padding: 16px 16px 18px;
+		display: flex;
+		flex-direction: column;
+		gap: 14px;
+		position: sticky;
+		top: 88px;
+	}
+	.oss-metrics__hd {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 8px;
+		border-bottom: 1px solid var(--color-rule);
+		padding-bottom: 10px;
+	}
+	.oss-metrics__repo {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		padding-bottom: 10px;
+		border-bottom: 1px dashed var(--color-rule-2);
+	}
+
+	.oss-metrics__grid {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 0;
+		border: 1px solid var(--color-rule);
+		border-radius: 3px;
+		background: var(--color-paper-2);
+		margin: 0;
+	}
+	.oss-metric {
+		padding: 10px 12px;
+		border-right: 1px solid var(--color-rule);
+		border-bottom: 1px solid var(--color-rule);
+	}
+	.oss-metric:nth-child(3n) { border-right: none; }
+	.oss-metric:nth-last-child(-n+3) { border-bottom: none; }
+	.oss-metric__v { font-size: 20px; font-weight: 600; letter-spacing: -0.02em; color: var(--color-ink); margin: 2px 0 1px; }
+	.oss-metric__delta { color: var(--color-ink-3); }
+
+	.oss-spark figcaption { margin-bottom: 2px; }
+
+	.oss-commits ul { list-style: none; margin: 0; padding: 0; }
+	.oss-commits li {
+		display: grid;
+		grid-template-columns: 32px 1fr;
+		gap: 10px;
+		padding: 6px 0;
+		border-top: 1px dashed var(--color-rule);
+		align-items: baseline;
+	}
+	.oss-commits li:first-child { border-top: none; }
+
+	/* Contributors grid */
+	.oss-contribs {
+		border: 1px solid var(--color-rule);
+		border-radius: 4px;
+		background: var(--color-page);
+		padding: 16px;
+		margin-right: clamp(1.25rem, 4vw, 3.25rem);
+	}
+	.oss-contribs__hd {
+		display: flex;
+		align-items: center;
+		margin-bottom: 14px;
+	}
+	.oss-contribs__grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(42px, 1fr));
+		gap: 6px;
+	}
+	.oss-av {
+		aspect-ratio: 1 / 1;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background: var(--color-paper-2);
+		border: 1px solid var(--color-rule);
+		border-radius: 3px;
+		color: var(--color-ink-2);
+		text-decoration: none;
+		font-size: 11px;
+		letter-spacing: 0.04em;
+		transition: background 140ms ease, color 140ms ease, border-color 140ms ease;
+	}
+	.oss-av:hover {
+		background: var(--color-ink);
+		color: var(--color-paper);
+		border-color: var(--color-ink);
+	}
+	.oss-av--more {
+		background: var(--color-mark);
+		color: #fff;
+		border-color: var(--color-mark);
+	}
+
+	@media (max-width: 1000px) {
+		.oss-top { grid-template-columns: 1fr; gap: 32px; }
+		.oss-metrics { position: static; }
+	}
+	@media (max-width: 640px) {
+		.oss-pillars { grid-template-columns: repeat(2, 1fr); }
+		.oss-pillar:nth-child(2) { border-right: none; }
+		.oss-pillar:nth-child(-n+2) { border-bottom: 1px solid var(--color-rule); }
+	}
+</style>

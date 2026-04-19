@@ -1,0 +1,233 @@
+---
+// Leaderboard table — real tabular data, no cards.
+
+type Row = { rank: number; name: string; tag: string; score: number; grade: string; delta: number };
+
+const rows: Row[] = [
+	{ rank: 1,  name: "Anthropic",     tag: "ai lab",        score: 87, grade: "A",  delta: +4 },
+	{ rank: 2,  name: "Vercel",        tag: "infra",         score: 81, grade: "A",  delta: +2 },
+	{ rank: 3,  name: "Linear",        tag: "saas",          score: 78, grade: "B",  delta: +6 },
+	{ rank: 4,  name: "Supabase",      tag: "infra",         score: 74, grade: "B",  delta: +1 },
+	{ rank: 5,  name: "Cursor",        tag: "dev tools",     score: 71, grade: "B",  delta: -2 },
+	{ rank: 6,  name: "Resend",        tag: "infra",         score: 68, grade: "C",  delta: +3 },
+	{ rank: 7,  name: "Stripe",        tag: "payments",      score: 57, grade: "D",  delta: 0  },
+	{ rank: 8,  name: "Notion",        tag: "saas",          score: 54, grade: "D",  delta: -1 },
+	{ rank: 9,  name: "OpenAI",        tag: "ai lab",        score: 42, grade: "F",  delta: -4 },
+	{ rank: 10, name: "Fly.io",        tag: "infra",         score: 38, grade: "F",  delta: -2 },
+];
+
+const delta = (d: number) => d > 0 ? `+${d}` : d === 0 ? "—" : `${d}`;
+---
+
+<section id="leaderboard" class="section">
+	<div class="wrap rail">
+		<span class="rail-tick" style="top:0"></span>
+		<span class="rail-coord" style="top:0">RANK</span>
+
+		<div class="section-head">
+			<div>
+				<p class="t-label">// AI visibility scoreboard</p>
+				<h2 class="t-h1 mt-2">100 funded startups score 42/100 on average.</h2>
+				<p class="t-body mt-3 max-w-[60ch]">
+					We scan the public sites of 100 funded startups every week. Below is today's top 10. The full board includes 90 more — filterable by industry, funding stage, and pillar.
+				</p>
+			</div>
+			<div class="section-meta">
+				<span>100&nbsp;<b>sites</b></span>
+				<span>wkly&nbsp;<b>scans</b></span>
+				<span>0.9s&nbsp;<b>mean runtime</b></span>
+			</div>
+		</div>
+
+		<div class="lb cropped" data-reveal>
+			<span class="cr-tl" aria-hidden="true"></span>
+			<span class="cr-br" aria-hidden="true"></span>
+
+			<!-- Table chrome -->
+			<header class="lb__hd">
+				<span class="font-mono text-[11px] ink-3">scoreboard · week 16 · 2026</span>
+				<span class="lb__hd-filters">
+					<button class="lb__chip is-active" type="button">all</button>
+					<button class="lb__chip" type="button">infra</button>
+					<button class="lb__chip" type="button">saas</button>
+					<button class="lb__chip" type="button">ai lab</button>
+					<button class="lb__chip" type="button">dev tools</button>
+					<button class="lb__chip" type="button">payments</button>
+				</span>
+				<a href="/scoreboard" class="font-mono text-[11px] ink ilink ml-auto">full board&nbsp;→</a>
+			</header>
+
+			<table class="lb__table">
+				<thead>
+					<tr>
+						<th scope="col" class="lb__th lb__th--rank">#</th>
+						<th scope="col" class="lb__th">company</th>
+						<th scope="col" class="lb__th">industry</th>
+						<th scope="col" class="lb__th lb__th--num">score</th>
+						<th scope="col" class="lb__th lb__th--grade">grade</th>
+						<th scope="col" class="lb__th lb__th--num">7d Δ</th>
+						<th scope="col" class="lb__th lb__th--bar">distribution</th>
+					</tr>
+				</thead>
+				<tbody>
+					{rows.map(r => (
+						<tr class="lb__tr">
+							<td class="lb__td lb__td--rank font-mono">{String(r.rank).padStart(2, "0")}</td>
+							<td class="lb__td lb__td--name">
+								<span class="ink">{r.name}</span>
+							</td>
+							<td class="lb__td">
+								<span class="t-label">{r.tag}</span>
+							</td>
+							<td class="lb__td lb__td--num font-mono">
+								<span class="ink" style="font-size: 15px; font-weight: 600;">{r.score}</span>
+								<span class="ink-3 text-[10.5px]">/100</span>
+							</td>
+							<td class="lb__td lb__td--grade">
+								<span class={`lb__grade lb__grade--${r.grade.replace("+", "plus").toLowerCase()}`}>{r.grade}</span>
+							</td>
+							<td class={`lb__td lb__td--num font-mono ${r.delta > 0 ? "sig-ok" : r.delta < 0 ? "sig-fail" : "ink-3"}`}>
+								{delta(r.delta)}
+							</td>
+							<td class="lb__td lb__td--bar">
+								<span class="lb__bar" role="img" aria-label={`score ${r.score} of 100`}>
+									<span class="lb__bar-fill" style={`width: ${r.score}%;`}></span>
+								</span>
+							</td>
+						</tr>
+					))}
+				</tbody>
+			</table>
+
+			<footer class="lb__ft">
+				<span class="font-mono text-[10.5px] ink-3">showing 10 of 100 · updated hourly · all scores deterministic</span>
+				<a href="/scoreboard" class="font-mono text-[11px] ink ilink">scan your own site&nbsp;→</a>
+			</footer>
+		</div>
+	</div>
+</section>
+
+<style>
+	.lb {
+		background: var(--color-page);
+		border: 1px solid var(--color-ink);
+		border-radius: 4px;
+		overflow: hidden;
+		margin-right: clamp(1.25rem, 4vw, 3.25rem);
+	}
+	.lb__hd {
+		display: flex;
+		align-items: center;
+		gap: 14px;
+		padding: 10px 16px;
+		border-bottom: 1px solid var(--color-rule);
+		background: var(--color-paper-2);
+		flex-wrap: wrap;
+	}
+	.lb__hd-filters {
+		display: inline-flex;
+		gap: 4px;
+		padding-left: 12px;
+		border-left: 1px solid var(--color-rule);
+	}
+	.lb__chip {
+		font-family: var(--font-mono);
+		font-size: 11px;
+		color: var(--color-ink-3);
+		background: transparent;
+		border: 1px solid var(--color-rule);
+		padding: 3px 7px 2px;
+		border-radius: 3px;
+		cursor: pointer;
+		transition: color 140ms ease, border-color 140ms ease;
+	}
+	.lb__chip:hover { color: var(--color-ink); border-color: var(--color-rule-2); }
+	.lb__chip.is-active { color: var(--color-ink); border-color: var(--color-ink); background: var(--color-page); }
+
+	.lb__table {
+		width: 100%;
+		border-collapse: collapse;
+		font-size: 13px;
+	}
+	.lb__th {
+		text-align: left;
+		font-family: var(--font-mono);
+		font-weight: 500;
+		font-size: 10.5px;
+		color: var(--color-ink-3);
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+		padding: 9px 16px;
+		border-bottom: 1px solid var(--color-rule);
+		background: var(--color-paper);
+	}
+	.lb__th--rank { width: 42px; }
+	.lb__th--num { text-align: right; }
+	.lb__th--grade { width: 78px; text-align: left; }
+	.lb__th--bar { width: 36%; }
+
+	.lb__tr:nth-child(odd)  { background: #FBFAF6; }
+	.lb__tr:hover           { background: #F3F0E8; }
+
+	.lb__td {
+		padding: 12px 16px;
+		border-bottom: 1px solid var(--color-rule);
+		vertical-align: middle;
+	}
+	.lb__td--rank { color: var(--color-ink-3); font-size: 12px; }
+	.lb__td--name { font-weight: 500; }
+	.lb__td--num { text-align: right; white-space: nowrap; }
+	.lb__td--grade { }
+	.lb__td--bar { }
+
+	.lb__grade {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 30px; height: 22px;
+		font-family: var(--font-serif);
+		font-style: italic;
+		font-size: 18px;
+		line-height: 1;
+		color: var(--color-ink);
+	}
+	.lb__grade--a  { color: var(--color-ok); }
+	.lb__grade--b  { color: var(--color-ink); }
+	.lb__grade--c  { color: var(--color-warn); }
+	.lb__grade--d  { color: var(--color-warn); }
+	.lb__grade--f  { color: var(--color-fail); }
+
+	.lb__bar {
+		display: block;
+		height: 6px;
+		background: var(--color-paper-2);
+		border: 1px solid var(--color-rule);
+		border-radius: 1px;
+		position: relative;
+		overflow: hidden;
+	}
+	.lb__bar-fill {
+		display: block;
+		height: 100%;
+		background:
+			linear-gradient(90deg, var(--color-fail) 0%, var(--color-warn) 50%, var(--color-ok) 100%);
+	}
+
+	.lb__ft {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 12px;
+		padding: 10px 16px;
+		border-top: 1px solid var(--color-rule);
+		background: var(--color-paper-2);
+		flex-wrap: wrap;
+	}
+
+	@media (max-width: 740px) {
+		.lb__th--bar, .lb__td--bar { display: none; }
+	}
+	@media (max-width: 540px) {
+		.lb__th--grade, .lb__td--grade { display: none; }
+	}
+</style>
