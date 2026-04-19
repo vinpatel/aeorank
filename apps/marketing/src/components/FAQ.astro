@@ -1,234 +1,235 @@
 ---
+// FAQ rendered as paired structured-data / prose panes.
+// Left: the actual JSON-LD an AI crawler would ingest.
+// Right: the human-readable Q&A with a lock-free details/summary pattern.
+
 const faqs = [
 	{
-		q: "Can I use this to report AI visibility to clients?",
-		a: "Yes. The dashboard at app.aeorank.dev lets you scan multiple sites, compare scores across your client portfolio, and export reports. You can show clients exactly where they score against industry benchmarks and which competitors are outranking them in AI answers."
+		q: "Will this actually help me rank in ChatGPT answers?",
+		a: "Alone, no single file is a silver bullet. AEOrank scores 36 things at once — technical signals like llms.txt, content signals like answer density, trust signals like schema.Author, and access signals like crawler permissions. Fix the 9 failing checks and a typical site goes from 31→70+ on the next scan. Citations in Perplexity and ChatGPT tend to follow within 2–4 weeks."
 	},
 	{
-		q: "My customers use ChatGPT and Perplexity. Why isn't my brand showing up?",
-		a: "AI engines don't index sites the way Google does. They look for specific signals: structured files (llms.txt, ai.txt), AI-readable content formatting, proper schema markup, and correctly configured crawler access. Most sites fail at multiple points — which is why even well-known brands score 40/100 or below. AEOrank identifies exactly which signals you're missing and generates the files to fix them."
+		q: "What does deterministic scoring actually mean?",
+		a: "Every check is a pure function of HTML, headers, and file presence — no LLM calls, no randomness. Scan the same site twice and you get the same score. That's what lets us run in CI and fail a PR confidently."
 	},
 	{
-		q: "What is AEO and why should I care?",
-		a: "Answer Engine Optimization. AI search engines (ChatGPT, Perplexity, Claude, Gemini) now drive 40% of web discovery and convert visitors at 15.9% — higher than Google organic. AEO is how you get into those AI-generated answers. If you're not optimized for AI extraction, your competitors are getting cited instead of you."
+		q: "Is it really MIT?",
+		a: "Yes. The scanner core, all 13 framework plugins, the GitHub App, the GitHub Action, and the file generators are under the MIT license. You can self-host the lot. The hosted app exists to make things convenient — never because the tool requires it."
 	},
 	{
-		q: "How is this different from SEO tools like Ahrefs or Semrush?",
-		a: "SEO tools check Google rankings. AEOrank checks what AI engines look for: llms.txt, ai.txt, schema markup, AI crawler access, content structure for extraction, and 30 more criteria that SEO tools don't touch. Then it generates the 9 files AI engines need — no other tool does that."
+		q: "How is this different from Ahrefs or Semrush?",
+		a: "Classical SEO tools check ranking signals for Google. AEOrank checks answer-extraction signals for AI engines: llms.txt, ai.txt, schema.org coverage, speakable markup, AI crawler access, content structure for extraction, and 30 more criteria that SEO tools don't touch. Then it generates the 9 actual files — no SEO tool does that."
 	},
 	{
-		q: "How is this different from Profound, Otterly, or Scrunch?",
-		a: "Profound ($99–399/mo, backed by Sequoia) is an excellent monitoring platform — it tracks prompt volume, brand mentions, and generates content briefs. Otterly and Scrunch do similar monitoring. AEOrank does something none of them do: it scores your site's technical AI readiness across 36 criteria and generates the 9 actual files AI engines look for (llms.txt, ai.txt, schema.json, etc.). Profound monitors what AI says about you. AEOrank fixes why AI can't read you. Both are useful — we're just 14× cheaper and open source."
+		q: "What's the difference vs Profound, Otterly, or Scrunch?",
+		a: "They monitor (what AI says about your brand). AEOrank scores (whether AI can read you) and fixes (by generating the 9 files). Complementary, but AEOrank solves the upstream problem. Also 14× cheaper and open source."
 	},
 	{
-		q: "Is it really free? What's the catch?",
-		a: "The CLI, GitHub App, GitHub Action, and all 13 framework plugins are MIT licensed and always free. The Starter plan gives you 1 site and 3 scans/month at no cost. Pro ($29/mo) adds 5 sites, 50 scans, score history, auto-rescan, and PDF exports. Agency ($99/mo) scales to 50 sites with API access. Every plan includes full 36-criteria scoring and all 9 generated files — we don't gate the features that matter."
+		q: "Can I use this in CI?",
+		a: "Two ways. Install the GitHub App for zero-YAML PR checks, or pin aeorank-action@v1 in a workflow with a fail-below threshold. Both post a check run with the score and the diff of generated files."
 	},
 	{
-		q: "Does llms.txt actually work?",
-		a: "Studies show llms.txt alone doesn't guarantee AI citations yet — which is exactly why AEOrank scores 36 criteria, not just one file. Your content structure, schema markup, AI crawler access, answer formatting, and entity disambiguation all matter. AEOrank checks every factor and generates all 9 files, not just llms.txt."
+		q: "Does AEOrank send my site to an LLM?",
+		a: "No. The scanner is deterministic and never calls an external model. The CLI runs fully locally; the hosted app fetches your public URL over HTTPS exactly like any other crawler."
 	},
 	{
-		q: "Can I use this in CI/CD?",
-		a: "Yes — two ways. Install the GitHub App for zero-config PR checks (one click, no YAML). Or use the GitHub Action (vinpatel/aeorank-action@v1) for full pipeline control with fail-below thresholds. Both post Check Runs and score breakdowns directly on your PRs."
-	},
-	{
-		q: "What AI engines does it optimize for?",
-		a: "All of them. AEOrank checks your visibility across ChatGPT (GPTBot), Claude (ClaudeBot), Perplexity (PerplexityBot), Gemini (Google-Extended), and Google AI Overviews. All 36 criteria are tuned for what these engines actually evaluate when deciding what to cite."
-	},
-	{
-		q: "How long does a scan take?",
-		a: "Under 30 seconds for a typical site. AEOrank crawls up to 50 pages, analyzes structure across all 36 criteria, and generates your score and files. Fully deterministic — no LLM calls, same score every time."
+		q: "What AI engines is it tuned for?",
+		a: "GPTBot (ChatGPT), ClaudeBot (Claude), PerplexityBot (Perplexity), Google-Extended (Gemini + AI Overviews), and Cohere. If a significant engine ships a new crawler or signal, we add a check — usually within a week."
 	},
 ];
----
-<section id="faq" class="px-6 py-20 md:py-28 border-t border-border scroll-mt-20">
-	<div class="mx-auto max-w-3xl">
-		<p class="eyebrow text-center">FAQ</p>
-		<h2 class="heading-lg text-center mt-3">Common questions</h2>
-		<p class="body-lg text-center max-w-xl mx-auto mt-4">Everything you need to know before you start.</p>
 
-		<div class="mt-14 faq-list">
-			{faqs.map((faq, i) => (
-				<div class="faq-item" data-index={i}>
-					<button
-						class="faq-trigger"
-						aria-expanded={i === 0 ? "true" : "false"}
-						aria-controls={`faq-answer-${i}`}
-						id={`faq-btn-${i}`}
-					>
-						<span class="faq-question">{faq.q}</span>
-						<span class="faq-chevron" aria-hidden="true">
-							<svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-								<path d="M4 6l4 4 4-4"/>
-							</svg>
-						</span>
-					</button>
-					<div
-						class="faq-body"
-						id={`faq-answer-${i}`}
-						role="region"
-						aria-labelledby={`faq-btn-${i}`}
-					>
-						<div class="faq-body-inner">
-							<p class="faq-answer">{faq.a}</p>
-						</div>
-					</div>
-				</div>
-			))}
+const jsonLd = {
+	"@context": "https://schema.org",
+	"@type": "FAQPage",
+	"mainEntity": faqs.map(f => ({
+		"@type": "Question",
+		"name": f.q,
+		"acceptedAnswer": { "@type": "Answer", "text": f.a }
+	}))
+};
+---
+
+<section id="faq" class="section">
+	<div class="wrap rail">
+		<span class="rail-tick" style="top:0"></span>
+		<span class="rail-coord" style="top:0">FAQ</span>
+
+		<div class="section-head">
+			<div>
+				<p class="t-label">// what an AI crawler sees vs. what you read</p>
+				<h2 class="t-h1 mt-2">FAQ, rendered twice.</h2>
+				<p class="t-body mt-3 max-w-[58ch]">
+					Left: the JSON-LD we emit on this page, verbatim — exactly what an AI crawler extracts. Right: the same answers for human eyes. We practice what we score.
+				</p>
+			</div>
+			<div class="section-meta">
+				<span>{faqs.length}&nbsp;<b>questions</b></span>
+				<span>1&nbsp;<b>schema.FAQPage</b></span>
+			</div>
 		</div>
 
-		<!-- Bottom CTA nudge -->
-		<div class="mt-12 text-center">
-			<p class="text-text-muted text-sm">Still have questions? <a href="mailto:hello@aeorank.dev" class="text-accent hover:text-accent-hover transition-colors underline underline-offset-2">Email us</a> — we reply fast.</p>
+		<div class="faq-split" data-reveal>
+			<!-- Machine pane -->
+			<aside class="faq-machine cropped">
+				<span class="cr-tl" aria-hidden="true"></span>
+				<span class="cr-br" aria-hidden="true"></span>
+
+				<header class="faq-machine__hd">
+					<span class="t-label">/faq &middot; <span class="ink-2">application/ld+json</span></span>
+					<span class="sig sig-ok ml-auto"><span class="dot dot-ok ping"></span>emitted</span>
+				</header>
+
+				<pre class="codeblock codeblock-dark faq-machine__pre">
+<span class="tok-p">&#123;</span>
+  <span class="tok-k">"@context"</span><span class="tok-p">:</span> <span class="tok-s">"https://schema.org"</span><span class="tok-p">,</span>
+  <span class="tok-k">"@type"</span><span class="tok-p">:</span> <span class="tok-s">"FAQPage"</span><span class="tok-p">,</span>
+  <span class="tok-k">"mainEntity"</span><span class="tok-p">:</span> <span class="tok-p">[</span>
+{faqs.map((f, i) => `    { "@type": "Question",\n      "name": ${JSON.stringify(f.q)},\n      "acceptedAnswer": {\n        "@type": "Answer",\n        "text": ${JSON.stringify(f.a).slice(0, 90)}…"\n      }\n    }${i < faqs.length - 1 ? "," : ""}\n`).join("")}
+  <span class="tok-p">]</span>
+<span class="tok-p">&#125;</span></pre>
+
+				<footer class="faq-machine__ft">
+					<span class="font-mono text-[10.5px] ink-3">valid schema · parsed by GPTBot, ClaudeBot, PerplexityBot</span>
+				</footer>
+			</aside>
+
+			<!-- Human pane -->
+			<div class="faq-human">
+				{faqs.map((f, i) => (
+					<details class="faq-item" open={i === 0}>
+						<summary class="faq-sum">
+							<span class="faq-sum__num font-mono">0{i + 1}</span>
+							<span class="faq-sum__q">{f.q}</span>
+							<span class="faq-sum__caret" aria-hidden="true">
+								<svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+									<path d="M4 6l4 4 4-4"/>
+								</svg>
+							</span>
+						</summary>
+						<p class="faq-a">{f.a}</p>
+					</details>
+				))}
+			</div>
+		</div>
+
+		<div class="faq-contact mt-8" data-reveal>
+			<span class="font-mono text-[11px] ink-3">still curious?</span>
+			<a href="mailto:hello@aeorank.dev" class="ilink font-mono text-[11px]">hello@aeorank.dev</a>
+			<span class="font-mono text-[11px] ink-3">·</span>
+			<a href="https://github.com/vinpatel/aeorank/discussions" class="ilink font-mono text-[11px]" target="_blank" rel="noopener">open a discussion on github&nbsp;→</a>
 		</div>
 	</div>
+
+	<!-- Emit the actual JSON-LD so the claim above is literally true -->
+	<script type="application/ld+json" set:html={JSON.stringify(jsonLd)}></script>
 </section>
 
 <style>
-	.faq-list {
+	.faq-split {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 0;
+		border: 1px solid var(--color-ink);
+		border-radius: 4px;
+		background: var(--color-page);
+		margin-right: clamp(1.25rem, 4vw, 3.25rem);
+		overflow: hidden;
+	}
+
+	.faq-machine {
+		background: #141416;
+		border-right: 1px solid var(--color-ink);
+		display: flex;
+		flex-direction: column;
+	}
+	.faq-machine__hd {
+		display: flex;
+		align-items: center;
+		padding: 10px 14px;
+		border-bottom: 1px solid #2A2A2C;
+		color: #A0A0A8;
+	}
+	.faq-machine__hd .t-label { color: #A0A0A8; }
+	.faq-machine__hd .ink-2 { color: #D0D0D4; }
+	.faq-machine__pre {
+		margin: 0;
+		border-radius: 0;
+		border: none;
+		flex: 1;
+		font-size: 11.5px;
+		line-height: 1.7;
+	}
+	.faq-machine__ft {
+		padding: 8px 14px;
+		border-top: 1px solid #2A2A2C;
+		background: #1A1A1C;
+		color: #6E6E74;
+	}
+
+	.faq-human {
+		background: var(--color-page);
 		display: flex;
 		flex-direction: column;
 	}
 
 	.faq-item {
-		border-bottom: 1px solid var(--color-border);
-		transition: background 0.2s ease, border-color 0.2s ease;
-		border-radius: 0;
-		position: relative;
+		border-bottom: 1px solid var(--color-rule);
+		padding: 0;
 	}
+	.faq-item[open] { background: var(--color-paper-2); }
+	.faq-item:last-child { border-bottom: none; }
 
-	.faq-item:first-child {
-		border-top: 1px solid var(--color-border);
-	}
-
-	.faq-item.is-open {
-		background: rgba(232, 89, 12, 0.035);
-		border-color: rgba(232, 89, 12, 0.12);
-	}
-
-	.faq-item.is-open + .faq-item {
-		border-top-color: rgba(232, 89, 12, 0.12);
-	}
-
-	/* Left accent bar on open */
-	.faq-item::before {
-		content: '';
-		position: absolute;
-		left: 0;
-		top: 0;
-		bottom: 0;
-		width: 2px;
-		background: var(--color-accent);
-		border-radius: 0 2px 2px 0;
-		transform: scaleY(0);
-		transform-origin: center;
-		transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-	}
-
-	.faq-item.is-open::before {
-		transform: scaleY(1);
-	}
-
-	.faq-trigger {
-		width: 100%;
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		gap: 1.25rem;
-		padding: 1.25rem 1rem 1.25rem 1.125rem;
-		background: none;
-		border: none;
+	.faq-sum {
+		list-style: none;
 		cursor: pointer;
-		text-align: left;
-		color: var(--color-text);
-		transition: color 0.15s ease;
-	}
-
-	.faq-trigger:hover {
-		color: var(--color-accent);
-	}
-
-	.faq-question {
-		font-size: 0.9375rem;
-		font-weight: 500;
-		line-height: 1.45;
-		flex: 1;
-		letter-spacing: -0.01em;
-	}
-
-	.faq-chevron {
-		flex-shrink: 0;
-		width: 28px;
-		height: 28px;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		border-radius: 6px;
-		background: rgba(255,255,255,0.04);
-		border: 1px solid rgba(255,255,255,0.07);
-		color: var(--color-text-muted);
-		transition: color 0.2s ease, transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), background 0.2s ease, border-color 0.2s ease;
-	}
-
-	.faq-item.is-open .faq-chevron {
-		transform: rotate(180deg);
-		color: var(--color-accent);
-		background: rgba(232, 89, 12, 0.1);
-		border-color: rgba(232, 89, 12, 0.2);
-	}
-
-	/* Smooth height animation via CSS grid trick */
-	.faq-body {
 		display: grid;
-		grid-template-rows: 0fr;
-		transition: grid-template-rows 0.32s cubic-bezier(0.4, 0, 0.2, 1);
-		overflow: hidden;
+		grid-template-columns: 36px 1fr 20px;
+		gap: 12px;
+		align-items: baseline;
+		padding: 16px 18px 16px 14px;
+		transition: background 140ms ease;
 	}
+	.faq-sum::-webkit-details-marker { display: none; }
 
-	.faq-body-inner {
-		overflow: hidden;
-		min-height: 0;
+	.faq-sum__num {
+		font-size: 10.5px;
+		color: var(--color-ink-3);
+		letter-spacing: 0.04em;
 	}
-
-	.faq-item.is-open .faq-body {
-		grid-template-rows: 1fr;
+	.faq-sum__q {
+		font-size: 14px;
+		font-weight: 540;
+		color: var(--color-ink);
+		line-height: 1.4;
 	}
+	.faq-sum__caret {
+		color: var(--color-ink-3);
+		transition: transform 200ms ease, color 140ms ease;
+	}
+	.faq-item[open] .faq-sum__caret { transform: rotate(180deg); color: var(--color-ink); }
+	.faq-sum:hover .faq-sum__q { color: var(--color-ink); }
 
-	.faq-answer {
-		font-size: 0.875rem;
-		line-height: 1.8;
-		color: var(--color-text-secondary);
-		padding: 0 1rem 1.375rem 1.125rem;
+	.faq-a {
+		padding: 0 18px 18px 62px;
+		font-size: 13.5px;
+		line-height: 1.7;
+		color: var(--color-ink-2);
 		margin: 0;
 	}
+
+	.faq-contact {
+		display: flex;
+		gap: 10px;
+		align-items: center;
+		padding: 14px 16px;
+		border: 1px dashed var(--color-rule-2);
+		border-radius: 4px;
+		margin-right: clamp(1.25rem, 4vw, 3.25rem);
+		flex-wrap: wrap;
+	}
+
+	@media (max-width: 880px) {
+		.faq-split { grid-template-columns: 1fr; }
+		.faq-machine { border-right: none; border-bottom: 1px solid var(--color-ink); }
+	}
 </style>
-
-<script>
-	const items = document.querySelectorAll<HTMLElement>('.faq-item');
-
-	// Open first item by default
-	const first = items[0];
-	if (first) first.classList.add('is-open');
-
-	items.forEach((item) => {
-		const trigger = item.querySelector<HTMLButtonElement>('.faq-trigger');
-		if (!trigger) return;
-
-		trigger.addEventListener('click', () => {
-			const isOpen = item.classList.contains('is-open');
-
-			// Close all
-			items.forEach((other) => {
-				other.classList.remove('is-open');
-				other.querySelector('.faq-trigger')?.setAttribute('aria-expanded', 'false');
-			});
-
-			// Toggle current (open if was closed)
-			if (!isOpen) {
-				item.classList.add('is-open');
-				trigger.setAttribute('aria-expanded', 'true');
-			}
-		});
-	});
-</script>

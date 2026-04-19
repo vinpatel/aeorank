@@ -1,0 +1,299 @@
+---
+// /100 Anatomy — the scoring system as a dissected diagram
+// Centerpiece: huge "/100" with pulled-out pillar callouts
+
+const pillars = [
+	{
+		code: "P1",
+		weight: 30,
+		name: "Answer readiness",
+		subs: ["topical authority", "fact density", "citation-ready prose", "evidence packaging", "duplicate detection"],
+		line: { y1: 34, y2: 15 },
+	},
+	{
+		code: "P2",
+		weight: 21,
+		name: "Content structure",
+		subs: ["Q&A format", "answer density", "tables & lists", "definitions", "heading hierarchy"],
+		line: { y1: 44, y2: 40 },
+	},
+	{
+		code: "P3",
+		weight: 19,
+		name: "AI discovery",
+		subs: ["llms.txt", "ai.txt", "GPTBot · ClaudeBot · PerplexityBot", "licensing", "freshness"],
+		line: { y1: 48, y2: 60 },
+	},
+	{
+		code: "P4",
+		weight: 16,
+		name: "Trust & authority",
+		subs: ["E-E-A-T signals", "author schema", "meta descriptions", "internal linking", "answer-first framing"],
+		line: { y1: 55, y2: 80 },
+	},
+	{
+		code: "P5",
+		weight: 14,
+		name: "Technical foundation",
+		subs: ["schema.org coverage", "semantic HTML", "speakable markup", "image context", "extraction friction"],
+		line: { y1: 60, y2: 96 },
+	},
+];
+---
+
+<section id="anatomy" class="section">
+	<div class="wrap rail">
+		<span class="rail-tick" style="top:0"></span>
+		<span class="rail-coord" style="top:0">/100</span>
+
+		<div class="section-head">
+			<div>
+				<p class="t-label">// anatomy of a score</p>
+				<h2 class="t-h1 mt-2">Every point is auditable.</h2>
+				<p class="t-body mt-3 max-w-[56ch]">
+					Your AEO score is a weighted sum of 36 deterministic checks across five pillars. Click a pillar to see the exact subchecks and their source code.
+				</p>
+			</div>
+			<div class="section-meta">
+				<span>36&nbsp;<b>criteria</b></span>
+				<span>5&nbsp;<b>pillars</b></span>
+				<span>411&nbsp;<b>tests</b></span>
+			</div>
+		</div>
+
+		<div class="anat" data-reveal>
+
+			<!-- The central number -->
+			<div class="anat__core">
+				<div class="anat__num" aria-hidden="true">
+					<span class="anat__num-big">100</span>
+					<span class="anat__num-slash">/</span>
+					<span class="anat__num-unit">maximum</span>
+				</div>
+				<div class="anat__core-meta">
+					<span class="font-mono text-[10.5px] ink-3">POINTS · weighted</span>
+					<span class="font-mono text-[10.5px] ink-3">GRADE · A+ → F</span>
+					<span class="font-mono text-[10.5px] ink-3">RUN · deterministic</span>
+				</div>
+			</div>
+
+			<!-- Pillar rows — asymmetric, editorial -->
+			<ol class="anat__pillars" start="1">
+				{pillars.map((p, i) => (
+					<li class="anat-row" data-pillar={p.code}>
+						<div class="anat-row__index">
+							<span class="font-mono text-[10.5px] ink-3">{p.code}</span>
+						</div>
+						<div class="anat-row__bar" aria-hidden="true">
+							<div class="anat-row__bar-fill" style={`width: ${p.weight}%;`}></div>
+							<span class="anat-row__bar-weight font-mono text-[10.5px]">{p.weight}%</span>
+						</div>
+						<div class="anat-row__name">
+							<h3 class="t-h3">{p.name}</h3>
+							<p class="t-caption mt-1">
+								{p.subs.join(" · ")}
+							</p>
+						</div>
+						<div class="anat-row__kbd">
+							<span class="font-mono text-[10.5px] ink-3">source</span>
+							<code class="ml-2">checks/{p.code.toLowerCase()}.ts</code>
+						</div>
+					</li>
+				))}
+			</ol>
+
+			<!-- Footer rule + formula -->
+			<div class="anat__formula">
+				<span class="font-mono text-[11px] ink-3">score</span>
+				<span class="font-mono text-[11px] ink-3">=</span>
+				<span class="font-mono text-[11px]">Σ (check · weight)</span>
+				<span class="font-mono text-[11px] ink-3">&nbsp;where&nbsp;</span>
+				<span class="font-mono text-[11px]">check ∈ { "{" }0, 1{ "}" }</span>
+				<span class="font-mono text-[11px] ink-3">&nbsp;and&nbsp;Σweights&nbsp;=&nbsp;100</span>
+			</div>
+		</div>
+
+		<!-- Grade chart -->
+		<div class="anat-grades mt-10" data-reveal>
+			{[
+				{ g: "A+", lo: 90, hi: 100, label: "ai-native" },
+				{ g: "A",  lo: 80, hi: 89,  label: "highly cited" },
+				{ g: "B",  lo: 70, hi: 79,  label: "consistently visible" },
+				{ g: "C",  lo: 60, hi: 69,  label: "sometimes cited" },
+				{ g: "D",  lo: 50, hi: 59,  label: "rare citation" },
+				{ g: "F",  lo: 0,  hi: 49,  label: "invisible" },
+			].map(grade => (
+				<div class={`anat-grade anat-grade--${grade.g.replace('+','plus').toLowerCase()}`}>
+					<div class="anat-grade__letter font-serif">{grade.g}</div>
+					<div class="anat-grade__range font-mono text-[11px] ink-2">
+						{grade.lo}–{grade.hi}
+					</div>
+					<div class="anat-grade__label t-caption">{grade.label}</div>
+				</div>
+			))}
+		</div>
+	</div>
+</section>
+
+<style>
+	.anat {
+		display: grid;
+		grid-template-columns: 340px 1fr;
+		gap: 0;
+		border: 1px solid var(--color-ink);
+		border-radius: 4px;
+		background: var(--color-page);
+		margin-right: clamp(1.25rem, 4vw, 3.25rem);
+		overflow: hidden;
+	}
+
+	.anat__core {
+		padding: 28px 22px 24px;
+		background: var(--color-paper-2);
+		border-right: 1px solid var(--color-rule);
+		display: flex;
+		flex-direction: column;
+		gap: 16px;
+		justify-content: space-between;
+	}
+
+	.anat__num {
+		display: flex;
+		align-items: baseline;
+		gap: 6px;
+		color: var(--color-ink);
+	}
+	.anat__num-big {
+		font-size: clamp(5rem, 10vw, 7.5rem);
+		font-weight: 640;
+		letter-spacing: -0.06em;
+		line-height: 0.85;
+	}
+	.anat__num-slash {
+		font-family: var(--font-serif);
+		font-style: italic;
+		font-size: clamp(2.5rem, 5vw, 3.75rem);
+		color: var(--color-ink-3);
+		line-height: 1;
+	}
+	.anat__num-unit {
+		font-family: var(--font-mono);
+		font-size: 11px;
+		color: var(--color-ink-3);
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+	}
+	.anat__core-meta {
+		display: flex;
+		flex-direction: column;
+		gap: 4px;
+		border-top: 1px dashed var(--color-rule-2);
+		padding-top: 14px;
+	}
+
+	.anat__pillars {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		counter-reset: pillar;
+	}
+
+	.anat-row {
+		display: grid;
+		grid-template-columns: 56px 180px 1fr 220px;
+		align-items: center;
+		gap: 18px;
+		padding: 18px 22px;
+		border-bottom: 1px solid var(--color-rule);
+		transition: background 140ms ease;
+	}
+	.anat-row:last-child { border-bottom: none; }
+	.anat-row:hover { background: var(--color-paper-2); }
+
+	.anat-row__index { text-align: right; }
+	.anat-row__bar {
+		position: relative;
+		height: 14px;
+		background: var(--color-paper-2);
+		border: 1px solid var(--color-rule);
+		border-radius: 2px;
+		display: flex;
+		align-items: center;
+	}
+	.anat-row__bar-fill {
+		position: absolute;
+		left: 0;
+		top: 0;
+		bottom: 0;
+		background: var(--color-ink);
+	}
+	.anat-row__bar-weight {
+		position: absolute;
+		right: 6px;
+		color: var(--color-ink-3);
+	}
+	.anat-row__bar:hover .anat-row__bar-weight { color: var(--color-ink); }
+
+	.anat-row__name { min-width: 0; }
+	.anat-row__name .t-caption { color: var(--color-ink-3); font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.01em; }
+
+	.anat-row__kbd {
+		justify-self: end;
+		display: inline-flex;
+		align-items: center;
+	}
+
+	.anat__formula {
+		padding: 12px 22px;
+		border-top: 1px solid var(--color-rule);
+		background: var(--color-paper-2);
+		display: flex;
+		align-items: center;
+		gap: 6px;
+		grid-column: 1 / -1;
+		flex-wrap: wrap;
+	}
+
+	/* ─── Grade chart ─── */
+	.anat-grades {
+		display: grid;
+		grid-template-columns: repeat(6, 1fr);
+		border: 1px solid var(--color-rule);
+		border-radius: 4px;
+		background: var(--color-page);
+		overflow: hidden;
+		margin-right: clamp(1.25rem, 4vw, 3.25rem);
+	}
+	.anat-grade {
+		padding: 18px 16px 16px;
+		border-right: 1px solid var(--color-rule);
+		display: flex;
+		flex-direction: column;
+		gap: 4px;
+	}
+	.anat-grade:last-child { border-right: none; }
+
+	.anat-grade__letter {
+		font-size: 40px;
+		line-height: 1;
+		color: var(--color-ink);
+	}
+	.anat-grade--f .anat-grade__letter  { color: var(--color-fail); }
+	.anat-grade--d .anat-grade__letter  { color: var(--color-fail); opacity: 0.85; }
+	.anat-grade--c .anat-grade__letter  { color: var(--color-warn); }
+	.anat-grade--b .anat-grade__letter  { color: var(--color-ink); }
+	.anat-grade--a .anat-grade__letter  { color: var(--color-ok); }
+	.anat-grade--aplus .anat-grade__letter { color: var(--color-ok); }
+
+	@media (max-width: 980px) {
+		.anat { grid-template-columns: 1fr; }
+		.anat__core { border-right: none; border-bottom: 1px solid var(--color-rule); }
+		.anat-row { grid-template-columns: 40px 120px 1fr; }
+		.anat-row__kbd { display: none; }
+	}
+	@media (max-width: 640px) {
+		.anat-grades { grid-template-columns: repeat(3, 1fr); }
+		.anat-grade:nth-child(3) { border-right: none; }
+		.anat-grade:nth-child(-n+3) { border-bottom: 1px solid var(--color-rule); }
+	}
+</style>

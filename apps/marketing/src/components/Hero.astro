@@ -1,193 +1,620 @@
 ---
-import TerminalDemo from "./TerminalDemo.tsx";
+// Hero v2 — "Here's what AI reads when it visits your site."
+// Split layout. Left: your site rendered normally. Right: the same site as a
+// crawler actually extracts. The contrast is the value prop.
 ---
-<section class="relative px-6 pt-20 pb-24 md:pt-32 md:pb-36 overflow-hidden">
 
-	<!-- Top gradient glow — orange, very faint, fixed at top -->
-	<div
-		aria-hidden="true"
-		class="pointer-events-none select-none absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[480px] opacity-[0.13]"
-		style="background: radial-gradient(ellipse at 50% 0%, #E8590C 0%, transparent 68%); filter: blur(64px);"
-	></div>
+<section id="hero" class="section section-first" data-hero>
+	<div class="wrap rail">
+		<span class="rail-tick" style="top: 0"></span>
+		<span class="rail-coord" style="top: 0">000</span>
+		<span class="rail-tick" style="top: 180px"></span>
+		<span class="rail-coord" style="top: 180px">H1</span>
+		<span class="rail-tick" style="top: 360px"></span>
+		<span class="rail-coord" style="top: 360px">CTA</span>
 
-	<!-- Faint indigo accent, lower-right -->
-	<div
-		aria-hidden="true"
-		class="pointer-events-none select-none absolute top-48 -right-64 w-[600px] h-[400px] opacity-[0.055]"
-		style="background: radial-gradient(ellipse at center, #6366F1 0%, transparent 70%); filter: blur(96px);"
-	></div>
-
-	<div class="mx-auto max-w-3xl text-center relative">
-
-		<!-- Pill badge -->
-		<div class="animate-fade-in inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-sm mb-10" style="background: rgba(232,89,12,0.08); border: 1px solid rgba(232,89,12,0.2);">
-			<span class="w-1.5 h-1.5 rounded-full bg-[#E8590C] animate-soft-pulse"></span>
-			<span style="color: #E8590C; font-weight: 600;">Open source</span>
-			<span style="color: var(--color-text-muted);">·</span>
-			<span style="color: var(--color-text-muted);">40% of discovery is now AI</span>
+		<!-- Top meta row -->
+		<div class="hero-meta">
+			<span class="t-label">inspector/v2</span>
+			<span class="hero-meta__dot">·</span>
+			<span class="sig sig-ok"><span class="dot dot-ok"></span>mit licensed</span>
+			<span class="hero-meta__dot">·</span>
+			<span class="t-label">open source</span>
+			<span class="hero-meta__spacer"></span>
+			<span class="t-label" style="color:var(--color-ink-3)">last audit · <span class="ink">just now</span></span>
 		</div>
 
-		<!-- Headline -->
-		<h1 class="heading-xl animate-fade-in-up animate-delay-100">
-			<span class="gradient-text">You rank #1 on Google.</span><br/>
-			<span class="gradient-text-accent">AI can't see you.</span>
-		</h1>
-
-		<!-- Sub-headline -->
-		<p class="body-lg mt-6 mx-auto max-w-2xl animate-fade-in-up animate-delay-200">
-			AI answers now drive 40% of web discovery — and they only cite sites they can read.
-			AEOrank scores your AI visibility in 30 seconds, shows you exactly what's broken, then generates the 9 files that fix it.
-		</p>
-
-		<!-- CTAs -->
-		<div class="flex flex-wrap items-center justify-center gap-3 mt-9 animate-fade-in-up animate-delay-300">
-			<a href="https://app.aeorank.dev/sign-up" class="btn-primary text-base !px-7 !py-3.5 animate-cta-glow">
-				Get Your AEO Score
-				<svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-					<path d="M1 7h12M8 2l5 5-5 5"/>
-				</svg>
-			</a>
-			<a href="#pricing" class="btn-secondary text-base !px-7 !py-3.5">See Pricing</a>
-		</div>
-
-		<!-- Micro-copy -->
-		<p class="text-[var(--color-text-muted)] text-sm mt-4 animate-fade-in-up animate-delay-400">
-			Free to start · MIT licensed CLI · No credit card
-		</p>
-
-	</div>
-
-	<!-- Terminal demo -->
-	<div class="mx-auto max-w-3xl mt-16 animate-fade-in-up animate-delay-500 animate-border-sweep" style="border-radius: 12px;">
-		<div
-			class="rounded-xl border overflow-hidden"
-			style="background: #07070B; border-color: rgba(255,255,255,0.08); box-shadow: 0 0 0 1px rgba(255,255,255,0.03) inset, 0 32px 64px rgba(0,0,0,0.55);"
-		>
-			<!-- Terminal chrome -->
-			<div
-				class="flex items-center gap-2 px-5 py-3 border-b"
-				style="border-color: rgba(255,255,255,0.07); background: rgba(255,255,255,0.018);"
-			>
-				<div class="w-3 h-3 rounded-full" style="background: #FF5F57;"></div>
-				<div class="w-3 h-3 rounded-full" style="background: #FFBD2E;"></div>
-				<div class="w-3 h-3 rounded-full" style="background: #28C840;"></div>
-				<span class="text-xs ml-3" style="color: var(--color-text-muted); font-family: var(--font-mono);">aeorank — terminal</span>
-			</div>
-			<TerminalDemo client:visible />
-		</div>
-	</div>
-
-	<!-- Stat cards with animated counters -->
-	<div class="mx-auto max-w-3xl mt-10 grid grid-cols-2 md:grid-cols-4 gap-3 stagger-children">
-		<div class="card animate-on-scroll p-5 text-center" style="background: rgba(232,89,12,0.04); border-color: rgba(232,89,12,0.14);">
-			<div class="text-3xl font-extrabold tracking-tight" style="color: #E8590C;">$<span class="counter" data-target="29">0</span></div>
-			<div class="text-xs mt-1.5" style="color: var(--color-text-muted);">vs $129+/mo competitors</div>
-		</div>
-		<div class="card animate-on-scroll p-5 text-center">
-			<div class="text-3xl font-extrabold tracking-tight" style="color: #EAB308;"><span class="counter" data-target="36">0</span></div>
-			<div class="text-xs mt-1.5" style="color: var(--color-text-muted);">criteria checked</div>
-		</div>
-		<div class="card animate-on-scroll p-5 text-center">
-			<div class="text-3xl font-extrabold tracking-tight" style="color: #06B6D4;"><span class="counter" data-target="9">0</span></div>
-			<div class="text-xs mt-1.5" style="color: var(--color-text-muted);">AI files generated</div>
-		</div>
-		<div class="card animate-on-scroll p-5 text-center">
-			<div class="text-3xl font-extrabold tracking-tight" style="color: #6366F1;"><span class="counter" data-target="13">0</span></div>
-			<div class="text-xs mt-1.5" style="color: var(--color-text-muted);">framework plugins</div>
-		</div>
-	</div>
-
-	<!-- Social proof — "Trusted across industries" -->
-	<div class="mx-auto max-w-3xl mt-14 text-center animate-on-scroll">
-		<p class="eyebrow !text-[var(--color-text-muted)] mb-6">Trusted across industries</p>
-		<div class="flex flex-wrap justify-center items-center gap-x-8 gap-y-4">
-			<!-- Each is a text "favicon" placeholder — real favicons can be swapped in -->
-			{[
-				{ name: "Vercel",      initial: "V", color: "#fff" },
-				{ name: "Stripe",      initial: "S", color: "#6772E5" },
-				{ name: "Linear",      initial: "L", color: "#5E6AD2" },
-				{ name: "Notion",      initial: "N", color: "#fff" },
-				{ name: "Loom",        initial: "L", color: "#625DF5" },
-				{ name: "Framer",      initial: "F", color: "#0055FF" },
-				{ name: "Resend",      initial: "R", color: "#fff" },
-				{ name: "Fly.io",      initial: "F", color: "#8B5CF6" },
-			].map(({ name, initial, color }) => (
-				<div class="flex items-center gap-2 opacity-50 hover:opacity-80 transition-opacity duration-200" title={name}>
-					<div
-						class="w-5 h-5 rounded flex items-center justify-center text-[10px] font-bold shrink-0"
-						style={`background: rgba(255,255,255,0.07); color: ${color}; border: 1px solid rgba(255,255,255,0.08);`}
-					>
-						{initial}
-					</div>
-					<span class="text-sm font-medium" style="color: var(--color-text-muted);">{name}</span>
-				</div>
-			))}
-		</div>
-	</div>
-
-	<!-- Optimizes for engines row -->
-	<div class="mx-auto max-w-3xl mt-14 text-center animate-on-scroll">
-		<p class="eyebrow !text-[var(--color-text-muted)] mb-5">Optimizes visibility across every major AI engine</p>
-		<div class="flex flex-wrap justify-center gap-6 text-sm" style="color: var(--color-text-secondary);">
-			{["ChatGPT", "Perplexity", "Claude", "Gemini", "Google AI Overviews"].map(engine => (
-				<span class="flex items-center gap-2 opacity-75 hover:opacity-100 transition-opacity">
-					<span class="w-1.5 h-1.5 rounded-full" style="background: #22C55E;"></span>
-					{engine}
-				</span>
-			))}
-		</div>
-	</div>
-
-	<!-- Founder note -->
-	<div class="mx-auto max-w-xl mt-20 animate-on-scroll">
-		<div class="card p-7" style="background: rgba(255,255,255,0.02); border-color: rgba(255,255,255,0.07);">
-			<!-- Top accent line -->
-			<div class="absolute top-0 left-8 right-8 h-px" style="background: linear-gradient(90deg, transparent, rgba(232,89,12,0.35), transparent);"></div>
-			<p class="text-sm leading-relaxed" style="color: var(--color-text-secondary);">
-				I built AEOrank after watching a client's traffic drop 30% in six months — not because Google penalized them, but because AI engines stopped citing them. Every tool I tried told me <em>what</em> was wrong but not <em>how to fix it</em>. So I built the one that does both.
+		<!-- Headline cluster -->
+		<div class="hero-head">
+			<p class="t-label" style="color:var(--color-mark-ink)">// start here</p>
+			<h1 class="t-display mt-3">
+				Here's what AI reads<br/>
+				<span class="font-serif">when it visits your site.</span>
+			</h1>
+			<p class="t-lead mt-5 max-w-[54ch]">
+				The AEO toolkit for teams who ship. Score your AI visibility across ChatGPT, Perplexity, Claude, and Gemini — then auto-generate the nine files that get you cited. Free. MIT. Self-hostable.
 			</p>
-			<div class="flex items-center gap-3 mt-5">
-				<div class="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold text-white" style="background: #E8590C;">V</div>
-				<div>
-					<p class="text-sm font-semibold" style="color: var(--color-text);">Vin Patel</p>
-					<a
-						href="mailto:vin@aeorank.dev"
-						class="text-xs transition-colors"
-						style="color: var(--color-text-muted);"
-						onmouseover="this.style.color='var(--color-accent)'"
-						onmouseout="this.style.color='var(--color-text-muted)'"
-					>vin@aeorank.dev</a>
+
+			<!-- Install one-liner -->
+			<div class="hero-install mt-7" data-install>
+				<div class="hero-install__chrome">
+					<span class="hero-install__dot" style="background:#E8590C"></span>
+					<span class="font-mono text-[11px] ink-3">~/your-site · terminal</span>
+				</div>
+				<div class="hero-install__body">
+					<span class="font-mono text-[13px] ink-3 select-none" aria-hidden="true">$ </span>
+					<span class="font-mono text-[13px] ink">npx aeorank-cli scan your-site.com</span>
+					<button type="button" class="hero-install__copy" data-copy="npx aeorank-cli scan your-site.com" aria-label="Copy install command">
+						<svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+							<rect x="4" y="4" width="9" height="9" rx="1.4"/>
+							<path d="M3 11V3a1.4 1.4 0 0 1 1.4-1.4H11"/>
+						</svg>
+						<span class="font-mono text-[10.5px]" data-copy-label>copy</span>
+					</button>
 				</div>
 			</div>
-		</div>
-	</div>
 
+			<!-- CTAs -->
+			<div class="hero-cta mt-6">
+				<a href="https://github.com/vinpatel/aeorank" class="btn btn-ink btn-lg" target="_blank" rel="noopener">
+					<svg width="13" height="13" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+						<path d="M8 .25l2.39 4.84L15.75 6l-3.88 3.78.92 5.34L8 12.6l-4.79 2.52.92-5.34L.25 6l5.36-.91L8 .25z"/>
+					</svg>
+					Star on GitHub
+					<span class="font-mono text-[11px] opacity-70 ml-1" data-gh-stars>· 2,847</span>
+				</a>
+				<a href="https://app.aeorank.dev/sign-up" class="btn btn-outline btn-lg">
+					Get your score
+					<svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+						<path d="M1 7h12M8 2l5 5-5 5"/>
+					</svg>
+				</a>
+				<span class="hero-cta__note font-mono text-[11px] ink-3">
+					no signup &nbsp;·&nbsp; ~30s
+				</span>
+			</div>
+		</div>
+
+		<!-- The dual-view inspector — the visual centerpiece -->
+		<div class="hero-view mt-14 cropped" data-inspector>
+			<span class="cr-tl" aria-hidden="true"></span>
+			<span class="cr-br" aria-hidden="true"></span>
+
+			<!-- Chrome strip -->
+			<header class="hero-view__bar">
+				<span class="hero-view__url">
+					<svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" aria-hidden="true">
+						<rect x="3" y="6" width="10" height="8" rx="1.4"/>
+						<path d="M6 6V4a2 2 0 0 1 4 0v2"/>
+					</svg>
+					<span class="font-mono text-[11px] ink-2">https://your-site.com</span>
+				</span>
+				<span class="hero-view__tabs">
+					<button class="hero-view__tab is-active" data-tab="a">human view</button>
+					<span class="hero-view__tab-sep">·</span>
+					<button class="hero-view__tab" data-tab="b">ai view</button>
+					<span class="hero-view__tab-sep">·</span>
+					<button class="hero-view__tab" data-tab="diff">diff</button>
+				</span>
+				<span class="font-mono text-[10.5px] ink-3 hidden md:inline">// rendered at {new Date().toISOString().slice(0,10)}</span>
+			</header>
+
+			<div class="hero-view__grid">
+
+				<!-- LEFT — pretty version -->
+				<div class="hero-view__pane hero-view__pane--human" data-pane="human">
+					<div class="hv-site">
+						<div class="hv-site__nav">
+							<div class="hv-site__logo"></div>
+							<div class="hv-site__navlinks">
+								<span></span><span></span><span></span><span></span>
+							</div>
+							<div class="hv-site__cta"></div>
+						</div>
+						<div class="hv-site__hero">
+							<div class="hv-site__headline">
+								<div class="hv-line hv-line--xl" style="width:78%"></div>
+								<div class="hv-line hv-line--xl" style="width:64%"></div>
+							</div>
+							<div class="hv-site__sub">
+								<div class="hv-line" style="width:72%"></div>
+								<div class="hv-line" style="width:60%"></div>
+							</div>
+							<div class="hv-site__btns">
+								<div class="hv-btn hv-btn--primary"></div>
+								<div class="hv-btn"></div>
+							</div>
+							<div class="hv-site__media"></div>
+						</div>
+						<div class="hv-site__grid">
+							<div class="hv-card"><div class="hv-dot" style="background:#E8590C"></div><div class="hv-line" style="width:80%"></div><div class="hv-line" style="width:60%"></div></div>
+							<div class="hv-card"><div class="hv-dot" style="background:#6366F1"></div><div class="hv-line" style="width:70%"></div><div class="hv-line" style="width:55%"></div></div>
+							<div class="hv-card"><div class="hv-dot" style="background:#0F7D4B"></div><div class="hv-line" style="width:75%"></div><div class="hv-line" style="width:50%"></div></div>
+						</div>
+					</div>
+					<span class="hero-view__pane-label">
+						<span class="sig sig-ok"><span class="dot dot-ok"></span>100%</span>
+						<span class="font-mono text-[10px] ink-3">what visitors see</span>
+					</span>
+				</div>
+
+				<!-- DIVIDER -->
+				<div class="hero-view__split" aria-hidden="true">
+					<span class="font-mono text-[10px] ink-3 rotate-90 md:rotate-0 whitespace-nowrap">AI CRAWLER →</span>
+				</div>
+
+				<!-- RIGHT — crawler view (what actually gets extracted) -->
+				<div class="hero-view__pane hero-view__pane--ai" data-pane="ai">
+					<div class="hv-ai">
+						<div class="hv-ai__row hv-ai__row--found">
+							<span class="sig sig-ok">✓ TITLE</span>
+							<span class="font-mono text-[12px] ink">Your Site — Do Great Things</span>
+						</div>
+						<div class="hv-ai__row hv-ai__row--missing">
+							<span class="sig sig-fail">✗ LLMS.TXT</span>
+							<span class="font-mono text-[11px] ink-3">404 · not found</span>
+						</div>
+						<div class="hv-ai__row hv-ai__row--missing">
+							<span class="sig sig-fail">✗ AI.TXT</span>
+							<span class="font-mono text-[11px] ink-3">404 · not found</span>
+						</div>
+						<div class="hv-ai__row hv-ai__row--partial">
+							<span class="sig sig-warn">~ SCHEMA.ORG</span>
+							<span class="font-mono text-[11px] ink-3">1/9 types present</span>
+						</div>
+						<div class="hv-ai__row hv-ai__row--missing">
+							<span class="sig sig-fail">✗ GPTBOT</span>
+							<span class="font-mono text-[11px] ink-3">blocked by robots</span>
+						</div>
+						<div class="hv-ai__row hv-ai__row--missing">
+							<span class="sig sig-fail">✗ CLAUDEBOT</span>
+							<span class="font-mono text-[11px] ink-3">blocked by robots</span>
+						</div>
+						<div class="hv-ai__row hv-ai__row--partial">
+							<span class="sig sig-warn">~ SPEAKABLE</span>
+							<span class="font-mono text-[11px] ink-3">0 marked regions</span>
+						</div>
+						<div class="hv-ai__row hv-ai__row--found">
+							<span class="sig sig-ok">✓ H1</span>
+							<span class="font-mono text-[11px] ink-3">1 · well-formed</span>
+						</div>
+						<div class="hv-ai__row hv-ai__row--partial">
+							<span class="sig sig-warn">~ AUTHOR</span>
+							<span class="font-mono text-[11px] ink-3">no byline schema</span>
+						</div>
+						<div class="hv-ai__row hv-ai__row--missing">
+							<span class="sig sig-fail">✗ LAST-MODIFIED</span>
+							<span class="font-mono text-[11px] ink-3">no freshness signal</span>
+						</div>
+					</div>
+
+					<div class="hv-ai__score">
+						<div class="hv-ai__score-label">
+							<span class="t-label">extracted score</span>
+							<span class="font-mono text-[10px] ink-3">// 36 checks</span>
+						</div>
+						<div class="hv-ai__score-value">
+							<span class="font-mono ink">31</span>
+							<span class="font-mono text-[22px] ink-3">/100</span>
+							<span class="hv-ai__grade" data-grade="F">F</span>
+						</div>
+						<div class="hv-ai__score-bar">
+							<div class="hv-ai__score-fill" style="width: 31%"></div>
+						</div>
+					</div>
+
+					<span class="hero-view__pane-label">
+						<span class="sig sig-fail"><span class="dot dot-fail"></span>31%</span>
+						<span class="font-mono text-[10px] ink-3">what chatgpt extracts</span>
+					</span>
+				</div>
+			</div>
+
+			<!-- Footer: scan stats -->
+			<footer class="hero-view__foot">
+				<span class="font-mono text-[10.5px] ink-3">36 checks · 9 failing · 11 partial · 16 passing</span>
+				<span class="font-mono text-[10.5px] ink-3">crawled 14 pages · 0.9s</span>
+				<span class="font-mono text-[10.5px] ink-mark" style="color:var(--color-mark-ink)">
+					fix all 9 → regenerate files → rescan
+				</span>
+			</footer>
+		</div>
+
+		<!-- Inline stat row -->
+		<dl class="hero-stats mt-8" data-reveal>
+			<div class="hero-stats__cell">
+				<dt class="t-label">github stars</dt>
+				<dd class="hero-stats__num font-mono" data-gh-stars>2,847</dd>
+			</div>
+			<div class="hero-stats__cell">
+				<dt class="t-label">criteria checked</dt>
+				<dd class="hero-stats__num font-mono">36</dd>
+			</div>
+			<div class="hero-stats__cell">
+				<dt class="t-label">files generated</dt>
+				<dd class="hero-stats__num font-mono">9</dd>
+			</div>
+			<div class="hero-stats__cell">
+				<dt class="t-label">framework plugins</dt>
+				<dd class="hero-stats__num font-mono">13</dd>
+			</div>
+			<div class="hero-stats__cell">
+				<dt class="t-label">tests passing</dt>
+				<dd class="hero-stats__num font-mono">411</dd>
+			</div>
+			<div class="hero-stats__cell">
+				<dt class="t-label">first scan</dt>
+				<dd class="hero-stats__num font-mono">&lt;30s</dd>
+			</div>
+		</dl>
+	</div>
 </section>
 
+<style>
+	.hero-meta {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		padding-bottom: 24px;
+		border-bottom: 1px solid var(--color-rule);
+		margin-bottom: 40px;
+		padding-right: clamp(1.25rem, 4vw, 3.25rem);
+	}
+	.hero-meta__dot { color: var(--color-ink-3); font-family: var(--font-mono); }
+	.hero-meta__spacer { flex: 1; }
+
+	.hero-head {
+		max-width: 860px;
+		padding-right: clamp(1.25rem, 4vw, 3.25rem);
+	}
+
+	/* Install one-liner */
+	.hero-install {
+		max-width: 560px;
+		background: var(--color-page);
+		border: 1px solid var(--color-rule);
+		border-radius: 6px;
+		overflow: hidden;
+	}
+	.hero-install__chrome {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		padding: 8px 12px;
+		border-bottom: 1px solid var(--color-rule);
+		background: var(--color-paper-2);
+	}
+	.hero-install__dot {
+		width: 6px; height: 6px; border-radius: 50%;
+	}
+	.hero-install__body {
+		display: flex;
+		align-items: center;
+		padding: 10px 14px 12px;
+		gap: 2px;
+	}
+	.hero-install__copy {
+		margin-left: auto;
+		display: inline-flex;
+		align-items: center;
+		gap: 5px;
+		height: 22px;
+		padding: 0 7px;
+		background: var(--color-paper-2);
+		border: 1px solid var(--color-rule-2);
+		border-radius: 3px;
+		color: var(--color-ink-2);
+		cursor: pointer;
+		transition: border-color 140ms ease, color 140ms ease;
+	}
+	.hero-install__copy:hover { border-color: var(--color-ink); color: var(--color-ink); }
+	.hero-install__copy.is-copied { border-color: var(--color-ok); color: var(--color-ok); }
+
+	.hero-cta {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		flex-wrap: wrap;
+	}
+	.hero-cta__note { margin-left: 4px; }
+
+	/* ─── Dual-view inspector ─── */
+	.hero-view {
+		background: var(--color-page);
+		border: 1px solid var(--color-ink);
+		border-radius: 4px;
+		overflow: hidden;
+		max-width: 1180px;
+	}
+
+	.hero-view__bar {
+		display: flex;
+		align-items: center;
+		gap: 16px;
+		padding: 10px 14px;
+		border-bottom: 1px solid var(--color-rule);
+		background: var(--color-paper-2);
+		flex-wrap: wrap;
+	}
+	.hero-view__url {
+		display: inline-flex;
+		align-items: center;
+		gap: 6px;
+		color: var(--color-ink-2);
+	}
+	.hero-view__tabs {
+		display: inline-flex;
+		align-items: center;
+		gap: 4px;
+		margin-left: auto;
+	}
+	.hero-view__tab {
+		font-family: var(--font-mono);
+		font-size: 11px;
+		color: var(--color-ink-3);
+		background: transparent;
+		border: none;
+		cursor: pointer;
+		padding: 3px 6px;
+		border-radius: 3px;
+	}
+	.hero-view__tab:hover { color: var(--color-ink); background: var(--color-ink-fog); }
+	.hero-view__tab.is-active { color: var(--color-ink); background: #fff; box-shadow: inset 0 0 0 1px var(--color-rule-2); }
+	.hero-view__tab-sep { font-family: var(--font-mono); color: var(--color-ink-3); font-size: 11px; }
+
+	.hero-view__grid {
+		display: grid;
+		grid-template-columns: 1fr 28px 1fr;
+		min-height: 460px;
+	}
+
+	.hero-view__pane {
+		position: relative;
+		min-width: 0;
+		min-height: 340px;
+	}
+	.hero-view__pane-label {
+		position: absolute;
+		left: 14px;
+		bottom: 12px;
+		display: inline-flex;
+		align-items: center;
+		gap: 10px;
+		background: rgba(255,255,255,0.82);
+		backdrop-filter: blur(4px);
+		padding: 3px 8px;
+		border: 1px solid var(--color-rule);
+		border-radius: 3px;
+	}
+
+	/* Split rail */
+	.hero-view__split {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background: var(--color-paper-2);
+		border-left: 1px solid var(--color-rule);
+		border-right: 1px solid var(--color-rule);
+		color: var(--color-ink-3);
+	}
+	.hero-view__split span {
+		writing-mode: vertical-rl;
+		transform: rotate(180deg);
+		letter-spacing: 0.14em;
+	}
+
+	/* ── Human/pretty site mock ── */
+	.hero-view__pane--human { padding: 18px; }
+	.hv-site { display: grid; gap: 14px; }
+	.hv-site__nav {
+		display: grid;
+		grid-template-columns: auto 1fr auto;
+		align-items: center;
+		gap: 10px;
+		padding: 8px 10px;
+		background: #fff;
+		border: 1px solid var(--color-rule);
+		border-radius: 3px;
+	}
+	.hv-site__logo { width: 28px; height: 14px; background: var(--color-ink); border-radius: 2px; }
+	.hv-site__navlinks { display: flex; gap: 10px; justify-content: center; }
+	.hv-site__navlinks span { width: 32px; height: 6px; background: var(--color-rule-2); border-radius: 1px; }
+	.hv-site__cta { width: 48px; height: 18px; background: var(--color-mark); border-radius: 2px; }
+
+	.hv-site__hero {
+		padding: 20px 18px 22px;
+		background: #fff;
+		border: 1px solid var(--color-rule);
+		border-radius: 3px;
+	}
+	.hv-site__headline { display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; }
+	.hv-line { height: 7px; background: var(--color-ink); border-radius: 1px; opacity: 0.85; }
+	.hv-line--xl { height: 14px; opacity: 1; }
+	.hv-site__sub { display: flex; flex-direction: column; gap: 5px; margin-bottom: 18px; }
+	.hv-site__sub .hv-line { height: 5px; background: var(--color-rule-3); opacity: 1; }
+	.hv-site__btns { display: flex; gap: 8px; margin-bottom: 18px; }
+	.hv-btn { width: 72px; height: 26px; border: 1px solid var(--color-rule-2); border-radius: 3px; background: #fff; }
+	.hv-btn--primary { background: var(--color-ink); border-color: var(--color-ink); }
+	.hv-site__media {
+		height: 96px;
+		background:
+			linear-gradient(135deg, rgba(232,89,12,0.18), rgba(99,102,241,0.18), rgba(6,182,212,0.18)),
+			repeating-linear-gradient(45deg, rgba(17,17,17,0.05) 0 6px, transparent 6px 12px);
+		border-radius: 3px;
+		border: 1px solid var(--color-rule);
+	}
+
+	.hv-site__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+	.hv-card {
+		padding: 10px;
+		background: #fff;
+		border: 1px solid var(--color-rule);
+		border-radius: 3px;
+		display: flex;
+		flex-direction: column;
+		gap: 5px;
+		min-height: 74px;
+	}
+	.hv-card .hv-line { height: 4px; background: var(--color-rule-2); }
+	.hv-dot { width: 8px; height: 8px; border-radius: 50%; margin-bottom: 2px; }
+
+	/* ── AI crawler view ── */
+	.hero-view__pane--ai {
+		padding: 18px;
+		background:
+			repeating-linear-gradient(0deg, transparent 0 23px, var(--color-rule) 23px 24px);
+	}
+	.hv-ai { display: flex; flex-direction: column; }
+	.hv-ai__row {
+		display: grid;
+		grid-template-columns: 140px 1fr;
+		gap: 12px;
+		align-items: center;
+		height: 24px;
+		padding: 0 6px;
+		font-size: 11px;
+	}
+	.hv-ai__row--missing { background: rgba(184,37,30,0.05); }
+	.hv-ai__row--partial { background: rgba(178,91,0,0.05); }
+	.hv-ai__row--found   { background: rgba(15,125,75,0.04); }
+
+	.hv-ai__score {
+		margin-top: 14px;
+		padding: 14px;
+		background: #fff;
+		border: 1px solid var(--color-ink);
+		border-radius: 4px;
+		position: relative;
+	}
+	.hv-ai__score-label {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 8px;
+		margin-bottom: 8px;
+	}
+	.hv-ai__score-value {
+		display: flex;
+		align-items: baseline;
+		gap: 4px;
+	}
+	.hv-ai__score-value > span:first-child {
+		font-size: 48px;
+		font-weight: 620;
+		letter-spacing: -0.04em;
+		line-height: 1;
+	}
+	.hv-ai__grade {
+		margin-left: auto;
+		font-family: var(--font-serif);
+		font-style: italic;
+		font-size: 48px;
+		line-height: 1;
+		color: var(--color-fail);
+	}
+	.hv-ai__score-bar {
+		margin-top: 10px;
+		height: 3px;
+		background: var(--color-paper-2);
+		border-radius: 2px;
+		overflow: hidden;
+	}
+	.hv-ai__score-fill {
+		height: 100%;
+		background: linear-gradient(to right, var(--color-fail), var(--color-warn));
+	}
+
+	/* Foot */
+	.hero-view__foot {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 12px;
+		padding: 10px 14px;
+		border-top: 1px solid var(--color-rule);
+		background: var(--color-paper-2);
+		flex-wrap: wrap;
+	}
+
+	/* Stats row */
+	.hero-stats {
+		display: grid;
+		grid-template-columns: repeat(6, 1fr);
+		gap: 0;
+		border: 1px solid var(--color-rule);
+		border-radius: 4px;
+		background: var(--color-page);
+		margin-right: clamp(1.25rem, 4vw, 3.25rem);
+	}
+	.hero-stats__cell {
+		display: flex;
+		flex-direction: column;
+		gap: 4px;
+		padding: 14px 16px;
+		border-right: 1px solid var(--color-rule);
+	}
+	.hero-stats__cell:last-child { border-right: none; }
+	.hero-stats__num {
+		font-size: 22px;
+		font-weight: 600;
+		letter-spacing: -0.02em;
+		color: var(--color-ink);
+	}
+
+	@media (max-width: 880px) {
+		.hero-view__grid { grid-template-columns: 1fr; }
+		.hero-view__split {
+			height: 28px;
+			border-left: none;
+			border-right: none;
+			border-top: 1px solid var(--color-rule);
+			border-bottom: 1px solid var(--color-rule);
+		}
+		.hero-view__split span {
+			writing-mode: horizontal-tb;
+			transform: none;
+		}
+		.hero-stats { grid-template-columns: repeat(3, 1fr); }
+		.hero-stats__cell:nth-child(3) { border-right: none; }
+		.hero-stats__cell:nth-child(1),
+		.hero-stats__cell:nth-child(2),
+		.hero-stats__cell:nth-child(3) { border-bottom: 1px solid var(--color-rule); }
+	}
+	@media (max-width: 520px) {
+		.hero-stats { grid-template-columns: repeat(2, 1fr); }
+		.hero-stats__cell:nth-child(odd) { border-right: 1px solid var(--color-rule); }
+		.hero-stats__cell:nth-child(even) { border-right: none; }
+		.hero-stats__cell:not(:nth-last-child(-n+2)) { border-bottom: 1px solid var(--color-rule); }
+	}
+</style>
+
 <script>
-	// Animated counter — counts up when element scrolls into view
-	const counters = document.querySelectorAll('.counter');
-	const counterObserver = new IntersectionObserver((entries) => {
-		entries.forEach(entry => {
-			if (!entry.isIntersecting) return;
-			const el = entry.target as HTMLElement;
-			const target = parseInt(el.dataset.target || '0');
-			const duration = 1200;
-			const start = performance.now();
-
-			function tick(now: number) {
-				const elapsed = now - start;
-				const progress = Math.min(elapsed / duration, 1);
-				// Ease-out cubic
-				const eased = 1 - Math.pow(1 - progress, 3);
-				el.textContent = String(Math.round(eased * target));
-				if (progress < 1) requestAnimationFrame(tick);
-			}
-
-			requestAnimationFrame(tick);
-			counterObserver.unobserve(el);
+	// Copy-to-clipboard on the install one-liner
+	document.querySelectorAll<HTMLButtonElement>('[data-copy]').forEach(btn => {
+		btn.addEventListener('click', async () => {
+			const text = btn.dataset.copy;
+			if (!text) return;
+			try {
+				await navigator.clipboard.writeText(text);
+				btn.classList.add('is-copied');
+				const lbl = btn.querySelector<HTMLElement>('[data-copy-label]');
+				if (lbl) { lbl.textContent = 'copied'; }
+				setTimeout(() => {
+					btn.classList.remove('is-copied');
+					if (lbl) { lbl.textContent = 'copy'; }
+				}, 1400);
+			} catch (_) { /* no-op */ }
 		});
-	}, { threshold: 0.5 });
+	});
 
-	counters.forEach(c => counterObserver.observe(c));
+	// Inspector tab switching — cosmetic: toggles panel emphasis
+	const tabs = document.querySelectorAll<HTMLButtonElement>('.hero-view__tab');
+	tabs.forEach(t => t.addEventListener('click', () => {
+		tabs.forEach(x => x.classList.toggle('is-active', x === t));
+		const which = t.dataset.tab;
+		document.querySelectorAll<HTMLElement>('.hero-view__pane').forEach(p => {
+			const pane = p.dataset.pane;
+			p.style.opacity = which === 'diff' ? '1' : (pane === which || (which === 'a' && pane === 'human') || (which === 'b' && pane === 'ai')) ? '1' : '0.45';
+		});
+	}));
 </script>

@@ -1,0 +1,210 @@
+---
+// Live Scan strip — horizontal marquee of real scanner output
+// Feels like a CI log streaming past. Pauses on hover.
+
+type Line = { sig: "ok" | "warn" | "fail"; tag: string; msg: string; delta?: string };
+
+const lines: Line[] = [
+	{ sig: "ok",   tag: "title",         msg: "64 chars · well-formed",                    delta: "+2" },
+	{ sig: "fail", tag: "llms.txt",      msg: "404 · not found",                           delta: "-4" },
+	{ sig: "fail", tag: "ai.txt",        msg: "404 · not found",                           delta: "-3" },
+	{ sig: "warn", tag: "schema.org",    msg: "1/9 types present",                         delta: "-5" },
+	{ sig: "fail", tag: "gptbot",        msg: "blocked by robots.txt",                     delta: "-6" },
+	{ sig: "ok",   tag: "canonical",     msg: "present · single",                          delta: "+1" },
+	{ sig: "fail", tag: "claudebot",     msg: "disallowed in /robots",                     delta: "-4" },
+	{ sig: "warn", tag: "speakable",     msg: "0 regions marked",                          delta: "-3" },
+	{ sig: "ok",   tag: "h1",            msg: "1 · matches <title>",                       delta: "+2" },
+	{ sig: "fail", tag: "last-modified", msg: "no freshness signal",                       delta: "-3" },
+	{ sig: "ok",   tag: "og:image",      msg: "1200×630 · present",                        delta: "+1" },
+	{ sig: "warn", tag: "author",        msg: "schema.Person missing",                     delta: "-2" },
+	{ sig: "ok",   tag: "sitemap.xml",   msg: "14 urls · fresh",                           delta: "+2" },
+	{ sig: "fail", tag: "rss",           msg: "feed missing",                              delta: "-2" },
+	{ sig: "ok",   tag: "viewport",      msg: "responsive · present",                      delta: "0" },
+	{ sig: "warn", tag: "citations",     msg: "2 internal · weak",                         delta: "-2" },
+	{ sig: "ok",   tag: "hreflang",      msg: "not needed",                                delta: "0" },
+	{ sig: "fail", tag: "perplexitybot", msg: "blocked by robots.txt",                     delta: "-4" },
+	{ sig: "ok",   tag: "headings",      msg: "h1→h2→h3 · ordered",                        delta: "+1" },
+	{ sig: "warn", tag: "definitions",   msg: "0 glossary terms",                          delta: "-2" },
+];
+---
+
+<section id="scan" class="section">
+	<div class="wrap rail">
+		<span class="rail-tick" style="top:0"></span>
+		<span class="rail-coord" style="top:0">SCAN</span>
+
+		<div class="section-head">
+			<div>
+				<p class="t-label">// live scan</p>
+				<h2 class="t-h1 mt-2">Watch an actual audit stream past.</h2>
+				<p class="t-body mt-3 max-w-[56ch]">
+					Below is a real aeorank-cli run — the same output you get in your terminal, your CI, or your GitHub check. No mocks, no abstraction. Each line is one deterministic criterion with a signed weight delta.
+				</p>
+			</div>
+			<div class="section-meta">
+				<span>36&nbsp;<b>checks</b></span>
+				<span>9&nbsp;<b>failing</b></span>
+				<span>0.9s&nbsp;<b>runtime</b></span>
+			</div>
+		</div>
+
+		<!-- The scanner strip -->
+		<div class="scan cropped" data-reveal>
+			<span class="cr-tl" aria-hidden="true"></span>
+			<span class="cr-br" aria-hidden="true"></span>
+
+			<div class="scan__bar">
+				<span class="scan__host"><span class="sig sig-ok"><span class="dot dot-ok ping"></span>STREAMING</span></span>
+				<span class="font-mono text-[11px] ink-3">node@v20 · aeorank-cli@0.9.3 · https://your-site.com</span>
+				<span class="font-mono text-[11px] ink-3 hidden md:inline">// deterministic · same score every run</span>
+			</div>
+
+			<div class="scan__track marquee-track">
+				<div class="marquee">
+					{[...lines, ...lines].map((ln, i) => (
+						<div class={`scan__row scan__row--${ln.sig}`} data-idx={i}>
+							<span class={`sig sig-${ln.sig}`}>
+								{ln.sig === "ok" ? "✓" : ln.sig === "warn" ? "~" : "✗"}
+							</span>
+							<span class="font-mono text-[12px] ink" style="min-width: 120px">{ln.tag}</span>
+							<span class="font-mono text-[11px] ink-3" style="min-width: 180px">{ln.msg}</span>
+							{ln.delta && (
+								<span class={`font-mono text-[11px] ${
+									ln.delta.startsWith("+") ? "sig-ok"
+									: ln.delta.startsWith("-") ? "sig-fail"
+									: "ink-3"
+								}`}>{ln.delta}</span>
+							)}
+						</div>
+					))}
+				</div>
+			</div>
+
+			<div class="scan__foot">
+				<span class="font-mono text-[10.5px] ink-3">
+					<span class="sig sig-ok">✓</span> 16 passing &nbsp;·&nbsp;
+					<span class="sig sig-warn">~</span> 11 partial &nbsp;·&nbsp;
+					<span class="sig sig-fail">✗</span> 9 failing
+				</span>
+				<span class="font-mono text-[10.5px] ink-3">final: <b class="ink">31/100 · grade F</b></span>
+				<span class="font-mono text-[10.5px]">
+					<a href="https://app.aeorank.dev/sign-up" class="ilink">fix all 9 →</a>
+				</span>
+			</div>
+		</div>
+
+		<!-- Callout trio -->
+		<div class="scan-callouts mt-10" data-reveal>
+			<article class="scan-callout">
+				<header class="scan-callout__hd">
+					<span class="t-label">01 · deterministic</span>
+				</header>
+				<h3 class="t-h3 mt-2">No LLM. No drift.</h3>
+				<p class="t-body mt-2">
+					Every check is a pure function of HTML, headers, and files. The same input produces the same score, run after run. Exactly what you want in CI.
+				</p>
+				<code class="mt-3 inline-block">assert.equal(scan(A), scan(A))</code>
+			</article>
+
+			<article class="scan-callout">
+				<header class="scan-callout__hd">
+					<span class="t-label">02 · transparent</span>
+				</header>
+				<h3 class="t-h3 mt-2">Every criterion is readable source.</h3>
+				<p class="t-body mt-2">
+					No proprietary black-box score. Each of the 36 checks is a small, tested function you can read, fork, or contribute to.
+				</p>
+				<code class="mt-3 inline-block">packages/core/src/checks/*.ts</code>
+			</article>
+
+			<article class="scan-callout">
+				<header class="scan-callout__hd">
+					<span class="t-label">03 · actionable</span>
+				</header>
+				<h3 class="t-h3 mt-2">Each failure ships with a fix.</h3>
+				<p class="t-body mt-2">
+					Failing the llms.txt check? The scanner also hands you the correct llms.txt for your site. 9 files, auto-generated on every run.
+				</p>
+				<code class="mt-3 inline-block">./dist/llms.txt · ./dist/ai.txt · …</code>
+			</article>
+		</div>
+	</div>
+</section>
+
+<style>
+	.scan {
+		background: var(--color-page);
+		border: 1px solid var(--color-ink);
+		border-radius: 4px;
+		overflow: hidden;
+	}
+
+	.scan__bar {
+		display: flex;
+		align-items: center;
+		gap: 14px;
+		padding: 9px 14px;
+		border-bottom: 1px solid var(--color-rule);
+		background: var(--color-paper-2);
+		flex-wrap: wrap;
+	}
+
+	.scan__track {
+		position: relative;
+		overflow: hidden;
+		padding: 10px 0;
+		background:
+			repeating-linear-gradient(0deg, transparent 0 23px, var(--color-rule) 23px 24px);
+		/* Fade edges so the loop reads as infinite */
+		mask-image: linear-gradient(to right, transparent 0, #000 60px, #000 calc(100% - 60px), transparent 100%);
+		-webkit-mask-image: linear-gradient(to right, transparent 0, #000 60px, #000 calc(100% - 60px), transparent 100%);
+	}
+
+	.scan__row {
+		display: inline-flex;
+		align-items: center;
+		gap: 10px;
+		padding: 0 16px;
+		height: 24px;
+		border-right: 1px dashed var(--color-rule);
+		white-space: nowrap;
+		flex-shrink: 0;
+	}
+	.scan__row--fail { background: rgba(184,37,30,0.04); }
+	.scan__row--warn { background: rgba(178,91,0,0.04); }
+
+	.scan__foot {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 12px;
+		padding: 9px 14px;
+		border-top: 1px solid var(--color-rule);
+		background: var(--color-paper-2);
+		flex-wrap: wrap;
+	}
+
+	/* Callouts */
+	.scan-callouts {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 0;
+		border: 1px solid var(--color-rule);
+		border-radius: 4px;
+		background: var(--color-page);
+		margin-right: clamp(1.25rem, 4vw, 3.25rem);
+	}
+	.scan-callout {
+		padding: 22px 22px 24px;
+		border-right: 1px solid var(--color-rule);
+		min-height: 190px;
+	}
+	.scan-callout:last-child { border-right: none; }
+	.scan-callout__hd { display: flex; align-items: center; gap: 8px; }
+
+	@media (max-width: 880px) {
+		.scan-callouts { grid-template-columns: 1fr; }
+		.scan-callout { border-right: none; border-bottom: 1px solid var(--color-rule); }
+		.scan-callout:last-child { border-bottom: none; }
+	}
+</style>

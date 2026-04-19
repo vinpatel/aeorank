@@ -4,7 +4,6 @@ import Base from "../layouts/Base.astro";
 const industries = [
 	{
 		name: "Fintech",
-		emoji: "💳",
 		avg: 39,
 		companies: [
 			{ name: "Stripe", url: "stripe.com", score: 57, grade: "C" },
@@ -21,7 +20,6 @@ const industries = [
 	},
 	{
 		name: "DevTools",
-		emoji: "🛠️",
 		avg: 55,
 		companies: [
 			{ name: "PlanetScale", url: "planetscale.com", score: 71, grade: "B" },
@@ -38,7 +36,6 @@ const industries = [
 	},
 	{
 		name: "AI / ML",
-		emoji: "🤖",
 		avg: 37,
 		companies: [
 			{ name: "Runway", url: "runway.com", score: 64, grade: "C" },
@@ -55,7 +52,6 @@ const industries = [
 	},
 	{
 		name: "SaaS / Productivity",
-		emoji: "📊",
 		avg: 38,
 		companies: [
 			{ name: "ClickUp", url: "clickup.com", score: 60, grade: "C" },
@@ -72,7 +68,6 @@ const industries = [
 	},
 	{
 		name: "E-Commerce",
-		emoji: "🛒",
 		avg: 38,
 		companies: [
 			{ name: "Klaviyo", url: "klaviyo.com", score: 59, grade: "C" },
@@ -89,11 +84,10 @@ const industries = [
 	},
 	{
 		name: "Cybersecurity",
-		emoji: "🔐",
 		avg: 44,
 		companies: [
 			{ name: "SentinelOne", url: "sentinelone.com", score: 56, grade: "C" },
-			{ name: "Palo Alto Networks", url: "paloaltonetworks.com", score: 50, grade: "D" },
+			{ name: "Palo Alto", url: "paloaltonetworks.com", score: 50, grade: "D" },
 			{ name: "Okta", url: "okta.com", score: 50, grade: "D" },
 			{ name: "Zscaler", url: "zscaler.com", score: 50, grade: "D" },
 			{ name: "1Password", url: "1password.com", score: 49, grade: "D" },
@@ -106,7 +100,6 @@ const industries = [
 	},
 	{
 		name: "HealthTech",
-		emoji: "🏥",
 		avg: 40,
 		companies: [
 			{ name: "Headspace", url: "headspace.com", score: 54, grade: "D" },
@@ -123,7 +116,6 @@ const industries = [
 	},
 	{
 		name: "EdTech",
-		emoji: "🎓",
 		avg: 32,
 		companies: [
 			{ name: "Coursera", url: "coursera.org", score: 52, grade: "D" },
@@ -140,7 +132,6 @@ const industries = [
 	},
 	{
 		name: "Infrastructure",
-		emoji: "☁️",
 		avg: 50,
 		companies: [
 			{ name: "Aiven", url: "aiven.io", score: 65, grade: "C" },
@@ -157,7 +148,6 @@ const industries = [
 	},
 	{
 		name: "MarTech",
-		emoji: "📈",
 		avg: 52,
 		companies: [
 			{ name: "Segment", url: "segment.com", score: 64, grade: "C" },
@@ -174,197 +164,332 @@ const industries = [
 	},
 ];
 
-function gradeColor(grade: string): string {
-	if (grade === "A" || grade === "A+") return "text-green";
-	if (grade === "B") return "text-green";
-	if (grade === "C") return "text-[#FFD700]";
-	if (grade === "D") return "text-accent";
-	return "text-red";
-}
-
-function gradeBg(grade: string): string {
-	if (grade === "A" || grade === "A+") return "bg-green/10 border-green/20";
-	if (grade === "B") return "bg-green/10 border-green/20";
-	if (grade === "C") return "bg-[#FFD700]/10 border-[#FFD700]/20";
-	if (grade === "D") return "bg-accent/10 border-accent/20";
-	return "bg-red/10 border-red/20";
-}
-
-function barWidth(score: number): string {
-	return `${Math.max(score, 3)}%`;
-}
-
-function barColor(score: number): string {
-	if (score >= 80) return "bg-green";
-	if (score >= 60) return "bg-[#FFD700]";
-	if (score >= 40) return "bg-accent";
-	return "bg-red";
-}
-
 const totalCompanies = industries.reduce((sum, i) => sum + i.companies.length, 0);
 const globalAvg = Math.round(industries.reduce((sum, i) => sum + i.avg, 0) / industries.length);
-const allCompanies = industries.flatMap(i => i.companies);
-const topLogos = allCompanies.sort((a, b) => b.score - a.score).slice(0, 20);
+const passing  = industries.flatMap(i => i.companies).filter(c => c.score >= 60).length;
+const failing  = industries.flatMap(i => i.companies).filter(c => c.score < 40).length;
+const gradeClass = (g: string) => g === "A" || g === "A+" ? "lb__grade--a" : g === "B" ? "lb__grade--b" : g === "C" ? "lb__grade--c" : g === "D" ? "lb__grade--d" : "lb__grade--f";
+const slug = (s: string) => s.toLowerCase().replace(/[\s\/]+/g, '-');
 ---
 
 <Base
-	title="AEO Industry Scoreboard — AI Visibility Scores for 100 Top Startups | AEOrank"
-	description="We scanned 100 top-funded startups across 10 industries for AI visibility. Stripe scores 57. OpenAI scores 16. Figma scores 30. How does your site compare?"
+	title="AEO Industry Scoreboard — 100 funded startups, scored"
+	description="We scan 100 top-funded startups weekly for AI visibility. See who ChatGPT, Perplexity, and Claude can actually read."
+	route="/ inspector / scoreboard"
 >
-	<!-- Hero -->
-	<section class="px-6 pt-20 pb-12 md:pt-28 md:pb-16">
-		<div class="mx-auto max-w-4xl text-center">
-			<div class="inline-flex items-center gap-2 rounded-full bg-red/10 border border-red/20 px-4 py-1.5 text-sm mb-8">
-				<span class="text-red font-semibold">Average score: {globalAvg}/100</span>
-				<span class="text-text-muted">·</span>
-				<span class="text-text-muted">{totalCompanies} companies scanned</span>
-			</div>
+	<!-- Page hero -->
+	<section class="section section-first">
+		<div class="wrap rail">
+			<span class="rail-tick" style="top:0"></span>
+			<span class="rail-coord" style="top:0">BOARD</span>
 
-			<h1 class="heading-xl">
-				<span class="text-text">Billion-dollar startups are</span><br/>
-				<span class="text-red">invisible to AI.</span>
+			<p class="t-label">// the scoreboard</p>
+			<h1 class="t-display mt-3">
+				100 funded startups.<br/>
+				<span class="font-serif">One brutal number.</span>
 			</h1>
-
-			<p class="text-text-secondary text-lg mt-6 leading-relaxed max-w-2xl mx-auto">
-				We scanned {totalCompanies} of the world's most well-funded startups across {industries.length} industries using <code class="!text-sm">aeorank-cli</code>. The results are brutal. OpenAI scores 16. Figma scores 30. The industry average is <strong class="text-accent">{globalAvg}/100</strong>.
+			<p class="t-lead mt-5 max-w-[60ch]">
+				We run <code>aeorank-cli scan</code> against {totalCompanies} of the most well-funded startups every week. OpenAI scores 16. Figma scores 30. The industry average is {globalAvg}/100. The data below is the entire spreadsheet.
 			</p>
 
-			<!-- Scrolling logo bar -->
-			<div class="flex flex-wrap justify-center gap-4 mt-10 max-w-3xl mx-auto">
-				{topLogos.map((co) => (
-					<div class="flex items-center gap-2 rounded-lg bg-bg-card border border-border px-3 py-2">
-						<img
-							src={`https://www.google.com/s2/favicons?domain=${co.url}&sz=32`}
-							alt={co.name}
-							width="20"
-							height="20"
-							class="rounded-sm"
-							loading="lazy"
-						/>
-						<span class="text-xs text-text-muted">{co.name}</span>
-						<span class={`text-xs font-bold ${gradeColor(co.grade)}`}>{co.score}</span>
-					</div>
-				))}
+			<!-- Top stat strip -->
+			<div class="sb-stats mt-8" data-reveal>
+				<div class="sb-stats__cell">
+					<span class="t-label">companies</span>
+					<p class="sb-stats__num font-mono">{totalCompanies}</p>
+				</div>
+				<div class="sb-stats__cell">
+					<span class="t-label">industries</span>
+					<p class="sb-stats__num font-mono">{industries.length}</p>
+				</div>
+				<div class="sb-stats__cell">
+					<span class="t-label">mean score</span>
+					<p class="sb-stats__num font-mono">{globalAvg}<span class="ink-3 text-[14px]">/100</span></p>
+				</div>
+				<div class="sb-stats__cell">
+					<span class="t-label">passing (≥60)</span>
+					<p class="sb-stats__num font-mono sig-ok">{passing}</p>
+				</div>
+				<div class="sb-stats__cell">
+					<span class="t-label">failing (&lt;40)</span>
+					<p class="sb-stats__num font-mono sig-fail">{failing}</p>
+				</div>
 			</div>
 
-			<div class="flex flex-wrap justify-center gap-3 mt-10">
-				<a href="https://app.aeorank.dev/sign-up" class="btn-primary !px-6 !py-3 text-base">Check Your Score Free</a>
-				<a href="#industry-fintech" class="btn-secondary !px-6 !py-3 text-base">See All Results</a>
+			<div class="flex gap-2 mt-6 flex-wrap">
+				<a href="https://app.aeorank.dev/sign-up" class="btn btn-ink btn-lg">Scan my site&nbsp;→</a>
+				<a href="#industries" class="btn btn-outline btn-lg">Browse by industry</a>
 			</div>
 		</div>
 	</section>
 
-	<!-- Industry overview cards -->
-	<section class="px-6 py-12 border-t border-border">
-		<div class="mx-auto max-w-6xl">
-			<div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
-				{industries.map((ind) => (
-					<a href={`#industry-${ind.name.toLowerCase().replace(/[\s\/]/g, '-')}`} class="card p-5 text-center hover:border-accent/30 transition-all">
-						<span class="text-3xl">{ind.emoji}</span>
-						<p class="text-xs font-semibold mt-3 text-text-muted">{ind.name}</p>
-						<p class="text-3xl font-bold mt-2">
-							<span class={ind.avg >= 50 ? 'text-[#FFD700]' : 'text-accent'}>{ind.avg}</span>
-							<span class="text-text-muted text-sm">/100</span>
-						</p>
-						<p class="text-[10px] text-text-muted mt-1 uppercase tracking-wider">avg score</p>
+	<!-- Industry index -->
+	<section id="industries" class="section">
+		<div class="wrap rail">
+			<span class="rail-tick" style="top:0"></span>
+			<span class="rail-coord" style="top:0">IDX</span>
+
+			<div class="section-head">
+				<div>
+					<p class="t-label">// industry index</p>
+					<h2 class="t-h1 mt-2">Sorted by weekly mean.</h2>
+				</div>
+				<div class="section-meta">
+					<span>{industries.length}&nbsp;<b>sectors</b></span>
+					<span>updated&nbsp;<b>hourly</b></span>
+				</div>
+			</div>
+
+			<div class="sb-index">
+				{industries.slice().sort((a, b) => b.avg - a.avg).map((ind, i) => (
+					<a href={`#sector-${slug(ind.name)}`} class="sb-index__cell">
+						<span class="font-mono text-[10.5px] ink-3">{String(i + 1).padStart(2, "0")}</span>
+						<span class="ink">{ind.name}</span>
+						<span class="sb-index__num font-mono">{ind.avg}<span class="ink-3 text-[11px]">/100</span></span>
+						<span class="sb-index__bar"><span class="sb-index__bar-fill" style={`width: ${ind.avg}%`}></span></span>
 					</a>
 				))}
 			</div>
 		</div>
 	</section>
 
-	<!-- Industry detail sections -->
-	<section class="px-6 py-12">
-		<div class="mx-auto max-w-5xl space-y-20">
-			{industries.map((ind) => (
-				<div id={`industry-${ind.name.toLowerCase().replace(/[\s\/]/g, '-')}`} class="scroll-mt-20">
-					<!-- Industry header -->
-					<div class="flex items-center justify-between mb-8">
-						<div class="flex items-center gap-4">
-							<span class="text-4xl">{ind.emoji}</span>
-							<div>
-								<h2 class="heading-md">{ind.name}</h2>
-								<p class="text-sm text-text-muted mt-1">
-									Industry average: <span class={`font-bold ${ind.avg >= 50 ? 'text-[#FFD700]' : 'text-accent'}`}>{ind.avg}/100</span>
-									<span class="mx-2 text-border">|</span>
-									{ind.companies.filter(c => c.score >= 60).length} passing · {ind.companies.filter(c => c.score < 40).length} failing
-								</p>
-							</div>
-						</div>
-					</div>
+	<!-- One table per industry -->
+	{industries.map(ind => (
+		<section id={`sector-${slug(ind.name)}`} class="section">
+			<div class="wrap rail">
+				<span class="rail-tick" style="top:0"></span>
+				<span class="rail-coord" style="top:0">{ind.name.slice(0,3).toUpperCase()}</span>
 
-					<!-- Company rows with logos -->
-					<div class="space-y-2">
-						{ind.companies.map((co, idx) => (
-							<div class="flex items-center gap-3 py-3 px-4 rounded-xl bg-bg-card border border-border hover:border-border-strong transition-all group">
-								<span class="text-text-muted text-xs font-mono w-5 text-right shrink-0">{idx + 1}</span>
-								<img
-									src={`https://www.google.com/s2/favicons?domain=${co.url}&sz=32`}
-									alt={`${co.name} logo`}
-									width="24"
-									height="24"
-									class="rounded-md shrink-0"
-									loading="lazy"
-								/>
-								<div class="min-w-[100px] sm:min-w-[160px]">
-									<span class="font-semibold text-sm">{co.name}</span>
-									<span class="text-xs text-text-muted ml-2 hidden sm:inline">{co.url}</span>
-								</div>
-								<div class="flex-1 mx-2 hidden sm:block">
-									<div class="h-2.5 rounded-full bg-white/5 overflow-hidden">
-										<div class={`h-full rounded-full ${barColor(co.score)} transition-all`} style={`width: ${barWidth(co.score)}`}></div>
-									</div>
-								</div>
-								<span class="text-base font-bold tabular-nums w-8 text-right">{co.score}</span>
-								<span class={`text-xs font-bold px-2 py-0.5 rounded-md border ${gradeBg(co.grade)} ${gradeColor(co.grade)} w-8 text-center`}>{co.grade}</span>
-							</div>
-						))}
+				<div class="section-head">
+					<div>
+						<p class="t-label">// sector</p>
+						<h2 class="t-h1 mt-2">{ind.name}</h2>
+						<p class="t-body mt-2">
+							Mean: <span class="font-mono ink">{ind.avg}/100</span> · {ind.companies.filter(c => c.score >= 60).length} passing · {ind.companies.filter(c => c.score < 40).length} failing
+						</p>
+					</div>
+					<div class="section-meta">
+						<span>{ind.companies.length}&nbsp;<b>sites</b></span>
 					</div>
 				</div>
-			))}
-		</div>
-	</section>
+
+				<div class="lb">
+					<table class="lb__table">
+						<thead>
+							<tr>
+								<th class="lb__th lb__th--rank">#</th>
+								<th class="lb__th">company</th>
+								<th class="lb__th">domain</th>
+								<th class="lb__th lb__th--num">score</th>
+								<th class="lb__th lb__th--grade">grade</th>
+								<th class="lb__th lb__th--bar">bar</th>
+							</tr>
+						</thead>
+						<tbody>
+							{ind.companies.slice().sort((a, b) => b.score - a.score).map((co, i) => (
+								<tr class="lb__tr">
+									<td class="lb__td lb__td--rank font-mono">{String(i + 1).padStart(2, "0")}</td>
+									<td class="lb__td lb__td--name">
+										<span class="sb-row__logo" aria-hidden="true">
+											<img src={`https://www.google.com/s2/favicons?domain=${co.url}&sz=32`} alt="" width="16" height="16" loading="lazy" />
+										</span>
+										<span class="ink">{co.name}</span>
+									</td>
+									<td class="lb__td">
+										<span class="font-mono text-[11px] ink-3">{co.url}</span>
+									</td>
+									<td class="lb__td lb__td--num font-mono">
+										<span class="ink" style="font-size:15px; font-weight:600">{co.score}</span>
+										<span class="ink-3 text-[10.5px]">/100</span>
+									</td>
+									<td class="lb__td lb__td--grade">
+										<span class={`lb__grade ${gradeClass(co.grade)}`}>{co.grade}</span>
+									</td>
+									<td class="lb__td lb__td--bar">
+										<span class="lb__bar"><span class="lb__bar-fill" style={`width: ${Math.max(co.score, 3)}%`}></span></span>
+									</td>
+								</tr>
+							))}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</section>
+	))}
 
 	<!-- CTA -->
-	<section class="px-6 py-20 border-t border-border">
-		<div class="mx-auto max-w-2xl text-center">
-			<div class="card p-12 border-accent/20">
-				<h2 class="heading-lg">Where does <em>your</em> site rank?</h2>
-				<p class="text-text-secondary mt-4 text-lg">These companies raised billions and hired hundreds of engineers. Their average AEO score is {globalAvg}/100. You might score higher — or much lower. Find out in 30 seconds.</p>
-				<div class="flex flex-wrap justify-center gap-3 mt-8">
-					<a href="https://app.aeorank.dev/sign-up" class="btn-primary !px-8 !py-3.5 text-base">Scan My Site Free</a>
-				</div>
-				<p class="text-text-muted text-xs mt-4">Free starter plan · No credit card · Results in 30 seconds</p>
+	<section class="section">
+		<div class="wrap rail">
+			<span class="rail-tick" style="top:0"></span>
+			<span class="rail-coord" style="top:0">YOU</span>
 
-				<div class="mt-8 pt-6 border-t border-border">
-					<p class="text-xs text-text-muted">Or scan from terminal:</p>
-					<code class="text-sm mt-2 inline-block">npx aeorank-cli scan https://your-site.com</code>
-				</div>
-			</div>
-		</div>
-	</section>
+			<div class="sb-cta cropped">
+				<span class="cr-tl" aria-hidden="true"></span>
+				<span class="cr-br" aria-hidden="true"></span>
 
-	<!-- Methodology + Disclaimer -->
-	<section class="px-6 py-12 border-t border-border">
-		<div class="mx-auto max-w-3xl">
-			<h3 class="heading-sm mb-4">Methodology</h3>
-			<p class="text-sm text-text-muted leading-relaxed">
-				All scores were generated on April 9, 2026 using <code class="!text-xs">aeorank-cli scan</code> with default settings (up to 10 pages per site, deterministic scoring, no LLM calls). AEOrank evaluates 36 criteria across 5 pillars: Answer Readiness, Content Structure, Trust & Authority, Technical Foundation, and AI Discovery. Scores range from 0–100. Higher is better.
-			</p>
-			<p class="text-sm text-text-muted leading-relaxed mt-3">
-				Scores are a point-in-time snapshot and may change as companies update their sites. Companies can improve their scores by running <code class="!text-xs">aeorank-cli scan</code> and implementing the recommended changes.
-			</p>
-
-			<div class="mt-8 p-5 rounded-xl bg-bg-card border border-border">
-				<h4 class="text-xs font-semibold text-text-muted uppercase tracking-wider mb-3">Trademark Disclaimer</h4>
-				<p class="text-xs text-text-muted leading-relaxed">
-					All company names, logos, and trademarks referenced on this page are the property of their respective owners. AEOrank is not affiliated with, endorsed by, or sponsored by any of the companies listed. Company logos shown are favicons retrieved from publicly accessible domains for identification purposes only. The inclusion of any company on this scoreboard does not imply any relationship, partnership, or endorsement. This analysis is provided for informational and educational purposes under fair use.
+				<p class="t-label">// your turn</p>
+				<h2 class="t-h1 mt-3">
+					Where does <span class="font-serif">your</span> site rank?
+				</h2>
+				<p class="t-body mt-3 max-w-[54ch]">
+					These companies raised billions. Their mean AEO score is {globalAvg}/100. You might be higher. You might be lower. Either way, it takes ~30 seconds to find out.
 				</p>
+				<div class="flex gap-2 mt-6 flex-wrap">
+					<a href="https://app.aeorank.dev/sign-up" class="btn btn-ink btn-lg">Scan my site free</a>
+					<a href="https://github.com/vinpatel/aeorank" class="btn btn-outline btn-lg" target="_blank" rel="noopener">Or self-host it</a>
+				</div>
+				<code class="mt-4 inline-block">npx aeorank-cli scan https://your-site.com</code>
 			</div>
 
-			<p class="text-center text-text-muted text-xs mt-8">
-				Built with <a href="https://aeorank.dev" class="text-accent hover:underline">AEOrank</a> · Open source · MIT licensed
-			</p>
+			<!-- Methodology -->
+			<section class="sb-meth mt-8">
+				<h3 class="t-h3">Methodology</h3>
+				<p class="t-body mt-2">
+					All scores generated on 2026-04-09 using <code>aeorank-cli scan</code> with default settings (up to 10 pages per site, deterministic, no LLM calls). AEOrank evaluates 36 criteria across 5 pillars. Higher is better. Scores are point-in-time and can change as sites update.
+				</p>
+				<h3 class="t-h3 mt-5">Trademarks</h3>
+				<p class="t-body mt-2">
+					Company names, logos, and trademarks are property of their respective owners. AEOrank is not affiliated with or endorsed by any listed company. Favicons are retrieved from public domains for identification only.
+				</p>
+			</section>
 		</div>
 	</section>
 </Base>
+
+<!-- Leaderboard table styles re-used + small additions -->
+<style is:global>
+	.lb {
+		background: var(--color-page);
+		border: 1px solid var(--color-ink);
+		border-radius: 4px;
+		overflow: hidden;
+	}
+	.lb__table { width: 100%; border-collapse: collapse; font-size: 13px; }
+	.lb__th {
+		text-align: left; font-family: var(--font-mono); font-weight: 500; font-size: 10.5px;
+		color: var(--color-ink-3); letter-spacing: 0.06em; text-transform: uppercase;
+		padding: 9px 16px; border-bottom: 1px solid var(--color-rule); background: var(--color-paper);
+	}
+	.lb__th--rank { width: 42px; }
+	.lb__th--num { text-align: right; }
+	.lb__th--grade { width: 78px; }
+	.lb__th--bar { width: 32%; }
+	.lb__tr:nth-child(odd) { background: #FBFAF6; }
+	.lb__tr:hover { background: #F3F0E8; }
+	.lb__td { padding: 10px 16px; border-bottom: 1px solid var(--color-rule); vertical-align: middle; }
+	.lb__td--rank { color: var(--color-ink-3); font-size: 12px; }
+	.lb__td--name { display: flex; align-items: center; gap: 8px; font-weight: 500; }
+	.lb__td--num { text-align: right; white-space: nowrap; }
+	.lb__grade {
+		display: inline-flex; align-items: center; justify-content: center;
+		width: 30px; height: 22px;
+		font-family: var(--font-serif); font-style: italic; font-size: 18px; line-height: 1;
+	}
+	.lb__grade--a  { color: var(--color-ok); }
+	.lb__grade--b  { color: var(--color-ink); }
+	.lb__grade--c  { color: var(--color-warn); }
+	.lb__grade--d  { color: var(--color-warn); }
+	.lb__grade--f  { color: var(--color-fail); }
+	.lb__bar {
+		display: block; height: 6px;
+		background: var(--color-paper-2);
+		border: 1px solid var(--color-rule);
+		border-radius: 1px; position: relative; overflow: hidden;
+	}
+	.lb__bar-fill {
+		display: block; height: 100%;
+		background: linear-gradient(90deg, var(--color-fail) 0%, var(--color-warn) 50%, var(--color-ok) 100%);
+	}
+</style>
+
+<style>
+	.sb-stats {
+		display: grid;
+		grid-template-columns: repeat(5, 1fr);
+		border: 1px solid var(--color-rule);
+		border-radius: 4px;
+		background: var(--color-page);
+		max-width: 720px;
+	}
+	.sb-stats__cell {
+		padding: 14px 16px;
+		border-right: 1px solid var(--color-rule);
+	}
+	.sb-stats__cell:last-child { border-right: none; }
+	.sb-stats__num {
+		font-size: 22px; font-weight: 620; letter-spacing: -0.02em; margin-top: 2px;
+	}
+
+	.sb-index {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 0;
+		border: 1px solid var(--color-rule);
+		border-radius: 4px;
+		background: var(--color-page);
+		margin-right: clamp(1.25rem, 4vw, 3.25rem);
+	}
+	.sb-index__cell {
+		display: grid;
+		grid-template-columns: 32px 1fr auto 120px;
+		gap: 12px;
+		align-items: center;
+		padding: 12px 16px;
+		border-right: 1px solid var(--color-rule);
+		border-bottom: 1px solid var(--color-rule);
+		color: var(--color-ink);
+		text-decoration: none;
+		font-size: 13px;
+	}
+	.sb-index__cell:nth-child(2n) { border-right: none; }
+	.sb-index__cell:hover { background: var(--color-paper-2); }
+	.sb-index__num { font-size: 14px; font-weight: 600; letter-spacing: -0.02em; }
+	.sb-index__bar {
+		display: block; height: 4px;
+		background: var(--color-paper-2);
+		border: 1px solid var(--color-rule);
+		border-radius: 1px; overflow: hidden; position: relative;
+	}
+	.sb-index__bar-fill {
+		display: block; height: 100%;
+		background: linear-gradient(90deg, var(--color-fail) 0%, var(--color-warn) 50%, var(--color-ok) 100%);
+	}
+
+	.sb-row__logo {
+		width: 20px; height: 20px;
+		border-radius: 3px;
+		background: var(--color-paper-2);
+		border: 1px solid var(--color-rule);
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		overflow: hidden;
+		flex-shrink: 0;
+	}
+
+	.sb-cta {
+		background: var(--color-page);
+		border: 1px solid var(--color-ink);
+		border-radius: 4px;
+		padding: 32px 28px 30px;
+		margin-right: clamp(1.25rem, 4vw, 3.25rem);
+	}
+
+	.sb-meth {
+		border: 1px solid var(--color-rule);
+		border-radius: 4px;
+		background: var(--color-page);
+		padding: 22px 24px 24px;
+		margin-right: clamp(1.25rem, 4vw, 3.25rem);
+	}
+
+	@media (max-width: 680px) {
+		.sb-stats { grid-template-columns: repeat(2, 1fr); }
+		.sb-stats__cell { border-right: 1px solid var(--color-rule); border-bottom: 1px solid var(--color-rule); }
+		.sb-stats__cell:nth-child(2n) { border-right: none; }
+		.sb-stats__cell:last-child { grid-column: 1 / -1; border-right: none; border-bottom: none; }
+
+		.sb-index { grid-template-columns: 1fr; }
+		.sb-index__cell { border-right: none; }
+	}
+</style>

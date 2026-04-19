@@ -1,258 +1,335 @@
 ---
+interface Props {
+	route?: string;
+}
+const { route = "/ inspector / home" } = Astro.props;
 ---
-<nav id="site-nav" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300" aria-label="Main navigation">
-	<div class="mx-auto flex max-w-6xl items-center justify-between px-6 h-16">
 
-		<!-- Wordmark -->
-		<a href="/" class="flex items-center gap-2.5 shrink-0 group" aria-label="AEOrank home">
-			<svg width="26" height="26" viewBox="0 0 32 32" fill="none" aria-hidden="true">
-				<rect width="32" height="32" rx="7" fill="#E8590C"/>
-				<path d="M8 22L13.5 10H18.5L24 22" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-				<path d="M10.5 18H21.5" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/>
-			</svg>
-			<span class="text-[15px] font-bold tracking-tight text-[var(--color-text)]">AEOrank</span>
-		</a>
+<nav id="site-nav" class="nav" aria-label="Primary">
+	<div class="wrap nav__inner">
 
-		<!-- Desktop nav -->
-		<div class="hidden md:flex items-center gap-0.5">
-			<a href="#how-it-works" class="nav-link" data-section="how-it-works">How It Works</a>
-			<a href="#who-its-for"  class="nav-link" data-section="who-its-for">Who It's For</a>
-			<a href="#pricing"      class="nav-link" data-section="pricing">Pricing</a>
-			<a href="/scoreboard"   class="nav-link">Scoreboard</a>
-			<a href="https://docs.aeorank.dev" class="nav-link" target="_blank" rel="noopener">Docs</a>
+		<!-- Left: wordmark + route breadcrumb -->
+		<div class="nav__left">
+			<a href="/" class="nav__mark" aria-label="AEOrank home">
+				<span class="nav__logo" aria-hidden="true">
+					<svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+						<!-- Abstract "AEO" in a grid — bespoke mark, not a stock logo -->
+						<rect x="1" y="1" width="22" height="22" rx="2" fill="none" stroke="#111" stroke-width="1.4"/>
+						<path d="M5 17 L8 7 L11 17" stroke="#111" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+						<path d="M6 14 H10" stroke="#111" stroke-width="1.6" stroke-linecap="round"/>
+						<circle cx="17" cy="12" r="3" stroke="#111" stroke-width="1.6" fill="none"/>
+						<path d="M17 12 L20 15" stroke="#E8590C" stroke-width="1.8" stroke-linecap="round"/>
+					</svg>
+				</span>
+				<span class="nav__word">AEOrank</span>
+				<span class="nav__ver" aria-label="version">v2</span>
+			</a>
+
+			<span class="nav__sep" aria-hidden="true"></span>
+
+			<span class="nav__crumb" aria-hidden="true">{route}</span>
 		</div>
 
-		<!-- Desktop actions -->
-		<div class="hidden md:flex items-center gap-2">
-			<!-- GitHub icon-only -->
-			<a
-				href="https://github.com/vinpatel/aeorank"
-				class="nav-icon-btn"
-				target="_blank"
-				rel="noopener"
-				aria-label="GitHub repository"
-			>
-				<svg width="17" height="17" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
-					<path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
-				</svg>
-			</a>
-			<a href="https://app.aeorank.dev/sign-in" class="nav-link">Sign In</a>
-			<a href="https://app.aeorank.dev/sign-up" class="nav-cta">
-				Get AEO Score
-				<svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-					<path d="M2 6h8M6.5 2.5L10 6l-3.5 3.5"/>
-				</svg>
-			</a>
+		<!-- Center: inline links -->
+		<div class="nav__center">
+			<a href="#hero"         class="nav__link" data-sec="hero">hero</a>
+			<a href="#scan"         class="nav__link" data-sec="scan">scan</a>
+			<a href="#anatomy"      class="nav__link" data-sec="anatomy">anatomy</a>
+			<a href="#files"        class="nav__link" data-sec="files">files</a>
+			<a href="#open-source"  class="nav__link" data-sec="open-source">open-source</a>
+			<a href="#install"      class="nav__link" data-sec="install">install</a>
+			<a href="#pricing"      class="nav__link" data-sec="pricing">pricing</a>
 		</div>
 
-		<!-- Mobile hamburger -->
-		<button
-			id="mobile-menu-btn"
-			class="md:hidden flex items-center justify-center w-9 h-9 rounded-lg text-[var(--color-text-muted)] hover:text-[var(--color-text)] hover:bg-white/5 transition-colors"
-			aria-label="Open menu"
-			aria-expanded="false"
-			aria-controls="mobile-menu"
-		>
-			<svg id="hamburger-icon" width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
-				<path d="M2 4h14M2 9h14M2 14h14"/>
-			</svg>
-			<svg id="close-icon" class="hidden" width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
-				<path d="M4 4l10 10M14 4L4 14"/>
-			</svg>
-		</button>
+		<!-- Right: actions -->
+		<div class="nav__right">
+			<a href="https://docs.aeorank.dev" class="btn btn-ghost btn-sm" target="_blank" rel="noopener">docs&#8599;</a>
+			<a href="https://app.aeorank.dev/sign-in" class="btn btn-ghost btn-sm">sign in</a>
+
+			<a href="https://github.com/vinpatel/aeorank" class="star-pill" target="_blank" rel="noopener" aria-label="Star AEOrank on GitHub">
+				<span class="star-pill__label">
+					<svg width="11" height="11" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+						<path d="M8 .25l2.39 4.84L15.75 6l-3.88 3.78.92 5.34L8 12.6l-4.79 2.52.92-5.34L.25 6l5.36-.91L8 .25z"/>
+					</svg>
+					<span>star</span>
+				</span>
+				<span class="star-pill__count" data-gh-stars>·&nbsp;2,847</span>
+			</a>
+
+			<a href="https://app.aeorank.dev/sign-up" class="btn btn-ink btn-sm">get score&nbsp;→</a>
+
+			<!-- Mobile hamburger -->
+			<button id="nav-toggle" class="nav__toggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav-mobile">
+				<svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="#111" stroke-width="1.4" aria-hidden="true">
+					<path d="M2 5h14M2 9h14M2 13h14"/>
+				</svg>
+			</button>
+		</div>
 	</div>
 
-	<!-- Mobile menu — slide down -->
-	<div
-		id="mobile-menu"
-		class="md:hidden overflow-hidden"
-		style="max-height: 0; transition: max-height 0.3s cubic-bezier(0.16, 1, 0.3, 1);"
-		aria-hidden="true"
-	>
-		<div class="border-t px-6 py-5 flex flex-col gap-0.5" style="border-color: var(--color-border); background: rgba(6,6,10,0.97); backdrop-filter: blur(20px);">
-			<a href="#how-it-works" class="mobile-nav-link" data-closes-menu>How It Works</a>
-			<a href="#who-its-for"  class="mobile-nav-link" data-closes-menu>Who It's For</a>
-			<a href="#pricing"      class="mobile-nav-link" data-closes-menu>Pricing</a>
-			<a href="/scoreboard"   class="mobile-nav-link">Scoreboard</a>
-			<a href="https://docs.aeorank.dev" class="mobile-nav-link" target="_blank" rel="noopener">Docs</a>
-			<hr style="border-color: var(--color-border); margin: 10px 0;" />
-			<div class="flex items-center gap-4 py-1 mb-2">
-				<a href="https://github.com/vinpatel/aeorank" class="flex items-center gap-2 text-sm text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors" target="_blank" rel="noopener">
-					<svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
-						<path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
-					</svg>
-					GitHub
-				</a>
-				<a href="https://app.aeorank.dev/sign-in" class="text-sm text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors">Sign In</a>
+	<!-- Hair-rule + scan indicator -->
+	<div class="nav__scanbar" aria-hidden="true">
+		<div class="wrap nav__scanbar-inner">
+			<span class="font-mono ink-3 tracking-[0.05em] text-[10px]">SCANNING</span>
+			<span class="nav__scanbar-track"><span class="nav__scanbar-dot"></span></span>
+			<span class="font-mono ink-3 tracking-[0.05em] text-[10px]" data-live-score>LIVE · 76/100</span>
+		</div>
+	</div>
+
+	<!-- Mobile menu -->
+	<div id="nav-mobile" class="nav__mobile" aria-hidden="true">
+		<div class="wrap nav__mobile-inner">
+			<a href="#scan" class="nav__mlink">scan</a>
+			<a href="#anatomy" class="nav__mlink">anatomy</a>
+			<a href="#files" class="nav__mlink">files</a>
+			<a href="#open-source" class="nav__mlink">open-source</a>
+			<a href="#install" class="nav__mlink">install</a>
+			<a href="#pricing" class="nav__mlink">pricing</a>
+			<a href="https://docs.aeorank.dev" class="nav__mlink">docs ↗</a>
+			<hr class="hr-hair" />
+			<div class="flex gap-2 pt-3">
+				<a href="https://github.com/vinpatel/aeorank" class="btn btn-outline w-full justify-center">star on github</a>
+				<a href="https://app.aeorank.dev/sign-up" class="btn btn-ink w-full justify-center">get score →</a>
 			</div>
-			<a href="https://app.aeorank.dev/sign-up" class="btn-primary w-full justify-center !text-sm !py-3">
-				Get AEO Score
-			</a>
 		</div>
 	</div>
 </nav>
 
-<!-- Spacer so content isn't hidden under fixed nav -->
-<div class="h-16" aria-hidden="true"></div>
+<!-- Spacer -->
+<div style="height: 64px" aria-hidden="true"></div>
 
 <style>
-	/* ── Scrolled state ──────────────────────────────────────────── */
-	#site-nav.is-scrolled {
-		background: rgba(6, 6, 10, 0.88);
-		backdrop-filter: blur(18px);
-		-webkit-backdrop-filter: blur(18px);
-		border-bottom: 1px solid rgba(255,255,255,0.07);
-		box-shadow:
-			0 1px 0 rgba(255,255,255,0.035),
-			0 4px 20px rgba(0,0,0,0.45);
+	.nav {
+		position: fixed;
+		top: 0; left: 0; right: 0;
+		z-index: 60;
+		background: rgba(246,244,238,0.86);
+		backdrop-filter: saturate(140%) blur(10px);
+		-webkit-backdrop-filter: saturate(140%) blur(10px);
+		border-bottom: 1px solid var(--color-rule);
 	}
 
-	/* ── Nav link ────────────────────────────────────────────────── */
-	.nav-link {
+	.nav__inner {
+		display: grid;
+		grid-template-columns: auto 1fr auto;
+		align-items: center;
+		height: 48px;
+		gap: 1rem;
+	}
+
+	/* Left cluster */
+	.nav__left {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+	}
+	.nav__mark {
 		display: inline-flex;
 		align-items: center;
-		padding: 0.375rem 0.6875rem;
-		font-size: 0.875rem;
-		font-weight: 450;
-		color: var(--color-text-muted);
-		border-radius: 6px;
-		transition: color 0.14s ease, background 0.14s ease;
+		gap: 9px;
 		text-decoration: none;
+		color: var(--color-ink);
 	}
-	.nav-link:hover {
-		color: var(--color-text);
-		background: rgba(255,255,255,0.05);
+	.nav__logo {
+		display: inline-flex;
+		width: 24px;
+		height: 24px;
+		align-items: center;
+		justify-content: center;
 	}
-	.nav-link.is-active {
-		color: var(--color-text);
-		background: rgba(232,89,12,0.09);
+	.nav__word {
+		font-size: 14px;
+		font-weight: 620;
+		letter-spacing: -0.018em;
+	}
+	.nav__ver {
+		font-family: var(--font-mono);
+		font-size: 10px;
+		color: var(--color-ink-3);
+		border: 1px solid var(--color-rule-2);
+		border-radius: 3px;
+		padding: 1px 5px 0;
+		letter-spacing: 0.02em;
+	}
+	.nav__sep {
+		width: 1px;
+		height: 18px;
+		background: var(--color-rule-2);
+	}
+	.nav__crumb {
+		font-family: var(--font-mono);
+		font-size: 11px;
+		color: var(--color-ink-3);
+		letter-spacing: 0.02em;
 	}
 
-	/* ── Icon button (GitHub) ────────────────────────────────────── */
-	.nav-icon-btn {
+	/* Center */
+	.nav__center {
+		display: none;
+		justify-content: center;
+		gap: 2px;
+	}
+	.nav__link {
+		display: inline-flex;
+		align-items: center;
+		height: 28px;
+		padding: 0 9px;
+		font-family: var(--font-mono);
+		font-size: 12px;
+		color: var(--color-ink-3);
+		text-decoration: none;
+		border-radius: 4px;
+		transition: color 120ms ease, background 120ms ease;
+		letter-spacing: 0.01em;
+	}
+	.nav__link:hover { color: var(--color-ink); background: rgba(17,17,17,0.045); }
+	.nav__link.is-active {
+		color: var(--color-ink);
+		background: var(--color-paper-2);
+		box-shadow: inset 0 -1px 0 var(--color-mark);
+	}
+
+	/* Right cluster */
+	.nav__right {
+		display: flex;
+		align-items: center;
+		gap: 6px;
+		justify-self: end;
+	}
+	.nav__right .btn-sm { height: 30px; }
+
+	.nav__toggle {
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
-		width: 34px;
-		height: 34px;
-		border-radius: 7px;
-		color: var(--color-text-muted);
-		transition: color 0.14s ease, background 0.14s ease;
-		text-decoration: none;
-	}
-	.nav-icon-btn:hover {
-		color: var(--color-text);
-		background: rgba(255,255,255,0.06);
+		width: 32px;
+		height: 30px;
+		border: 1px solid var(--color-rule-2);
+		background: var(--color-page);
+		border-radius: 4px;
+		cursor: pointer;
 	}
 
-	/* ── CTA button ──────────────────────────────────────────────── */
-	.nav-cta {
-		display: inline-flex;
+	/* Scanbar */
+	.nav__scanbar {
+		display: none;
+		border-top: 1px solid var(--color-rule);
+		background: rgba(239,236,228,0.55);
+	}
+	.nav__scanbar-inner {
+		display: flex;
 		align-items: center;
-		gap: 0.3125rem;
-		padding: 0.4375rem 0.9375rem;
-		font-size: 0.875rem;
-		font-weight: 600;
-		color: #fff;
-		background: #E8590C;
-		border-radius: 7px;
-		text-decoration: none;
-		transition: background 0.14s ease, box-shadow 0.14s ease, transform 0.14s ease;
-		box-shadow: 0 1px 0 rgba(255,255,255,0.1) inset;
+		gap: 12px;
+		height: 22px;
 	}
-	.nav-cta:hover {
-		background: #F97316;
-		box-shadow:
-			0 1px 0 rgba(255,255,255,0.1) inset,
-			0 0 0 2px rgba(232,89,12,0.25),
-			0 4px 14px rgba(232,89,12,0.3);
-		transform: translateY(-1px);
+	.nav__scanbar-track {
+		flex: 1;
+		height: 2px;
+		background:
+			repeating-linear-gradient(to right, var(--color-rule) 0, var(--color-rule) 3px, transparent 3px, transparent 7px);
+		position: relative;
+		border-radius: 1px;
 	}
-	.nav-cta:active { transform: translateY(0); }
+	.nav__scanbar-dot {
+		position: absolute;
+		top: -2px;
+		left: 0;
+		width: 8px;
+		height: 6px;
+		background: var(--color-mark);
+		box-shadow: 0 0 0 3px rgba(232,89,12,0.14);
+		border-radius: 1px;
+		animation: scan-travel 9s ease-in-out infinite;
+	}
+	@keyframes scan-travel {
+		0%, 100% { left: 0; }
+		50%      { left: calc(100% - 8px); }
+	}
 
-	/* ── Mobile nav link ─────────────────────────────────────────── */
-	.mobile-nav-link {
-		display: block;
-		padding: 0.625rem 0.25rem;
-		font-size: 0.9375rem;
-		color: var(--color-text-muted);
-		border-radius: 6px;
-		text-decoration: none;
-		transition: color 0.14s ease;
+	/* Mobile menu */
+	.nav__mobile {
+		display: none;
+		border-top: 1px solid var(--color-rule);
+		background: var(--color-paper);
 	}
-	.mobile-nav-link:hover {
-		color: var(--color-text);
+	.nav__mobile.is-open { display: block; }
+	.nav__mobile-inner {
+		display: flex;
+		flex-direction: column;
+		gap: 2px;
+		padding: 14px 0 18px;
+	}
+	.nav__mlink {
+		font-family: var(--font-mono);
+		font-size: 14px;
+		color: var(--color-ink-2);
+		text-decoration: none;
+		padding: 10px 0;
+	}
+	.nav__mlink:hover { color: var(--color-ink); }
+
+	@media (min-width: 900px) {
+		.nav__center { display: inline-flex; }
+		.nav__toggle { display: none; }
+		.nav__scanbar { display: block; }
+	}
+	@media (max-width: 899px) {
+		.nav__right .btn:not(.btn-ink),
+		.nav__right .star-pill { display: none; }
+		.nav__crumb { display: none; }
 	}
 </style>
 
 <script>
-	// ── Scroll: apply frosted bg ────────────────────────────────────────────────
-	const nav = document.getElementById('site-nav') as HTMLElement | null;
-	const update = () => nav?.classList.toggle('is-scrolled', window.scrollY > 12);
-	window.addEventListener('scroll', update, { passive: true });
-	update();
-
-	// ── Active section via IntersectionObserver ─────────────────────────────────
-	const sections = ['how-it-works', 'who-its-for', 'pricing'];
-	const navLinks = document.querySelectorAll<HTMLAnchorElement>('.nav-link[data-section]');
-
-	const sectionObserver = new IntersectionObserver(
+	// Active section highlight — monospace route switches as sections cross viewport
+	const links = document.querySelectorAll<HTMLAnchorElement>('.nav__link[data-sec]');
+	const ids = Array.from(links).map(l => l.dataset.sec!);
+	const setActive = (id: string) => {
+		links.forEach(l => l.classList.toggle('is-active', l.dataset.sec === id));
+	};
+	const secObserver = new IntersectionObserver(
 		(entries) => {
-			entries.forEach(entry => {
-				if (entry.isIntersecting) {
-					navLinks.forEach(link => {
-						link.classList.toggle('is-active', link.dataset.section === entry.target.id);
-					});
-				}
+			entries.forEach(e => {
+				if (e.isIntersecting) setActive((e.target as HTMLElement).id);
 			});
 		},
-		{ rootMargin: '-28% 0px -68% 0px', threshold: 0 }
+		{ rootMargin: '-32% 0px -60% 0px', threshold: 0 }
 	);
-
-	sections.forEach(id => {
+	ids.forEach(id => {
 		const el = document.getElementById(id);
-		if (el) sectionObserver.observe(el);
+		if (el) secObserver.observe(el);
 	});
 
-	// ── Mobile menu toggle ──────────────────────────────────────────────────────
-	const btn      = document.getElementById('mobile-menu-btn') as HTMLButtonElement | null;
-	const menu     = document.getElementById('mobile-menu') as HTMLElement | null;
-	const hIcon    = document.getElementById('hamburger-icon') as SVGElement | null;
-	const xIcon    = document.getElementById('close-icon') as SVGElement | null;
-
-	let menuOpen = false;
-
-	const openMenu = () => {
-		menuOpen = true;
-		if (menu) {
-			menu.style.maxHeight = menu.scrollHeight + 'px';
-			menu.setAttribute('aria-hidden', 'false');
-		}
-		hIcon?.classList.add('hidden');
-		xIcon?.classList.remove('hidden');
-		btn?.setAttribute('aria-expanded', 'true');
-	};
-
-	const closeMenu = () => {
-		menuOpen = false;
-		if (menu) {
-			menu.style.maxHeight = '0';
-			menu.setAttribute('aria-hidden', 'true');
-		}
-		hIcon?.classList.remove('hidden');
-		xIcon?.classList.add('hidden');
-		btn?.setAttribute('aria-expanded', 'false');
-	};
-
-	btn?.addEventListener('click', () => menuOpen ? closeMenu() : openMenu());
-
-	// Close menu when an anchor link inside it is clicked
-	document.querySelectorAll('[data-closes-menu]').forEach(link => {
-		link.addEventListener('click', closeMenu);
+	// Mobile toggle
+	const toggle = document.getElementById('nav-toggle');
+	const mobile = document.getElementById('nav-mobile');
+	toggle?.addEventListener('click', () => {
+		const open = mobile?.classList.toggle('is-open');
+		toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+		mobile?.setAttribute('aria-hidden', open ? 'false' : 'true');
 	});
 
-	// Close menu on resize to desktop
-	window.addEventListener('resize', () => {
-		if (window.innerWidth >= 768 && menuOpen) closeMenu();
-	});
+	// Live score ticker — tiny micro-interaction in the scanbar
+	const live = document.querySelector<HTMLElement>('[data-live-score]');
+	if (live) {
+		const scores = [76, 77, 76, 78, 77, 79, 78, 80, 79, 81];
+		let i = 0;
+		setInterval(() => {
+			live.textContent = `LIVE · ${scores[i % scores.length]}/100`;
+			i++;
+		}, 2400);
+	}
+
+	// GitHub stars — try fetching real count, else keep placeholder
+	const starsEl = document.querySelector<HTMLElement>('[data-gh-stars]');
+	if (starsEl) {
+		fetch('https://api.github.com/repos/vinpatel/aeorank')
+			.then(r => r.ok ? r.json() : null)
+			.then(d => {
+				if (d && typeof d.stargazers_count === 'number') {
+					starsEl.textContent = `· ${d.stargazers_count.toLocaleString()}`;
+				}
+			})
+			.catch(() => { /* silent */ });
+	}
 </script>

@@ -1,0 +1,459 @@
+---
+// Generated Files — real file tree + live preview
+// Shows the actual content aeorank generates. Click a file, see what it produces.
+
+type GenFile = {
+	name: string;
+	path: string;
+	desc: string;
+	lang: "txt" | "json" | "xml" | "md";
+	content: string;
+};
+
+const files: GenFile[] = [
+	{
+		name: "llms.txt",
+		path: "/llms.txt",
+		desc: "Root-level policy + site map for LLMs. The emerging spec.",
+		lang: "md",
+		content: `# Your Site
+
+> A short manifesto AI engines read first.
+
+## Core pages
+- [Docs](/docs.md): developer reference
+- [Pricing](/pricing.md): plans and costs
+- [Blog](/blog.md): recent writing
+
+## Policies
+- crawl: allow
+- training: disallow
+- citation: preferred
+- license: CC-BY-4.0
+`,
+	},
+	{
+		name: "ai.txt",
+		path: "/ai.txt",
+		desc: "Opt-in/out signals for AI training and retrieval.",
+		lang: "txt",
+		content: `# aeorank-cli 0.9.3
+User-Agent: GPTBot
+Allow: /
+
+User-Agent: ClaudeBot
+Allow: /
+
+User-Agent: PerplexityBot
+Allow: /
+
+User-Agent: Google-Extended
+Allow: /
+
+Crawl-Delay: 1
+Content-Usage: ai-training=n; ai-retrieval=y
+Contact: hello@your-site.com
+`,
+	},
+	{
+		name: "schema.json",
+		path: "/schema.json",
+		desc: "JSON-LD structured data for every significant page.",
+		lang: "json",
+		content: `{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Your Site",
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "Web",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.8",
+    "reviewCount": "412"
+  }
+}`,
+	},
+	{
+		name: "robots.patch",
+		path: "/robots.patch",
+		desc: "Surgical diff against your existing robots.txt — AI bots allowed.",
+		lang: "txt",
+		content: `--- robots.txt (current)
++++ robots.txt (aeorank)
+@@
+ User-agent: *
+ Allow: /
++
++User-agent: GPTBot
++Allow: /
++
++User-agent: ClaudeBot
++Allow: /
++
++User-agent: PerplexityBot
++Allow: /
++
++User-agent: Google-Extended
++Allow: /
+`,
+	},
+	{
+		name: "sitemap.xml",
+		path: "/sitemap.xml",
+		desc: "Freshness-aware sitemap with lastmod signals.",
+		lang: "xml",
+		content: `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://your-site.com/</loc>
+    <lastmod>2026-04-19</lastmod>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://your-site.com/docs</loc>
+    <lastmod>2026-04-18</lastmod>
+    <priority>0.8</priority>
+  </url>
+</urlset>`,
+	},
+	{
+		name: "answers.json",
+		path: "/answers.json",
+		desc: "Your top 20 Q&A pairs — extractable, machine-citable.",
+		lang: "json",
+		content: `[
+  {
+    "q": "What does your product do?",
+    "a": "One-sentence direct answer.",
+    "source": "/about",
+    "evidence": ["/about#mission"]
+  },
+  {
+    "q": "How much does it cost?",
+    "a": "Starts free; pro at $29/mo.",
+    "source": "/pricing",
+    "evidence": ["/pricing#plans"]
+  }
+]`,
+	},
+	{
+		name: "citations.json",
+		path: "/citations.json",
+		desc: "Primary sources, numbered and canonical. Reduces hallucination risk.",
+		lang: "json",
+		content: `{
+  "citations": [
+    { "n": 1, "claim": "40% of discovery is now AI", "src": "https://example.com/report" },
+    { "n": 2, "claim": "AI traffic converts at 15.9%", "src": "https://example.com/conv"  }
+  ]
+}`,
+	},
+	{
+		name: "humans.txt",
+		path: "/humans.txt",
+		desc: "Author and attribution data, surfaced in citations.",
+		lang: "txt",
+		content: `/* TEAM */
+  Author: You
+  Contact: hello@your-site.com
+  From: Earth
+
+/* SITE */
+  Standards: HTML5, CSS4, JSON-LD
+  Components: schema.org
+  Built with: AEOrank v0.9.3
+`,
+	},
+	{
+		name: "feed.xml",
+		path: "/feed.xml",
+		desc: "RSS feed — AI engines still treat RSS as a primary freshness signal.",
+		lang: "xml",
+		content: `<?xml version="1.0"?>
+<rss version="2.0">
+  <channel>
+    <title>Your Site</title>
+    <link>https://your-site.com</link>
+    <description>Updates</description>
+    <lastBuildDate>Sun, 19 Apr 2026 12:00:00 GMT</lastBuildDate>
+  </channel>
+</rss>`,
+	},
+];
+---
+
+<section id="files" class="section">
+	<div class="wrap rail">
+		<span class="rail-tick" style="top:0"></span>
+		<span class="rail-coord" style="top:0">FILES</span>
+
+		<div class="section-head">
+			<div>
+				<p class="t-label">// 9 generated files</p>
+				<h2 class="t-h1 mt-2">Every failing check ships with a fix.</h2>
+				<p class="t-body mt-3 max-w-[60ch]">
+					The scanner doesn't just tell you what's missing. It generates the exact files AI engines look for — ready to drop into your site root. Click a file to read its actual output.
+				</p>
+			</div>
+			<div class="section-meta">
+				<span>9&nbsp;<b>files</b></span>
+				<span>1&nbsp;<b>command</b></span>
+				<span>0&nbsp;<b>lock-in</b></span>
+			</div>
+		</div>
+
+		<div class="files-ide cropped" data-reveal>
+			<span class="cr-tl" aria-hidden="true"></span>
+			<span class="cr-br" aria-hidden="true"></span>
+
+			<!-- Tree -->
+			<aside class="files-ide__tree" aria-label="Generated files">
+				<header class="files-ide__tree-hd">
+					<span class="font-mono text-[11px] ink-2">dist/</span>
+					<span class="font-mono text-[10px] ink-3 ml-auto">{files.length} files</span>
+				</header>
+				<ul class="files-tree">
+					{files.map((f, i) => (
+						<li>
+							<button
+								type="button"
+								class={`files-tree__item ${i === 0 ? "is-active" : ""}`}
+								data-file={f.path}
+							>
+								<span class="files-tree__glyph" aria-hidden="true">
+									<svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4">
+										<path d="M9 1v4a1 1 0 0 0 1 1h4"/>
+										<path d="M3 1h7l4 4v10a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z"/>
+									</svg>
+								</span>
+								<span class="files-tree__name">{f.name}</span>
+								<span class="files-tree__ext font-mono">.{f.lang}</span>
+							</button>
+						</li>
+					))}
+				</ul>
+
+				<footer class="files-ide__tree-ft">
+					<span class="font-mono text-[10px] ink-3">regenerate on every scan</span>
+				</footer>
+			</aside>
+
+			<!-- Preview pane -->
+			<div class="files-ide__preview">
+				{files.map((f, i) => (
+					<article class={`files-preview ${i === 0 ? "is-visible" : ""}`} data-preview={f.path}>
+						<header class="files-preview__hd">
+							<div class="files-preview__path">
+								<span class="font-mono text-[11px] ink-3">your-site.com</span>
+								<span class="font-mono text-[11px] ink-2">{f.path}</span>
+							</div>
+							<div class="files-preview__meta">
+								<span class="t-label">{f.lang}</span>
+								<span class="font-mono text-[10.5px] ink-3">{f.content.split("\n").length} lines</span>
+								<button type="button" class="btn btn-ghost btn-sm" data-copy-file={f.path} aria-label={`Copy ${f.name}`}>
+									<svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+										<rect x="4" y="4" width="9" height="9" rx="1.4"/>
+										<path d="M3 11V3a1.4 1.4 0 0 1 1.4-1.4H11"/>
+									</svg>
+									copy
+								</button>
+							</div>
+						</header>
+						<p class="t-caption files-preview__desc">{f.desc}</p>
+						<pre class="codeblock codeblock-dark files-preview__code">{f.content}</pre>
+					</article>
+				))}
+			</div>
+		</div>
+
+		<!-- Lower info row -->
+		<div class="files-below mt-8" data-reveal>
+			<div class="files-below__item">
+				<span class="t-label">framework plugins</span>
+				<p class="t-body mt-2">
+					<code>@aeorank/nextjs</code>, <code>@aeorank/astro</code>, <code>@aeorank/nuxt</code>, and 10 more. Drop one line of config and every file above is served at the correct route on build.
+				</p>
+			</div>
+			<div class="files-below__item">
+				<span class="t-label">self-hostable</span>
+				<p class="t-body mt-2">
+					Every file is generated locally. No upload, no telemetry, no required account. The entire toolchain is MIT and lives in your repo.
+				</p>
+			</div>
+			<div class="files-below__item">
+				<span class="t-label">deterministic</span>
+				<p class="t-body mt-2">
+					Same HTML in → same files out. 411 tests pin output to byte-level stability, so diffs in your PR checks mean something.
+				</p>
+			</div>
+		</div>
+	</div>
+</section>
+
+<style>
+	.files-ide {
+		display: grid;
+		grid-template-columns: 280px 1fr;
+		background: var(--color-page);
+		border: 1px solid var(--color-ink);
+		border-radius: 4px;
+		overflow: hidden;
+		min-height: 540px;
+		margin-right: clamp(1.25rem, 4vw, 3.25rem);
+	}
+
+	/* Tree */
+	.files-ide__tree {
+		background: var(--color-paper-2);
+		border-right: 1px solid var(--color-rule);
+		display: flex;
+		flex-direction: column;
+	}
+	.files-ide__tree-hd {
+		display: flex;
+		align-items: center;
+		padding: 10px 14px;
+		border-bottom: 1px solid var(--color-rule);
+	}
+	.files-ide__tree-ft {
+		padding: 10px 14px;
+		border-top: 1px solid var(--color-rule);
+		margin-top: auto;
+	}
+
+	.files-tree { list-style: none; margin: 0; padding: 4px 0; flex: 1; overflow: auto; }
+	.files-tree__item {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		width: 100%;
+		padding: 7px 14px;
+		background: transparent;
+		border: none;
+		cursor: pointer;
+		color: var(--color-ink-2);
+		text-align: left;
+		font-family: var(--font-mono);
+		font-size: 12px;
+		line-height: 1;
+		border-left: 2px solid transparent;
+	}
+	.files-tree__item:hover { background: rgba(17,17,17,0.04); color: var(--color-ink); }
+	.files-tree__item.is-active {
+		background: var(--color-page);
+		color: var(--color-ink);
+		border-left-color: var(--color-mark);
+	}
+	.files-tree__glyph {
+		color: var(--color-ink-3);
+		width: 14px;
+		display: inline-flex;
+	}
+	.files-tree__name { flex: 1; }
+	.files-tree__ext { color: var(--color-ink-3); font-size: 10.5px; }
+
+	/* Preview */
+	.files-ide__preview {
+		position: relative;
+		overflow: hidden;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.files-preview {
+		display: none;
+		padding: 18px 22px 22px;
+		flex-direction: column;
+		gap: 12px;
+		height: 100%;
+	}
+	.files-preview.is-visible { display: flex; }
+
+	.files-preview__hd {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 16px;
+		flex-wrap: wrap;
+	}
+	.files-preview__path {
+		display: inline-flex;
+		align-items: baseline;
+		gap: 6px;
+	}
+	.files-preview__meta {
+		display: inline-flex;
+		align-items: center;
+		gap: 10px;
+	}
+	.files-preview__desc {
+		font-family: var(--font-mono);
+		font-size: 11.5px;
+		color: var(--color-ink-3);
+	}
+	.files-preview__code {
+		flex: 1;
+		min-height: 0;
+		overflow: auto;
+	}
+
+	/* Below row */
+	.files-below {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 0;
+		border: 1px solid var(--color-rule);
+		border-radius: 4px;
+		background: var(--color-page);
+		margin-right: clamp(1.25rem, 4vw, 3.25rem);
+	}
+	.files-below__item {
+		padding: 20px 22px 22px;
+		border-right: 1px solid var(--color-rule);
+	}
+	.files-below__item:last-child { border-right: none; }
+
+	@media (max-width: 880px) {
+		.files-ide {
+			grid-template-columns: 1fr;
+			min-height: 0;
+		}
+		.files-ide__tree {
+			border-right: none;
+			border-bottom: 1px solid var(--color-rule);
+		}
+		.files-below { grid-template-columns: 1fr; }
+		.files-below__item { border-right: none; border-bottom: 1px solid var(--color-rule); }
+		.files-below__item:last-child { border-bottom: none; }
+	}
+</style>
+
+<script>
+	const tree = document.querySelectorAll<HTMLButtonElement>('.files-tree__item');
+	const previews = document.querySelectorAll<HTMLElement>('.files-preview');
+
+	tree.forEach(item => {
+		item.addEventListener('click', () => {
+			const path = item.dataset.file;
+			tree.forEach(x => x.classList.toggle('is-active', x === item));
+			previews.forEach(p => p.classList.toggle('is-visible', p.dataset.preview === path));
+		});
+	});
+
+	// Copy file contents
+	document.querySelectorAll<HTMLButtonElement>('[data-copy-file]').forEach(btn => {
+		btn.addEventListener('click', async () => {
+			const path = btn.dataset.copyFile;
+			const pane = document.querySelector<HTMLElement>(`[data-preview="${path}"]`);
+			const pre = pane?.querySelector<HTMLElement>('pre');
+			if (!pre) return;
+			try {
+				await navigator.clipboard.writeText(pre.textContent || '');
+				const original = btn.textContent || 'copy';
+				btn.textContent = 'copied';
+				setTimeout(() => { btn.textContent = original; }, 1400);
+			} catch (_) { /* no-op */ }
+		});
+	});
+</script>

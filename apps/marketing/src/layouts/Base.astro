@@ -6,24 +6,28 @@ import Footer from "../components/Footer.astro";
 interface Props {
 	title: string;
 	description?: string;
+	route?: string;
 }
 
 const {
 	title,
-	description = "Score your AI visibility across ChatGPT, Perplexity, Claude, Gemini, and Google AI Overviews. Open source. Free to start.",
+	description = "AEO toolkit — score, fix, and monitor your AI visibility across ChatGPT, Perplexity, Claude, and Gemini. MIT licensed. Self-hostable.",
+	route = "/ inspector / home",
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? "https://aeorank.dev");
 const ogImage = new URL("/og-image.png", canonicalURL).toString();
 ---
 <!doctype html>
-<html lang="en" class="dark">
+<html lang="en">
 <head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<meta name="description" content={description} />
 	<link rel="canonical" href={canonicalURL.toString()} />
 	<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+	<meta name="theme-color" content="#F6F4EE" />
 
 	<!-- Open Graph -->
 	<meta property="og:type"        content="website" />
@@ -40,14 +44,13 @@ const ogImage = new URL("/og-image.png", canonicalURL).toString();
 	<meta name="twitter:description" content={description} />
 	<meta name="twitter:image"       content={ogImage} />
 
-	<!-- SEO -->
 	<meta name="robots" content="index, follow" />
 
-	<!-- Fonts: Inter + JetBrains Mono -->
+	<!-- Fonts: Inter + JetBrains Mono + Instrument Serif (all OFL/open source) -->
 	<link rel="preconnect" href="https://fonts.googleapis.com" />
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 	<link
-		href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;0,14..32,800;1,14..32,400&family=JetBrains+Mono:wght@400;500&display=swap"
+		href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;540;600;640;700&family=JetBrains+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap"
 		rel="stylesheet"
 	/>
 
@@ -55,7 +58,7 @@ const ogImage = new URL("/og-image.png", canonicalURL).toString();
 </head>
 <body>
 
-	<Nav />
+	<Nav route={route} />
 
 	<main>
 		<slot />
@@ -63,44 +66,20 @@ const ogImage = new URL("/og-image.png", canonicalURL).toString();
 
 	<Footer />
 
-	<!-- Mobile sticky CTA — hidden on md+ -->
-	<div
-		id="mobile-cta-bar"
-		class="fixed bottom-0 left-0 right-0 z-40 md:hidden"
-		style="
-			padding: 10px 12px;
-			background: rgba(6,6,10,0.94);
-			backdrop-filter: blur(16px);
-			-webkit-backdrop-filter: blur(16px);
-			border-top: 1px solid rgba(255,255,255,0.07);
-		"
-	>
-		<a
-			href="https://app.aeorank.dev/sign-up"
-			class="btn-primary w-full justify-center !py-3 !text-sm"
-		>
-			Get Your AEO Score — Free
-		</a>
-	</div>
-
-	<!-- Scroll-reveal: all animation classes → is-visible ────────────────── -->
+	<!-- Progressive reveal (one class only) -->
 	<script>
-		const scrollObserver = new IntersectionObserver(
+		const io = new IntersectionObserver(
 			(entries) => {
-				entries.forEach((entry) => {
-					if (entry.isIntersecting) {
-						entry.target.classList.add("is-visible");
-						scrollObserver.unobserve(entry.target);
+				for (const e of entries) {
+					if (e.isIntersecting) {
+						e.target.classList.add('rise');
+						io.unobserve(e.target);
 					}
-				});
+				}
 			},
-			{ threshold: 0.07, rootMargin: "0px 0px -40px 0px" }
+			{ threshold: 0.08, rootMargin: "0px 0px -40px 0px" }
 		);
-
-		document
-			.querySelectorAll(".animate-on-scroll, .animate-scale-in, .animate-slide-left, .animate-slide-right")
-			.forEach((el) => scrollObserver.observe(el));
+		document.querySelectorAll<HTMLElement>('[data-reveal]').forEach(el => io.observe(el));
 	</script>
-
 </body>
 </html>
