@@ -129,6 +129,12 @@ export interface ScanConfig {
 	respectCrawlDelay: boolean;
 	onProgress?: OnProgressFn;
 	browser?: boolean; // Use Playwright for JS-rendered pages (SPAs)
+	/**
+	 * Allow fetches to loopback / link-local / RFC1918 addresses.
+	 * Defaults to false — turn on only in trusted dev / CLI contexts
+	 * (e.g. scanning localhost:3000 during development).
+	 */
+	allowPrivateHosts?: boolean;
 }
 
 /** Top-level AEOrank config */

@@ -13,6 +13,9 @@ concurrency:
   group: deploy-web
   cancel-in-progress: true
 
+permissions:
+  contents: read
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest

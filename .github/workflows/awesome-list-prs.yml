@@ -4,6 +4,9 @@ on:
     - cron: '0 15 * * 1' # Monday 10am EST
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   submit-to-awesome-seo:
     runs-on: ubuntu-latest

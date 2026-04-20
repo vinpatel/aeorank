@@ -62,10 +62,12 @@ export function calculateWeightedScore(dimensions: DimensionScore[]): number {
 	return Math.round((weightedSum / totalWeight) * 100);
 }
 
-/** Convert text to URL-friendly slug */
+/** Convert text to URL-friendly slug. Caps input length to avoid ReDoS on hostile strings. */
 export function slugify(text: string): string {
 	return text
+		.slice(0, 256)
 		.toLowerCase()
 		.replace(/[^a-z0-9]+/g, "-")
-		.replace(/^-+|-+$/g, "");
+		.replace(/^-+/, "")
+		.replace(/-+$/, "");
 }

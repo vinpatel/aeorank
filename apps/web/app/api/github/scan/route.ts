@@ -131,7 +131,7 @@ export async function POST(request: Request) {
 		}
 	} catch (err) {
 		const message = err instanceof Error ? err.message : "Scan failed";
-		console.error(`GitHub App scan error for ${owner}/${repo}:`, err);
+		console.error("GitHub App scan error for %s/%s:", owner, repo, err);
 		Sentry.captureException(err, {
 			tags: { source: "github-scan", repo: `${owner}/${repo}` },
 		});
@@ -158,12 +158,21 @@ export async function POST(request: Request) {
 
 // ─── Helpers ───────────────────────────────────────────────────────
 
+// Match GitHub's own rules: users/orgs [A-Za-z0-9-], repos [A-Za-z0-9._-].
+// Enforced so owner/repo can't smuggle traversal or host-override chars into
+// the api.github.com URL this handler constructs for its Check Run.
+const GITHUB_SLUG_RE = /^[A-Za-z0-9](?:[A-Za-z0-9._-]{0,99})$/;
+
 async function createInProgressCheckRun(
 	token: string,
 	owner: string,
 	repo: string,
 	headSha: string,
 ): Promise<void> {
+	if (!GITHUB_SLUG_RE.test(owner) || !GITHUB_SLUG_RE.test(repo)) {
+		throw new Error(`Invalid GitHub owner/repo: ${owner}/${repo}`);
+	}
+
 	const response = await fetch(
 		`https://api.github.com/repos/${owner}/${repo}/check-runs`,
 		{

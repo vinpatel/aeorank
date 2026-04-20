@@ -1,5 +1,27 @@
 import { createHmac, timingSafeEqual, sign as cryptoSign } from "node:crypto";
 
+// ─── GitHub identifier validation (SSRF defense) ───────────────────
+
+// GitHub restricts usernames/orgs to alphanumerics + hyphen and repo names to
+// alphanumerics + hyphen/underscore/period. Enforcing this here means an owner
+// or repo value can never carry path-traversal or host-override characters
+// into the api.github.com URL template.
+const GITHUB_SLUG_RE = /^[A-Za-z0-9](?:[A-Za-z0-9._-]{0,99})$/;
+
+function assertGithubSlug(value: string, label: "owner" | "repo"): string {
+	if (!GITHUB_SLUG_RE.test(value)) {
+		throw new Error(`Invalid GitHub ${label}: ${JSON.stringify(value)}`);
+	}
+	return value;
+}
+
+function assertSafeInt(value: number, label: string): number {
+	if (!Number.isInteger(value) || value <= 0 || value > Number.MAX_SAFE_INTEGER) {
+		throw new Error(`Invalid ${label}: ${value}`);
+	}
+	return value;
+}
+
 // ─── Webhook Signature Verification ────────────────────────────────
 
 /**
@@ -57,10 +79,11 @@ function createAppJwt(): string {
  * This token can make API calls on behalf of the installed app.
  */
 export async function getInstallationToken(installationId: number): Promise<string> {
+	const safeId = assertSafeInt(installationId, "installationId");
 	const jwt = createAppJwt();
 
 	const response = await fetch(
-		`https://api.github.com/app/installations/${installationId}/access_tokens`,
+		`https://api.github.com/app/installations/${safeId}/access_tokens`,
 		{
 			method: "POST",
 			headers: {
@@ -97,9 +120,11 @@ interface CheckRunParams {
 /** Create a Check Run on a commit. */
 export async function createCheckRun(params: CheckRunParams): Promise<void> {
 	const { token, owner, repo, headSha, name, conclusion, title, summary, text } = params;
+	const safeOwner = assertGithubSlug(owner, "owner");
+	const safeRepo = assertGithubSlug(repo, "repo");
 
 	const response = await fetch(
-		`https://api.github.com/repos/${owner}/${repo}/check-runs`,
+		`https://api.github.com/repos/${safeOwner}/${safeRepo}/check-runs`,
 		{
 			method: "POST",
 			headers: {
@@ -135,6 +160,9 @@ interface PrCommentParams {
 /** Create or update a PR comment identified by a hidden HTML marker. */
 export async function upsertPrComment(params: PrCommentParams): Promise<void> {
 	const { token, owner, repo, prNumber, body, marker } = params;
+	const safeOwner = assertGithubSlug(owner, "owner");
+	const safeRepo = assertGithubSlug(repo, "repo");
+	const safePr = assertSafeInt(prNumber, "prNumber");
 	const headers = {
 		Authorization: `token ${token}`,
 		Accept: "application/vnd.github+json",
@@ -143,7 +171,7 @@ export async function upsertPrComment(params: PrCommentParams): Promise<void> {
 
 	// Find existing comment with marker
 	const commentsResponse = await fetch(
-		`https://api.github.com/repos/${owner}/${repo}/issues/${prNumber}/comments?per_page=100`,
+		`https://api.github.com/repos/${safeOwner}/${safeRepo}/issues/${safePr}/comments?per_page=100`,
 		{ headers },
 	);
 
@@ -157,9 +185,10 @@ export async function upsertPrComment(params: PrCommentParams): Promise<void> {
 	const markedBody = `${marker}\n${body}`;
 
 	if (existing) {
+		const safeCommentId = assertSafeInt(existing.id, "commentId");
 		// Update existing comment
 		const response = await fetch(
-			`https://api.github.com/repos/${owner}/${repo}/issues/comments/${existing.id}`,
+			`https://api.github.com/repos/${safeOwner}/${safeRepo}/issues/comments/${safeCommentId}`,
 			{
 				method: "PATCH",
 				headers,
@@ -172,7 +201,7 @@ export async function upsertPrComment(params: PrCommentParams): Promise<void> {
 	} else {
 		// Create new comment
 		const response = await fetch(
-			`https://api.github.com/repos/${owner}/${repo}/issues/${prNumber}/comments`,
+			`https://api.github.com/repos/${safeOwner}/${safeRepo}/issues/${safePr}/comments`,
 			{
 				method: "POST",
 				headers,
