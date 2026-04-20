@@ -1,6 +1,7 @@
 ---
 // Nav — V1 layout structure, adapted to the v2 light canvas.
 // No scanbar, no mono route crumb, no overloaded link list.
+import AeorankMark from "./AeorankMark.astro";
 ---
 
 <nav id="site-nav" class="nav" aria-label="Primary">
@@ -8,11 +9,7 @@
 
 		<!-- Wordmark -->
 		<a href="/" class="nav__brand" aria-label="AEOrank home">
-			<svg width="26" height="26" viewBox="0 0 32 32" fill="none" aria-hidden="true">
-				<rect width="32" height="32" rx="7" fill="#111111"/>
-				<path d="M8 22L13.5 10H18.5L24 22" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-				<path d="M10.5 18H21.5" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/>
-			</svg>
+			<AeorankMark size={26} />
 			<span class="nav__word">AEOrank</span>
 		</a>
 

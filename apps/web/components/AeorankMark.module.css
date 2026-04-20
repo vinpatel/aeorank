@@ -1,0 +1,68 @@
+.mark {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: var(--aeo-mark-size, 28px);
+	height: var(--aeo-mark-size, 28px);
+	color: #111111;
+	border-radius: calc(var(--aeo-mark-size, 28px) * 0.22);
+	transition:
+		color 240ms cubic-bezier(0.2, 0.8, 0.2, 1),
+		box-shadow 240ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.mark svg {
+	display: block;
+	transition: transform 520ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.bar {
+	animation: aeo-mark-scan 2.4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+	transform-origin: center;
+}
+
+@keyframes aeo-mark-scan {
+	0%,
+	100% {
+		opacity: 0.72;
+	}
+	50% {
+		opacity: 1;
+	}
+}
+
+a:hover .mark,
+button:hover .mark,
+.mark:hover {
+	color: #e8590c;
+	box-shadow: 0 6px 18px rgba(232, 89, 12, 0.22);
+}
+
+a:hover .mark svg,
+button:hover .mark svg,
+.mark:hover svg {
+	transform: rotate(360deg);
+}
+
+a:active .mark svg,
+button:active .mark svg,
+.mark:active svg {
+	transform: scale(0.93);
+	transition-duration: 120ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.bar {
+		animation: none;
+		opacity: 1;
+	}
+	.mark svg,
+	.mark {
+		transition: none;
+	}
+	a:hover .mark svg,
+	button:hover .mark svg,
+	.mark:hover svg {
+		transform: none;
+	}
+}
