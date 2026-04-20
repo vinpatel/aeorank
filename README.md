@@ -229,4 +229,4 @@ If AEOrank saved you a $299/mo subscription, the best thank-you is sending it to
 
 ## License
 
-[MIT](LICENSE) — built by [Vin Patel](https://github.com/vinpatel), powered by [Linx Agency](https://linx.agency) & [Mindtrades](https://mindtrades.com).
+[MIT](LICENSE) — built by [Vin Patel](https://github.com/vinpatel), sponsored by [Linx Agency](https://linx.agency) & [Mindtrades](https://mindtrades.com).
