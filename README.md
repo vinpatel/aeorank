@@ -38,20 +38,13 @@
 npx aeorank-cli scan https://your-site.com
 ```
 
-```
-AEO Score: 72/100 (B)
+<p align="center">
+  <img src=".github/demo.gif" alt="AEOrank CLI scanning stripe.com — 56/100 (C) with per-dimension breakdown and top recommendations" width="100%" />
+</p>
 
-  Answer Readiness           68%  ██████▊░░░
-  Content Structure          81%  ████████░░
-  Trust & Authority          59%  █████▉░░░░
-  Technical Foundation       90%  █████████░
-  AI Discovery               44%  ████▍░░░░░
-
-  Top recommendations:
-  1. Create /llms.txt with H1 title and sections
-  2. Allow GPTBot, ClaudeBot in robots.txt
-  3. Add FAQPage schema with 3+ Q&A pairs
-```
+<p align="center">
+  <em>30-second scan · 36 criteria · actionable fixes ranked by score impact</em>
+</p>
 
 ## Why does this matter?
 
