@@ -1,0 +1,58 @@
+name: Feature request
+description: Suggest a new check, new file, framework plugin, or workflow.
+title: "feat: "
+labels: ["enhancement", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Feature ideas welcome. One ask per issue, please — easier to triage and ship.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: The problem
+      description: What are you trying to do? What's missing today?
+      placeholder: |
+        When I run the CLI on a Next.js app router site, it doesn't detect my
+        app/llms.txt/route.ts file because it only looks at /public.
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: Concrete. "Add X" > "make it better."
+    validations:
+      required: true
+
+  - type: dropdown
+    id: scope
+    attributes:
+      label: Which surface does this touch?
+      multiple: true
+      options:
+        - Scoring (36 criteria)
+        - Generators (9 files)
+        - CLI
+        - GitHub Action / App
+        - Dashboard
+        - Framework plugin
+        - Docs
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: What else did you try or think about?
+
+  - type: checkboxes
+    id: willing
+    attributes:
+      label: Contribution
+      options:
+        - label: I'd be willing to open a PR for this.

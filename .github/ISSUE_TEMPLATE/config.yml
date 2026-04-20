@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Ask a question
+    url: https://github.com/vinpatel/aeorank/discussions
+    about: For usage questions, ideas, show-and-tell. Issues are for bugs + concrete feature requests.
+  - name: Documentation
+    url: https://docs.aeorank.dev
+    about: Guides, API reference, the 36 scoring criteria, the 9 generated files.
+  - name: Security disclosure
+    url: https://github.com/vinpatel/aeorank/security/advisories/new
+    about: Found a vulnerability? Report privately. Do not open a public issue.
