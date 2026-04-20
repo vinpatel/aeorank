@@ -1,0 +1,67 @@
+name: Bug report
+description: Something doesn't work — a crash, wrong score, broken file, or unexpected output.
+title: "bug: "
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for filing a bug. The fastest way to a fix is a 5-line repro.
+
+  - type: input
+    id: version
+    attributes:
+      label: AEOrank version
+      description: Run `aeorank-cli --version` or check the package.json version.
+      placeholder: "e.g. 0.1.0"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: surface
+    attributes:
+      label: Which surface?
+      options:
+        - CLI (aeorank-cli)
+        - GitHub Action
+        - GitHub App
+        - Dashboard (app.aeorank.dev)
+        - Framework plugin (Next, Astro, Nuxt, etc.)
+        - Core (@aeorank/core)
+        - Other / unsure
+    validations:
+      required: true
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: What did you run? What did you see? What did you expect?
+      placeholder: |
+        Ran: npx aeorank-cli scan https://example.com
+        Expected: a score
+        Got: crash with "Cannot read property 'x' of undefined"
+    validations:
+      required: true
+
+  - type: textarea
+    id: repro
+    attributes:
+      label: Reproduction
+      description: A URL, a command, or a minimal snippet we can paste.
+      render: shell
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant logs / output
+      description: Paste terminal output, stack traces, or screenshots. Redact secrets.
+      render: shell
+
+  - type: input
+    id: env
+    attributes:
+      label: Environment
+      placeholder: "macOS 15 · Node 22 · pnpm 10"

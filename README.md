@@ -199,18 +199,41 @@ See [DEMO.md](./DEMO.md) for today's auto-generated scan.
 
 Last updated: April 20, 2026
 
+## Star History
+
+<a href="https://www.star-history.com/#vinpatel/aeorank&Date">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=vinpatel/aeorank&type=Date&theme=dark" />
+    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=vinpatel/aeorank&type=Date" />
+    <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=vinpatel/aeorank&type=Date" />
+  </picture>
+</a>
+
 ## Contributing
 
-Contributions are welcome. Please open an issue first to discuss what you'd like to change.
+We ship fast and merge fast. New framework plugins, new scoring criteria, and real-world bug reports are especially welcome.
+
+- 👀 Browse [good first issues](https://github.com/vinpatel/aeorank/labels/good%20first%20issue) — concrete, small, well-scoped.
+- 📖 Read [CONTRIBUTING.md](./CONTRIBUTING.md) — repo layout, PR expectations, local setup.
+- 💬 Ask in [Discussions](https://github.com/vinpatel/aeorank/discussions) — ideas, questions, show-and-tell.
+- 🔒 Report vulnerabilities privately via [Security Advisories](https://github.com/vinpatel/aeorank/security/advisories/new).
 
 ```bash
 git clone https://github.com/vinpatel/aeorank.git
 cd aeorank
 pnpm install
-pnpm build
-pnpm test    # 411 tests
+pnpm test    # 675 tests across 13 packages
 ```
+
+## Share
+
+If AEOrank saved you a $299/mo subscription, the best thank-you is sending it to one person who also needs it.
+
+[![Tweet](https://img.shields.io/badge/Share-on%20X-000000?style=flat-square&logo=x&logoColor=white)](https://twitter.com/intent/tweet?text=AEOrank%20%E2%80%94%20open-source%20AI%20visibility%20scanner.%20Score%20your%20site%2C%20generate%20the%209%20files%20ChatGPT%20actually%20reads.%20MIT%2C%20free%2C%20self-hostable.&url=https%3A%2F%2Fgithub.com%2Fvinpatel%2Faeorank)
+[![Share on Hacker News](https://img.shields.io/badge/Share-on%20Hacker%20News-FF6600?style=flat-square&logo=ycombinator&logoColor=white)](https://news.ycombinator.com/submitlink?u=https%3A%2F%2Fgithub.com%2Fvinpatel%2Faeorank&t=AEOrank%20%E2%80%94%20open-source%20AI-visibility%20scanner%20for%20ChatGPT%2C%20Perplexity%2C%20Claude)
+[![Share on Reddit](https://img.shields.io/badge/Share-on%20Reddit-FF4500?style=flat-square&logo=reddit&logoColor=white)](https://www.reddit.com/submit?url=https%3A%2F%2Fgithub.com%2Fvinpatel%2Faeorank&title=AEOrank%20%E2%80%94%20open-source%20AI-visibility%20scanner%20%28MIT%29)
+[![Share on LinkedIn](https://img.shields.io/badge/Share-on%20LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white)](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fgithub.com%2Fvinpatel%2Faeorank)
 
 ## License
 
-[MIT](LICENSE) — Vin Patel
+[MIT](LICENSE) — built by [Vin Patel](https://github.com/vinpatel), powered by [Linx Agency](https://linx.agency) & [Mindtrades](https://mindtrades.com).
