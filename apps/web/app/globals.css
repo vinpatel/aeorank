@@ -910,6 +910,8 @@ body {
 	gap: 10px;
 	margin-bottom: 28px;
 	padding: 0 8px;
+	text-decoration: none;
+	color: inherit;
 }
 
 .sidebar-logo-text {
@@ -1018,6 +1020,8 @@ body {
 	display: flex;
 	align-items: center;
 	gap: 10px;
+	text-decoration: none;
+	color: inherit;
 }
 
 .mobile-header-logo-text {

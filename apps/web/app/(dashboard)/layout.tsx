@@ -2,6 +2,7 @@ import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { SignOutButton } from "@clerk/nextjs";
+import { AeorankMark } from "@/components/AeorankMark";
 import { PlanBadge } from "@/components/PlanBadge";
 import { getCurrentPlan } from "@/lib/plan";
 
@@ -21,15 +22,11 @@ export default async function DashboardLayout({
 		<div className="flex" style={{ minHeight: "100vh", background: "var(--bg)" }}>
 			{/* Mobile header */}
 			<div className="mobile-header">
-				<div className="mobile-header-logo">
-					<svg width="24" height="24" viewBox="0 0 32 32" fill="none">
-						<rect width="32" height="32" rx="7" fill="#111111"/>
-						<path d="M8 22L13.5 10H18.5L24 22" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-						<path d="M10.5 18H21.5" stroke="#fff" strokeWidth="2.5" strokeLinecap="round"/>
-					</svg>
+				<Link href="/dashboard" className="mobile-header-logo" aria-label="AEOrank home">
+					<AeorankMark size={24} />
 					<span className="mobile-header-logo-text">AEOrank</span>
 					<span className="brand-ver">app</span>
-				</div>
+				</Link>
 				<div className="mobile-header-nav">
 					<Link href="/dashboard" className="mobile-nav-link">Dashboard</Link>
 					<Link href="/upgrade" className="mobile-nav-link">Upgrade</Link>
@@ -38,15 +35,11 @@ export default async function DashboardLayout({
 
 			{/* Desktop sidebar */}
 			<nav className="sidebar sidebar-desktop">
-				<div className="sidebar-logo">
-					<svg width="28" height="28" viewBox="0 0 32 32" fill="none">
-						<rect width="32" height="32" rx="7" fill="#111111"/>
-						<path d="M8 22L13.5 10H18.5L24 22" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-						<path d="M10.5 18H21.5" stroke="#fff" strokeWidth="2.5" strokeLinecap="round"/>
-					</svg>
+				<Link href="/dashboard" className="sidebar-logo" aria-label="AEOrank home">
+					<AeorankMark size={28} />
 					<span className="sidebar-logo-text">AEOrank</span>
 					<span className="brand-ver">app</span>
-				</div>
+				</Link>
 
 				<div className="sidebar-nav">
 					<Link href="/dashboard" className="sidebar-link sidebar-link-active">

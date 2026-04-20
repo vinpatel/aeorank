@@ -1,0 +1,106 @@
+---
+interface Props {
+	size?: number;
+	class?: string;
+}
+const { size = 26, class: className = "" } = Astro.props;
+---
+
+<span class={`aeo-mark ${className}`} style={`--aeo-mark-size:${size}px`}>
+	<svg
+		width={size}
+		height={size}
+		viewBox="0 0 32 32"
+		fill="none"
+		aria-hidden="true"
+	>
+		<rect class="aeo-mark__bg" width="32" height="32" rx="7" fill="currentColor" />
+		<path
+			class="aeo-mark__v"
+			d="M8 22L13.5 10H18.5L24 22"
+			stroke="#fff"
+			stroke-width="2.5"
+			stroke-linecap="round"
+			stroke-linejoin="round"
+		/>
+		<path
+			class="aeo-mark__bar"
+			d="M10.5 18H21.5"
+			stroke="#fff"
+			stroke-width="2.5"
+			stroke-linecap="round"
+		/>
+	</svg>
+</span>
+
+<style>
+	.aeo-mark {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: var(--aeo-mark-size, 26px);
+		height: var(--aeo-mark-size, 26px);
+		color: #111111;
+		border-radius: calc(var(--aeo-mark-size, 26px) * 0.22);
+		transition:
+			color 240ms cubic-bezier(0.2, 0.8, 0.2, 1),
+			box-shadow 240ms cubic-bezier(0.2, 0.8, 0.2, 1);
+	}
+
+	.aeo-mark svg {
+		display: block;
+		transition: transform 520ms cubic-bezier(0.2, 0.8, 0.2, 1);
+	}
+
+	.aeo-mark__bar {
+		animation: aeo-mark-scan 2.4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+		transform-origin: center;
+	}
+
+	@keyframes aeo-mark-scan {
+		0%,
+		100% {
+			opacity: 0.72;
+		}
+		50% {
+			opacity: 1;
+		}
+	}
+
+	/* Hover state only attaches when the mark sits inside an interactive element */
+	a:hover .aeo-mark,
+	button:hover .aeo-mark,
+	.aeo-mark--interactive:hover {
+		color: #e8590c;
+		box-shadow: 0 6px 18px rgba(232, 89, 12, 0.22);
+	}
+
+	a:hover .aeo-mark svg,
+	button:hover .aeo-mark svg,
+	.aeo-mark--interactive:hover svg {
+		transform: rotate(360deg);
+	}
+
+	a:active .aeo-mark svg,
+	button:active .aeo-mark svg,
+	.aeo-mark--interactive:active svg {
+		transform: scale(0.93);
+		transition-duration: 120ms;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.aeo-mark__bar {
+			animation: none;
+			opacity: 1;
+		}
+		.aeo-mark svg,
+		.aeo-mark {
+			transition: none;
+		}
+		a:hover .aeo-mark svg,
+		button:hover .aeo-mark svg,
+		.aeo-mark--interactive:hover svg {
+			transform: none;
+		}
+	}
+</style>
