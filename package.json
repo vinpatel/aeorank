@@ -19,5 +19,35 @@
 		"typescript": "^5.7.0",
 		"@biomejs/biome": "^1.9.0",
 		"vitest": "^3.2.0"
+	},
+	"pnpm": {
+		"overrides": {
+			"handlebars": ">=4.7.9",
+			"lodash": ">=4.18.0",
+			"node-forge": ">=1.4.0",
+			"immutable": ">=3.8.3",
+			"liquidjs": ">=10.25.6",
+			"defu": ">=6.1.7",
+			"vite": "^7.3.2",
+			"picomatch": ">=4.0.4",
+			"serialize-javascript": ">=7.0.5",
+			"path-to-regexp": ">=0.1.13",
+			"axios": ">=1.15.1",
+			"esbuild": ">=0.25.0",
+			"brace-expansion": ">=5.0.5",
+			"cookie": ">=0.7.0",
+			"tmp": ">=0.2.5",
+			"markdown-it": ">=14.1.1",
+			"yaml": ">=2.8.3",
+			"follow-redirects": ">=1.16.0",
+			"smol-toml": ">=1.6.1",
+			"file-type": ">=21.3.1",
+			"h3": ">=1.15.9",
+			"srvx": ">=0.11.13",
+			"unhead": ">=2.1.13",
+			"@sveltejs/kit": ">=2.57.1",
+			"@parcel/reporter-dev-server": ">=2.16.4",
+			"webpack": ">=5.106.2"
+		}
 	}
 }
