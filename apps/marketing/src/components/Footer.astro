@@ -147,6 +147,18 @@ const nowIso = new Date().toISOString();
 			</nav>
 		</div>
 
+		<!-- Powered by -->
+		<div class="wrap footer-powered">
+			<span class="font-mono text-[10.5px] ink-3 footer-powered__label">// powered by</span>
+			<a href="https://linx.agency" class="footer-powered__link" target="_blank" rel="noopener" aria-label="Linx Agency">
+				<img src="/partners/linx.png" alt="Linx Agency" width="257" height="57" loading="lazy" />
+			</a>
+			<span class="font-mono text-[10.5px] ink-3 footer-powered__amp">&amp;</span>
+			<a href="https://mindtrades.com" class="footer-powered__link" target="_blank" rel="noopener" aria-label="Mindtrades">
+				<img src="/partners/mindtrades.png" alt="Mindtrades" width="1196" height="196" loading="lazy" />
+			</a>
+		</div>
+
 		<!-- End bar -->
 		<div class="wrap footer-endbar">
 			<span class="font-mono text-[10.5px] ink-3">// © {new Date().getFullYear()} AEOrank · MIT</span>
@@ -280,11 +292,37 @@ const nowIso = new Date().toISOString();
 	}
 	.footer-meta__cols li a { font-size: 13px; }
 
+	.footer-powered {
+		display: flex;
+		align-items: center;
+		gap: 18px;
+		margin-top: 32px;
+		padding-top: 16px;
+		border-top: 1px dashed var(--color-rule);
+		flex-wrap: wrap;
+	}
+	.footer-powered__label { letter-spacing: 0.02em; }
+	.footer-powered__amp { opacity: 0.6; }
+	.footer-powered__link {
+		display: inline-flex;
+		align-items: center;
+		opacity: 0.72;
+		transition: opacity 180ms ease;
+	}
+	.footer-powered__link:hover { opacity: 1; }
+	.footer-powered__link img {
+		height: 22px;
+		width: auto;
+		display: block;
+		filter: grayscale(1) contrast(1.05);
+	}
+	.footer-powered__link:hover img { filter: none; }
+
 	.footer-endbar {
 		display: flex;
 		align-items: center;
 		gap: 16px;
-		margin-top: 32px;
+		margin-top: 20px;
 		padding-top: 16px;
 		border-top: 1px dashed var(--color-rule);
 		flex-wrap: wrap;
