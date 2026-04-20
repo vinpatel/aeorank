@@ -52,6 +52,10 @@ export const scanCommand = new Command("scan")
 				maxPages: options.maxPages,
 				output: options.output !== "./aeorank-output" ? options.output : undefined,
 				browser: options.browser ?? false,
+				// CLI is a local trusted context — allow scanning localhost and
+				// other private ranges while devs iterate on their sites. The
+				// web service still defaults to blocking these.
+				allowPrivateHosts: true,
 			});
 
 			// Use config output dir if CLI didn't override

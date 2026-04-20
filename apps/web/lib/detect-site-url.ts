@@ -12,6 +12,28 @@
 
 const GITHUB_API = "https://api.github.com";
 
+// Match GitHub's own rules: users/orgs [A-Za-z0-9-], repos [A-Za-z0-9._-].
+// Enforced here so owner/repo can't smuggle traversal or host-override chars
+// into the api.github.com URL.
+const GITHUB_SLUG_RE = /^[A-Za-z0-9](?:[A-Za-z0-9._-]{0,99})$/;
+// Path segments within the repo — alphanumerics, dashes, dots, underscores,
+// forward slashes for nested paths. No leading slash, no ".." segments.
+const GITHUB_REPO_PATH_RE = /^(?!.*(?:^|\/)\.\.(?:\/|$))[A-Za-z0-9._-][A-Za-z0-9._/-]{0,199}$/;
+
+function assertGithubSlug(value: string, label: "owner" | "repo"): string {
+	if (!GITHUB_SLUG_RE.test(value)) {
+		throw new Error(`Invalid GitHub ${label}: ${JSON.stringify(value)}`);
+	}
+	return value;
+}
+
+function assertRepoPath(value: string): string {
+	if (!GITHUB_REPO_PATH_RE.test(value)) {
+		throw new Error(`Invalid repo path: ${JSON.stringify(value)}`);
+	}
+	return value;
+}
+
 interface DetectOptions {
 	token: string;
 	owner: string;
@@ -68,13 +90,19 @@ async function fetchFileContent(
 	path: string,
 ): Promise<string | null> {
 	try {
-		const response = await fetch(`${GITHUB_API}/repos/${owner}/${repo}/contents/${path}`, {
-			headers: {
-				Authorization: `token ${token}`,
-				Accept: "application/vnd.github.raw+json",
-				"X-GitHub-Api-Version": "2022-11-28",
+		const safeOwner = assertGithubSlug(owner, "owner");
+		const safeRepo = assertGithubSlug(repo, "repo");
+		const safePath = assertRepoPath(path);
+		const response = await fetch(
+			`${GITHUB_API}/repos/${safeOwner}/${safeRepo}/contents/${safePath}`,
+			{
+				headers: {
+					Authorization: `token ${token}`,
+					Accept: "application/vnd.github.raw+json",
+					"X-GitHub-Api-Version": "2022-11-28",
+				},
 			},
-		});
+		);
 
 		if (!response.ok) return null;
 

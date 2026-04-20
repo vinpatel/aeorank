@@ -103,7 +103,16 @@ describe("parsePage", () => {
 		const externalLinks = page.links.filter((l) => !l.internal);
 		expect(internalLinks.length).toBeGreaterThan(0);
 		expect(externalLinks.length).toBeGreaterThan(0);
-		expect(externalLinks.some((l) => l.href.includes("github.com"))).toBe(true);
+		expect(
+			externalLinks.some((l) => {
+				try {
+					const host = new URL(l.href).hostname;
+					return host === "github.com" || host.endsWith(".github.com");
+				} catch {
+					return false;
+				}
+			}),
+		).toBe(true);
 	});
 
 	it("extracts canonical URL", () => {

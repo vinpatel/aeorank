@@ -33,7 +33,12 @@ export async function loadConfig(configPath?: string): Promise<AeorankConfig | n
 /** Merge user config with defaults and CLI flag overrides */
 export function mergeConfig(
 	userConfig: AeorankConfig | null,
-	cliFlags: { maxPages?: number; output?: string; browser?: boolean },
+	cliFlags: {
+		maxPages?: number;
+		output?: string;
+		browser?: boolean;
+		allowPrivateHosts?: boolean;
+	},
 ): {
 	scanConfig: Partial<ScanConfig>;
 	outputDir: string;
@@ -64,6 +69,9 @@ export function mergeConfig(
 	}
 	if (cliFlags.output !== undefined) {
 		outputDir = cliFlags.output;
+	}
+	if (cliFlags.allowPrivateHosts !== undefined) {
+		scanConfig.allowPrivateHosts = cliFlags.allowPrivateHosts;
 	}
 	if (cliFlags.browser !== undefined) {
 		scanConfig.browser = cliFlags.browser;
