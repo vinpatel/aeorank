@@ -3,7 +3,7 @@
 > Auto-generated daily scan. See your own score at [aeorank.dev](https://aeorank.dev)
 
 **Scanned:** https://sumhealth.org  
-**Date:** April 27, 2026  
+**Date:** April 28, 2026  
 **Score:** 23/100 (F)
 
 ## Dimension Scores
