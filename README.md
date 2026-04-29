@@ -5,7 +5,8 @@
 <h3 align="center">Your site ranks #1 on Google — but is invisible to ChatGPT.</h3>
 
 <p align="center">
-  AEOrank scores your AI visibility 0–100 across <strong>36 criteria</strong>, then generates the <strong>9 files</strong> that get you cited by ChatGPT, Perplexity, Claude, and Google AI Overviews.
+  AEOrank scores your AI visibility 0–100 across <strong>36 deterministic checks</strong>, then generates the <strong>9 files</strong> that get you cited by ChatGPT, Perplexity, Claude, and Google AI Overviews.<br/>
+  <em>Others monitor. AEOrank fixes.</em>
 </p>
 
 <p align="center">
@@ -43,18 +44,30 @@ npx aeorank-cli scan https://your-site.com
 </p>
 
 <p align="center">
-  <em>30-second scan · 36 criteria · actionable fixes ranked by score impact</em>
+  <em>~30-second scan · 36 criteria · actionable fixes ranked by score impact</em>
 </p>
+
+> **⭐ If AEOrank saves you a $299/mo monitoring subscription, a star helps the next person find it.**
+
+## How it works
+
+| Step | What happens | Output |
+|------|--------------|--------|
+| **1. Scan** | Crawls up to 50 pages of your site, parses HTML/schema/llms.txt, and runs 36 deterministic checks across 5 pillars. | Per-dimension scores. |
+| **2. Score** | Aggregates into an AEO Score (0–100) with a letter grade and a ranked list of fixes by score impact. | `42/100 (D)` + recommendations. |
+| **3. Generate** | Writes 9 ready-to-deploy files (`llms.txt`, `schema.json`, `ai.txt`, …) tailored to your scan. | Drop into `public/`. Re-scan. |
+
+No account. No telemetry. No vendor dashboard to babysit.
 
 ## Why does this matter?
 
-AI search engines now drive **40% of web discovery**. ChatGPT converts visitors at **15.9%** — higher than Google organic. But traditional SEO tools don't check what AI engines actually look for.
+AI search engines route a meaningful and growing share of web discovery, and they read your site differently than Google does. Most sites are invisible to them by default — not because the content is bad, but because the structural signals (`llms.txt`, schema, FAQ markup, AI-crawler permissions) aren't there.
 
-AEOrank does.
+**Traditional SEO tools don't check what AI engines actually look for.** AEOrank does, and it generates the missing files for you.
 
-## AEOrank vs the competition
+## AEOrank vs the alternatives
 
-Every other AEO tool is paid SaaS targeting marketers. AEOrank is the **only open-source, developer-native** AEO tool.
+Every other AEO tool we found is closed-source SaaS targeting marketers. AEOrank is the only open-source, developer-native AEO toolkit.
 
 | | AEOrank | Scrunch | Adobe LLM Optimizer | Semrush AI |
 |---|:---:|:---:|:---:|:---:|
@@ -62,22 +75,31 @@ Every other AEO tool is paid SaaS targeting marketers. AEOrank is the **only ope
 | **Open source** | ✅ | ❌ | ❌ | ❌ |
 | **CLI** | ✅ | ❌ | ❌ | ❌ |
 | **GitHub integration** | ✅ Action + App | ❌ | ❌ | ❌ |
-| **Framework plugins** | **13** | 0 | 0 | 0 |
+| **Framework plugins** | **11 packages + 2 manual guides** | 0 | 0 | 0 |
 | **Generates AI files** | ✅ 9 files | ❌ | ❌ | ❌ |
-| **Scoring criteria** | 36 | Varies | Varies | Varies |
+| **Scoring criteria** | 36 deterministic | Varies | Varies | Varies |
 | **Self-hostable** | ✅ | ❌ | ❌ | ❌ |
+| **Telemetry** | None | Yes | Yes | Yes |
+
+> The category is "monitoring": dashboards that tell you ChatGPT didn't mention you. AEOrank fixes the upstream problem so AI engines *can* mention you.
 
 ## Three ways to use it
 
-### 1. CLI — scan any URL
+### 1. GitHub App — zero-config PR checks
+
+Install the [AEOrank GitHub App](https://github.com/apps/aeorank) on your repo. Every PR automatically gets an AEO Check Run. No YAML, no config, no secrets.
+
+### 2. CLI — scan any URL
 
 ```bash
 npx aeorank-cli scan https://your-site.com
 ```
 
-### 2. GitHub App — zero-config PR checks
+JSON output for scripting:
 
-Install the [AEOrank GitHub App](https://github.com/apps/aeorank) on your repo. Every PR automatically gets an AEO score as a Check Run — no YAML, no config.
+```bash
+npx aeorank-cli scan https://your-site.com --format json | jq '.score'
+```
 
 ### 3. GitHub Action — CI pipeline control
 
@@ -110,18 +132,20 @@ jobs:
 | ⚙️ **Technical Foundation** | 14% | Schema.org coverage, semantic HTML, image context, extraction friction, speakable markup |
 | 🔍 **AI Discovery** | 19% | llms.txt, AI crawler access, content licensing, canonical URLs, RSS feed, sitemap freshness |
 
+Full criteria reference: [docs.aeorank.dev/scoring/dimensions](https://docs.aeorank.dev/scoring/dimensions/)
+
 ## 9 generated files
 
-AEOrank generates all the files AI engines look for:
+AEOrank generates everything AI engines look for at your site root:
 
 | File | Purpose |
 |------|---------|
 | `llms.txt` | Site summary for LLM crawlers ([llmstxt.org](https://llmstxt.org) spec) |
 | `llms-full.txt` | Full-context version with Q&A pairs and entity disambiguation |
-| `ai.txt` | AI usage permissions and licensing |
+| `ai.txt` | AI usage permissions and licensing directives |
 | `CLAUDE.md` | Markdown context file for Claude |
-| `schema.json` | JSON-LD structured data |
-| `robots-patch.txt` | AI-specific robots.txt rules |
+| `schema.json` | JSON-LD structured data (Organization, WebSite, FAQ) |
+| `robots-patch.txt` | AI-crawler directives (GPTBot, ClaudeBot, PerplexityBot, Google-Extended) |
 | `faq-blocks.html` | FAQ with schema.org + speakable markup |
 | `citation-anchors.html` | Deep-linkable citation anchors |
 | `sitemap-ai.xml` | AI-optimized sitemap |
@@ -160,6 +184,8 @@ export default withAeorank({
 // → All 9 AEO files now served at your site root
 ```
 
+Webflow and Squarespace have manual setup guides: [docs.aeorank.dev/frameworks](https://docs.aeorank.dev/frameworks/).
+
 ## SaaS Dashboard
 
 Track your AEO score over time at [app.aeorank.dev](https://app.aeorank.dev):
@@ -168,6 +194,7 @@ Track your AEO score over time at [app.aeorank.dev](https://app.aeorank.dev):
 - 30-day score history with sparkline charts
 - Download all 9 generated files as a ZIP
 - Free tier: 1 site, 3 scans/month
+- Self-host the entire stack — code is MIT-licensed
 
 ## Packages
 
@@ -186,11 +213,17 @@ Track your AEO score over time at [app.aeorank.dev](https://app.aeorank.dev):
 | [`@aeorank/vitepress`](https://www.npmjs.com/package/@aeorank/vitepress) | VitePress plugin |
 | [`@aeorank/docusaurus`](https://www.npmjs.com/package/@aeorank/docusaurus) | Docusaurus plugin |
 
+## Built for developers
+
+- **MIT licensed.** Every package, every plugin, every file generator. Fork it.
+- **Self-hostable end-to-end.** CLI, scoring engine, GitHub App, GitHub Action, web dashboard — all open source. Stand the entire stack up inside your own infra.
+- **No telemetry.** The CLI does not phone home. The scan runs locally.
+- **Deterministic scoring.** Same input → same score. Same scan re-run → same files. No model calls in the scoring path, so results are reproducible across machines and over time.
+- **Drop-in framework plugins.** One config line, files served at the right routes on build. No vendor dashboard required.
+
 ## Live Demo
 
 See [DEMO.md](./DEMO.md) for today's auto-generated scan.
-
-Last updated: April 25, 2026
 
 ## Star History
 
@@ -215,7 +248,7 @@ We ship fast and merge fast. New framework plugins, new scoring criteria, and re
 git clone https://github.com/vinpatel/aeorank.git
 cd aeorank
 pnpm install
-pnpm test    # 675 tests across 13 packages
+pnpm test
 ```
 
 ## Share
@@ -230,4 +263,3 @@ If AEOrank saved you a $299/mo subscription, the best thank-you is sending it to
 ## License
 
 [MIT](LICENSE) — built by [Vin Patel](https://github.com/vinpatel), sponsored by [Linx Agency](https://linx.agency) & [Mindtrades](https://mindtrades.com).
-

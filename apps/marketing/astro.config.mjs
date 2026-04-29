@@ -28,7 +28,7 @@ export default defineConfig({
 				},
 				{
 					question: "What is AEO and why should I care?",
-					answer: "Answer Engine Optimization. AI search engines like ChatGPT, Perplexity, Claude, and Gemini now drive 40% of web discovery and convert visitors at 15.9% — higher than Google organic. AEO is how you get into those AI-generated answers. If you're not optimized for AI extraction, your competitors are getting cited instead of you."
+					answer: "Answer Engine Optimization. AI search engines like ChatGPT, Perplexity, Claude, and Gemini are taking a fast-growing share of web discovery, and the visitors they send tend to convert at higher rates than typical organic search. AEO is how you get into those AI-generated answers. If you're not optimized for AI extraction, your competitors are getting cited instead of you."
 				},
 				{
 					question: "How is AEOrank different from SEO tools like Ahrefs or Semrush?",
@@ -40,7 +40,7 @@ export default defineConfig({
 				},
 				{
 					question: "Is it really free? What's the catch?",
-					answer: "The CLI, GitHub App, GitHub Action, and all 13 framework plugins are MIT licensed and always free. The Starter plan gives you 1 site and 3 scans per month at no cost. Pro ($29/mo) adds 5 sites, 50 scans, score history, auto-rescan, and PDF exports. Agency ($99/mo) scales to 50 sites with API access. Every plan includes full 36-criteria scoring and all 9 generated files — we don't gate the features that matter."
+					answer: "The CLI, GitHub App, GitHub Action, and every framework plugin are MIT licensed and always free. The Starter plan gives you 1 site and 3 scans per month at no cost. Pro ($29/mo) adds 5 sites, 50 scans, score history, auto-rescan, and PDF exports. Agency ($99/mo) scales to 50 sites with API access. Every plan includes full 36-criteria scoring and all 9 generated files — we don't gate the features that matter."
 				},
 				{
 					question: "What AI engines does AEOrank optimize for?",
