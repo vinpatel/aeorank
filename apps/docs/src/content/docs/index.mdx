@@ -3,7 +3,7 @@ title: AEOrank Documentation
 description: Learn how to scan your site, understand your AEO score, and deploy the generated files that make your content visible to AI engines.
 template: splash
 hero:
-  tagline: Scan your site, get an AEO score, and generate the 8 files AI engines look for.
+  tagline: Scan your site, get an AEO score, and generate the 9 files AI engines look for.
   image:
     html: '<svg width="160" height="160" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="32" height="32" rx="7" fill="#E8590C" /><path d="M8 22L13.5 10H18.5L24 22" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M10.5 18H21.5" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/></svg>'
   actions:
@@ -22,7 +22,7 @@ import { Card, CardGrid, LinkCard } from '@astrojs/starlight/components';
 
 <CardGrid>
   <Card title="Quick Start" icon="rocket">
-    Run `npx aeorank-cli scan https://your-site.com` to get your AEO score and generate all 8 files.
+    Run `npx aeorank-cli scan https://your-site.com` to get your AEO score and generate all 9 files.
     [Read the guide &rarr;](/getting-started/)
   </Card>
   <Card title="What is AEO?" icon="information">
@@ -41,7 +41,7 @@ import { Card, CardGrid, LinkCard } from '@astrojs/starlight/components';
 
 ## Framework guides
 
-Drop-in plugins for your stack. One config change, 8 AEO files, zero maintenance.
+Drop-in plugins for your stack. One config change, 9 AEO files, zero maintenance.
 
 <CardGrid>
   <LinkCard title="Next.js" href="/frameworks/next/" />
@@ -61,7 +61,7 @@ Drop-in plugins for your stack. One config change, 8 AEO files, zero maintenance
 
 ## Generated files
 
-AEOrank generates 8 files that AI engines look for at your site root.
+AEOrank generates 9 files that AI engines look for at your site root.
 
 <CardGrid>
   <LinkCard title="llms.txt" description="Summary of your site for LLM crawlers" href="/files/llms-txt/" />
@@ -72,4 +72,5 @@ AEOrank generates 8 files that AI engines look for at your site root.
   <LinkCard title="faq-blocks.html" description="FAQ with schema.org markup" href="/files/faq-blocks-html/" />
   <LinkCard title="citation-anchors.html" description="Citation anchor elements" href="/files/citation-anchors-html/" />
   <LinkCard title="sitemap-ai.xml" description="AI-optimized sitemap" href="/files/sitemap-ai-xml/" />
+  <LinkCard title="ai.txt" description="AI content licensing directives" href="/files/ai-txt/" />
 </CardGrid>

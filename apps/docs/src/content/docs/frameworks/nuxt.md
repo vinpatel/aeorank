@@ -30,10 +30,10 @@ export default defineNuxtConfig({
 });
 ```
 
-The module registers Nitro server routes for all 8 AEO files. They're available in both dev and production.
+The module registers Nitro server routes for all 9 AEO files. They're available in both dev and production.
 
 ## Generated Files
 
-All 8 AEO files are served as Nitro routes: `/llms.txt`, `/llms-full.txt`, `/CLAUDE.md`, `/schema.json`, `/robots-patch.txt`, `/faq-blocks.html`, `/citation-anchors.html`, `/sitemap-ai.xml`.
+All 9 AEO files are served as Nitro routes: `/llms.txt`, `/llms-full.txt`, `/CLAUDE.md`, `/schema.json`, `/robots-patch.txt`, `/faq-blocks.html`, `/citation-anchors.html`, `/sitemap-ai.xml`, `/ai.txt`.
 
 Each route returns the correct `Content-Type` header and is cached with `Cache-Control: public, max-age=3600, s-maxage=86400`.

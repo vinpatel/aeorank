@@ -77,6 +77,7 @@ export default defineConfig({
 							slug: "files/citation-anchors-html",
 						},
 						{ label: "sitemap-ai.xml", slug: "files/sitemap-ai-xml" },
+						{ label: "ai.txt", slug: "files/ai-txt" },
 					],
 				},
 				{

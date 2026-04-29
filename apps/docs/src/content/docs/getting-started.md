@@ -28,7 +28,7 @@ You'll see output like this:
 Scanning https://your-site.com...
 ✓ Fetched 12 pages in 3.2s
 ✓ Analyzed structure and schema
-✓ Generated 8 files
+✓ Generated 9 files
 
 AEO Score: 42/100 (D)
 
@@ -47,14 +47,14 @@ HTTPS & Redirects      100    ✓ pass
 Page Freshness          50    ⚠ warn
 Citation Anchors        10    ✗ fail
 
-→ 8 files written to ./aeo-output/
+→ 9 files written to ./aeo-output/
 ```
 
 Each criterion is scored 0-10 and weighted by percentage importance. See [36 Criteria](/scoring/dimensions/) for details on what each one measures.
 
 ## Step 3: Check your generated files
 
-AEOrank writes 8 files to `./aeo-output/` by default:
+AEOrank writes 9 files to `./aeo-output/` by default:
 
 | File | What it does |
 |------|-------------|
@@ -66,6 +66,7 @@ AEOrank writes 8 files to `./aeo-output/` by default:
 | `faq-blocks.html` | Speakable FAQ schema markup |
 | `citation-anchors.html` | Heading anchors for AI citations |
 | `sitemap-ai.xml` | AI-optimized sitemap |
+| `ai.txt` | Machine-readable AI content licensing directives |
 
 See [Generated Files](/files/llms-txt/) for detailed documentation on each file.
 
@@ -78,6 +79,7 @@ Copy the generated files to your website:
 3. **robots-patch.txt** → append the directives to your existing robots.txt
 4. **faq-blocks.html** and **citation-anchors.html** → add to relevant pages
 5. **sitemap-ai.xml** → root of your site, reference in robots.txt
+6. **ai.txt** → root of your site (next to robots.txt) — declares AI training and attribution terms
 
 Run the scan again after deploying to see your score improve.
 

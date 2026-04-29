@@ -1,9 +1,9 @@
 ---
 title: "aeorank scan"
-description: Scan a URL and generate an AEO score with all 8 files.
+description: Scan a URL and generate an AEO score with all 9 files.
 ---
 
-Scan a website URL and generate an AEO score with dimension breakdown and all 8 output files.
+Scan a website URL and generate an AEO score with dimension breakdown and all 9 output files.
 
 ## Usage
 
