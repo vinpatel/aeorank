@@ -7,7 +7,7 @@ AEOrank provides two export options from the dashboard.
 
 ## Download files (ZIP)
 
-Click **Download all files (ZIP)** to get all 8 generated files for your site in a single archive. These are ready to deploy to your site.
+Click **Download all files (ZIP)** to get all 9 generated files for your site in a single archive. These are ready to deploy to your site.
 
 ## Export report
 

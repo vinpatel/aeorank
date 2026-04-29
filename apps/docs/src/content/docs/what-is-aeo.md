@@ -26,7 +26,7 @@ AEO complements SEO — you should do both.
 
 ## What AEOrank does
 
-AEOrank measures your site's AI visibility across [36 criteria across 5 pillars](/scoring/dimensions/) and generates 8 files that AI engines look for:
+AEOrank measures your site's AI visibility across [36 criteria across 5 pillars](/scoring/dimensions/) and generates 9 files that AI engines look for:
 
 1. **Scans** your site (up to 50 pages, under 30 seconds)
 2. **Scores** your AI visibility from 0-100
@@ -34,7 +34,7 @@ AEOrank measures your site's AI visibility across [36 criteria across 5 pillars]
 
 The CLI is free, open source, and MIT-licensed. No account required.
 
-## The 8 generated files
+## The 9 generated files
 
 AEOrank produces these files tailored to your specific site:
 
@@ -46,5 +46,6 @@ AEOrank produces these files tailored to your specific site:
 - **faq-blocks.html** — speakable FAQ schema markup
 - **citation-anchors.html** — heading anchors that make content citable
 - **sitemap-ai.xml** — AI-optimized sitemap with content hints
+- **ai.txt** — machine-readable AI content licensing and attribution directives
 
 Deploy these files on your site and AI engines will have everything they need to understand and cite your content.

@@ -38,8 +38,8 @@ const config: GatsbyConfig = {
 export default config;
 ```
 
-The plugin hooks into Gatsby's `onPostBuild` lifecycle and writes all 8 AEO files to the `public/` directory.
+The plugin hooks into Gatsby's `onPostBuild` lifecycle and writes all 9 AEO files to the `public/` directory.
 
 ## Generated Files
 
-After `gatsby build`, all 8 AEO files are in `public/`: `llms.txt`, `llms-full.txt`, `CLAUDE.md`, `schema.json`, `robots-patch.txt`, `faq-blocks.html`, `citation-anchors.html`, `sitemap-ai.xml`.
+After `gatsby build`, all 9 AEO files are in `public/`: `llms.txt`, `llms-full.txt`, `CLAUDE.md`, `schema.json`, `robots-patch.txt`, `faq-blocks.html`, `citation-anchors.html`, `sitemap-ai.xml`, `ai.txt`.

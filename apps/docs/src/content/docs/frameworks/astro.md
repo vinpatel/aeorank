@@ -36,8 +36,8 @@ export default defineConfig({
 
 That's it. The integration:
 - **Dev**: Serves AEO files via Vite middleware at `localhost:4321/llms.txt`, etc.
-- **Build**: Writes all 8 files to your output directory.
+- **Build**: Writes all 9 files to your output directory.
 
 ## Generated Files
 
-All 8 AEO files are available at your site root: `/llms.txt`, `/llms-full.txt`, `/CLAUDE.md`, `/schema.json`, `/robots-patch.txt`, `/faq-blocks.html`, `/citation-anchors.html`, `/sitemap-ai.xml`.
+All 9 AEO files are available at your site root: `/llms.txt`, `/llms-full.txt`, `/CLAUDE.md`, `/schema.json`, `/robots-patch.txt`, `/faq-blocks.html`, `/citation-anchors.html`, `/sitemap-ai.xml`, `/ai.txt`.

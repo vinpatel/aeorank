@@ -41,7 +41,7 @@ import { aeoConfig } from "~/aeo.config";
 export const loader = createAeoLoader("llms.txt", aeoConfig);
 ```
 
-Repeat for all 8 files:
+Repeat for all 9 files:
 - `app/routes/llms-full[.]txt.tsx`
 - `app/routes/CLAUDE[.]md.tsx`
 - `app/routes/schema[.]json.tsx`
@@ -49,7 +49,8 @@ Repeat for all 8 files:
 - `app/routes/faq-blocks[.]html.tsx`
 - `app/routes/citation-anchors[.]html.tsx`
 - `app/routes/sitemap-ai[.]xml.tsx`
+- `app/routes/ai[.]txt.tsx`
 
 ## Generated Files
 
-All 8 AEO files are served at your store root: `/llms.txt`, `/llms-full.txt`, `/CLAUDE.md`, `/schema.json`, `/robots-patch.txt`, `/faq-blocks.html`, `/citation-anchors.html`, `/sitemap-ai.xml`.
+All 9 AEO files are served at your store root: `/llms.txt`, `/llms-full.txt`, `/CLAUDE.md`, `/schema.json`, `/robots-patch.txt`, `/faq-blocks.html`, `/citation-anchors.html`, `/sitemap-ai.xml`, `/ai.txt`.

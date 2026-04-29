@@ -47,13 +47,14 @@ import { aeoConfig } from "~/aeo.config";
 export const loader = createAeoLoader("llms-full.txt", aeoConfig);
 ```
 
-Repeat the same pattern for all 8 files:
+Repeat the same pattern for all 9 files:
 - `app/routes/CLAUDE[.]md.ts`
 - `app/routes/schema[.]json.ts`
 - `app/routes/robots-patch[.]txt.ts`
 - `app/routes/faq-blocks[.]html.ts`
 - `app/routes/citation-anchors[.]html.ts`
 - `app/routes/sitemap-ai[.]xml.ts`
+- `app/routes/ai[.]txt.ts`
 
 ## Static Generation
 
@@ -68,4 +69,4 @@ generateAeoFiles(aeoConfig);
 
 ## Generated Files
 
-All 8 AEO files are served at your site root: `/llms.txt`, `/llms-full.txt`, `/CLAUDE.md`, `/schema.json`, `/robots-patch.txt`, `/faq-blocks.html`, `/citation-anchors.html`, `/sitemap-ai.xml`.
+All 9 AEO files are served at your site root: `/llms.txt`, `/llms-full.txt`, `/CLAUDE.md`, `/schema.json`, `/robots-patch.txt`, `/faq-blocks.html`, `/citation-anchors.html`, `/sitemap-ai.xml`, `/ai.txt`.

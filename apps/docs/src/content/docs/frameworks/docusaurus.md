@@ -34,8 +34,8 @@ const config = {
 };
 ```
 
-The plugin uses Docusaurus's `postBuild` hook to write all 8 AEO files to the build output directory.
+The plugin uses Docusaurus's `postBuild` hook to write all 9 AEO files to the build output directory.
 
 ## Generated Files
 
-After `docusaurus build`, all 8 AEO files are in `build/`: `llms.txt`, `llms-full.txt`, `CLAUDE.md`, `schema.json`, `robots-patch.txt`, `faq-blocks.html`, `citation-anchors.html`, `sitemap-ai.xml`.
+After `docusaurus build`, all 9 AEO files are in `build/`: `llms.txt`, `llms-full.txt`, `CLAUDE.md`, `schema.json`, `robots-patch.txt`, `faq-blocks.html`, `citation-anchors.html`, `sitemap-ai.xml`, `ai.txt`.

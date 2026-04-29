@@ -40,4 +40,4 @@ In dev mode, AEO files are served via middleware. During build, files are writte
 
 ## Generated Files
 
-After `vitepress build`, all 8 AEO files are in `.vitepress/dist/`: `llms.txt`, `llms-full.txt`, `CLAUDE.md`, `schema.json`, `robots-patch.txt`, `faq-blocks.html`, `citation-anchors.html`, `sitemap-ai.xml`.
+After `vitepress build`, all 9 AEO files are in `.vitepress/dist/`: `llms.txt`, `llms-full.txt`, `CLAUDE.md`, `schema.json`, `robots-patch.txt`, `faq-blocks.html`, `citation-anchors.html`, `sitemap-ai.xml`, `ai.txt`.
