@@ -7,12 +7,12 @@ created: 2026-04-19
 
 ## Current Position
 **Status:** In progress
-**Current Phase:** Phase 01 complete — next: Phase 02 (reconcile 8 vs 9 files)
-**Last Activity:** 2026-04-19
-**Last Activity Description:** Phase 01 shipped via /gsd-fast — attribution header in all 9 generated files
+**Current Phase:** Phase 02 complete — next: Phase 03 (README overhaul) before HN launch
+**Last Activity:** 2026-04-28
+**Last Activity Description:** Phase 02 shipped via inline batch edit — docs site reconciled to 9 files, ai.txt added to enumerated lists, new ai-txt doc page
 
 ## Progress
-**Phases Complete:** 1/16
+**Phases Complete:** 2/16
 **Current Plan:** N/A
 
 ## Phase Log
@@ -21,6 +21,14 @@ created: 2026-04-19
   - All 9 core generators wired with language-appropriate header (HTML comment for markdown/HTML/XML, `#` for text, `_generator` field for JSON)
   - 4 new tests pin the header (288 → 292 tests passing)
   - Commit: `747d958`
+- **2026-04-28 · Phase 02 · Reconcile 8 vs 9 files** ✅
+  - 18 docs site references updated 8 → 9 across index, getting-started, what-is-aeo, cli/scan, dashboard/export, and 12 framework guides
+  - New `apps/docs/src/content/docs/files/ai-txt.md` doc page with directives reference
+  - `apps/docs/astro.config.mjs` sidebar entry for ai.txt under Generated Files
+  - `AEORANK_PROJECT.md` current-state description updated; `AEORANK_SPEC.md` and `AEORANK_ROADMAP.md` left as historical v1 artifacts (intentional scope cut)
+  - Verified: `astro build` produces 39 pages (up from 38)
+  - Commits: `5a380ad` (docs), pending (project doc)
+  - Note: GSD `/gsd-quick` blocked by SDK version mismatch (`@gsd-build/sdk@0.1.0` lacks `query` subcommand expected by workflow); fell back to inline batch edit for time pressure
 
 ## Session Continuity
 **Stopped At:** N/A

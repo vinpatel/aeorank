@@ -9,7 +9,7 @@ Open-source CLI + SaaS that audits any website or GitHub repo for AI visibility,
 ## What it does
 - Scans any URL or local project directory
 - Scores AI readability across 12 dimensions (AEO Score 0–100)
-- Generates 8 files: llms.txt, llms-full.txt, CLAUDE.md, schema.json, robots-patch.txt, faq-blocks.html, citation-anchors.html, sitemap-ai.xml
+- Generates 9 files: llms.txt, llms-full.txt, CLAUDE.md, schema.json, robots-patch.txt, faq-blocks.html, citation-anchors.html, sitemap-ai.xml, ai.txt
 - Posts AEO score as a GitHub Check directly in PRs (via GitHub Actions, GITHUB_TOKEN)
 - Posts score comparison table as a PR comment (upsert, not spam)
 - Provides a web dashboard for ongoing monitoring
