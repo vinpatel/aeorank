@@ -1,5 +1,5 @@
-import { defineConfig } from "astro/config";
 import starlight from "@astrojs/starlight";
+import { defineConfig } from "astro/config";
 
 export default defineConfig({
 	site: "https://docs.aeorank.dev",
@@ -49,6 +49,7 @@ export default defineConfig({
 					label: "CLI Reference",
 					items: [
 						{ label: "scan", slug: "cli/scan" },
+						{ label: "doctor", slug: "cli/doctor" },
 						{ label: "compare", slug: "cli/compare" },
 						{ label: "init", slug: "cli/init" },
 						{ label: "Configuration", slug: "cli/configuration" },
