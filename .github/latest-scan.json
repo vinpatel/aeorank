@@ -7609,9 +7609,9 @@
     "sitemapXml": null,
     "existingLlmsTxt": null,
     "platform": null,
-    "responseTimeMs": 2624
+    "responseTimeMs": 2899
   },
   "pagesScanned": 24,
-  "duration": 7200,
-  "scannedAt": "2026-05-21T17:16:08.114Z"
+  "duration": 8172,
+  "scannedAt": "2026-05-22T16:43:45.206Z"
 }
