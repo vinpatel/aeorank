@@ -18,7 +18,7 @@
 </p>
 
 <!-- STATS_START -->
-![npm downloads](https://img.shields.io/badge/monthly%20downloads-57-blue)
+![npm downloads](https://img.shields.io/badge/monthly%20downloads-73-blue)
 ![GitHub stars](https://img.shields.io/github/stars/vinpatel/aeorank?style=social)
 <!-- STATS_END -->
 
