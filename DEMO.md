@@ -3,14 +3,14 @@
 > Auto-generated daily scan. See your own score at [aeorank.dev](https://aeorank.dev)
 
 **Scanned:** https://sumhealth.org  
-**Date:** July 09, 2026  
-**Score:** 44/100 (D)
+**Date:** July 10, 2026  
+**Score:** 57/100 (C)
 
 ## Dimension Scores
 
 | Dimension | Score | Pass |
 |-----------|-------|------|
-| llms.txt Presence | 0 | ❌ |
+| llms.txt Presence | 10 | ❌ |
 | Schema.org Markup | 7 | ❌ |
 | AI Crawler Access | 10 | ❌ |
 | Content Structure | 3 | ❌ |
