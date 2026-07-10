@@ -1,6 +1,8 @@
+import * as Sentry from "@sentry/nextjs";
 import { NextResponse } from "next/server";
 import { createServiceSupabaseClient } from "@/lib/supabase";
 import { getQStashClient } from "@/lib/qstash";
+import { resolveAppUrl } from "@/lib/app-url";
 
 const SCHEDULE_INTERVALS: Record<string, number> = {
 	daily: 24 * 60 * 60 * 1000,
@@ -13,9 +15,14 @@ const SCHEDULE_INTERVALS: Record<string, number> = {
  * Finds sites due for rescan and enqueues them via QStash.
  */
 export async function GET(request: Request) {
-	// Verify cron secret to prevent unauthorized triggers
+	const expected = process.env.CRON_SECRET;
+	if (!expected) {
+		console.error("CRON_SECRET is not configured — refusing to run");
+		Sentry.captureMessage("CRON_SECRET missing in cron/rescan", { level: "error" });
+		return NextResponse.json({ error: "Server misconfigured" }, { status: 500 });
+	}
 	const authHeader = request.headers.get("authorization");
-	if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
+	if (authHeader !== `Bearer ${expected}`) {
 		return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 	}
 
@@ -28,12 +35,30 @@ export async function GET(request: Request) {
 		.not("rescan_schedule", "is", null)
 		.lte("next_rescan_at", new Date().toISOString());
 
-	if (error || !sites || sites.length === 0) {
+	if (error) {
+		console.error("cron/rescan: query failed", error);
+		Sentry.captureException(error, { tags: { source: "cron-rescan-query" } });
+		return NextResponse.json({ error: "query_failed" }, { status: 500 });
+	}
+
+	if (!sites || sites.length === 0) {
 		return NextResponse.json({ enqueued: 0 });
 	}
 
 	const qstash = getQStashClient();
 	let enqueued = 0;
+
+	// Resolve the callback origin once. If it can only resolve to an
+	// unreachable (localhost) origin, publishing would silently strand every
+	// rescan at "pending" — fail the whole run loudly instead.
+	let callbackBase: string;
+	try {
+		callbackBase = resolveAppUrl(request);
+	} catch (err) {
+		console.error("cron/rescan: cannot resolve app URL for callback", err);
+		Sentry.captureException(err, { tags: { source: "cron-rescan-app-url" } });
+		return NextResponse.json({ error: "app_url_unresolved" }, { status: 500 });
+	}
 
 	for (const site of sites) {
 		// Insert pending scan
@@ -43,16 +68,24 @@ export async function GET(request: Request) {
 			.select("id")
 			.single();
 
-		if (scanError || !scanRecord) continue;
+		if (scanError || !scanRecord) {
+			console.error("cron/rescan: failed to insert scan row", { siteId: site.id, scanError });
+			Sentry.captureException(scanError ?? new Error("scan insert returned no row"), {
+				tags: { source: "cron-rescan-insert" },
+			});
+			continue;
+		}
 
 		// Enqueue via QStash
 		try {
 			await qstash.publishJSON({
-				url: `${process.env.NEXT_PUBLIC_APP_URL}/api/scan/process`,
+				url: `${callbackBase}/api/scan/process`,
 				body: { scanId: scanRecord.id, url: site.url },
 			});
 			enqueued++;
-		} catch {
+		} catch (err) {
+			console.error("cron/rescan: QStash publish failed", { siteId: site.id, err });
+			Sentry.captureException(err, { tags: { source: "cron-rescan-qstash" } });
 			await supabase
 				.from("scans")
 				.update({ status: "error", error: "Failed to enqueue rescan" })
