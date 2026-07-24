@@ -3,8 +3,8 @@
 > Auto-generated daily scan. See your own score at [aeorank.dev](https://aeorank.dev)
 
 **Scanned:** https://sumhealth.org  
-**Date:** July 23, 2026  
-**Score:** 57/100 (C)
+**Date:** July 24, 2026  
+**Score:** 63/100 (C)
 
 ## Dimension Scores
 
@@ -15,7 +15,7 @@
 | AI Crawler Access | 10 | ❌ |
 | Content Structure | 3 | ❌ |
 | Answer-First Formatting | 0 | ❌ |
-| FAQ & Speakable | 3 | ❌ |
+| FAQ & Speakable | 10 | ❌ |
 | E-E-A-T Signals | 7 | ❌ |
 | Meta Descriptions | 7 | ❌ |
 | Sitemap Presence | 0 | ❌ |
