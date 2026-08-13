@@ -190,7 +190,7 @@ Track your AEO score over time at [app.aeorank.dev](https://app.aeorank.dev):
 
 See [DEMO.md](./DEMO.md) for today's auto-generated scan.
 
-Last updated: August 12, 2026
+Last updated: August 13, 2026
 
 ## Star History
 
