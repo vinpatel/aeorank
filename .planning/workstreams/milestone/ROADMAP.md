@@ -4,6 +4,7 @@
 
 - ✅ **v1.0 MVP** — Phases 1-7 (shipped 2026-03-28) — [Archive](milestones/v1.0-ROADMAP.md)
 - ✅ **v2.0 Competitive Parity** — Phases 8-16 (shipped 2026-03-28) — [Archive](milestones/v2.0-ROADMAP.md)
+- 🔨 **v3.0 Developer Parity** — Phases 17-25 (started 2026-08-15) — [Roadmap](../../milestones/v3.0-ROADMAP.md)
 
 ## Phases
 
@@ -39,9 +40,26 @@
 
 </details>
 
+### 🔨 v3.0 Developer Parity (Phases 17-25) — IN PROGRESS
+
+Scope from `.planning/COMPETITIVE-PARITY.md`. Tier 0 monitoring (prompt tracking,
+citations, share-of-voice, sentiment, prompt volume) explicitly deferred — see
+PROJECT.md Out of Scope.
+
+- [ ] Phase 17: Launch Blockers — SEC-01…06
+- [ ] Phase 18: Public API — API-01…07
+- [ ] Phase 19: MCP Server — MCP-01…03
+- [ ] Phase 20: Crawler Analytics — CRAWL-01…04
+- [ ] Phase 21: Alerts — ALERT-01…04
+- [ ] Phase 22: Reports & Exports — RPT-01…04
+- [ ] Phase 23: Integrations — CONN-01…04
+- [ ] Phase 24: Geo & Language — GEO-01…02
+- [ ] Phase 25: Defend the Moat — DEF-01…03
+
 ## Progress
 
 | Phase | Milestone | Plans Complete | Status | Completed |
 |-------|-----------|----------------|--------|-----------|
 | 1-7 | v1.0 | 24/24 | Complete | 2026-03-28 |
 | 8-16 | v2.0 | 17/17 | Complete | 2026-03-28 |
+| 17-25 | v3.0 | 0/— | In progress | — |
