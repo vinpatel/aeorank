@@ -24,10 +24,10 @@ See: .planning/PROJECT.md (updated 2026-03-28)
 
 ## Current Position
 
-Phase: Not started (defining requirements)
-Plan: —
-Status: Defining requirements
-Last activity: 2026-08-15 — Milestone v3.0 started
+Phase: 17-launch-blockers
+Plan: 17-02 complete (with escalation) — next 17-03
+Status: Awaiting decision on `auto-install-peers=false` (see 17-02-SUMMARY.md "Decision Required")
+Last activity: 2026-08-16 — 17-02 SEC-01 Lever A landed on branch fix/scan-callback-url
 
 ## Performance Metrics
 
@@ -85,6 +85,7 @@ Last activity: 2026-08-15 — Milestone v3.0 started
 | Phase 15-dashboard-docs-updates P03 | 194s | 2 tasks | 5 files |
 | Phase 16-per-page-scoring P01 | 139 | 2 tasks | 5 files |
 | Phase 16-per-page-scoring P02 | 2 | 2 tasks | 5 files |
+| Phase 17-launch-blockers P02 | 10min | 2 tasks | 9 files |
 
 ## Phase 4 Deliverables
 
@@ -277,6 +278,9 @@ Recent decisions affecting current work:
 - [Phase 16-per-page-scoring]: PAGE_SCORE_MAX = 75 constant used throughout scorer to eliminate magic numbers and stay proportional (duplication gate = round(75*0.35) = 26)
 - [Phase 16-per-page-scoring]: getGrade() called with score*(100/75) to keep letter grade thresholds on 0-100 scale when computing grades for 0-75 page scores
 - [Phase 16-per-page-scoring]: Hardcode 25 page-level dimension id->name pairs in PageScores.tsx to avoid @aeorank/core browser bundle import
+- [Phase 17-02]: pnpm 10.32.1 `remove` DOES strip matching peerDependencies entries — never use it on a package that declares the same name as a peer; edit devDependencies by hand and byte-compare the peer blocks
+- [Phase 17-02]: Framework subtrees are held in the tree by peerDependencies + pnpm's auto-install-peers=true default, NOT by devDependencies — removing unused devDeps alone yields only -21 alerts, not the predicted -108
+- [Phase 17-02]: `auto-install-peers=false` measured at 237 -> 81 alerts (criticals 8 -> 2, both vitest) with peer contracts intact — NOT applied, escalated as a workspace-wide decision
 
 ### Pending Todos
 
@@ -289,6 +293,8 @@ Recent decisions affecting current work:
 - [Phase 5]: RESOLVED — QStash chosen for async scan queue; pattern documented in RESEARCH.md
 - [Phase 5]: RESOLVED — SSRF prevention implemented as validateScanUrl() in apps/web/lib/validate-url.ts; 12 tests pass
 - [Phase 5]: User must configure Clerk and Supabase before running dev server (see apps/web/.env.example)
+- [Phase 17-02]: DECISION REQUIRED — adopt `auto-install-peers=false` as its own commit? Without it SEC-01's "zero critical and high" target is unreachable via Levers A+B (8 criticals, 93 highs survive). See 17-02-SUMMARY.md "Decision Required"
+- [Phase 17-02]: Local branch fix/scan-callback-url has diverged from its remote (257 ahead / 4 behind, pre-existing rebase) — push rejected non-fast-forward; history reconciliation needed before any push or merge to main
 
 ## Session Continuity
 
