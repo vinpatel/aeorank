@@ -34,8 +34,6 @@
 		"@types/node": "^22.19.15",
 		"tsup": "^8.4.0",
 		"typescript": "^5.7.0",
-		"vitepress": "^1.0.0",
-		"vitest": "^3.2.0",
-		"vue": "^3.5.0"
+		"vitest": "^3.2.0"
 	}
 }

@@ -24,7 +24,6 @@
 		"@docusaurus/core": ">=3"
 	},
 	"devDependencies": {
-		"@docusaurus/types": "^3.0.0",
 		"@types/node": "^22.0.0",
 		"tsup": "^8.4.0",
 		"typescript": "^5.7.0",
