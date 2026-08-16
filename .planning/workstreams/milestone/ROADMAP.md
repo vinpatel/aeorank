@@ -60,16 +60,16 @@ PROJECT.md Out of Scope.
 **Plans:** 10 plans across 6 waves
 
 Plans:
-- [ ] 17-01-PLAN.md — Land `fix/scan-callback-url`: keep-alive cron, Supabase unique-constraint migration (wave 1)
+- [ ] 17-01-PLAN.md — Land `fix/scan-callback-url`: keep-alive cron, Supabase unique-constraint migration, and repair of the 3 pre-existing `pnpm typecheck` failures every later gate depends on (wave 1)
 - [ ] 17-02-PLAN.md — SEC-01 lever A: delete 9 unused framework devDependencies, measure delta (wave 2)
-- [ ] 17-03-PLAN.md — CI pipeline: test gate, `pnpm audit` gate, authoritative test count from the vitest JSON reporter (wave 2)
+- [ ] 17-03-PLAN.md — Scope biome to real source, then CI pipeline: test gate, `pnpm audit` gate, advisory lint job, authoritative test count from the vitest JSON reporter (wave 2)
 - [ ] 17-04-PLAN.md — SEC-06: liveness script for public surfaces + credential-gated human checklist (wave 2)
 - [ ] 17-05-PLAN.md — SEC-01 lever B: raise `pnpm.overrides` floors and patch direct deps, measure delta (wave 3)
 - [ ] 17-06-PLAN.md — Marketing pricing, tier names, and competitor claims reconciled to canonical sources (wave 3)
 - [ ] 17-07-PLAN.md — Marketing pillar weights derived from `@aeorank/core`; test count and scoreboard cadence made true (wave 3)
 - [ ] 17-08-PLAN.md — SEC-01 lever B': isolated Astro 5.18.1 -> 7.2.2 migration (wave 4)
 - [ ] 17-09-PLAN.md — README / LAUNCH.md / PROJECT.md claim corrections + CI claim-drift guard (wave 5)
-- [ ] 17-10-PLAN.md — SEC-02: enable Dependabot security updates, grouped `dependabot.yml`, branch protection with bot exemption (wave 6)
+- [ ] 17-10-PLAN.md — SEC-02: enable Dependabot security updates, grouped `dependabot.yml`, branch protection with bot-only exemption behind a human consent gate (wave 6)
 
 ### Phase 18: Public API
 **Goal**: Turn the $99 API tier from a pricing-page promise into a product. All five competitors ship an API; AEOrank has advertised one since v1.0 while `apps/web/app/api/*` remains entirely internal, session-authenticated dashboard plumbing.

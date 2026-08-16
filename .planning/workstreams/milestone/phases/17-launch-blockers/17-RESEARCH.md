@@ -3,6 +3,28 @@
 **Researched:** 2026-08-15
 **Domain:** Supply-chain security remediation (pnpm monorepo), CI truth-sourcing, claim auditing, release engineering
 **Confidence:** HIGH (nearly every finding is measured from this repo or the GitHub/npm APIs in-session)
+**Status:** PARTIALLY SUPERSEDED by `17-CONTEXT.md` (2026-08-15) — see the notice below.
+
+---
+
+> ## Read `17-CONTEXT.md` before acting on anything in this document
+>
+> This research was written BEFORE the user's decisions were captured. Two of its
+> recommendations were overruled, and the questions it left open have all been answered.
+> Where this document and `17-CONTEXT.md` disagree, **CONTEXT wins** — it carries locked
+> decisions D-01..D-11. Every superseded passage below is struck through and annotated inline.
+>
+> | Superseded recommendation | Where | Overruled by |
+> |---|---|---|
+> | "target Astro **6.4.8**, not 7" | Summary; "The Astro Upgrade"; Assumption A4; Open Question 1 | **D-03 — the target is Astro 7.2.2.** The user chose the two-major jump deliberately, for the longer runway. |
+> | The 4 CodeQL SSRF findings "should be **dismissed** in the GitHub UI" | "The truthful post-remediation line"; Security Domain; Assumption A10; Open Question 6 | **D-08 — do NOT suppress or dismiss them.** They stay open and the copy tells the truth. Plan 17-09 asserts the dismissed-alert count is unchanged. |
+>
+> The `## Open Questions` section is fully RESOLVED — all seven map to decisions
+> (Q1→D-03, Q2→D-01, Q3→D-02, Q4→CONTEXT specifics, Q5→D-04, Q6→D-08, Q7→D-10).
+>
+> Everything else stands as measured and is still authoritative: the alert data, the
+> per-package remediation table, the claim audit with file:line, the compatibility matrix,
+> the migration review, and the validation architecture.
 
 ---
 
@@ -53,7 +75,7 @@ strictly credential-gated and cannot be done by a coding agent.
 framework devDependencies, gated on `pnpm build && pnpm typecheck && pnpm test` staying green,
 which removes 108 alerts and 6 of 7 criticals at near-zero risk; then (B) bump 18 remaining
 packages, of which 17 are one-line `pnpm.overrides` or patch bumps and exactly one — Astro
-5.18.1 → 6.4.8 — is a genuine major migration needing its own plan and a human checkpoint. Do not
+5.18.1 → ~~6.4.8~~ **7.2.2 per D-03** — is a genuine major migration needing its own plan and a human checkpoint. Do not
 plan SEC-01 as a single "fix the alerts" task.
 
 ---
@@ -340,14 +362,27 @@ literal zero-alert repo is achievable but is not the requirement.
 | Image cropping/upscaling defaults changed | `apps/docs` depends on `sharp` — visual regression possible on logos. |
 
 **Coupled upgrade set (must move together):**
-`astro ^6.4.8` + `@astrojs/starlight ^0.40.0` + `@astrojs/preact` (bump) + `@astrojs/sitemap ^3.7.3`
+~~`astro ^6.4.8` + `@astrojs/starlight ^0.40.0`~~ — **SUPERSEDED BY D-03.** The locked target is
+`astro ^7.2.2` + `@astrojs/starlight ^0.41.7` (peer `astro ^7.0.2`), per the 7.2.2 row of the
+compatibility matrix above. Plan 17-08 Task 1 re-resolves every `@astrojs/*` peer range against
+7.2.2 at execution time rather than trusting either version set recorded here. Also
+`@astrojs/preact` (bump) + `@astrojs/sitemap ^3.7.3`
 + `packages/astro` devDep and **peerDependency range widened** so downstream consumers on Astro 6/7
 don't hit peer errors.
 
-**Recommendation: target Astro 6.4.8, not 7.** It clears the alerts with one major migration
-instead of two, and `@astrojs/starlight@0.40.0` is the last release on the Astro 6 line so the pin
-is stable. Going to 7 is defensible (avoids repeating this in a quarter) but doubles the migration
-surface during a launch-blocker phase. **This should be a `checkpoint:human-verify`.**
+> **SUPERSEDED BY D-03 — the decision was made and it went the other way.**
+>
+> ~~**Recommendation: target Astro 6.4.8, not 7.** It clears the alerts with one major migration
+> instead of two, and `@astrojs/starlight@0.40.0` is the last release on the Astro 6 line so the
+> pin is stable. Going to 7 is defensible (avoids repeating this in a quarter) but doubles the
+> migration surface during a launch-blocker phase.~~
+>
+> **The locked target is Astro 7.2.2.** The user chose the two-major jump deliberately, for the
+> longer runway, with the constraint that the migration be its own separately-gated, individually
+> revertible commit. Do not silently downgrade to 6.4.8 mid-execution; if an integration turns out
+> to have no 7-compatible version, plan 17-08 Task 1 requires stopping and returning the question
+> to the user. The `checkpoint:human-verify` recommendation WAS adopted — it is plan 17-08
+> Task 3 (visual verification of both Astro sites after the two-major jump).
 
 ---
 
@@ -512,9 +547,14 @@ The truthful post-remediation line, assuming the projected end state:
 
 Do **not** write "0 alerts" or "0 vulnerabilities". 4 CodeQL SSRF findings will remain open (they
 are inherent to a scanner that fetches user-supplied URLs, and are mitigated by
-`apps/web/lib/validate-url.ts::validateScanUrl`). Those should be **dismissed in the GitHub UI with
+`apps/web/lib/validate-url.ts::validateScanUrl`). ~~Those should be **dismissed in the GitHub UI with
 a written justification** rather than left silently open — a dismissed-with-reason alert reads as
-diligence to a hostile evaluator; an ignored one reads as neglect.
+diligence to a hostile evaluator; an ignored one reads as neglect.~~
+
+> **SUPERSEDED BY D-08 — do NOT dismiss them.** D-08 is explicit: "Do not suppress or dismiss
+> the CodeQL alerts to make a copy line work." The 4 findings stay OPEN and the copy describes
+> them honestly. Plan 17-09 Task 2 carries an acceptance criterion asserting the dismissed-alert
+> count is unchanged before and after this phase.
 
 ---
 
@@ -904,7 +944,7 @@ Every value measured 2026-08-15 in this session.
 | V2 Authentication | no (unchanged) | Clerk; not modified here |
 | V3 Session Management | no | Clerk; not modified |
 | V4 Access Control | **yes** | The cron routes authenticate via `Authorization: Bearer $CRON_SECRET` — constant-string compare. Supabase RLS unchanged by the migration. |
-| V5 Input Validation | **yes** | `apps/web/lib/validate-url.ts::validateScanUrl` is the existing SSRF control and is the mitigation cited when dismissing the 4 CodeQL alerts |
+| V5 Input Validation | **yes** | `apps/web/lib/validate-url.ts::validateScanUrl` is the existing SSRF control and is the mitigation cited when ~~dismissing~~ **describing** the 4 CodeQL alerts (D-08: they are not dismissed) |
 | V6 Cryptography | no | No crypto changes |
 | V14 Configuration | **yes** | `dependabot_security_updates` disabled, `main` unprotected, `allow_auto_merge` false — all configuration-tier defects |
 
@@ -913,7 +953,7 @@ Every value measured 2026-08-15 in this session.
 | Pattern | STRIDE | Standard mitigation | State here |
 |---|---|---|---|
 | Vulnerable dependency (supply chain) | Tampering / EoP | Version pinning + CI audit gate | **The subject of SEC-01/02** |
-| SSRF via user-supplied scan URL | Information Disclosure | Allowlist / block private IP ranges | `validateScanUrl()` exists, 12 tests; **CodeQL still flags 4 sites** — dismiss with justification, or add an explicit sanitizer annotation |
+| SSRF via user-supplied scan URL | Information Disclosure | Allowlist / block private IP ranges | `validateScanUrl()` exists, 12 tests; **CodeQL still flags 4 sites** — ~~dismiss with justification, or~~ add an explicit sanitizer annotation, or leave open and describe honestly. **D-08 forbids dismissal.** |
 | Unauthenticated cron invocation | Spoofing | Shared secret in `Authorization` | Implemented; **fails closed** (500) when `CRON_SECRET` is unset — good design |
 | Unauthenticated QStash callback | Spoofing | Signature verification | Pre-existing (`/api/scan/process` uses service-role client); **not in scope**, note only |
 | Malicious dependency via auto-merge | Tampering | Never auto-merge majors; require CI | Addressed by the proposed auto-merge conditional |
@@ -923,9 +963,11 @@ Every value measured 2026-08-15 in this session.
 `apps/web/lib/github-app.ts:{85,173,203}`. The core one is *inherent* — a URL scanner fetches
 user-supplied URLs by definition. The three in `github-app.ts` construct GitHub API URLs from
 installation/repo identifiers and are lower risk but should be reviewed for path-traversal in the
-repo/owner segments. Recommended disposition: **fix or annotate `github-app.ts`; dismiss
+repo/owner segments. ~~Recommended disposition: **fix or annotate `github-app.ts`; dismiss
 `fetcher.ts` as "used in tests"/"false positive" with a written justification pointing at
-`validateScanUrl`.**
+`validateScanUrl`.**~~ **SUPERSEDED BY D-08:** nothing is dismissed. The alerts stay open;
+annotating or fixing `github-app.ts` remains available but is out of Phase 17 scope, and
+LAUNCH.md describes the residual findings truthfully (plan 17-09 Task 2).
 
 ---
 
@@ -960,49 +1002,62 @@ project access, Clerk/Stripe accounts, a scratch repo for GitHub App verificatio
 | A1 | Removing the 9 framework devDeps will not break `pnpm typecheck` / `pnpm build` | Lever A | Medium. Import grep found no framework imports and `tsup external:` entries do not require installation — but ambient types could exist. **Mitigated by making build+typecheck+test a hard gate on that commit.** Recovery is restoring one devDep. |
 | A2 | Removing `nuxt` while keeping `@nuxt/kit` clears the `seroval`/`tar`/`@nuxt/devtools` alerts | Lever A | Low-Medium. `pnpm why` shows all three route through `nuxt` (via `@nuxt/vite-builder`, `nitropack`, directly), and `@nuxt/kit` is a far smaller tree — but `@nuxt/kit`'s own tree was not exhaustively walked. Verify with a post-removal `pnpm audit`. |
 | A3 | Bumping a package to its patched floor closes *all* that package's alerts, incl. medium/low | Projected end state | Low. Used to derive the "4 residual alerts" projection. If some alerts have higher floors than the crit/high ones, the residual is larger. Does not affect SEC-01 (crit+high only). |
-| A4 | Astro 6.4.8 + Starlight 0.40.0 build cleanly for `apps/docs` and `apps/marketing` | Astro upgrade | **High.** Peer ranges verified; actual migration not attempted. Needs its own plan and a human checkpoint. |
+| A4 | ~~Astro 6.4.8 + Starlight 0.40.0~~ **Astro 7.2.2 + Starlight 0.41.7 (D-03)** build cleanly for `apps/docs` and `apps/marketing` | Astro upgrade | **High.** Peer ranges verified; actual migration not attempted. Needs its own plan and a human checkpoint. |
 | A5 | `apps/marketing`/`apps/docs` contain no `<ViewTransitions />`, `Astro.glob()`, or other Astro-6-removed APIs | Astro upgrade | Medium. Content collections and config format were verified clean; the full removed-API surface was not grepped exhaustively. |
 | A6 | Raising `engines.node` for Astro 6 is acceptable | Astro upgrade | Medium. `PROJECT.md` states "CLI runtime: Node.js 20+". Astro 6 needs 22.12+. The CLI does not depend on Astro, so the floors can diverge per-package — but the root `engines` field currently says `>=20`. **User decision.** |
 | A7 | Vercel project is on the Hobby plan | Cron limits | Low. Both crons are daily, which is valid on every plan. Only matters if sub-daily scheduling is ever wanted. |
 | A8 | The Supabase `sites` table contains duplicate `(user_id,url)` rows | Migration | Low impact. The migration is a no-op on the dedupe step if none exist. The pre-flight query resolves it. |
 | A9 | Competitor pricing in `COMPETITIVE-PARITY.md` (2026-08-15) is accurate | Claim audit #6, #7, #16 | Medium. That doc claims live-fetched pricing but I did not re-verify competitor sites this session. The safest correction is to **remove specific competitor price numbers** rather than replace them with new ones that will also go stale. |
-| A10 | The 4 CodeQL SSRF alerts are acceptable-and-dismissible rather than real bugs | Security domain | Medium. `fetcher.ts` is inherent; the three in `github-app.ts` were not code-reviewed line by line. **Review before dismissing.** |
+| A10 | The 4 CodeQL SSRF alerts are acceptable ~~and-dismissible~~ rather than real bugs | Security domain | Medium. `fetcher.ts` is inherent; the three in `github-app.ts` were not code-reviewed line by line. **D-08 overrules the "dismissible" half: they are NOT to be dismissed.** They stay open and are described honestly in LAUNCH.md. |
 | A11 | `@aeorank/wordpress` is intentionally unpublished | Claim audit #3, #11 | Low. It has no `package.json` scripts or deps. Could be intentional (manual-guide-only) or an oversight. **User confirmation needed** before rewording "11 plugins". |
 
 ---
 
-## Open Questions
+## Open Questions - ALL RESOLVED
 
-1. **Astro 6 or Astro 7?**
+> **RESOLVED 2026-08-15 by `17-CONTEXT.md`.** All seven questions below were answered by the
+> user after this research returned. Each is annotated with the decision that closes it. Nothing
+> in this section is still open; do not treat any recommendation here as live guidance.
+
+1. **Astro 6 or Astro 7?** -> **RESOLVED by D-03: Astro 7.2.2.**
    - Known: 5.18.1 has 8 high alerts with no 5.x patch. 6.4.8 clears them (Starlight 0.40.0). 7.2.2 is current (Starlight 0.41.7). Both are majors.
-   - Unclear: appetite for two migrations vs. repeating this in a quarter.
-   - Recommendation: **Astro 6.4.8** — minimum change that satisfies SEC-01. Make it a `checkpoint:human-verify` with an explicit "or go to 7" option.
+   - ~~Recommendation: **Astro 6.4.8**~~ - overruled. The user chose **7.2.2** for the longer
+     runway, with the constraint that the migration be its own separately-gated, individually
+     revertible commit. Executed by plan 17-08.
 
-2. **What is the canonical pricing and tier naming?**
-   - Known: `apps/web/lib/stripe.ts` = `free / pro($29) / api / admin`. Marketing sells `Starter $0 / Pro $29 / Agency $99`. `PROJECT.md` says `Free / Pro $29 / API $99 / Agency $499`. Three different answers.
-   - Unclear: which is real.
-   - Recommendation: **user must declare the canonical set**, then SEC-03 reconciles code, marketing, and PROJECT.md to it. This is a decision, not a research finding — do not let the planner guess.
+2. **What is the canonical pricing and tier naming?** -> **RESOLVED by D-01: PROJECT.md is canonical.**
+   - The canonical tier set is **Free / Pro $29 / API $99 / Agency $499**. The `admin` tier in
+     code is internal and must never be presented as sellable. Executed by plan 17-06 (marketing)
+     and plan 17-09 (README / LAUNCH.md / PROJECT.md).
 
-3. **Do Pro and Agency currently advertise unbuilt features?**
-   - Known: marketing FAQ promises "PDF exports" (RPT-03, Phase 22) and "API access" (API-01..07, Phase 18). Neither exists.
-   - Recommendation: remove both from the marketing copy, or label them explicitly as roadmap. Shipping a paid tier that names a nonexistent feature is a refund/chargeback risk, not just a credibility one.
+3. **Do Pro and Agency currently advertise unbuilt features?** -> **RESOLVED by D-02: label, do not remove.**
+   - PDF export (Phase 22) and REST API (Phase 18) stay on the page but are marked as roadmap /
+     "coming soon" with a visible indicator. They must not look purchasable today. Executed by
+     plan 17-06 Task 1.
 
-4. **Should the scoreboard claim be fixed or the scoreboard be automated?**
-   - Known: `scoreboard.astro` holds hardcoded scores; the copy says "every week". `DEF-03` (publish the scoreboard) is a Phase 25 requirement.
-   - Options: (a) soften the copy to "last scanned <date>" — cheap, honest, in scope; (b) build the weekly job — that is Phase 25.
-   - Recommendation: **(a) for Phase 17.** Add a visible "last measured" date.
+4. **Should the scoreboard claim be fixed or the scoreboard be automated?** -> **RESOLVED: fix the copy.**
+   - CONTEXT `<specifics>` says "either make it true or make the copy true"; automating the board
+     is DEF-03 in Phase 25, out of scope here. Option (a) adopted: replace "every week" with a
+     rendered "last measured DATE" backed by a constant beside the data. Executed by plan
+     17-07 Task 2.
 
-5. **Should `main` get branch protection this phase?**
-   - Known: currently unprotected, no required checks. SEC-02's audit gate is decorative without it. But three bot workflows push directly to `main`.
-   - Unclear: whether the user wants to gate their own pushes.
-   - Recommendation: enable protection with the CI check required, and allow the bot to bypass — or convert the bots to PRs. Flag as a decision.
+5. **Should `main` get branch protection this phase?** -> **RESOLVED by D-04: yes, with bot exemption.**
+   - Protect `main`, require the new status checks, and exempt the three existing bot workflows
+     that push directly. D-04 exempts BOTS only - not the maintainer. Executed by plan 17-10,
+     which gates ruleset creation behind a blocking human checkpoint.
 
-6. **Literal zero alerts, or zero critical+high?**
-   - Known: SEC-01 asks only for zero crit+high. Projected residual is 4 (2 medium, 2 low), all closable with 4 more overrides.
-   - Recommendation: go to literal zero if it is cheap — it makes the launch-day Security tab read "0", which is worth more than the marginal effort. But **do not** let this expand into chasing the 7 no-patch advisories, which must be dismissed with reasons instead.
+6. **Literal zero alerts, or zero critical+high?** -> **RESOLVED by D-08: zero critical+high, and nothing is dismissed.**
+   - ~~Recommendation: go to literal zero if it is cheap... the 7 no-patch advisories **must be
+     dismissed with reasons** instead.~~ Overruled. SEC-01 requires zero critical and high only.
+     Residual medium and low alerts are explicitly acceptable and are a Deferred Idea in CONTEXT.
+     The 4 CodeQL SSRF findings stay OPEN - D-08 forbids suppressing or dismissing anything to
+     make a copy line work. LAUNCH.md is rewritten to state something true instead (plan 17-09).
 
-7. **Is `@aeorank/wordpress` meant to be published?**
-   - Affects the "11 plugins" claim in three files. Needs a one-word answer from the user.
+7. **Is `@aeorank/wordpress` meant to be published?** -> **RESOLVED by D-10 + Claude's discretion: reword, do not publish.**
+   - Publishing is listed as a Deferred Idea in CONTEXT. Plan 17-04 Task 1 records the decision to
+     REWORD: every plugin/package count must name the surface it describes - 11 plugin packages in
+     the repo, 10 published to npm - using the count that `scripts/verify-deploys.sh` measures.
+     Consumed by plans 17-06 and 17-09.
 
 ---
 
