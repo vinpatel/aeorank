@@ -68,13 +68,29 @@ Consequences already absorbed into the plans:
   all four `checkpoint:human-verify` items signed off
 - **Max feedback latency:** **90 seconds** for any task gate.
 
-**Explicitly non-gating (recorded, never blocking):** the GitHub Dependabot alert histogram
-(`gh api …/dependabot/alerts`). It re-scans a pushed lockfile on GitHub's own schedule, up to
-roughly 30 minutes — far outside the 90 s latency budget. Plans 17-02, 17-05, and 17-08 each fire
-it twice (once after push, once when writing the SUMMARY) and record both readings with
-timestamps, or record "not yet re-scanned at &lt;time&gt;". Final confirmation of ROADMAP criterion 1
-lands in plan 17-10 Task 2, where a human reads the CI job conclusions before the checks become
-required.
+**Deferred, not waived — the GitHub Dependabot alert histogram** (`gh api …/dependabot/alerts`).
+It re-scans a pushed lockfile on GitHub's own schedule, up to roughly 30 minutes — far outside
+the 90 s latency budget. So plans 17-02, 17-05, and 17-08 fire it twice each (once after push,
+once when writing the SUMMARY) and RECORD both readings with timestamps, or record "not yet
+re-scanned at &lt;time&gt;". None of those three gates on it, and that is correct.
+
+**It IS gated, twice, in later waves — after the latency has elapsed.** SEC-01 and ROADMAP
+criterion 1 are stated in terms of this API and nothing else; local `pnpm audit` is a proxy
+against a different advisory database with different per-manifest alert accounting, and a green
+CI `audit` job does not discharge the criterion:
+
+- **Plan 17-09 Task 2 (wave 5)** — an `<automated>` verify re-runs the query and refuses to write
+  the LAUNCH.md security-posture claim ("Zero critical or high severity Dependabot alerts")
+  unless it returns zero `critical` and zero `high`. The published claim is downstream of the
+  gate by construction.
+- **Plan 17-10 Task 2 (wave 6)** — a blocking human checkpoint requires the full histogram pasted
+  showing zero of both before Task 3 may create the branch ruleset, with a NAMED remediation path
+  if it is not: re-query after 30 minutes, then list offending packages with a
+  `select(.security_advisory.severity=="critical" or …)` query, then route the
+  `astro`/`@astrojs/*`/`vite` subtree back to plan 17-08 and anything else back to plan 17-05.
+
+Plan 17-08 pushes the last alert lever in wave 4, so by waves 5 and 6 the >30-minute re-scan
+latency has long since elapsed. Gating there is legitimate, not a latency violation.
 
 ---
 
@@ -86,7 +102,7 @@ required.
 | 17-01-02 | 01 | 1 | SEC-05 | T-17-04b | Undeclared `h3` made explicit and lockfile-pinned; no `@ts-ignore` escapes | unit+build | `pnpm install && pnpm build && pnpm typecheck && pnpm test` | ✅ | ⬜ pending |
 | 17-01-03 | 01 | 1 | SEC-05 | T-17-02 / T-17-03 | Destructive migration gated on a human-taken snapshot | manual | — (human-check) | n/a | ⬜ pending |
 | 17-01-04 | 01 | 1 | SEC-05 | — | Merge verified against a freshly fetched `origin/main` | smoke | `git fetch origin && git merge-base --is-ancestor fix/scan-callback-url origin/main && gh run list --workflow=deploy-web.yml --limit 1 --json conclusion -q '.[0].conclusion' \| grep -qx success` | ✅ | ⬜ pending |
-| 17-02-01 | 02 | 2 | SEC-01 | T-17-05 / T-17-06 | 9 unused framework devDeps deleted; every `peerDependencies` block byte-unchanged | unit+build | `pnpm install --frozen-lockfile && pnpm build && pnpm typecheck && pnpm test` | ✅ | ⬜ pending |
+| 17-02-01 | 02 | 2 | SEC-01 | T-17-05 / T-17-06 | 11 unused framework devDep names deleted across 8 manifests; every `peerDependencies` block byte-unchanged | unit+build | `pnpm install --frozen-lockfile && pnpm build && pnpm typecheck && pnpm test` | ✅ | ⬜ pending |
 | 17-02-02 | 02 | 2 | SEC-01 | T-17-05 | Lever A alert delta attributable to one commit | smoke | `pnpm audit --json \| jq -e '.metadata.vulnerabilities.critical <= 1'` | ✅ | ⬜ pending |
 | 17-03-01 | 03 | 2 | SEC-04 | T-17-10b | Lint scoped to real source; no rule disabled to fake a green gate | smoke | `jq -e '.files.ignore \| index("**/.astro") and index("**/.next") and index("**/.vercel") and index(".planning")' biome.json && test "$(pnpm lint 2>&1 \| grep -cE '(\.astro\|\.next\|\.vercel\|\.planning)/')" -eq 0` | ❌ W0 | ⬜ pending |
 | 17-03-02 | 03 | 2 | SEC-04 | T-17-09 | Test count derived at runtime, never by grep | unit | `pnpm build && node scripts/measure-tests.mjs && jq -e '.tests > 600 and .files > 30' .github/test-count.json && diff <(jq -S 'del(.measured)' .github/test-count.json) <(jq -S 'del(.measured)' apps/marketing/src/data/test-count.json)` | ❌ W0 | ⬜ pending |
@@ -103,10 +119,10 @@ required.
 | 17-08-02 | 08 | 4 | SEC-01 | T-17-23 / T-17-25 / T-17-26 | Two-major jump lands as one revertible commit; no override crosses a major | unit+build | `pnpm install && pnpm build && pnpm typecheck && pnpm test && pnpm audit --audit-level=high` | ✅ | ⬜ pending |
 | 17-08-03 | 08 | 4 | SEC-01 | T-17-24 | Visual regression from changed image defaults caught by a human | manual | — (human-check) | n/a | ⬜ pending |
 | 17-09-01 | 09 | 5 | SEC-03 | T-17-27 | Every README weight matches the derived artifact | unit | `node -e "…every pillars.json weightPct appears in README.md…"` | ✅ | ⬜ pending |
-| 17-09-02 | 09 | 5 | SEC-03 | T-17-28 / T-17-29 / T-17-30 | No "0 alerts" claim; no CodeQL alert dismissed; no uncited statistic | smoke | `test -n "$(git log --oneline -- LAUNCH.md)" && ! grep -qE '0 (Dependabot\|vulnerabilities)\|675 tests\|637 tests' LAUNCH.md .planning/PROJECT.md` | ✅ | ⬜ pending |
+| 17-09-02 | 09 | 5 | SEC-03, SEC-01 | T-17-28 / T-17-29 / T-17-30 | LAUNCH.md security-posture claim gated on a live zero-crit/zero-high Dependabot histogram; no "0 alerts" claim; no CodeQL alert dismissed; no uncited statistic | smoke | `test "$(gh api "repos/vinpatel/aeorank/dependabot/alerts?state=open&per_page=100" --paginate -q '.[].security_advisory.severity' \| grep -cE '^(critical\|high)$')" -eq 0 && test -n "$(git log --oneline -- LAUNCH.md)" && ! grep -qE '0 (Dependabot\|vulnerabilities)\|675 tests\|637 tests' LAUNCH.md .planning/PROJECT.md` | ✅ | ⬜ pending |
 | 17-09-03 | 09 | 5 | SEC-03, SEC-04 | T-17-27 / T-17-27b | Claim drift fails the build; unsourced competitor prices caught recursively | unit | `pnpm build && node scripts/derive-pillars.mjs && node scripts/measure-tests.mjs && node scripts/check-claims.mjs` | ❌ W0 | ⬜ pending |
 | 17-10-01 | 10 | 6 | SEC-02 | T-17-SC | Dependabot security updates enabled; one rooted npm entry, not per-workspace | smoke | `gh api repos/vinpatel/aeorank --jq '.security_and_analysis.dependabot_security_updates.status' \| grep -qx enabled && test -f .github/dependabot.yml` | ❌ W0 | ⬜ pending |
-| 17-10-02 | 10 | 6 | SEC-02 | T-17-35 / T-17-36 | Required checks confirmed green, and the maintainer consents to PR-only `main`, BEFORE the ruleset exists | manual | — (human-check) | n/a | ⬜ pending |
+| 17-10-02 | 10 | 6 | SEC-02, SEC-01 | T-17-SEC01 / T-17-35 / T-17-36 | Live Dependabot histogram read and gated at zero critical / zero high — the phase's only assertion of ROADMAP criterion 1 against the API it names; required checks confirmed green; maintainer consents to PR-only `main`, all BEFORE the ruleset exists | manual | — (human-check) | n/a | ⬜ pending |
 | 17-10-03 | 10 | 6 | SEC-02 | T-17-31 / T-17-32 / T-17-33 | Audit gate is genuinely required; only the Actions integration bypasses | integration | `gh api …/rulesets --jq '…enforcement' \| grep -qx active && test "$(… '[.bypass_actors[] \| select(.actor_type=="RepositoryRole")] \| length')" -eq 0` | ❌ W0 | ⬜ pending |
 
 *Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky*
@@ -167,8 +183,18 @@ a build order, not a gap.
 - [x] Sampling continuity: no 3 consecutive tasks without automated verify (longest run is 1)
 - [x] Wave 0 covers all `MISSING` references — there are none; every `❌ W0` maps to a creating task
 - [x] No watch-mode flags anywhere (`vitest run`, never `vitest --watch`)
-- [x] Feedback latency < 90 s for every gate; the >30-minute Dependabot API reading is explicitly
-      recorded rather than gated
+- [x] Feedback latency < 90 s for every gate, with three explicitly carved-out exceptions. These
+      are unavoidable — each waits on a remote system whose duration this repo does not control —
+      and each is legitimately gating, so they are named rather than hidden behind an average:
+      - **17-03 Task 3** — `gh run watch` on a full CI run (install + build + typecheck + test on
+        a cold runner). Minutes, not seconds. Blocking is correct: the alternative is a fixed
+        `sleep` that either wastes time or reports on an unfinished run.
+      - **17-01 Task 4** — waits for `deploy-web.yml` to conclude after the merge push.
+      - **17-10 Task 3** — dispatches two bot workflow runs and blocks on both with
+        `gh run watch --interval 15`, then attempts a rejected direct push.
+      Every other task gate stays under 90 s. Separately, the >30-minute Dependabot re-scan is
+      recorded (not gated) in plans 17-02 / 17-05 / 17-08 and gated in plans 17-09 and 17-10 once
+      the latency has elapsed — see the section above.
 - [x] Every gating assertion was re-read against the POST-execution state, not the pre-execution
       state — the `peerDependencies` greps in 17-02 were rescoped to `jq` on `.devDependencies`
       because the peer entries survive by design

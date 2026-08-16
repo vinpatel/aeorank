@@ -145,6 +145,17 @@ credential-gated must be emitted as an explicit user-action checklist, not attem
   Phases 18 and 22
 - Medium and low severity Dependabot alerts beyond what the three levers clear —
   SEC-01 requires zero critical and high only
+- **Repo-wide biome cleanup** — after plan 17-03 Task 1 scopes `biome.json` to real source,
+  roughly **MEASURE-IN-17-03** real lint errors remain in real source files (measured
+  2026-08-15: 364 across ~251 files — 116 `noNonNullAssertion`, 98 `format`, 78
+  `organizeImports`, 18 `noSvgWithoutTitle`, 11 `noUnusedTemplateLiteral`, 10 `useLiteralKeys`,
+  9 `noExplicitAny`, 24 assorted; 176 of them safe-autofixable). Plan 17-03 Task 1 records the
+  decision that the CI `verify` job does NOT run `pnpm lint` and that plan 17-10 does NOT make
+  `lint` a required check, because a required check with hundreds of known failures would make
+  the repository permanently unmergeable. This is quantified, de-gated debt — NOT a silent
+  omission. It is also tracked outside this phase folder, in `ROADMAP.md` under
+  `### Tracked Debt (v3.0)`, so it survives the phase closing. Plan 17-03 Task 1 must replace
+  the `MEASURE-IN-17-03` placeholder in both places with the number it actually measures.
 </deferred>
 
 ---

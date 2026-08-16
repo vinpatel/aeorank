@@ -163,8 +163,16 @@ No new runtime libraries are needed. This phase changes *versions*, *configurati
 
 ### Installation / remediation commands
 
+> **CORRECTION (plan revision, 2026-08-15):** the count "9" below — and every other "nine"
+> in this document, at lines 40, 74, 203, and 411 — is **wrong**. The eight `pnpm --filter`
+> commands name **ELEVEN** package names: `gatsby`, `@docusaurus/types`, `@11ty/eleventy`,
+> `next`, `@remix-run/node`, `@remix-run/react`, `@sveltejs/kit`, `svelte`, `vitepress`,
+> `vue`, `nuxt` — all verified present in the eight manifests on 2026-08-15. The command
+> list itself is correct and unchanged; only the count was wrong. Plan 17-02 says **11**
+> throughout, including in its mandated commit message. Do not propagate "9".
+
 ```bash
-# Lever A — remove provably-unused framework devDependencies (9 packages)
+# Lever A — remove provably-unused framework devDependency names (11 names, 8 commands)
 pnpm --filter @aeorank/gatsby      remove gatsby
 pnpm --filter @aeorank/docusaurus  remove @docusaurus/types
 pnpm --filter @aeorank/11ty        remove @11ty/eleventy

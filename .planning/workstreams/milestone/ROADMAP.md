@@ -61,7 +61,7 @@ PROJECT.md Out of Scope.
 
 Plans:
 - [ ] 17-01-PLAN.md — Land `fix/scan-callback-url`: keep-alive cron, Supabase unique-constraint migration, and repair of the 3 pre-existing `pnpm typecheck` failures every later gate depends on (wave 1)
-- [ ] 17-02-PLAN.md — SEC-01 lever A: delete 9 unused framework devDependencies, measure delta (wave 2)
+- [ ] 17-02-PLAN.md — SEC-01 lever A: delete 11 unused framework devDependency names across 8 manifests, measure delta (wave 2)
 - [ ] 17-03-PLAN.md — Scope biome to real source, then CI pipeline: test gate, `pnpm audit` gate, advisory lint job, authoritative test count from the vitest JSON reporter (wave 2)
 - [ ] 17-04-PLAN.md — SEC-06: liveness script for public surfaces + credential-gated human checklist (wave 2)
 - [ ] 17-05-PLAN.md — SEC-01 lever B: raise `pnpm.overrides` floors and patch direct deps, measure delta (wave 3)
@@ -155,6 +155,26 @@ Plans:
   2. A reproducible benchmark comparing AEOrank audit depth to Otterly's GEO URL audit is published
   3. The 100-funded-startup scoreboard is live at a public URL and linked from the marketing site
 **Plans:** TBD
+
+### Tracked Debt (v3.0)
+
+Quantified, deliberately de-gated debt carried out of a completed phase. Recorded here rather
+than only in a phase SUMMARY so it survives the phase closing.
+
+- **Repo-wide biome cleanup** — origin: Phase 17, plan 17-03 Task 1. After `biome.json` is
+  scoped to real source (excluding `.astro`, `.next`, `.vercel`, `.planning`), roughly
+  **MEASURE-IN-17-03** real lint errors remain in real source files (measured 2026-08-15:
+  364 across ~251 files — 116 `noNonNullAssertion`, 98 `format`, 78 `organizeImports`, 18
+  `noSvgWithoutTitle`, 11 `noUnusedTemplateLiteral`, 10 `useLiteralKeys`, 9 `noExplicitAny`,
+  24 assorted; 176 safe-autofixable). Phase 17 runs `pnpm lint` as a `continue-on-error` CI
+  job and deliberately does NOT make it a required status check — a required check with
+  hundreds of known failures would make the repository permanently unmergeable, and clearing
+  them repo-wide would have collided with the file ownership of five other Phase 17 plans.
+  No document, badge, or copy line claims the codebase is lint-clean. Plan 17-03 Task 1 must
+  replace the `MEASURE-IN-17-03` placeholder above with the count it actually measures.
+  Also recorded as a deferred idea in `phases/17-launch-blockers/17-CONTEXT.md`.
+  **Close-out condition:** `pnpm lint` exits 0 and `lint` is added to the required status
+  checks on the `main` ruleset.
 
 ## Progress
 
