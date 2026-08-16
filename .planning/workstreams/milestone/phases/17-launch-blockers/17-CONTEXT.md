@@ -50,9 +50,13 @@ PRs.
 ### D-05 — Alert remediation is three separate mechanisms, never one task
 Per research, plan SEC-01 as three independently-gated commits so the alert delta is
 attributable and a bad lever is revertible in isolation:
-  1. **Removal** — delete 9 unused framework `devDependencies` (11ty, docusaurus,
-     gatsby, next, remix, sveltekit, vitepress, and the others whose source never
-     imports them). Expected: -108 alerts including 6 of 7 criticals.
+  1. **Removal** — delete **11** unused framework `devDependency` names across **8**
+     packages: `@11ty/eleventy`, `@docusaurus/types`, `gatsby`, `next`, `nuxt`,
+     `@remix-run/node`, `@remix-run/react`, `@sveltejs/kit`, `svelte`, `vitepress`,
+     `vue`. Expected: -108 alerts including 6 of 7 criticals.
+     *(Corrected 2026-08-15: this decision originally said "9", inherited from
+     RESEARCH.md. Verified against all 8 manifests — the count is 11 names.
+     The plans and the commit message use 11.)*
      Do NOT remove `packages/astro` (`import type { AstroIntegration }`) or
      `packages/nuxt` (`@nuxt/kit`, `h3`) — those imports are real.
   2. **Overrides / patch bumps** — ~17 packages via `pnpm.overrides`.
