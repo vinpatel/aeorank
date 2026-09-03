@@ -1,9 +1,9 @@
 ---
 title: "aeorank scan"
-description: Scan a URL and generate an AEO score with all 9 files.
+description: Scan a URL and generate an AEO score with all 8 files.
 ---
 
-Scan a website URL and generate an AEO score with a dimension breakdown and the 9 files the CLI actually writes.
+Scan a website URL and generate an AEO score with a dimension breakdown and the 8 files the published CLI (`aeorank-cli@0.1.1`) actually writes.
 
 ## Usage
 
@@ -65,7 +65,7 @@ The JSON object is the contract the GitHub Action consumes next. Always present:
 - `version` — CLI version from `package.json` (one source of truth)
 - `score` / `grade`
 - `dimensionCount` — `dimensions.length` (currently 36)
-- `generatedFiles` — names of files actually written (currently 9)
+- `generatedFiles` — names of files actually written (currently 8)
 - `crawlerAccess` — per-bot map: `allow` \| `block` \| `unknown`
 - `crawlerGate` — `{ checkedBots, blockedBots, unknownBots, failed, robotsTxt }`
   - `failed` is `true` only when a checked bot is **disallowed**

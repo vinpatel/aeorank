@@ -121,10 +121,13 @@ When a PR comes from a fork, `GITHUB_TOKEN` is restricted to read-only. The Acti
 |---|---|---|
 | **Setup** | Add YAML workflow file | One-click install |
 | **Control** | Full — custom triggers, thresholds | Automatic on every PR |
+| **Crawler block** | ✅ `fail-on-crawler-block` | ✅ Fails the Check if GPTBot (or peer) is disallowed |
 | **`fail-below`** | ✅ | Coming soon |
 | **Runs on** | Your GitHub Actions minutes | AEOrank servers |
 
-**Recommendation:** Use the Action if you need `fail-below` thresholds or custom workflow logic. Use the [GitHub App](/github-app) for zero-friction setup.
+The App fails on crawler **block** only. `fail-below` (score threshold) is Action-only until the App ships it.
+
+**Recommendation:** Use the Action if you need `fail-below` thresholds or custom workflow logic. Use the [GitHub App](/github-app) for zero-friction setup and crawler-block protection.
 
 ## Links
 

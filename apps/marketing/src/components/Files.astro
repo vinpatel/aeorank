@@ -33,29 +33,6 @@ const files: GenFile[] = [
 `,
 	},
 	{
-		name: "ai.txt",
-		path: "/ai.txt",
-		desc: "Opt-in/out signals for AI training and retrieval.",
-		lang: "txt",
-		content: `# aeorank-cli 0.1.1
-User-Agent: GPTBot
-Allow: /
-
-User-Agent: ClaudeBot
-Allow: /
-
-User-Agent: PerplexityBot
-Allow: /
-
-User-Agent: Google-Extended
-Allow: /
-
-Crawl-Delay: 1
-Content-Usage: ai-training=n; ai-retrieval=y
-Contact: hello@your-site.com
-`,
-	},
-	{
 		name: "schema.json",
 		path: "/schema.json",
 		desc: "JSON-LD structured data for every significant page.",
@@ -131,7 +108,7 @@ Allow: /
 		lang: "txt",
 		content: `<section>
   <h2>What does AEOrank generate?</h2>
-  <p>Nine files: llms.txt, llms-full.txt, CLAUDE.md, schema.json, robots-patch.txt, faq-blocks.html, citation-anchors.html, sitemap-ai.xml, ai.txt.</p>
+  <p>Eight files: llms.txt, llms-full.txt, CLAUDE.md, schema.json, robots-patch.txt, faq-blocks.html, citation-anchors.html, sitemap-ai.xml.</p>
 </section>
 `,
 	},
@@ -167,14 +144,14 @@ Allow: /
 
 		<div class="section-head">
 			<div>
-				<p class="t-label">// 9 generated files</p>
+				<p class="t-label">// 8 generated files</p>
 				<h2 class="t-h1 mt-2">Every failing check ships with a fix.</h2>
 				<p class="t-body mt-3 max-w-[60ch]">
-					Every other AEO tool monitors — they hand you a dashboard and a todo list. AEOrank writes the nine files the CLI actually generates (no answers.json / report.html stubs). Click a file to read a sample.
+					Every other AEO tool monitors — they hand you a dashboard and a todo list. AEOrank writes the eight files the published CLI generates (no ai.txt, answers.json, or report.html stubs). Click a file to read a sample.
 				</p>
 			</div>
 			<div class="section-meta">
-				<span>9&nbsp;<b>files</b></span>
+				<span>8&nbsp;<b>files</b></span>
 				<span>1&nbsp;<b>command</b></span>
 				<span>0&nbsp;<b>lock-in</b></span>
 			</div>
@@ -249,7 +226,7 @@ Allow: /
 			<div class="files-below__item">
 				<span class="t-label">framework plugins</span>
 				<p class="t-body mt-2">
-					<code>@aeorank/nextjs</code>, <code>@aeorank/astro</code>, <code>@aeorank/nuxt</code>, and 8 more. Drop one line of config and all 9 files are served at the correct route on build — no vendor dashboard to babysit.
+					<code>@aeorank/next</code>, <code>@aeorank/astro</code>, <code>@aeorank/nuxt</code>, and 8 more. Drop one line of config and all 8 files are served at the correct route on build — no vendor dashboard to babysit.
 				</p>
 			</div>
 			<div class="files-below__item">

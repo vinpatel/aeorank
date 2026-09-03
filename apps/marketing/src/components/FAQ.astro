@@ -18,15 +18,15 @@ const faqs = [
 	},
 	{
 		q: "How is this different from Ahrefs, Semrush, or their AI add-ons?",
-		a: "Classical SEO tools check ranking signals for Google's blue-link results. AEOrank checks answer-extraction signals for AI engines: llms.txt, ai.txt, schema.org coverage, speakable markup, AI crawler access (GPTBot, ClaudeBot, PerplexityBot), content structure for extraction, and 30 more criteria SEO tools don't touch. Then it generates the 9 files the CLI actually writes. Semrush's AI add-on and Ahrefs' Brand Radar report on visibility; neither writes a single file you can ship."
+		a: "Classical SEO tools check ranking signals for Google's blue-link results. AEOrank checks answer-extraction signals for AI engines: llms.txt, schema.org coverage, speakable markup, AI crawler access (GPTBot, ClaudeBot, PerplexityBot), content structure for extraction, and 30 more criteria SEO tools don't touch. Then it generates the 8 files the published CLI writes. Semrush's AI add-on and Ahrefs' Brand Radar report on visibility; neither writes a single file you can ship."
 	},
 	{
 		q: "What's the difference vs Profound, Scrunch, Otterly, Peec, or AthenaHQ?",
-		a: "They monitor: they run prompts through LLMs and tell you what AI said about your brand this week. AEOrank fixes: it scores whether AI can read your site at all, then writes the 9 files the CLI generates. Floor prices there run $89–$295/mo; AEOrank Pro is $29 and the CLI is free. Useful complements, but they solve the downstream question — AEOrank solves the upstream one."
+		a: "They monitor: they run prompts through LLMs and tell you what AI said about your brand this week. AEOrank fixes: it scores whether AI can read your site at all, then writes the 8 files the CLI generates. Floor prices there run $89–$295/mo; AEOrank Pro is $29 and the CLI is free. Useful complements, but they solve the downstream question — AEOrank solves the upstream one."
 	},
 	{
 		q: "Can I use this in CI?",
-		a: "AEOrank is the only AEO tool designed for CI first. Install the GitHub App for zero-YAML PR checks, or pin aeorank-action@v1 with fail-on-crawler-block (fail the PR if GPTBot is blocked) and an optional fail-below threshold. Both post a check run that leads with the crawler allow/block/unknown table. Because the scorer is deterministic, the check is safe to block merges on — the opposite of LLM-based evals."
+		a: "AEOrank is the only AEO tool designed for CI first. The GitHub App posts a Check Run and fails the PR if GPTBot (or ClaudeBot, PerplexityBot, Google-Extended) is blocked — it does not support fail-below yet. Pin aeorank-action@v1 for the same crawler gate plus an optional fail-below score threshold. Both post a Check Run that leads with the crawler table. Only claim merge-blocking for the gates that exist."
 	},
 	{
 		q: "Does AEOrank send my site to an LLM?",

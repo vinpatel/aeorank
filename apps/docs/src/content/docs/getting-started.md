@@ -35,19 +35,19 @@ Scanning https://your-site.com...
     Google-Extended    unknown
 
   AEO Score: 42/100 (D)
-  36 dimensions · 9 generated files
+  36 dimensions · 8 generated files
 
   Dimensions by Pillar
     ...
 
-→ 9 files written to ./aeorank-output/
+→ 8 files written to ./aeorank-output/
 ```
 
 Each criterion is scored 0-10 and weighted by percentage importance. See [36 Criteria](/scoring/dimensions/) for details on what each one measures.
 
 ## Step 3: Check your generated files
 
-AEOrank writes 9 files to `./aeorank-output/` by default (the same list `generateFiles()` returns):
+AEOrank writes 8 files to `./aeorank-output/` by default (the same list `generateFiles()` and `npx aeorank-cli@latest` return):
 
 | File | What it does |
 |------|-------------|
@@ -59,7 +59,6 @@ AEOrank writes 9 files to `./aeorank-output/` by default (the same list `generat
 | `faq-blocks.html` | Speakable FAQ schema markup |
 | `citation-anchors.html` | Heading anchors for deep links |
 | `sitemap-ai.xml` | AI-oriented sitemap |
-| `ai.txt` | AI usage permissions and licensing |
 
 See [Generated Files](/files/llms-txt/) for detailed documentation on each file.
 
@@ -72,7 +71,6 @@ Copy the generated files to your website:
 3. **robots-patch.txt** → append the directives to your existing robots.txt
 4. **faq-blocks.html** and **citation-anchors.html** → add to relevant pages
 5. **sitemap-ai.xml** → root of your site, reference in robots.txt
-6. **ai.txt** → root of your site
 
 Run the scan again after deploying to see your score improve.
 

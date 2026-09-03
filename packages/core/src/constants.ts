@@ -215,7 +215,11 @@ export const CRAWLER_GATE_BOTS = [
 	"Google-Extended",
 ] as const;
 
-/** Files `generateFiles()` actually writes. Marketing copy must match this list. */
+/**
+ * Files `generateFiles()` / `npx aeorank-cli@latest` (npm 0.1.1) actually write.
+ * Public claims must match this 8-file list. `generateAiTxt` exists but is not
+ * in the default set — do not add stubs to hit a higher count.
+ */
 export const GENERATED_FILE_NAMES = [
 	"llms.txt",
 	"llms-full.txt",
@@ -225,7 +229,6 @@ export const GENERATED_FILE_NAMES = [
 	"faq-blocks.html",
 	"citation-anchors.html",
 	"sitemap-ai.xml",
-	"ai.txt",
 ] as const;
 
 /** True counts derived from the scoring/generator registries. */

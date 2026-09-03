@@ -34,7 +34,6 @@ const FILE_GENERATORS: Record<
 	"faq-blocks.html": generateFaqBlocks,
 	"citation-anchors.html": generateCitationAnchors,
 	"sitemap-ai.xml": generateSitemapAi,
-	"ai.txt": generateAiTxt,
 };
 
 /** Generate the files listed in GENERATED_FILE_NAMES from a scan result */

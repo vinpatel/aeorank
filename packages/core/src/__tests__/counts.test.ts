@@ -16,7 +16,7 @@ describe("published counts", () => {
 		expect(DIMENSION_DEFS.reduce((s, d) => s + d.weightPct, 0)).toBe(100);
 	});
 
-	it("generates exactly the 9 named files — no stubs", () => {
+	it("generates exactly the 8 named files published CLI writes — no stubs", () => {
 		expect(GENERATED_FILE_NAMES).toEqual([
 			"llms.txt",
 			"llms-full.txt",
@@ -26,9 +26,9 @@ describe("published counts", () => {
 			"faq-blocks.html",
 			"citation-anchors.html",
 			"sitemap-ai.xml",
-			"ai.txt",
 		]);
-		expect(GENERATED_FILE_COUNT).toBe(9);
+		expect(GENERATED_FILE_COUNT).toBe(8);
+		expect(GENERATED_FILE_NAMES).not.toContain("ai.txt");
 		expect(GENERATED_FILE_NAMES).not.toContain("answers.json");
 		expect(GENERATED_FILE_NAMES).not.toContain("report.html");
 	});

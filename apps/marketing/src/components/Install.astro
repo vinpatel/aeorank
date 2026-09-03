@@ -6,7 +6,7 @@ const tabs = [
 		id: "npx",
 		label: "npx",
 		title: "Scan from your terminal",
-		blurb: "Zero install. Zero account. Zero API key. Crawler table first, then 36 scores and the 9 files the CLI actually writes. --fail-on-crawler-block fails the PR if GPTBot is blocked.",
+		blurb: "Zero install. Zero account. Zero API key. Crawler table first, then 36 scores and the 8 files the published CLI writes. --fail-on-crawler-block fails the PR if GPTBot is blocked.",
 		time: "~30s per scan",
 		code: `# one-off audit on any site
 $ npx aeorank-cli scan https://your-site.com --fail-on-crawler-block
@@ -18,20 +18,20 @@ $ npx aeorank-cli scan https://your-site.com --fail-on-crawler-block
     Google-Extended    allow
 
   AEO Score: 31/100 (F)
-  36 dimensions · 9 generated files
+  36 dimensions · 8 generated files
 
 ✔ wrote aeorank-output/llms.txt
-✔ wrote aeorank-output/ai.txt
 ✔ wrote aeorank-output/schema.json
 ✔ wrote aeorank-output/robots-patch.txt
-… (+ 5 more)`,
+✔ wrote aeorank-output/CLAUDE.md
+… (+ 4 more)`,
 		diff: null,
 	},
 	{
 		id: "app",
 		label: "GitHub App",
 		title: "Install, then forget",
-		blurb: "One click. Zero YAML. Every pull request gets a Check Run with the delta, the failing criteria, and a diff of the regenerated files. Block merges on AEO regressions — the way you already block on lint and tests.",
+		blurb: "One click. Zero YAML. Every pull request gets a Check Run that fails if GPTBot is blocked. Score thresholds (fail-below) are Action-only — the App does not support them yet.",
 		time: "~1 click · ~0 config",
 		code: `# Flow
 1.  Install AEOrank on your repo
@@ -74,9 +74,9 @@ jobs:
 + .github/workflows/aeorank.yml
 # CLI writes (when you generate files):
 + aeorank-output/llms.txt
-+ aeorank-output/ai.txt
 + aeorank-output/schema.json
-+ aeorank-output/robots-patch.txt`,
++ aeorank-output/robots-patch.txt
++ aeorank-output/CLAUDE.md`
 	},
 ];
 ---
@@ -91,7 +91,7 @@ jobs:
 				<p class="t-label">// three ways in</p>
 				<h2 class="t-h1 mt-2">Pick the surface that fits your team.</h2>
 				<p class="t-body mt-3 max-w-[58ch]">
-					Same scoring engine under all three. Same 36 checks. Same 9 generated files. Pick the surface closest to where you already ship — AEOrank is the only AEO tool that treats CI as a first-class target instead of an afterthought.
+					Same scoring engine under all three. Same 36 checks. Same 8 generated files. Pick the surface closest to where you already ship — AEOrank is the only AEO tool that treats CI as a first-class target instead of an afterthought.
 				</p>
 			</div>
 			<div class="section-meta">

@@ -21,7 +21,7 @@ Closes #
 <!-- Check all that apply. -->
 
 - [ ] Scoring (`@aeorank/core`)
-- [ ] Generators (the 9 files)
+- [ ] Generators (the 8 files)
 - [ ] CLI (`aeorank-cli`)
 - [ ] GitHub Action / App
 - [ ] Dashboard (`apps/web`)

@@ -89,9 +89,12 @@ Both post the same Check Run and PR comment. Choose based on your preference:
 | **Config** | Zero — auto-detects URL | Set `url` input in workflow |
 | **Runs on** | AEOrank servers | GitHub Actions runners (your minutes) |
 | **Control** | Automatic on every PR | Full control via workflow triggers |
+| **Crawler block** | ✅ Fails the Check if GPTBot (or peer) is disallowed | ✅ `fail-on-crawler-block` |
 | **`fail-below`** | Not yet (coming soon) | ✅ Set minimum score threshold |
 
-**Recommendation:** Start with the GitHub App for zero friction. Switch to the Action if you need `fail-below` thresholds or custom workflow triggers.
+The App **does** fail the PR when a gated crawler is blocked. It does **not** support `fail-below` yet — do not treat the App as a score-threshold merge gate.
+
+**Recommendation:** Start with the GitHub App for zero friction and crawler-block protection. Switch to the Action if you need `fail-below` thresholds or custom workflow triggers.
 
 ## Troubleshooting
 
