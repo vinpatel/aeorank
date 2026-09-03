@@ -20,4 +20,5 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm --filter @aeorank/core test
+      - run: pnpm --filter @aeorank/core build
       - run: pnpm --filter aeorank-cli test
