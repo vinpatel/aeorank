@@ -165,7 +165,7 @@ describe("scan() full pipeline", () => {
 
 		expect(result.pagesScanned).toBe(1);
 		expect(result.score).toBeGreaterThanOrEqual(0);
-		expect(result.files).toHaveLength(9);
+		expect(result.files).toHaveLength(8);
 	});
 
 	it("works when robots.txt and sitemap are missing", async () => {
@@ -184,7 +184,7 @@ describe("scan() full pipeline", () => {
 
 		expect(result.pagesScanned).toBe(1);
 		expect(result.score).toBeGreaterThanOrEqual(0);
-		expect(result.files).toHaveLength(9);
+		expect(result.files).toHaveLength(8);
 		expect(result.meta.robotsTxt.raw).toBeNull();
 		expect(result.crawlerAccess.GPTBot).toBe("unknown");
 		expect(result.crawlerGate.failed).toBe(false);
