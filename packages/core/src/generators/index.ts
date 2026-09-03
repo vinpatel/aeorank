@@ -1,3 +1,4 @@
+import { GENERATED_FILE_NAMES } from "../constants.js";
 import type { GeneratedFile, ScanResult } from "../types.js";
 import { generateAiTxt } from "./ai-txt.js";
 import { generateCitationAnchors } from "./citation-anchors.js";
@@ -21,17 +22,25 @@ export {
 	generateAiTxt,
 };
 
-/** Generate all 9 AI readability files from scan result */
+const FILE_GENERATORS: Record<
+	(typeof GENERATED_FILE_NAMES)[number],
+	(result: ScanResult) => string
+> = {
+	"llms.txt": generateLlmsTxt,
+	"llms-full.txt": generateLlmsFullTxt,
+	"CLAUDE.md": generateClaudeMd,
+	"schema.json": generateSchemaJson,
+	"robots-patch.txt": generateRobotsPatch,
+	"faq-blocks.html": generateFaqBlocks,
+	"citation-anchors.html": generateCitationAnchors,
+	"sitemap-ai.xml": generateSitemapAi,
+	"ai.txt": generateAiTxt,
+};
+
+/** Generate the files listed in GENERATED_FILE_NAMES from a scan result */
 export function generateFiles(result: ScanResult): GeneratedFile[] {
-	return [
-		{ name: "llms.txt", content: generateLlmsTxt(result) },
-		{ name: "llms-full.txt", content: generateLlmsFullTxt(result) },
-		{ name: "CLAUDE.md", content: generateClaudeMd(result) },
-		{ name: "schema.json", content: generateSchemaJson(result) },
-		{ name: "robots-patch.txt", content: generateRobotsPatch(result) },
-		{ name: "faq-blocks.html", content: generateFaqBlocks(result) },
-		{ name: "citation-anchors.html", content: generateCitationAnchors(result) },
-		{ name: "sitemap-ai.xml", content: generateSitemapAi(result) },
-		{ name: "ai.txt", content: generateAiTxt(result) },
-	];
+	return GENERATED_FILE_NAMES.map((name) => ({
+		name,
+		content: FILE_GENERATORS[name](result),
+	}));
 }

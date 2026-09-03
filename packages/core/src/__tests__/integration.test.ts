@@ -141,6 +141,12 @@ describe("scan() full pipeline", () => {
 		expect(result.meta.url).toBe("https://example.com");
 		expect(result.meta.robotsTxt.crawlerAccess.GPTBot).toBe("allowed");
 		expect(result.meta.robotsTxt.crawlerAccess.PerplexityBot).toBe("disallowed");
+		expect(result.crawlerAccess.GPTBot).toBe("allow");
+		expect(result.crawlerAccess.PerplexityBot).toBe("block");
+		expect(result.crawlerGate.failed).toBe(true);
+		expect(result.crawlerGate.blockedBots).toContain("PerplexityBot");
+		expect(result.dimensionCount).toBe(result.dimensions.length);
+		expect(result.generatedFiles).toHaveLength(result.files.length);
 	});
 
 	it("handles single-page scan", async () => {
@@ -180,6 +186,9 @@ describe("scan() full pipeline", () => {
 		expect(result.score).toBeGreaterThanOrEqual(0);
 		expect(result.files).toHaveLength(9);
 		expect(result.meta.robotsTxt.raw).toBeNull();
+		expect(result.crawlerAccess.GPTBot).toBe("unknown");
+		expect(result.crawlerGate.failed).toBe(false);
+		expect(result.crawlerGate.robotsTxt).toBe("missing");
 	});
 
 	it("schema.json output is valid JSON", async () => {

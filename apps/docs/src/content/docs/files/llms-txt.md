@@ -11,9 +11,7 @@ A plain text file that lists your site's pages grouped by section, with titles a
 
 ## Why it matters
 
-Language models use `llms.txt` to quickly understand what a site offers without crawling every page. Sites with a well-structured `llms.txt` are more likely to be accurately cited by AI engines.
-
-**This is the single highest-weighted dimension in AEOrank scoring.**
+Language models and coding agents use `llms.txt` to understand what a site offers without crawling every page. That is **agent-docs hygiene**, not a citation guarantee. The evidenced lever for AI visibility is crawler allowlists (GPTBot and peers) plus a CI gate so they stay allowed.
 
 ## Example output
 

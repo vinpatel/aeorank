@@ -6,7 +6,7 @@
 const faqs = [
 	{
 		q: "Will this actually help me rank in ChatGPT answers?",
-		a: "Alone, no single file is a silver bullet. AEOrank scores 36 things at once — technical signals like llms.txt, content signals like answer density, trust signals like schema.Author, and access signals like crawler permissions. Fix the 9 failing checks and a typical site goes from 31→70+ on the next scan. Citations in Perplexity and ChatGPT tend to follow within 2–4 weeks."
+		a: "Alone, no single file is a silver bullet. AEOrank scores 36 things at once — technical signals like llms.txt, content signals like answer density, trust signals like schema.Author, and access signals like crawler permissions. The evidenced lever is crawler allowlists plus a CI gate: --fail-on-crawler-block fails the PR if GPTBot is blocked. llms.txt is agent-docs hygiene, not a citation guarantee."
 	},
 	{
 		q: "What does deterministic scoring actually mean?",
@@ -18,15 +18,15 @@ const faqs = [
 	},
 	{
 		q: "How is this different from Ahrefs, Semrush, or their AI add-ons?",
-		a: "Classical SEO tools check ranking signals for Google's blue-link results. AEOrank checks answer-extraction signals for AI engines: llms.txt, ai.txt, schema.org coverage, speakable markup, AI crawler access (GPTBot, ClaudeBot, PerplexityBot), content structure for extraction, and 30 more criteria SEO tools don't touch. Then it generates the 9 actual files. Semrush's AI add-on and Ahrefs' Brand Radar report on visibility; neither writes a single file you can ship."
+		a: "Classical SEO tools check ranking signals for Google's blue-link results. AEOrank checks answer-extraction signals for AI engines: llms.txt, ai.txt, schema.org coverage, speakable markup, AI crawler access (GPTBot, ClaudeBot, PerplexityBot), content structure for extraction, and 30 more criteria SEO tools don't touch. Then it generates the 9 files the CLI actually writes. Semrush's AI add-on and Ahrefs' Brand Radar report on visibility; neither writes a single file you can ship."
 	},
 	{
 		q: "What's the difference vs Profound, Scrunch, Otterly, Peec, or AthenaHQ?",
-		a: "They monitor: they run prompts through LLMs and tell you what AI said about your brand this week. AEOrank fixes: it scores whether AI can read your site at all, then writes the 9 files that make it readable. Floor prices there run $89–$295/mo; AEOrank Pro is $29 and the CLI is free. Useful complements, but they solve the downstream question — AEOrank solves the upstream one."
+		a: "They monitor: they run prompts through LLMs and tell you what AI said about your brand this week. AEOrank fixes: it scores whether AI can read your site at all, then writes the 9 files the CLI generates. Floor prices there run $89–$295/mo; AEOrank Pro is $29 and the CLI is free. Useful complements, but they solve the downstream question — AEOrank solves the upstream one."
 	},
 	{
 		q: "Can I use this in CI?",
-		a: "AEOrank is the only AEO tool designed for CI first. Install the GitHub App for zero-YAML PR checks, or pin aeorank-action@v1 in a workflow with a fail-below threshold. Both post a check run with the score delta and the diff of the 9 regenerated files. Because the scorer is deterministic, the check is safe to block merges on — the opposite of LLM-based evals."
+		a: "AEOrank is the only AEO tool designed for CI first. Install the GitHub App for zero-YAML PR checks, or pin aeorank-action@v1 with fail-on-crawler-block (fail the PR if GPTBot is blocked) and an optional fail-below threshold. Both post a check run that leads with the crawler allow/block/unknown table. Because the scorer is deterministic, the check is safe to block merges on — the opposite of LLM-based evals."
 	},
 	{
 		q: "Does AEOrank send my site to an LLM?",

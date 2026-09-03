@@ -23,6 +23,8 @@ When you open or update a pull request, AEOrank automatically:
 
 The Check Run shows ✅ green (score ≥ 70), grey neutral (40–69), or ❌ red (below 40).
 
+The Check **fails if GPTBot (or ClaudeBot, PerplexityBot, Google-Extended) is disallowed** in `robots.txt`, even when the overall score is high. The summary names which bot is blocked. A missing `robots.txt` is **unknown**, not a failure.
+
 ## URL detection
 
 AEOrank auto-detects your site URL by checking these files in order:
@@ -49,8 +51,8 @@ If no URL is found, AEOrank posts a neutral Check Run with setup instructions.
 The Check Run appears in your PR's checks tab with:
 
 - **AEO Score** (0–100) with letter grade (A+ through F)
-- **Pass/neutral/fail** conclusion based on score
-- **36-dimension table** grouped by pillar with scores and recommendations
+- **Pass/neutral/fail** conclusion based on score **and** crawler blocks
+- **Crawler table first** (allow / block / unknown), then the 36-dimension table
 
 ### PR comment
 

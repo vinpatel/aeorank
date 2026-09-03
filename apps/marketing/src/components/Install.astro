@@ -6,22 +6,25 @@ const tabs = [
 		id: "npx",
 		label: "npx",
 		title: "Scan from your terminal",
-		blurb: "Zero install. Zero account. Zero API key. Colored output with per-criterion scores and the 9 fix files written locally. No upload, no vendor call.",
+		blurb: "Zero install. Zero account. Zero API key. Crawler table first, then 36 scores and the 9 files the CLI actually writes. --fail-on-crawler-block fails the PR if GPTBot is blocked.",
 		time: "~30s per scan",
 		code: `# one-off audit on any site
-$ npx aeorank-cli scan https://your-site.com
+$ npx aeorank-cli scan https://your-site.com --fail-on-crawler-block
 
-✔ 36 checks in 0.9s
-  score: 31/100 · grade F
-  failing: 9 · partial: 11 · passing: 16
+  AI Crawler Access
+    GPTBot             allow
+    ClaudeBot          allow
+    PerplexityBot      allow
+    Google-Extended    allow
 
-✔ wrote dist/llms.txt
-✔ wrote dist/ai.txt
-✔ wrote dist/schema.json
-✔ wrote dist/robots.patch
-… (+ 5 more)
+  AEO Score: 31/100 (F)
+  36 dimensions · 9 generated files
 
-→ open report.html in your browser`,
+✔ wrote aeorank-output/llms.txt
+✔ wrote aeorank-output/ai.txt
+✔ wrote aeorank-output/schema.json
+✔ wrote aeorank-output/robots-patch.txt
+… (+ 5 more)`,
 		diff: null,
 	},
 	{
@@ -51,7 +54,7 @@ $ npx aeorank-cli scan https://your-site.com
 		id: "action",
 		label: "GitHub Action",
 		title: "Full pipeline control",
-		blurb: "Pin a version, set a fail-below threshold, commit the generated files back to your repo. AEO as code — the same way tests and coverage already work. No monitoring tool on the market does this.",
+		blurb: "Pin a version, set fail-on-crawler-block (fail the PR if GPTBot is blocked) and an optional fail-below score. AEO as code — the same way tests and coverage already work.",
 		time: "~8 lines of YAML",
 		code: `# .github/workflows/aeorank.yml
 name: aeorank
@@ -66,14 +69,14 @@ jobs:
         with:
           url: https://\${{ github.event.pull_request.head.ref }}.preview.example.com
           fail-below: 70
-          output: ./dist/aeo`,
+          fail-on-crawler-block: true`,
 		diff: `# what this adds to your repo
 + .github/workflows/aeorank.yml
-+ dist/aeo/llms.txt
-+ dist/aeo/ai.txt
-+ dist/aeo/schema.json
-+ dist/aeo/robots.patch
-+ dist/aeo/report.html`,
+# CLI writes (when you generate files):
++ aeorank-output/llms.txt
++ aeorank-output/ai.txt
++ aeorank-output/schema.json
++ aeorank-output/robots-patch.txt`,
 	},
 ];
 ---

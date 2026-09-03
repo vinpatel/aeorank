@@ -240,10 +240,10 @@ Checks for structured data using Schema.org vocabulary (JSON-LD, Microdata, or R
 
 **ID:** `ai-crawler-access` · **Weight:** 3% · **Max Score:** 10
 
-Checks robots.txt for AI-specific crawler rules. Verifies that GPTBot, ClaudeBot, PerplexityBot, and Google-Extended are not blocked.
+Checks robots.txt for AI-specific crawler rules. Each bot is **allow**, **block**, or **unknown**. A missing `robots.txt` (HTTP 404) is **unknown**, not blocked. `--fail-on-crawler-block` fails CI only on **block** (disallow) for GPTBot, ClaudeBot, PerplexityBot, or Google-Extended.
 
 **Pass:** All major AI crawlers allowed
-**Warn:** Some crawlers blocked
+**Warn:** Some crawlers blocked or unknown
 **Fail:** All or most AI crawlers blocked
 
 ### Meta Descriptions

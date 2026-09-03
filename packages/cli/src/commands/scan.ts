@@ -1,13 +1,43 @@
 import { existsSync, mkdirSync, readdirSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
-import { DIMENSION_DEFS, PILLAR_GROUPS, scan } from "@aeorank/core";
-import type { ScanConfig } from "@aeorank/core";
+import {
+	DIMENSION_DEFS,
+	PILLAR_GROUPS,
+	buildCrawlerReport,
+	crawlerBlockCheckCopy,
+	scan,
+} from "@aeorank/core";
+import type { ScanResult } from "@aeorank/core";
 import chalk from "chalk";
 import { Command } from "commander";
 import { loadConfig, mergeConfig } from "../config.js";
 import { handleError } from "../errors.js";
-import { renderDimensionTable, renderNextSteps, renderPageScore, renderScore } from "../ui/score-display.js";
+import {
+	renderCrawlerTable,
+	renderDimensionTable,
+	renderNextSteps,
+	renderPageScore,
+	renderScore,
+} from "../ui/score-display.js";
 import { createSpinner } from "../ui/spinner.js";
+import { getCliVersion } from "../version.js";
+
+/** Exit code when `--fail-on-crawler-block` trips on an explicit robots.txt disallow. */
+export const CRAWLER_BLOCK_EXIT_CODE = 2;
+
+function withCliJsonFields(result: ScanResult): ScanResult & { version: string } {
+	const report =
+		result.crawlerAccess && result.crawlerGate
+			? { crawlerAccess: result.crawlerAccess, crawlerGate: result.crawlerGate }
+			: buildCrawlerReport(result.meta.robotsTxt);
+	return {
+		...result,
+		...report,
+		dimensionCount: result.dimensions.length,
+		generatedFiles: result.files.map((f) => f.name),
+		version: getCliVersion(),
+	};
+}
 
 export const scanCommand = new Command("scan")
 	.description("Scan a URL for AEO (AI Engine Optimization) score")
@@ -25,6 +55,10 @@ export const scanCommand = new Command("scan")
 		"Filter dimensions to a specific pillar (answer-readiness, content-structure, trust-authority, technical-foundation, ai-discovery)",
 	)
 	.option("--page <path>", "Show score for a specific page path (e.g. /about)")
+	.option(
+		"--fail-on-crawler-block",
+		"Exit 2 if GPTBot, ClaudeBot, PerplexityBot, or Google-Extended is disallowed in robots.txt (fail the PR if GPTBot is blocked). Missing robots.txt is unknown, not blocked.",
+	)
 	.action(async (url: string, options: ScanOptions) => {
 		const isJson = options.format === "json";
 		const spinner = createSpinner(`Scanning ${url}...`, isJson);
@@ -112,6 +146,7 @@ export const scanCommand = new Command("scan")
 				if (isJson) {
 					console.log(JSON.stringify(matchedPage, null, 2));
 				} else {
+					console.log(renderCrawlerTable(result));
 					console.log(renderPageScore(matchedPage, DIMENSION_DEFS));
 				}
 			} else if (isJson) {
@@ -120,14 +155,13 @@ export const scanCommand = new Command("scan")
 				if (options.pillar) {
 					const pillar = PILLAR_GROUPS.find((p) => p.id === options.pillar);
 					if (pillar) {
-						result.dimensions = result.dimensions.filter((d) =>
-							pillar.dimensionIds.includes(d.id),
-						);
+						result.dimensions = result.dimensions.filter((d) => pillar.dimensionIds.includes(d.id));
 					}
 				}
-				console.log(JSON.stringify(result, null, 2));
+				console.log(JSON.stringify(withCliJsonFields(result), null, 2));
 			} else {
-				// Human output mode
+				// Human output mode — crawler table leads
+				console.log(renderCrawlerTable(result));
 				console.log(renderScore(result));
 				console.log(renderDimensionTable(result.dimensions, options.pillar));
 				console.log(renderNextSteps(result.dimensions, options.pillar));
@@ -161,6 +195,27 @@ export const scanCommand = new Command("scan")
 					console.log("");
 				}
 			}
+
+			if (options.failOnCrawlerBlock) {
+				const report = result.crawlerGate ?? buildCrawlerReport(result.meta.robotsTxt).crawlerGate;
+				if (report.failed) {
+					const { title, summary } = crawlerBlockCheckCopy(report.blockedBots);
+					if (isJson) {
+						// JSON already printed; annotate stderr for CI logs
+						console.error(
+							JSON.stringify({
+								error: title,
+								suggestion: summary,
+								exitCode: CRAWLER_BLOCK_EXIT_CODE,
+							}),
+						);
+					} else {
+						console.error(chalk.red(`Error: ${title}`));
+						console.error(summary);
+					}
+					process.exit(CRAWLER_BLOCK_EXIT_CODE);
+				}
+			}
 		} catch (error) {
 			spinner.stop();
 			const { message, suggestion } = handleError(error);
@@ -187,4 +242,5 @@ interface ScanOptions {
 	browser?: boolean;
 	pillar?: string;
 	page?: string;
+	failOnCrawlerBlock?: boolean;
 }

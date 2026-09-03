@@ -1,7 +1,7 @@
 import { existsSync, mkdirSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import type { ScanResult } from "@aeorank/core";
+import { emptyCrawlerScanFields, type ScanResult } from "@aeorank/core";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 // Mock @aeorank/core
@@ -182,6 +182,7 @@ const mockResult: ScanResult = {
 	pagesScanned: 5,
 	duration: 3200,
 	scannedAt: "2026-03-14T00:00:00.000Z",
+	...emptyCrawlerScanFields(),
 };
 
 describe("scan command", () => {
@@ -247,7 +248,14 @@ describe("scan command", () => {
 		expect(parsed.score).toBe(65);
 		expect(parsed.grade).toBe("C");
 		expect(parsed.dimensions).toHaveLength(12);
+		expect(parsed.dimensionCount).toBe(12);
 		expect(parsed.files).toHaveLength(2);
+		expect(parsed.generatedFiles).toEqual(["llms.txt", "schema.json"]);
+		expect(parsed.version).toBeTruthy();
+		expect(parsed.crawlerAccess).toBeDefined();
+		expect(parsed.crawlerGate).toBeDefined();
+		expect(parsed.crawlerGate.robotsTxt).toBe("missing");
+		expect(parsed.crawlerGate.failed).toBe(false);
 	});
 
 	it("exits with error for invalid URL", async () => {
@@ -494,5 +502,135 @@ describe("scan command", () => {
 			// Should NOT show site-level score
 			expect(allOutput).not.toContain("65/100");
 		});
+	});
+
+	describe("--fail-on-crawler-block", () => {
+		it("exits 2 when GPTBot is disallowed", async () => {
+			const { scan } = await import("@aeorank/core");
+			(scan as ReturnType<typeof vi.fn>).mockResolvedValue({
+				...mockResult,
+				crawlerAccess: {
+					GPTBot: "block",
+					ClaudeBot: "allow",
+					PerplexityBot: "allow",
+					"Google-Extended": "allow",
+				},
+				crawlerGate: {
+					checkedBots: ["GPTBot", "ClaudeBot", "PerplexityBot", "Google-Extended"],
+					blockedBots: ["GPTBot"],
+					unknownBots: [],
+					failed: true,
+					robotsTxt: "present",
+				},
+			});
+
+			const { scanCommand } = await import("../commands/scan.js");
+			await scanCommand.parseAsync([
+				"node",
+				"scan",
+				"https://example.com",
+				"--fail-on-crawler-block",
+				"--no-files",
+			]);
+
+			expect(exitSpy).toHaveBeenCalledWith(2);
+			const allErrors = errorSpy.mock.calls.map((c) => String(c[0])).join("\n");
+			expect(allErrors).toContain("GPTBot");
+		});
+
+		it("exits 0 when robots.txt is missing (unknown is not blocked)", async () => {
+			const { scan } = await import("@aeorank/core");
+			(scan as ReturnType<typeof vi.fn>).mockResolvedValue({
+				...mockResult,
+				crawlerAccess: {
+					GPTBot: "unknown",
+					ClaudeBot: "unknown",
+					PerplexityBot: "unknown",
+					"Google-Extended": "unknown",
+				},
+				crawlerGate: {
+					checkedBots: ["GPTBot", "ClaudeBot", "PerplexityBot", "Google-Extended"],
+					blockedBots: [],
+					unknownBots: ["GPTBot", "ClaudeBot", "PerplexityBot", "Google-Extended"],
+					failed: false,
+					robotsTxt: "missing",
+				},
+			});
+
+			const { scanCommand } = await import("../commands/scan.js");
+			await scanCommand.parseAsync([
+				"node",
+				"scan",
+				"https://example.com",
+				"--fail-on-crawler-block",
+				"--no-files",
+			]);
+
+			expect(exitSpy).not.toHaveBeenCalled();
+		});
+
+		it("exits 0 when all gate bots are allowed", async () => {
+			const { scan } = await import("@aeorank/core");
+			(scan as ReturnType<typeof vi.fn>).mockResolvedValue({
+				...mockResult,
+				crawlerAccess: {
+					GPTBot: "allow",
+					ClaudeBot: "allow",
+					PerplexityBot: "allow",
+					"Google-Extended": "allow",
+				},
+				crawlerGate: {
+					checkedBots: ["GPTBot", "ClaudeBot", "PerplexityBot", "Google-Extended"],
+					blockedBots: [],
+					unknownBots: [],
+					failed: false,
+					robotsTxt: "present",
+				},
+			});
+
+			const { scanCommand } = await import("../commands/scan.js");
+			await scanCommand.parseAsync([
+				"node",
+				"scan",
+				"https://example.com",
+				"--fail-on-crawler-block",
+				"--no-files",
+			]);
+
+			expect(exitSpy).not.toHaveBeenCalled();
+		});
+	});
+
+	it("leads human output with the crawler table", async () => {
+		const { scan } = await import("@aeorank/core");
+		(scan as ReturnType<typeof vi.fn>).mockResolvedValue({
+			...mockResult,
+			crawlerAccess: {
+				GPTBot: "allow",
+				ClaudeBot: "block",
+				PerplexityBot: "unknown",
+				"Google-Extended": "allow",
+			},
+			crawlerGate: {
+				checkedBots: ["GPTBot", "ClaudeBot", "PerplexityBot", "Google-Extended"],
+				blockedBots: ["ClaudeBot"],
+				unknownBots: ["PerplexityBot"],
+				failed: true,
+				robotsTxt: "present",
+			},
+		});
+
+		const { scanCommand } = await import("../commands/scan.js");
+		await scanCommand.parseAsync(["node", "scan", "https://example.com", "--no-files"]);
+
+		const allOutput = logSpy.mock.calls.map((c) => String(c[0])).join("\n");
+		const crawlerIdx = allOutput.indexOf("AI Crawler Access");
+		const scoreIdx = allOutput.indexOf("AEO Score");
+		expect(crawlerIdx).toBeGreaterThanOrEqual(0);
+		expect(scoreIdx).toBeGreaterThan(crawlerIdx);
+		expect(allOutput).toContain("GPTBot");
+		expect(allOutput).toMatch(/allow/);
+		expect(allOutput).toMatch(/block/);
+		expect(allOutput).toMatch(/unknown/);
 	});
 });

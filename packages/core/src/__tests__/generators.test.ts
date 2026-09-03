@@ -6,6 +6,7 @@ import { generateLlmsFullTxt } from "../generators/llms-full.js";
 import { generateLlmsTxt } from "../generators/llms-txt.js";
 import { generateRobotsPatch } from "../generators/robots-patch.js";
 import { generateSchemaJson } from "../generators/schema-json.js";
+import { emptyCrawlerScanFields } from "../crawler-gate.js";
 import type { DimensionScore, ScanMeta, ScanResult, ScannedPage } from "../types.js";
 
 function makeDimension(id: string): DimensionScore {
@@ -143,6 +144,7 @@ function makeMockResult(): ScanResult {
 		pagesScanned: 2,
 		duration: 1500,
 		scannedAt: "2026-03-14T10:00:00Z",
+		...emptyCrawlerScanFields(),
 	};
 }
 

@@ -1,12 +1,9 @@
+import { createCheckRun, getInstallationToken, upsertPrComment } from "@/lib/github-app";
+import { renderCrawlerMarkdown, resolveAeoCheck } from "@/lib/github-check";
+import { scan } from "@aeorank/core";
 import * as Sentry from "@sentry/nextjs";
 import { Receiver } from "@upstash/qstash";
 import { NextResponse } from "next/server";
-import { scan } from "@aeorank/core";
-import {
-	getInstallationToken,
-	createCheckRun,
-	upsertPrComment,
-} from "@/lib/github-app";
 
 // Public route — QStash callbacks are unauthenticated HTTP
 export const maxDuration = 300;
@@ -86,40 +83,43 @@ export async function POST(request: Request) {
 			`GitHub App scan complete: ${owner}/${repo} score=${result.score} grade=${result.grade} (${durationSec}s)`,
 		);
 
-		// Build dimension table (same format as the Action)
+		// Build crawler table first, then dimension table (same format as the Action)
 		const statusEmoji: Record<string, string> = { pass: "✅", warn: "⚠️", fail: "❌" };
 		const rows = result.dimensions.map(
 			(d) =>
 				`| ${d.name} | ${d.score}/${d.maxScore} | ${statusEmoji[d.status] ?? "—"} ${d.status.toUpperCase()} | ${d.hint} |`,
 		);
+		const crawlerMd = renderCrawlerMarkdown(result.crawlerAccess, result.crawlerGate);
 		const table = [
 			"| Dimension | Score | Status | Recommendation |",
 			"|-----------|-------|--------|----------------|",
 			...rows,
 		].join("\n");
+		const text = `${crawlerMd}\n${table}`;
 
-		// Determine conclusion
-		let conclusion: "success" | "neutral" | "failure";
-		if (result.score >= 70) conclusion = "success";
-		else if (result.score >= 40) conclusion = "neutral";
-		else conclusion = "failure";
+		const check = resolveAeoCheck({
+			score: result.score,
+			grade: result.grade,
+			url,
+			crawlerGate: result.crawlerGate,
+		});
 
-		// Post Check Run
+		// Post Check Run — crawler *block* fails even when the overall score is high
 		await createCheckRun({
 			token,
 			owner,
 			repo,
 			headSha,
 			name: "AEOrank Score",
-			conclusion,
-			title: `AEO Score: ${result.score}/100 (${result.grade})`,
-			summary: `Your site scored **${result.score}** — Grade **${result.grade}** | Scanned: ${url}`,
-			text: table,
+			conclusion: check.conclusion,
+			title: check.title,
+			summary: check.summary,
+			text,
 		});
 
 		// Post PR comment if triggered by a PR
 		if (prNumber) {
-			const commentBody = `## AEOrank Score: ${result.score}/100 (${result.grade})\n\n${table}\n\n*Scanned ${url} · [What is AEOrank?](https://aeorank.dev)*`;
+			const commentBody = `## AEOrank Score: ${result.score}/100 (${result.grade})\n\n${text}\n\n*Scanned ${url} · [What is AEOrank?](https://aeorank.dev)*`;
 			await upsertPrComment({
 				token,
 				owner,

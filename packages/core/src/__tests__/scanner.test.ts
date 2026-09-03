@@ -57,6 +57,10 @@ describe("scanUrl", () => {
 		const result = await scanUrl("https://example.com", { maxPages: 5 }, mockFetcher);
 		expect(result.pages.length).toBeGreaterThanOrEqual(1);
 		expect(result.meta.robotsTxt.raw).toBeNull();
+		expect(result.meta.robotsTxt.crawlerAccess.GPTBot).toBe("unknown");
+		expect(result.meta.robotsTxt.crawlerAccess.ClaudeBot).toBe("unknown");
+		expect(result.meta.robotsTxt.crawlerAccess.PerplexityBot).toBe("unknown");
+		expect(result.meta.robotsTxt.crawlerAccess["Google-Extended"]).toBe("unknown");
 	});
 
 	it("respects maxPages limit", async () => {

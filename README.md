@@ -5,7 +5,7 @@
 <h3 align="center">Your site ranks #1 on Google — but is invisible to ChatGPT.</h3>
 
 <p align="center">
-  AEOrank scores your AI visibility 0–100 across <strong>36 criteria</strong>, then generates the <strong>9 files</strong> that get you cited by ChatGPT, Perplexity, Claude, and Google AI Overviews.
+  AEOrank scores your AI visibility 0–100 across <strong>36 criteria</strong>, then generates the <strong>9 files</strong> AI crawlers and coding agents actually read. Crawler allowlists + CI stop GPTBot from staying blocked; <code>llms.txt</code> is agent-docs hygiene, not a citation guarantee.
 </p>
 
 <p align="center">
@@ -43,7 +43,7 @@ npx aeorank-cli scan https://your-site.com
 </p>
 
 <p align="center">
-  <em>30-second scan · 36 criteria · actionable fixes ranked by score impact</em>
+  <em>30-second scan · 36 criteria · crawler allow/block/unknown table · fail the PR if GPTBot is blocked</em>
 </p>
 
 ## Why does this matter?
@@ -98,6 +98,7 @@ jobs:
         with:
           url: https://your-site.com
           fail-below: 50
+          fail-on-crawler-block: true  # fail the PR if GPTBot is blocked
 ```
 
 ## 36 criteria across 5 pillars
@@ -112,23 +113,35 @@ jobs:
 
 ## 9 generated files
 
-AEOrank generates all the files AI engines look for:
+These are the files the CLI actually writes (`generateFiles()` — no stubs):
 
 | File | Purpose |
 |------|---------|
-| `llms.txt` | Site summary for LLM crawlers ([llmstxt.org](https://llmstxt.org) spec) |
+| `llms.txt` | Site summary for LLM crawlers ([llmstxt.org](https://llmstxt.org) spec). Agent-docs hygiene, not a citation guarantee. |
 | `llms-full.txt` | Full-context version with Q&A pairs and entity disambiguation |
-| `ai.txt` | AI usage permissions and licensing |
 | `CLAUDE.md` | Markdown context file for Claude |
 | `schema.json` | JSON-LD structured data |
-| `robots-patch.txt` | AI-specific robots.txt rules |
+| `robots-patch.txt` | AI-specific robots.txt rules (GPTBot, ClaudeBot, PerplexityBot, Google-Extended) |
 | `faq-blocks.html` | FAQ with schema.org + speakable markup |
 | `citation-anchors.html` | Deep-linkable citation anchors |
 | `sitemap-ai.xml` | AI-optimized sitemap |
+| `ai.txt` | AI usage permissions and licensing |
+
+The CLI JSON reports `dimensionCount` and `generatedFiles` from this same list.
+
+### Fail the PR if GPTBot is blocked
+
+`--fail-on-crawler-block` exits **2** when GPTBot, ClaudeBot, PerplexityBot, or Google-Extended is **disallowed** in `robots.txt`. A missing `robots.txt` is **unknown**, not blocked.
+
+```bash
+npx aeorank-cli scan https://your-site.com --fail-on-crawler-block
+```
+
+Human and CI output leads with a crawler table (`allow` / `block` / `unknown`) before the score. JSON includes `crawlerAccess` and `crawlerGate` so GitHub Actions can consume the same map.
 
 ## Framework plugins
 
-Drop-in AEO file generation. One config, 9 files, zero maintenance.
+Drop-in AEO file generation. One config, the same 9 files the CLI writes, zero maintenance.
 
 <p align="center">
   <a href="https://docs.aeorank.dev/frameworks/next/"><img src="https://img.shields.io/badge/Next.js-000?style=for-the-badge&logo=nextdotjs" alt="Next.js"></a>
@@ -157,7 +170,7 @@ export default withAeorank({
   siteUrl: "https://example.com",
   description: "What my site does.",
 });
-// → All 9 AEO files now served at your site root
+// → The 9 generated AEO files now served at your site root
 ```
 
 ## SaaS Dashboard
@@ -166,7 +179,7 @@ Track your AEO score over time at [app.aeorank.dev](https://app.aeorank.dev):
 
 - Scan any URL → full 36-criteria breakdown
 - 30-day score history with sparkline charts
-- Download all 9 generated files as a ZIP
+- Download the 9 generated files as a ZIP
 - Free tier: 1 site, 3 scans/month
 
 ## Packages

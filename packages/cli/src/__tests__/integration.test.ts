@@ -1,7 +1,7 @@
 import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import type { ScanResult } from "@aeorank/core";
+import { emptyCrawlerScanFields, type ScanResult } from "@aeorank/core";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 // Mock @aeorank/core
@@ -175,6 +175,7 @@ const mockResult: ScanResult = {
 	pagesScanned: 5,
 	duration: 3200,
 	scannedAt: "2026-03-14T00:00:00.000Z",
+	...emptyCrawlerScanFields(),
 };
 
 describe("CLI Integration Tests", () => {

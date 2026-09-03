@@ -203,3 +203,31 @@ export const AI_CRAWLERS = [
 	"Google-Extended",
 	"anthropic-ai",
 ] as const;
+
+/**
+ * Bots that fail `--fail-on-crawler-block` / the CI crawler gate when disallowed.
+ * UNKNOWN (missing robots.txt) does not fail the gate.
+ */
+export const CRAWLER_GATE_BOTS = [
+	"GPTBot",
+	"ClaudeBot",
+	"PerplexityBot",
+	"Google-Extended",
+] as const;
+
+/** Files `generateFiles()` actually writes. Marketing copy must match this list. */
+export const GENERATED_FILE_NAMES = [
+	"llms.txt",
+	"llms-full.txt",
+	"CLAUDE.md",
+	"schema.json",
+	"robots-patch.txt",
+	"faq-blocks.html",
+	"citation-anchors.html",
+	"sitemap-ai.xml",
+	"ai.txt",
+] as const;
+
+/** True counts derived from the scoring/generator registries. */
+export const DIMENSION_COUNT = DIMENSION_DEFS.length;
+export const GENERATED_FILE_COUNT = GENERATED_FILE_NAMES.length;

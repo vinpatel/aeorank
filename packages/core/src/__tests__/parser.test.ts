@@ -262,5 +262,31 @@ describe("parseRobotsTxt", () => {
 		const info = parseRobotsTxt("https://example.com", null);
 		expect(info.raw).toBeNull();
 		expect(info.crawlDelay).toBeNull();
+		expect(info.crawlerAccess.GPTBot).toBe("unknown");
+		expect(info.crawlerAccess.ClaudeBot).toBe("unknown");
+		expect(info.crawlerAccess.PerplexityBot).toBe("unknown");
+		expect(info.crawlerAccess["Google-Extended"]).toBe("unknown");
+	});
+});
+
+describe("parsePage date detection", () => {
+	it("accepts JSON-LD dateModified", () => {
+		const html = `<html><head><script type="application/ld+json">{"@type":"Article","dateModified":"2026-09-01"}</script></head><body></body></html>`;
+		const page = parsePage("https://example.com", html, "https://example.com");
+		expect(page.hasDatePublished).toBe(true);
+	});
+
+	it("accepts Last-Modified HTTP header", () => {
+		const html = `<html><body><h1>Post</h1></body></html>`;
+		const page = parsePage("https://example.com", html, "https://example.com", {
+			"last-modified": "Wed, 02 Sep 2026 12:00:00 GMT",
+		});
+		expect(page.hasDatePublished).toBe(true);
+	});
+
+	it("accepts visible <time> without datetime", () => {
+		const html = `<html><body><time>September 1, 2026</time></body></html>`;
+		const page = parsePage("https://example.com", html, "https://example.com");
+		expect(page.hasDatePublished).toBe(true);
 	});
 });
