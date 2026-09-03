@@ -27,6 +27,16 @@ describe("detectPlatformFromHtml", () => {
 		const html = `<html><script id="__NEXT_DATA__" type="application/json">{}</script></html>`;
 		expect(detectPlatformFromHtml(html)).toBe("Next.js");
 	});
+
+	it("reads generator meta with name before content", () => {
+		const html = `<html><head><meta name="generator" content="Hugo 0.120"></head></html>`;
+		expect(detectPlatformFromHtml(html)).toBe("Hugo");
+	});
+
+	it("reads generator meta with content before name", () => {
+		const html = `<html><head><meta content="WordPress 6.4" name="generator"></head></html>`;
+		expect(detectPlatformFromHtml(html)).toBe("WordPress");
+	});
 });
 
 describe("parsePage platformHint", () => {
