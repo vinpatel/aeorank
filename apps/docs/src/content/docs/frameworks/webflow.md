@@ -13,7 +13,7 @@ Use the CLI to scan your site and generate AEO files:
 npx aeorank-cli scan https://your-site.webflow.io
 ```
 
-This writes 9 files to `./aeo-output/`.
+This writes 8 files to `./aeo-output/`.
 
 ## Step 2: Host the files
 
@@ -27,7 +27,7 @@ Create a Cloudflare Worker that serves your AEO files at your domain:
 const files = {
   "/llms.txt": { content: "...", type: "text/plain" },
   "/schema.json": { content: "...", type: "application/ld+json" },
-  // ... add all 9 files
+  // ... add all 8 files
 };
 
 export default {

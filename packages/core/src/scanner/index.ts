@@ -13,6 +13,7 @@ export { createFetcher } from "./fetcher.js";
 export type { FetcherFn, FetchResult } from "./fetcher.js";
 export { discoverUrls } from "./discovery.js";
 export { createPlaywrightFetcher } from "./playwright-fetcher.js";
+export { detectPlatformFromHtml } from "./platform.js";
 
 /** Scan a URL and return raw pages + metadata (no scoring or file generation) */
 export async function scanUrl(
@@ -100,7 +101,7 @@ export async function scanUrl(
 					const pct = Math.round((fetchedCount / totalPages) * 75) + 5;
 					mergedConfig.onProgress?.(pct, `Scanning page ${fetchedCount}/${totalPages}`);
 					if (result.status === 200 && result.html) {
-						return parsePage(pageUrl, result.html, origin);
+						return parsePage(pageUrl, result.html, origin, result.headers);
 					}
 				} catch {
 					fetchedCount++;
@@ -141,12 +142,7 @@ export async function scanUrl(
 
 function detectPlatform(pages: ScannedPage[]): string | null {
 	for (const page of pages) {
-		const html = page.bodyText + page.links.map((l) => l.href).join(" ");
-		if (html.includes("wp-content") || html.includes("WordPress")) return "WordPress";
-		if (html.includes("_next") || html.includes("__next")) return "Next.js";
-		if (html.includes("__nuxt")) return "Nuxt";
-		if (html.includes("astro")) return "Astro";
-		if (html.includes("gatsby")) return "Gatsby";
+		if (page.platformHint) return page.platformHint;
 	}
 	return null;
 }

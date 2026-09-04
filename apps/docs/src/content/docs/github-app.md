@@ -23,6 +23,8 @@ When you open or update a pull request, AEOrank automatically:
 
 The Check Run shows ✅ green (score ≥ 70), grey neutral (40–69), or ❌ red (below 40).
 
+The Check **fails if GPTBot (or ClaudeBot, PerplexityBot, Google-Extended) is disallowed** in `robots.txt`, even when the overall score is high. The summary names which bot is blocked. A missing `robots.txt` is **unknown**, not a failure.
+
 ## URL detection
 
 AEOrank auto-detects your site URL by checking these files in order:
@@ -49,8 +51,8 @@ If no URL is found, AEOrank posts a neutral Check Run with setup instructions.
 The Check Run appears in your PR's checks tab with:
 
 - **AEO Score** (0–100) with letter grade (A+ through F)
-- **Pass/neutral/fail** conclusion based on score
-- **36-dimension table** grouped by pillar with scores and recommendations
+- **Pass/neutral/fail** conclusion based on score **and** crawler blocks
+- **Crawler table first** (allow / block / unknown), then the 36-dimension table
 
 ### PR comment
 
@@ -87,9 +89,12 @@ Both post the same Check Run and PR comment. Choose based on your preference:
 | **Config** | Zero — auto-detects URL | Set `url` input in workflow |
 | **Runs on** | AEOrank servers | GitHub Actions runners (your minutes) |
 | **Control** | Automatic on every PR | Full control via workflow triggers |
+| **Crawler block** | ✅ Fails the Check if GPTBot (or peer) is disallowed | ✅ `fail-on-crawler-block` |
 | **`fail-below`** | Not yet (coming soon) | ✅ Set minimum score threshold |
 
-**Recommendation:** Start with the GitHub App for zero friction. Switch to the Action if you need `fail-below` thresholds or custom workflow triggers.
+The App **does** fail the PR when a gated crawler is blocked. It does **not** support `fail-below` yet — do not treat the App as a score-threshold merge gate.
+
+**Recommendation:** Start with the GitHub App for zero friction and crawler-block protection. Switch to the Action if you need `fail-below` thresholds or custom workflow triggers.
 
 ## Troubleshooting
 

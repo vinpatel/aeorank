@@ -12,6 +12,9 @@ export type {
 	DimensionDef,
 	OnProgressFn,
 	PageScore,
+	CrawlerPublicStatus,
+	CrawlerInternalStatus,
+	CrawlerGate,
 } from "./types.js";
 
 export type { PillarGroup } from "./constants.js";
@@ -24,9 +27,20 @@ export {
 	STATUS_THRESHOLDS,
 	DEFAULT_CONFIG,
 	AI_CRAWLERS,
+	CRAWLER_GATE_BOTS,
+	GENERATED_FILE_NAMES,
+	DIMENSION_COUNT,
+	GENERATED_FILE_COUNT,
 	PAGE_LEVEL_DIMENSIONS,
 	PAGE_SCORE_MAX,
 } from "./constants.js";
+
+export {
+	buildCrawlerReport,
+	toPublicCrawlerStatus,
+	crawlerBlockCheckCopy,
+	emptyCrawlerScanFields,
+} from "./crawler-gate.js";
 
 // Utilities
 export {
@@ -46,6 +60,7 @@ export {
 	createFetcher,
 	createPlaywrightFetcher,
 	discoverUrls,
+	detectPlatformFromHtml,
 } from "./scanner/index.js";
 export type { RobotsInfo } from "./scanner/index.js";
 export type { FetcherFn, FetchResult } from "./scanner/index.js";
@@ -56,6 +71,7 @@ export { calculateAeoScore, scorePerPage, getWeightCategory } from "./scorer/ind
 // Generators
 export { generateFiles } from "./generators/index.js";
 
+import { buildCrawlerReport } from "./crawler-gate.js";
 import { generateFiles as _generateFiles } from "./generators/index.js";
 // Convenience API
 import type { FetcherFn } from "./scanner/index.js";
@@ -98,6 +114,8 @@ export async function scan(
 	config?.onProgress?.(85, "Scoring individual pages");
 	const pageScores = scorePerPage(pages, meta);
 
+	const crawlerReport = buildCrawlerReport(meta.robotsTxt);
+
 	const partialResult: ScanResult = {
 		url,
 		siteName,
@@ -112,6 +130,10 @@ export async function scan(
 		pagesScanned: pages.length,
 		duration: Math.round(performance.now() - startTime),
 		scannedAt: new Date().toISOString(),
+		crawlerAccess: crawlerReport.crawlerAccess,
+		crawlerGate: crawlerReport.crawlerGate,
+		dimensionCount: dimensions.length,
+		generatedFiles: [],
 	};
 
 	// Step 4: Generate files
@@ -121,7 +143,12 @@ export async function scan(
 	if (cleanup) await cleanup();
 
 	config?.onProgress?.(100, "Complete");
-	return { ...partialResult, files };
+	return {
+		...partialResult,
+		files,
+		dimensionCount: dimensions.length,
+		generatedFiles: files.map((f) => f.name),
+	};
 }
 
 function extractSiteName(pages: import("./types.js").ScannedPage[], url: string): string {

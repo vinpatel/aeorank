@@ -33,6 +33,7 @@ jobs:
 | `url` | Yes | — | URL to scan |
 | `token` | No | `github.token` | GitHub token for API calls |
 | `fail-below` | No | `0` | Fail the Check if score drops below this value (0 = never fail) |
+| `fail-on-crawler-block` | No | `true` | **Fail the PR if GPTBot is blocked.** Check fails when GPTBot, ClaudeBot, PerplexityBot, or Google-Extended is disallowed in `robots.txt`. A missing `robots.txt` is unknown, not blocked. |
 
 ## Permissions
 
@@ -49,11 +50,13 @@ permissions:
 
 **On every push and pull request:**
 
-The Action runs `aeorank scan <url> --format json` and posts the result as a **Check Run** with:
+The Action runs `aeorank-cli scan <url> --format json --no-files` and posts the result as a **Check Run** with:
 
+- **Crawler table first** — GPTBot / ClaudeBot / PerplexityBot / Google-Extended → allow / block / unknown
 - Score and grade in the Check summary
 - Full 36-dimension breakdown table in the Check details
 - Conclusion: `success` (≥70), `neutral` (40–69), or `failure` (<40)
+- **Crawler block always fails the Check** (when `fail-on-crawler-block` is true), even if the overall score is high. The summary names which bot is blocked.
 
 **On pull requests only:**
 
@@ -72,14 +75,26 @@ Set `fail-below` to make the Check fail when the score drops below your threshol
 
 PRs that drop the score below 70 will show a failing Check — blocking merge if you use branch protection rules.
 
+```yaml
+- uses: vinpatel/aeorank-action@v1
+  with:
+    url: https://your-site.com
+    fail-on-crawler-block: true
+```
+
+That input is "fail the PR if GPTBot is blocked." The CLI JSON fields `crawlerAccess` and `crawlerGate` are the contract; `vinpatel/aeorank-action` can consume them without guessing.
+
 ## Check conclusion logic
 
-| Score | `fail-below` triggered? | Conclusion |
-|-------|------------------------|------------|
-| 70–100 | No | ✅ Success |
-| 40–69 | No | — Neutral |
-| 0–39 | No | ❌ Failure |
-| Any | Yes (score < threshold) | ❌ Failure |
+| Score | Crawler blocked? | `fail-below` triggered? | Conclusion |
+|-------|------------------|------------------------|------------|
+| Any | Yes (disallowed) | — | ❌ Failure (summary names the bot) |
+| 70–100 | No | No | ✅ Success |
+| 40–69 | No | No | — Neutral |
+| 0–39 | No | No | ❌ Failure |
+| Any | No | Yes (score < threshold) | ❌ Failure |
+
+Missing `robots.txt` → **unknown**, not a crawler-block failure.
 
 ## Caching
 
@@ -106,10 +121,13 @@ When a PR comes from a fork, `GITHUB_TOKEN` is restricted to read-only. The Acti
 |---|---|---|
 | **Setup** | Add YAML workflow file | One-click install |
 | **Control** | Full — custom triggers, thresholds | Automatic on every PR |
+| **Crawler block** | ✅ `fail-on-crawler-block` | ✅ Fails the Check if GPTBot (or peer) is disallowed |
 | **`fail-below`** | ✅ | Coming soon |
 | **Runs on** | Your GitHub Actions minutes | AEOrank servers |
 
-**Recommendation:** Use the Action if you need `fail-below` thresholds or custom workflow logic. Use the [GitHub App](/github-app) for zero-friction setup.
+The App fails on crawler **block** only. `fail-below` (score threshold) is Action-only until the App ships it.
+
+**Recommendation:** Use the Action if you need `fail-below` thresholds or custom workflow logic. Use the [GitHub App](/github-app) for zero-friction setup and crawler-block protection.
 
 ## Links
 

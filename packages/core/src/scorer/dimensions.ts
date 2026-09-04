@@ -162,15 +162,20 @@ export function scoreContentStructure(pages: ScannedPage[], _meta: ScanMeta): Di
 	else if (h1Pct > 0.3) score = 3;
 	else score = 0;
 
-	return makeDimension(
-		"content-structure",
-		"Content Structure",
-		score,
-		5,
-		score < 10
-			? "Add H1 to every page and maintain proper heading hierarchy (H1->H2->H3)"
-			: "Strong content structure",
-	);
+	let hint = "Strong content structure";
+	if (score < 10) {
+		if (h1Pct > 0.8 && hierPct <= 0.5) {
+			hint =
+				"Heading hierarchy skips levels (e.g. H1→H4→H5). Use H1→H2→H3 without skipping — pages already have H1.";
+		} else if (h1Pct <= 0.5) {
+			hint = "Add H1 to every page and maintain proper heading hierarchy (H1→H2→H3)";
+		} else {
+			hint =
+				"Fix heading hierarchy: don't skip levels (H1→H2→H3). Most pages already have an H1.";
+		}
+	}
+
+	return makeDimension("content-structure", "Content Structure", score, 5, hint);
 }
 
 /** Dimension 5: Answer-First Formatting (medium weight) */
@@ -440,15 +445,17 @@ export function scoreHttpsRedirects(pages: ScannedPage[], meta: ScanMeta): Dimen
 	else if (isHttps) score = 5;
 	else score = 0;
 
-	return makeDimension(
-		"https-redirects",
-		"HTTPS & Redirects",
-		score,
-		2,
-		score < 10
-			? "Ensure HTTPS and add canonical URLs to all pages"
-			: "HTTPS and canonical URLs configured",
-	);
+	let hint = "HTTPS and canonical URLs configured";
+	if (score < 10) {
+		if (isHttps) {
+			hint =
+				"Add <link rel=\"canonical\"> to all pages. HTTPS is already configured — the missing points are canonicals, not HTTPS.";
+		} else {
+			hint = "Enable HTTPS and add canonical URLs to all pages";
+		}
+	}
+
+	return makeDimension("https-redirects", "HTTPS & Redirects", score, 2, hint);
 }
 
 /** Dimension 11: Page Freshness (low weight) */
@@ -477,7 +484,7 @@ export function scorePageFreshness(pages: ScannedPage[], _meta: ScanMeta): Dimen
 		score,
 		2,
 		score < 10
-			? "Add publication and last-modified dates to content pages"
+			? "Add machine-readable dates: JSON-LD datePublished/dateModified, <time datetime>, or a Last-Modified HTTP header. Visible text dates alone are not scored."
 			: "Date signals present",
 	);
 }
