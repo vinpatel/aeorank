@@ -24,6 +24,7 @@ Scan any URL for AI Engine Optimization (AEO) score and post results as a GitHub
 | `url` | URL to scan | Yes | — |
 | `token` | GitHub token for API calls | No | `${{ github.token }}` |
 | `fail-below` | Fail the Check if AEO score drops below this value (0 = never fail) | No | `0` |
+| `fail-on-crawler-block` | Fail the PR if GPTBot is blocked. Check fails when GPTBot, ClaudeBot, PerplexityBot, or Google-Extended is *disallowed* in robots.txt. Missing robots.txt is **unknown**, not blocked. | No | `true` |
 
 ---
 
@@ -76,6 +77,7 @@ jobs:
           url: https://example.com
           token: ${{ secrets.GITHUB_TOKEN }}
           fail-below: 70
+          fail-on-crawler-block: true
 ```
 
 Replace `https://example.com` with the URL you want to scan on every push or pull request.
@@ -100,18 +102,30 @@ Posts (or updates) a **PR comment** with the score and dimension table. The comm
 
 Set `fail-below: 70` (or any threshold from 1–100) to make the Check fail whenever the AEO score drops below that number. This lets you enforce a minimum AEO quality bar in CI — PRs that drop the score below your threshold will show a failing Check.
 
+**With `fail-on-crawler-block` (default true):**
+
+The Check fails when GPTBot, ClaudeBot, PerplexityBot, or Google-Extended is **disallowed** in `robots.txt` — even if the overall score is high. The Check summary names which bot is blocked. A missing `robots.txt` is **unknown** and does not fail.
+
+The CLI JSON contract (for `vinpatel/aeorank-action` to consume):
+
+- `crawlerAccess`: `{ "GPTBot": "allow"|"block"|"unknown", ... }`
+- `crawlerGate.failed`: `true` only on explicit disallow
+- `crawlerGate.blockedBots`: names to put in the Check summary
+- CLI `--fail-on-crawler-block` exits **2** (scan errors stay **1**)
+
 ---
 
 ## Check Conclusion Logic
 
-| Score Range | `fail-below` triggered? | Conclusion | Display |
-|-------------|------------------------|------------|---------|
-| 70–100 | No | `success` | Green check |
-| 40–69 | No | `neutral` | Grey dash |
-| 0–39 | No | `failure` | Red X |
-| Any | Yes (score < threshold) | `failure` | Red X |
+| Score Range | Crawler blocked? | `fail-below` triggered? | Conclusion | Display |
+|-------------|------------------|------------------------|------------|---------|
+| Any | Yes | — | `failure` | Red X (bot named) |
+| 70–100 | No | No | `success` | Green check |
+| 40–69 | No | No | `neutral` | Grey dash |
+| 0–39 | No | No | `failure` | Red X |
+| Any | No | Yes (score < threshold) | `failure` | Red X |
 
-The `fail-below` input overrides the normal conclusion — if the score is below your threshold, the Check fails regardless of whether the score would otherwise be `neutral` or `success`.
+The `fail-below` input overrides the normal score bands. A crawler **block** overrides both.
 
 ---
 

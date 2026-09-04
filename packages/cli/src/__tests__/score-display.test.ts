@@ -1,6 +1,6 @@
-import type { DimensionScore, PageScore, ScanResult } from "@aeorank/core";
+import { emptyCrawlerScanFields, type DimensionScore, type PageScore, type ScanResult } from "@aeorank/core";
 import { describe, expect, it } from "vitest";
-import { renderDimensionTable, renderNextSteps, renderPageScore, renderScore } from "../ui/score-display.js";
+import { renderCrawlerTable, renderDimensionTable, renderNextSteps, renderPageScore, renderScore } from "../ui/score-display.js";
 
 // Strip ANSI color codes for assertions
 function stripAnsi(str: string): string {
@@ -45,9 +45,59 @@ function makeScanResult(overrides: Partial<ScanResult> = {}): ScanResult {
 		pagesScanned: 5,
 		duration: 3200,
 		scannedAt: "2026-03-14T00:00:00.000Z",
+		...emptyCrawlerScanFields(),
 		...overrides,
 	};
 }
+
+describe("renderCrawlerTable", () => {
+	it("prints allow/block/unknown for each gate bot", () => {
+		const result = makeScanResult({
+			crawlerAccess: {
+				GPTBot: "allow",
+				ClaudeBot: "block",
+				PerplexityBot: "unknown",
+				"Google-Extended": "allow",
+			},
+			crawlerGate: {
+				checkedBots: ["GPTBot", "ClaudeBot", "PerplexityBot", "Google-Extended"],
+				blockedBots: ["ClaudeBot"],
+				unknownBots: ["PerplexityBot"],
+				failed: true,
+				robotsTxt: "present",
+			},
+		});
+		const output = stripAnsi(renderCrawlerTable(result));
+		expect(output).toContain("AI Crawler Access");
+		expect(output).toContain("GPTBot");
+		expect(output).toContain("allow");
+		expect(output).toContain("block");
+		expect(output).toContain("unknown");
+		expect(output).toContain("ClaudeBot");
+	});
+
+	it("states missing robots.txt is unknown, not blocked", () => {
+		const result = makeScanResult({
+			crawlerGate: {
+				checkedBots: ["GPTBot", "ClaudeBot", "PerplexityBot", "Google-Extended"],
+				blockedBots: [],
+				unknownBots: ["GPTBot", "ClaudeBot", "PerplexityBot", "Google-Extended"],
+				failed: false,
+				robotsTxt: "missing",
+			},
+			crawlerAccess: {
+				GPTBot: "unknown",
+				ClaudeBot: "unknown",
+				PerplexityBot: "unknown",
+				"Google-Extended": "unknown",
+			},
+		});
+		const output = stripAnsi(renderCrawlerTable(result));
+		expect(output).toMatch(/missing/);
+		expect(output).toMatch(/unknown/);
+		expect(output).toMatch(/not treated as blocked/);
+	});
+});
 
 describe("renderScore", () => {
 	it("displays score and grade", () => {

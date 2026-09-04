@@ -26,25 +26,27 @@ AEO complements SEO — you should do both.
 
 ## What AEOrank does
 
-AEOrank measures your site's AI visibility across [36 criteria across 5 pillars](/scoring/dimensions/) and generates 8 files that AI engines look for:
+AEOrank measures your site's AI visibility across [36 criteria across 5 pillars](/scoring/dimensions/) and generates 8 files:
 
-1. **Scans** your site (up to 50 pages, under 30 seconds)
+1. **Scans** your site (up to 200 pages)
 2. **Scores** your AI visibility from 0-100
-3. **Generates** the files AI engines need to find and cite you
+3. **Generates** the files listed below — the same set `npx aeorank-cli@latest` (npm 0.1.1) writes
 
 The CLI is free, open source, and MIT-licensed. No account required.
 
+The evidenced lever is **crawler allowlists + CI regression prevention**. `llms.txt` is agent-docs hygiene, not a citation guarantee.
+
 ## The 8 generated files
 
-AEOrank produces these files tailored to your specific site:
+These match `generateFiles()` in `@aeorank/core` and the published CLI. The CLI does **not** write `ai.txt`, `answers.json`, `citations.json`, `humans.txt`, `feed.xml`, or `report.html`.
 
 - **llms.txt** — a structured overview of your site for language models
 - **llms-full.txt** — full-text content for comprehensive indexing
 - **CLAUDE.md** — repository context for AI coding assistants
 - **schema.json** — Organization, WebSite, and FAQ structured data
-- **robots-patch.txt** — directives for GPTBot, ClaudeBot, PerplexityBot
+- **robots-patch.txt** — directives for GPTBot, ClaudeBot, PerplexityBot, Google-Extended
 - **faq-blocks.html** — speakable FAQ schema markup
-- **citation-anchors.html** — heading anchors that make content citable
-- **sitemap-ai.xml** — AI-optimized sitemap with content hints
+- **citation-anchors.html** — heading anchors for deep links
+- **sitemap-ai.xml** — AI-oriented sitemap
 
-Deploy these files on your site and AI engines will have everything they need to understand and cite your content.
+Use `--fail-on-crawler-block` to fail the PR if GPTBot is blocked. The GitHub App uses that same crawler gate. `fail-below` (score threshold) is Action-only; it is not available on the App yet.

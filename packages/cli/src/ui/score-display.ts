@@ -1,6 +1,56 @@
-import type { DimensionScore, DimensionDef, PageScore, ScanResult } from "@aeorank/core";
-import { DIMENSION_DEFS, PAGE_SCORE_MAX, PILLAR_GROUPS } from "@aeorank/core";
+import type {
+	CrawlerPublicStatus,
+	DimensionDef,
+	DimensionScore,
+	PageScore,
+	ScanResult,
+} from "@aeorank/core";
+import {
+	CRAWLER_GATE_BOTS,
+	DIMENSION_DEFS,
+	PAGE_SCORE_MAX,
+	PILLAR_GROUPS,
+	buildCrawlerReport,
+} from "@aeorank/core";
 import chalk from "chalk";
+
+const CRAWLER_STATUS_ICON: Record<CrawlerPublicStatus, string> = {
+	allow: chalk.green("allow"),
+	block: chalk.red("block"),
+	unknown: chalk.yellow("unknown"),
+};
+
+/** Crawler table leads human/CI output — bot → allow/block/unknown */
+export function renderCrawlerTable(result: ScanResult): string {
+	const report =
+		result.crawlerAccess && result.crawlerGate
+			? { crawlerAccess: result.crawlerAccess, crawlerGate: result.crawlerGate }
+			: buildCrawlerReport(result.meta.robotsTxt);
+
+	const lines: string[] = ["", chalk.bold("  AI Crawler Access"), ""];
+
+	if (report.crawlerGate.robotsTxt === "missing") {
+		lines.push(chalk.dim("  robots.txt: missing — status unknown (not treated as blocked)"), "");
+	}
+
+	for (const bot of CRAWLER_GATE_BOTS) {
+		const status = report.crawlerAccess[bot] ?? "unknown";
+		const icon = CRAWLER_STATUS_ICON[status];
+		lines.push(`    ${bot.padEnd(18)} ${icon}`);
+	}
+
+	if (report.crawlerGate.failed) {
+		lines.push(
+			"",
+			chalk.red(
+				`  Blocked: ${report.crawlerGate.blockedBots.join(", ")} — use --fail-on-crawler-block to fail the PR if GPTBot is blocked.`,
+			),
+		);
+	}
+
+	lines.push("");
+	return lines.join("\n");
+}
 
 const STATUS_ICON: Record<string, string> = {
 	pass: chalk.green("✓"),
@@ -17,6 +67,8 @@ function colorForScore(score: number): typeof chalk {
 /** Render the overall AEO score prominently with color */
 export function renderScore(result: ScanResult): string {
 	const color = colorForScore(result.score);
+	const dimCount = result.dimensionCount ?? result.dimensions.length;
+	const fileCount = result.generatedFiles?.length ?? result.files.length;
 	const lines: string[] = [
 		"",
 		color.bold(`  AEO Score: ${result.score}/100 (${result.grade})`),
@@ -24,6 +76,7 @@ export function renderScore(result: ScanResult): string {
 		chalk.dim(
 			`  ${result.siteName} — ${result.pagesScanned} pages scanned in ${(result.duration / 1000).toFixed(1)}s`,
 		),
+		chalk.dim(`  ${dimCount} dimensions · ${fileCount} generated files`),
 		"",
 	];
 	return lines.join("\n");

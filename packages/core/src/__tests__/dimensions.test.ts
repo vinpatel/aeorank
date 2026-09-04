@@ -23,6 +23,8 @@ import {
 	scoreMetaDescriptions,
 	scoreOriginalData,
 	scorePublishingVelocity,
+	scoreHttpsRedirects,
+	scorePageFreshness,
 	scoreQaFormat,
 	scoreQueryAnswerAlignment,
 	scoreRssFeed,
@@ -219,6 +221,43 @@ describe("scoreContentStructure", () => {
 		];
 		const result = scoreContentStructure(pages, makeMeta());
 		expect(result.score).toBeLessThanOrEqual(3);
+		expect(result.hint).toMatch(/Add H1/);
+	});
+
+	it("does not tell you to add H1 when every page already has H1 but hierarchy skips", () => {
+		const pages = [
+			makePage({
+				headings: [
+					{ level: 1, text: "Title", id: null },
+					{ level: 4, text: "Skipped", id: null },
+					{ level: 5, text: "Deeper", id: null },
+				],
+			}),
+		];
+		const result = scoreContentStructure(pages, makeMeta());
+		expect(result.score).toBeLessThan(10);
+		expect(result.hint).not.toMatch(/Add H1 to every page$/);
+		expect(result.hint).toMatch(/hierarchy|skip/i);
+		expect(result.hint).toMatch(/H1/);
+	});
+});
+
+describe("scoreHttpsRedirects", () => {
+	it("hints at canonicals — not broken HTTPS — when the site is already HTTPS", () => {
+		const pages = [makePage({ canonical: null })];
+		const result = scoreHttpsRedirects(pages, makeMeta({ url: "https://example.com" }));
+		expect(result.score).toBe(5);
+		expect(result.hint).toMatch(/canonical/i);
+		expect(result.hint).toMatch(/HTTPS is already configured/);
+		expect(result.hint).not.toMatch(/Enable HTTPS/);
+	});
+});
+
+describe("scorePageFreshness", () => {
+	it("names machine-readable date fields in the hint when dates are missing", () => {
+		const result = scorePageFreshness([makePage({ hasDatePublished: false })], makeMeta());
+		expect(result.score).toBe(0);
+		expect(result.hint).toMatch(/datePublished|Last-Modified|datetime/);
 	});
 });
 

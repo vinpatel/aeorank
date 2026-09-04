@@ -97,7 +97,7 @@ export async function discoverUrls(
 			const result = await fetcher(url);
 			if (result.status !== 200 || !result.html) continue;
 
-			const page = parsePage(url, result.html, origin);
+			const page = parsePage(url, result.html, origin, result.headers);
 			// Cache the parsed page so scanUrl doesn't re-fetch it
 			cachedPages.set(url, page);
 

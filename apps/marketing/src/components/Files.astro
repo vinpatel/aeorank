@@ -33,29 +33,6 @@ const files: GenFile[] = [
 `,
 	},
 	{
-		name: "ai.txt",
-		path: "/ai.txt",
-		desc: "Opt-in/out signals for AI training and retrieval.",
-		lang: "txt",
-		content: `# aeorank-cli 0.1.1
-User-Agent: GPTBot
-Allow: /
-
-User-Agent: ClaudeBot
-Allow: /
-
-User-Agent: PerplexityBot
-Allow: /
-
-User-Agent: Google-Extended
-Allow: /
-
-Crawl-Delay: 1
-Content-Usage: ai-training=n; ai-retrieval=y
-Contact: hello@your-site.com
-`,
-	},
-	{
 		name: "schema.json",
 		path: "/schema.json",
 		desc: "JSON-LD structured data for every significant page.",
@@ -75,110 +52,87 @@ Contact: hello@your-site.com
 }`,
 	},
 	{
-		name: "robots.patch",
-		path: "/robots.patch",
-		desc: "Surgical diff against your existing robots.txt — AI bots allowed.",
-		lang: "txt",
-		content: `--- robots.txt (current)
-+++ robots.txt (aeorank)
-@@
- User-agent: *
- Allow: /
-+
-+User-agent: GPTBot
-+Allow: /
-+
-+User-agent: ClaudeBot
-+Allow: /
-+
-+User-agent: PerplexityBot
-+Allow: /
-+
-+User-agent: Google-Extended
-+Allow: /
+		name: "llms-full.txt",
+		path: "/llms-full.txt",
+		desc: "Full-context version with Q&A pairs and entity disambiguation.",
+		lang: "md",
+		content: `# Your Site — full context
+
+> Extended extract for agents that want more than the llms.txt map.
+
+## What is this product?
+This product scores AI visibility and writes the files crawlers read.
+
+## How do I scan a site?
+npx aeorank-cli scan https://your-site.com
 `,
 	},
 	{
-		name: "sitemap.xml",
-		path: "/sitemap.xml",
-		desc: "Freshness-aware sitemap with lastmod signals.",
+		name: "CLAUDE.md",
+		path: "/CLAUDE.md",
+		desc: "Markdown context file for Claude and other coding agents.",
+		lang: "md",
+		content: `# Your Site
+
+- Platform: detected from HTML (Webflow, Next.js, WordPress, …)
+- Purpose: agent-docs hygiene for coding assistants
+
+## Commands
+- npx aeorank-cli scan https://your-site.com
+- npx aeorank-cli scan https://your-site.com --fail-on-crawler-block
+`,
+	},
+	{
+		name: "robots-patch.txt",
+		path: "/robots-patch.txt",
+		desc: "AI crawler rules to merge into robots.txt — GPTBot allowed.",
+		lang: "txt",
+		content: `# Append to robots.txt
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+`,
+	},
+	{
+		name: "faq-blocks.html",
+		path: "/faq-blocks.html",
+		desc: "FAQPage + speakable markup you can drop into a page.",
+		lang: "txt",
+		content: `<section>
+  <h2>What does AEOrank generate?</h2>
+  <p>Eight files: llms.txt, llms-full.txt, CLAUDE.md, schema.json, robots-patch.txt, faq-blocks.html, citation-anchors.html, sitemap-ai.xml.</p>
+</section>
+`,
+	},
+	{
+		name: "citation-anchors.html",
+		path: "/citation-anchors.html",
+		desc: "H2/H3 markup with id attributes for deep links.",
+		lang: "txt",
+		content: `<h2 id="what-is-aeo">What is AEO?</h2>
+<p>AI Engine Optimization — structure a site so agents can extract answers.</p>
+`,
+	},
+	{
+		name: "sitemap-ai.xml",
+		path: "/sitemap-ai.xml",
+		desc: "AI-oriented sitemap generated from the pages we scanned.",
 		lang: "xml",
 		content: `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://your-site.com/</loc>
-    <lastmod>2026-04-19</lastmod>
-    <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>https://your-site.com/docs</loc>
-    <lastmod>2026-04-18</lastmod>
-    <priority>0.8</priority>
+    <lastmod>2026-09-03</lastmod>
   </url>
 </urlset>`,
-	},
-	{
-		name: "answers.json",
-		path: "/answers.json",
-		desc: "Your top 20 Q&A pairs — extractable, machine-citable.",
-		lang: "json",
-		content: `[
-  {
-    "q": "What does your product do?",
-    "a": "One-sentence direct answer.",
-    "source": "/about",
-    "evidence": ["/about#mission"]
-  },
-  {
-    "q": "How much does it cost?",
-    "a": "Starts free; pro at $29/mo.",
-    "source": "/pricing",
-    "evidence": ["/pricing#plans"]
-  }
-]`,
-	},
-	{
-		name: "citations.json",
-		path: "/citations.json",
-		desc: "Primary sources, numbered and canonical. Reduces hallucination risk.",
-		lang: "json",
-		content: `{
-  "citations": [
-    { "n": 1, "claim": "40% of discovery is now AI", "src": "https://example.com/report" },
-    { "n": 2, "claim": "AI traffic converts at 15.9%", "src": "https://example.com/conv"  }
-  ]
-}`,
-	},
-	{
-		name: "humans.txt",
-		path: "/humans.txt",
-		desc: "Author and attribution data, surfaced in citations.",
-		lang: "txt",
-		content: `/* TEAM */
-  Author: You
-  Contact: hello@your-site.com
-  From: Earth
-
-/* SITE */
-  Standards: HTML5, CSS4, JSON-LD
-  Components: schema.org
-  Built with: AEOrank v0.1.1
-`,
-	},
-	{
-		name: "feed.xml",
-		path: "/feed.xml",
-		desc: "RSS feed — AI engines still treat RSS as a primary freshness signal.",
-		lang: "xml",
-		content: `<?xml version="1.0"?>
-<rss version="2.0">
-  <channel>
-    <title>Your Site</title>
-    <link>https://your-site.com</link>
-    <description>Updates</description>
-    <lastBuildDate>Sun, 19 Apr 2026 12:00:00 GMT</lastBuildDate>
-  </channel>
-</rss>`,
 	},
 ];
 ---
@@ -190,14 +144,14 @@ Contact: hello@your-site.com
 
 		<div class="section-head">
 			<div>
-				<p class="t-label">// 9 generated files</p>
+				<p class="t-label">// 8 generated files</p>
 				<h2 class="t-h1 mt-2">Every failing check ships with a fix.</h2>
 				<p class="t-body mt-3 max-w-[60ch]">
-					Every other AEO tool monitors — they hand you a dashboard and a todo list. AEOrank hands you the nine actual files AI engines look for, generated from your site, ready to drop into your repo root. Click a file to read its real output.
+					Every other AEO tool monitors — they hand you a dashboard and a todo list. AEOrank writes the eight files the published CLI generates (no ai.txt, answers.json, or report.html stubs). Click a file to read a sample.
 				</p>
 			</div>
 			<div class="section-meta">
-				<span>9&nbsp;<b>files</b></span>
+				<span>8&nbsp;<b>files</b></span>
 				<span>1&nbsp;<b>command</b></span>
 				<span>0&nbsp;<b>lock-in</b></span>
 			</div>
@@ -272,7 +226,7 @@ Contact: hello@your-site.com
 			<div class="files-below__item">
 				<span class="t-label">framework plugins</span>
 				<p class="t-body mt-2">
-					<code>@aeorank/nextjs</code>, <code>@aeorank/astro</code>, <code>@aeorank/nuxt</code>, and 8 more. Drop one line of config and all 9 files are served at the correct route on build — no vendor dashboard to babysit.
+					<code>@aeorank/next</code>, <code>@aeorank/astro</code>, <code>@aeorank/nuxt</code>, and 8 more. Drop one line of config and all 8 files are served at the correct route on build — no vendor dashboard to babysit.
 				</p>
 			</div>
 			<div class="files-below__item">

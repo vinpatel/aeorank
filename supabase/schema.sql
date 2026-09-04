@@ -17,7 +17,10 @@ create table sites (
   name             text,
   rescan_schedule  text,           -- weekly | daily | monthly | null (off)
   next_rescan_at   timestamptz,
-  created_at       timestamptz default now()
+  created_at       timestamptz default now(),
+  -- Required by the scan API upsert: onConflict "user_id,url".
+  -- Postgres rejects ON CONFLICT without a matching unique constraint (42P10).
+  constraint sites_user_id_url_key unique (user_id, url)
 );
 
 -- Scans: one row per scan run

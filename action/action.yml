@@ -18,6 +18,10 @@ inputs:
     description: "Fail the Check if AEO score drops below this value (0 = never fail)"
     required: false
     default: "0"
+  fail-on-crawler-block:
+    description: "Fail the Check if GPTBot, ClaudeBot, PerplexityBot, or Google-Extended is disallowed in robots.txt (fail the PR if GPTBot is blocked). Missing robots.txt is unknown, not blocked."
+    required: false
+    default: "true"
 
 runs:
   using: "composite"
@@ -41,12 +45,39 @@ runs:
       env:
         SCAN_RESULT: ${{ steps.scan.outputs.result }}
         FAIL_BELOW: ${{ inputs.fail-below }}
+        FAIL_ON_CRAWLER_BLOCK: ${{ inputs.fail-on-crawler-block }}
       with:
         github-token: ${{ inputs.token }}
         script: |
           const result = JSON.parse(process.env.SCAN_RESULT);
           const failBelow = parseInt(process.env.FAIL_BELOW, 10);
+          const failOnCrawlerBlock = String(process.env.FAIL_ON_CRAWLER_BLOCK).toLowerCase() !== 'false';
           const { score, grade, url, dimensions } = result;
+          const crawlerAccess = result.crawlerAccess || result.meta?.robotsTxt?.crawlerAccess || {};
+          const crawlerGate = result.crawlerGate || {};
+          const blockedBots = Array.isArray(crawlerGate.blockedBots) ? crawlerGate.blockedBots : [];
+          const crawlerFailed = failOnCrawlerBlock && (crawlerGate.failed === true || blockedBots.length > 0);
+
+          // Crawler table leads the Check / PR comment
+          const crawlerRows = ['GPTBot', 'ClaudeBot', 'PerplexityBot', 'Google-Extended'].map(bot => {
+            const raw = crawlerAccess[bot] || 'unknown';
+            const status = raw === 'allowed' ? 'allow' : raw === 'disallowed' ? 'block' : raw;
+            return `| ${bot} | ${status} |`;
+          });
+          const crawlerNote = crawlerGate.robotsTxt === 'missing'
+            ? '_robots.txt missing — status **unknown** (not treated as blocked)._\n\n'
+            : '';
+          const blockedNote = blockedBots.length
+            ? `\n**Blocked:** ${blockedBots.join(', ')}\n`
+            : '';
+          const crawlerTable = [
+            '### AI Crawler Access',
+            '',
+            crawlerNote + '| Bot | Status |',
+            '|-----|--------|',
+            ...crawlerRows,
+            blockedNote
+          ].join('\n');
 
           // Build dimension table markdown
           const statusEmoji = { pass: '✅', warn: '⚠️', fail: '❌' };
@@ -54,6 +85,8 @@ runs:
             `| ${d.name} | ${d.score}/${d.maxScore} | ${statusEmoji[d.status]} ${d.status.toUpperCase()} | ${d.hint} |`
           );
           const table = [
+            crawlerTable,
+            '',
             '| Dimension | Score | Status | Recommendation |',
             '|-----------|-------|--------|----------------|',
             ...rows
@@ -64,9 +97,16 @@ runs:
             ? context.payload.pull_request.head.sha
             : context.sha;
 
-          // Determine Check conclusion
+          // Determine Check conclusion — crawler block fails even when score is high
           let conclusion;
-          if (failBelow > 0 && score < failBelow) {
+          let title = `AEO Score: ${score}/100 (${grade})`;
+          let summary = `Your site scored **${score}** — Grade **${grade}** | Scanned: ${url}`;
+          if (crawlerFailed) {
+            conclusion = 'failure';
+            const names = blockedBots.join(', ') || 'an AI crawler';
+            title = `${names} blocked in robots.txt`;
+            summary = `${names} ${blockedBots.length === 1 ? 'is' : 'are'} blocked in robots.txt. The AEOrank check fails when GPTBot, ClaudeBot, PerplexityBot, or Google-Extended is disallowed — even if the overall score is high. Score: ${score}/100 (${grade}).`;
+          } else if (failBelow > 0 && score < failBelow) {
             conclusion = 'failure';
           } else if (score >= 70) {
             conclusion = 'success';
@@ -85,8 +125,8 @@ runs:
             status: 'completed',
             conclusion: conclusion,
             output: {
-              title: `AEO Score: ${score}/100 (${grade})`,
-              summary: `Your site scored **${score}** — Grade **${grade}** | Scanned: ${url}`,
+              title: title,
+              summary: summary,
               text: table,
             }
           });

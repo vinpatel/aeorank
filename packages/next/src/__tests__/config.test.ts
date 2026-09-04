@@ -16,6 +16,17 @@ const testConfig = {
 	],
 };
 
+/**
+ * `withAeorank` returns a generic wrapper:
+ *   <T extends Record<string, unknown>>(nextConfig: T): T
+ *
+ * Passing a bare object literal `{}` infers `T = {}`, so the returned type has no
+ * `headers` property and `result.headers` fails to typecheck. Annotating the argument
+ * as `Record<string, unknown>` widens `T` correctly. Returns a fresh object per call so
+ * the tests stay isolated.
+ */
+const emptyNextConfig = (): Record<string, unknown> => ({});
+
 describe("withAeorank", () => {
 	it("returns a function", () => {
 		const wrapper = withAeorank(testConfig);
@@ -32,13 +43,13 @@ describe("withAeorank", () => {
 
 	it("adds headers function to config", () => {
 		const wrapper = withAeorank(testConfig);
-		const result = wrapper({});
+		const result = wrapper(emptyNextConfig());
 		expect(result.headers).toBeTypeOf("function");
 	});
 
 	it("headers include text/plain for .txt files", async () => {
 		const wrapper = withAeorank(testConfig);
-		const result = wrapper({});
+		const result = wrapper(emptyNextConfig());
 		const headers = (await (result.headers as () => Promise<Array<{ source: string; headers: Array<{ key: string; value: string }> }>>)()) as Array<{
 			source: string;
 			headers: Array<{ key: string; value: string }>;
@@ -51,7 +62,7 @@ describe("withAeorank", () => {
 
 	it("headers include application/ld+json for schema.json", async () => {
 		const wrapper = withAeorank(testConfig);
-		const result = wrapper({});
+		const result = wrapper(emptyNextConfig());
 		const headers = (await (result.headers as () => Promise<Array<{ source: string; headers: Array<{ key: string; value: string }> }>>)()) as Array<{
 			source: string;
 			headers: Array<{ key: string; value: string }>;
@@ -64,7 +75,7 @@ describe("withAeorank", () => {
 
 	it("headers include application/xml for sitemap-ai.xml", async () => {
 		const wrapper = withAeorank(testConfig);
-		const result = wrapper({});
+		const result = wrapper(emptyNextConfig());
 		const headers = (await (result.headers as () => Promise<Array<{ source: string; headers: Array<{ key: string; value: string }> }>>)()) as Array<{
 			source: string;
 			headers: Array<{ key: string; value: string }>;

@@ -1,10 +1,16 @@
 import * as cheerio from "cheerio";
 import type { Heading, PageLink, ScannedPage } from "../types.js";
+import { detectPlatformFromHtml } from "./platform.js";
 
 const MAX_BODY_TEXT_LENGTH = 50_000;
 
 /** Parse an HTML string into a ScannedPage */
-export function parsePage(url: string, html: string, baseUrl: string): ScannedPage {
+export function parsePage(
+	url: string,
+	html: string,
+	baseUrl: string,
+	headers?: Record<string, string>,
+): ScannedPage {
 	const $ = cheerio.load(html);
 
 	const title = $("title").first().text().trim();
@@ -110,8 +116,9 @@ export function parsePage(url: string, html: string, baseUrl: string): ScannedPa
 	// Detect author
 	const authorName = detectAuthor($, schemaOrg);
 
-	// Detect date published
-	const hasDatePublished = detectDatePublished($, schemaOrg);
+	// Detect date published / modified (JSON-LD, meta, <time>, HTTP Last-Modified)
+	const hasDatePublished = detectDatePublished($, schemaOrg, headers);
+	const platformHint = detectPlatformFromHtml(html);
 
 	return {
 		url,
@@ -141,6 +148,7 @@ export function parsePage(url: string, html: string, baseUrl: string): ScannedPa
 		avgSentenceLength,
 		rssFeeds,
 		timeElementCount,
+		platformHint,
 	};
 }
 
@@ -215,19 +223,48 @@ function detectAuthor($: cheerio.CheerioAPI, schemaOrg: object[]): string | null
 	return null;
 }
 
-function detectDatePublished($: cheerio.CheerioAPI, schemaOrg: object[]): boolean {
-	// Check meta tags
-	if ($('meta[property="article:published_time"]').attr("content")) return true;
-	if ($('meta[name="date"]').attr("content")) return true;
+function schemaHasMachineDate(schema: object): boolean {
+	const s = schema as Record<string, unknown>;
+	if (s.datePublished || s.dateModified) return true;
+	if (Array.isArray(s["@graph"])) {
+		for (const item of s["@graph"] as Record<string, unknown>[]) {
+			if (item.datePublished || item.dateModified) return true;
+		}
+	}
+	return false;
+}
 
-	// Check JSON-LD
+function headerHasLastModified(headers?: Record<string, string>): boolean {
+	if (!headers) return false;
+	const raw =
+		headers["last-modified"] ??
+		headers["Last-Modified"] ??
+		Object.entries(headers).find(([k]) => k.toLowerCase() === "last-modified")?.[1];
+	if (!raw) return false;
+	return !Number.isNaN(Date.parse(raw));
+}
+
+function detectDatePublished(
+	$: cheerio.CheerioAPI,
+	schemaOrg: object[],
+	headers?: Record<string, string>,
+): boolean {
+	if ($('meta[property="article:published_time"]').attr("content")) return true;
+	if ($('meta[property="article:modified_time"]').attr("content")) return true;
+	if ($('meta[name="date"]').attr("content")) return true;
+	if ($('meta[name="last-modified"]').attr("content")) return true;
+	if ($('meta[property="og:updated_time"]').attr("content")) return true;
+	if ($('meta[itemprop="datePublished"]').attr("content")) return true;
+	if ($('meta[itemprop="dateModified"]').attr("content")) return true;
+
 	for (const schema of schemaOrg) {
-		const s = schema as Record<string, unknown>;
-		if (s.datePublished) return true;
+		if (schemaHasMachineDate(schema)) return true;
 	}
 
-	// Check time elements
+	// Visible <time> (with or without datetime) and HTTP Last-Modified
 	if ($("time[datetime]").length > 0) return true;
+	if ($("time").length > 0) return true;
+	if (headerHasLastModified(headers)) return true;
 
 	return false;
 }

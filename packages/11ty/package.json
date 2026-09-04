@@ -31,7 +31,6 @@
 		}
 	},
 	"devDependencies": {
-		"@11ty/eleventy": "^2.0.0",
 		"@types/node": "^22.19.15",
 		"tsup": "^8.4.0",
 		"typescript": "^5.7.0",

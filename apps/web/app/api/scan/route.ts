@@ -4,6 +4,7 @@ import { createServerSupabaseClient } from "@/lib/supabase";
 import { createServiceSupabaseClient } from "@/lib/supabase";
 import { validateScanUrl } from "@/lib/validate-url";
 import { getQStashClient } from "@/lib/qstash";
+import { resolveAppUrl } from "@/lib/app-url";
 import { getCurrentPlan, canAddSite, canRunScan } from "@/lib/plan";
 
 export async function POST(request: Request) {
@@ -107,7 +108,7 @@ export async function POST(request: Request) {
 	try {
 		const qstash = getQStashClient();
 		await qstash.publishJSON({
-			url: `${process.env.NEXT_PUBLIC_APP_URL}/api/scan/process`,
+			url: `${resolveAppUrl(request)}/api/scan/process`,
 			body: { scanId: scanRecord.id, url: validatedUrl },
 		});
 	} catch (err) {

@@ -7,12 +7,12 @@ created: 2026-04-19
 
 ## Current Position
 **Status:** In progress
-**Current Phase:** Phase 01 complete — next: Phase 02 (reconcile 8 vs 9 files)
-**Last Activity:** 2026-04-19
-**Last Activity Description:** Phase 01 shipped via /gsd-fast — attribution header in all 9 generated files
+**Current Phase:** Phase 03 complete — next: Phase 06 (GitHub topics + awesome-list PRs), then Phase 04 (100-startup post) before HN
+**Last Activity:** 2026-04-28
+**Last Activity Description:** Phase 03 shipped via full README overhaul + marketing site credibility fixes (placeholder citation URLs, unsourced stats softened)
 
 ## Progress
-**Phases Complete:** 1/16
+**Phases Complete:** 3/16
 **Current Plan:** N/A
 
 ## Phase Log
@@ -21,6 +21,23 @@ created: 2026-04-19
   - All 9 core generators wired with language-appropriate header (HTML comment for markdown/HTML/XML, `#` for text, `_generator` field for JSON)
   - 4 new tests pin the header (288 → 292 tests passing)
   - Commit: `747d958`
+- **2026-04-28 · Phase 03 · README overhaul** ✅
+  - Full README rewrite: added prominent star CTA below the demo GIF, "How it works" 3-step table, "Built for developers" positioning section, sharpened comparison table ("Telemetry: None" row added; "11 packages + 2 manual guides" replaces overstated "13")
+  - Pulled "Others monitor. AEOrank fixes." line from marketing Hero to align tone
+  - Softened unsourced stats ("40% of web discovery", "15.9% conversion") to qualitative claims — HN audience scrutinizes specific percentages without sources
+  - Auto-update markers preserved (`<!-- STATS_START -->` for readme-social-proof.yml workflow)
+  - Verified docs build still passes; marketing build still passes
+  - **Spillover credibility fixes (also committed):**
+    - `apps/marketing/src/components/Files.astro`: replaced `https://example.com/{report,conv}` placeholder citation URLs with self-referential demo content
+    - `apps/marketing/astro.config.mjs`: softened FAQ stat claim and corrected "13 framework plugins" overstatement
+- **2026-04-28 · Phase 02 · Reconcile 8 vs 9 files** ✅
+  - 18 docs site references updated 8 → 9 across index, getting-started, what-is-aeo, cli/scan, dashboard/export, and 12 framework guides
+  - New `apps/docs/src/content/docs/files/ai-txt.md` doc page with directives reference
+  - `apps/docs/astro.config.mjs` sidebar entry for ai.txt under Generated Files
+  - `AEORANK_PROJECT.md` current-state description updated; `AEORANK_SPEC.md` and `AEORANK_ROADMAP.md` left as historical v1 artifacts (intentional scope cut)
+  - Verified: `astro build` produces 39 pages (up from 38)
+  - Commits: `5a380ad` (docs), pending (project doc)
+  - Note: GSD `/gsd-quick` blocked by SDK version mismatch (`@gsd-build/sdk@0.1.0` lacks `query` subcommand expected by workflow); fell back to inline batch edit for time pressure
 
 ## Session Continuity
 **Stopped At:** N/A

@@ -3,7 +3,7 @@ title: "aeorank scan"
 description: Scan a URL and generate an AEO score with all 8 files.
 ---
 
-Scan a website URL and generate an AEO score with dimension breakdown and all 8 output files.
+Scan a website URL and generate an AEO score with a dimension breakdown and the 8 files the published CLI (`aeorank-cli@0.1.1`) actually writes.
 
 ## Usage
 
@@ -21,12 +21,16 @@ aeorank scan <url> [options]
 
 | Flag | Default | Description |
 |------|---------|-------------|
-| `--format <type>` | `text` | Output format: `text` (colored terminal) or `json` (machine-readable) |
-| `--output <dir>` | `./aeo-output` | Directory to write generated files |
-| `--config <path>` | `./aeorank.config.js` | Path to configuration file |
-| `--max-pages <n>` | `50` | Maximum pages to crawl |
-| `--timeout <ms>` | `30000` | Request timeout in milliseconds |
-| `--concurrency <n>` | `3` | Concurrent requests |
+| `--format <type>` | `human` | Output format: `human` (colored terminal) or `json` (machine-readable) |
+| `--output <dir>` | `./aeorank-output` | Directory to write generated files |
+| `--config <path>` | — | Path to configuration file |
+| `--max-pages <n>` | `200` | Maximum pages to crawl |
+| `--no-files` | off | Skip writing generated files |
+| `--overwrite` | off | Replace existing output files |
+| `--browser` / `-b` | off | Use Playwright for JavaScript-rendered pages |
+| `--pillar <name>` | — | Filter dimensions to one pillar |
+| `--page <path>` | — | Show score for a specific page path |
+| `--fail-on-crawler-block` | off | **Fail the PR if GPTBot is blocked.** Exit 2 if GPTBot, ClaudeBot, PerplexityBot, or Google-Extended is *disallowed* in `robots.txt`. A missing `robots.txt` is **unknown**, not blocked. |
 
 ## Examples
 
@@ -36,61 +40,54 @@ aeorank scan <url> [options]
 npx aeorank-cli scan https://example.com
 ```
 
+### Fail CI when an AI crawler is blocked
+
+```bash
+npx aeorank-cli scan https://example.com --fail-on-crawler-block --format json --no-files
+```
+
+Exit codes:
+
+| Code | Meaning |
+|------|---------|
+| `0` | Scan succeeded (unknown crawlers do **not** fail) |
+| `1` | Scan or I/O error |
+| `2` | `--fail-on-crawler-block` and a gated bot is disallowed |
+
 ### JSON output for CI
 
 ```bash
-npx aeorank-cli scan https://example.com --format json
+npx aeorank-cli scan https://example.com --format json --no-files
 ```
 
-The JSON output can be piped to other tools:
+The JSON object is the contract the GitHub Action consumes next. Always present:
+
+- `version` — CLI version from `package.json` (one source of truth)
+- `score` / `grade`
+- `dimensionCount` — `dimensions.length` (currently 36)
+- `generatedFiles` — names of files actually written (currently 8)
+- `crawlerAccess` — per-bot map: `allow` \| `block` \| `unknown`
+- `crawlerGate` — `{ checkedBots, blockedBots, unknownBots, failed, robotsTxt }`
+  - `failed` is `true` only when a checked bot is **disallowed**
+  - `robotsTxt: "missing"` means 404 / no file — status unknown, **not** blocked
 
 ```bash
-npx aeorank-cli scan https://example.com --format json | jq '.score'
-```
-
-### Custom output directory
-
-```bash
-npx aeorank-cli scan https://example.com --output ./my-aeo-files
-```
-
-### Scan fewer pages (faster)
-
-```bash
-npx aeorank-cli scan https://example.com --max-pages 10
-```
-
-### Use a config file
-
-```bash
-npx aeorank-cli scan https://example.com --config ./aeorank.config.js
+npx aeorank-cli scan https://example.com --format json --no-files | jq '.crawlerAccess.GPTBot'
 ```
 
 ## Output
 
-### Text format (default)
+### Human format (default)
 
-The text format displays a colored score table with:
-- Overall AEO score (0-100) and letter grade
-- 12-dimension breakdown with score, weight, and status
-- Pass/warn/fail indicators
-- Actionable next-step recommendations ranked by priority
+1. **AI crawler table** — GPTBot, ClaudeBot, PerplexityBot, Google-Extended → allow / block / unknown
+2. Overall AEO score (0–100) and letter grade, plus the true dimension and file counts
+3. 36-dimension breakdown grouped by pillar
+4. Actionable next-step recommendations
 
 ### JSON format
 
-The JSON format outputs a clean JSON object to stdout containing:
-- `url` — scanned URL
-- `score` — overall score (0-100)
-- `grade` — letter grade (A+ through F)
-- `dimensions` — array of dimension scores
-- `files` — array of generated file objects
-- `pagesScanned` — number of pages crawled
-- `duration` — scan duration in milliseconds
+See fields above. `crawlerAccess` uses `allow` / `block` / `unknown` (not `allowed` / `disallowed`) so Actions can consume it without remapping.
 
-## Error handling
+## Honest claims
 
-Every error includes a specific next action:
-- **Invalid URL** — "Check the URL format. Include https:// prefix."
-- **Network error** — "Verify the site is accessible. Check your internet connection."
-- **Timeout** — "Site took too long to respond. Try `--timeout 60000` for a longer timeout."
-- **Permission denied** — "The site's robots.txt blocks crawling. Check the site's access rules."
+Crawler allowlists plus a CI gate prevent GPTBot (and peers) from staying blocked. `llms.txt` is agent-docs hygiene, not a citation guarantee.

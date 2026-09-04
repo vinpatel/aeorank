@@ -25,12 +25,12 @@
 	},
 	"devDependencies": {
 		"@nuxt/kit": "^3.16.0",
-		"nuxt": "^3.16.0",
 		"tsup": "^8.4.0",
 		"typescript": "^5.7.0",
 		"vitest": "^3.2.0"
 	},
 	"dependencies": {
-		"@nuxt/kit": "^3.16.0"
+		"@nuxt/kit": "^3.16.0",
+		"h3": "^1.15.9"
 	}
 }

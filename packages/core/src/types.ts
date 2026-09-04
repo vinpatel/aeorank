@@ -41,6 +41,8 @@ export interface ScannedPage {
 	rssFeeds: { href: string; type: string }[];
 	/** Count of <time> elements with a datetime attribute */
 	timeElementCount: number;
+	/** CMS / framework detected from raw HTML (not body text — avoids false positives) */
+	platformHint?: string | null;
 }
 
 export interface Heading {
@@ -73,6 +75,22 @@ export interface ScanMeta {
 	sitemapLastmods: string[];
 }
 
+/** Public crawler status used in JSON / human / CI output */
+export type CrawlerPublicStatus = "allow" | "block" | "unknown";
+
+/** Internal robots-parser status stored on ScanMeta */
+export type CrawlerInternalStatus = "allowed" | "disallowed" | "unknown";
+
+/** CI crawler gate — Action/App consume this; UNKNOWN is never a failure */
+export interface CrawlerGate {
+	checkedBots: string[];
+	blockedBots: string[];
+	unknownBots: string[];
+	/** True only when a checked bot is explicitly disallowed in robots.txt */
+	failed: boolean;
+	robotsTxt: "present" | "missing";
+}
+
 /** Complete scan result with score, dimensions, and generated files */
 export interface ScanResult {
 	url: string;
@@ -88,6 +106,13 @@ export interface ScanResult {
 	pagesScanned: number;
 	duration: number;
 	scannedAt: string;
+	/** Per-bot allow/block/unknown map for CLI JSON and the GitHub Action */
+	crawlerAccess: Record<string, CrawlerPublicStatus>;
+	crawlerGate: CrawlerGate;
+	/** True dimension count for this scan (not marketing copy) */
+	dimensionCount: number;
+	/** Names of files actually generated (not marketing copy) */
+	generatedFiles: string[];
 }
 
 /** Per-page score summary */

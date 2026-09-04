@@ -4,10 +4,12 @@ import { createServerSupabaseClient } from "@/lib/supabase";
 
 const VALID_SCHEDULES = ["daily", "weekly", "monthly", null];
 
+const DAY_MS = 24 * 60 * 60 * 1000;
+
 const SCHEDULE_INTERVALS: Record<string, number> = {
-	daily: 24 * 60 * 60 * 1000,
-	weekly: 7 * 24 * 60 * 60 * 1000,
-	monthly: 30 * 24 * 60 * 60 * 1000,
+	daily: DAY_MS,
+	weekly: 7 * DAY_MS,
+	monthly: 30 * DAY_MS,
 };
 
 interface RouteParams {
@@ -35,8 +37,13 @@ export async function PUT(request: Request, { params }: RouteParams) {
 
 	const supabase = createServerSupabaseClient();
 
+	// Subtract one cron period (24h) so the very next 6am UTC tick after
+	// roughly `interval` has elapsed picks this site up. Without this offset,
+	// "daily" lags ~44h, "weekly" lags ~7d 20h on the first run.
 	const nextRescan = body.schedule
-		? new Date(Date.now() + (SCHEDULE_INTERVALS[body.schedule] ?? SCHEDULE_INTERVALS.weekly)).toISOString()
+		? new Date(
+			Date.now() + (SCHEDULE_INTERVALS[body.schedule] ?? SCHEDULE_INTERVALS.weekly) - DAY_MS,
+		).toISOString()
 		: null;
 
 	const { error } = await supabase

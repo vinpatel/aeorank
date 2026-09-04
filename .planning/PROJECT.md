@@ -8,6 +8,30 @@ Open-source CLI + SaaS that audits any website for AI visibility across 36 crite
 
 A developer runs `npx aeorank-cli scan <url>` with zero config and gets an AEO score (36 criteria across 5 pillars) plus all 9 generated files needed for AI visibility — in under 30 seconds.
 
+## Current Milestone: v3.0 Developer Parity
+
+**Goal:** Close the developer-surface gaps against Profound, Scrunch, Otterly, Peec, and
+AthenaHQ — then launch.
+
+**Target features:**
+- Launch blockers cleared: 242 open Dependabot alerts resolved, every published claim measured and true
+- Public REST API + scoped API keys (makes the promised $99 API tier real — it does not currently exist)
+- MCP server (only Otterly has one in the category, and developers are our audience)
+- AI crawler / agent log analytics (Profound, Scrunch, Otterly and AthenaHQ all ship this)
+- Alerts: score drop, AI crawler blocked, generated file regression
+- CSV / JSON / PDF exports + scheduled delivery (today we ship ZIP only)
+- Integrations: Google Search Console, GA4, Vercel, Cloudflare
+- Multi-region + multi-language scanning
+- Defend the moat: edge middleware for AI-optimised page variants, audit-depth benchmark, publish the scoreboard
+
+**Explicitly NOT in this milestone — Tier 0 monitoring.** Prompt tracking, citation
+extraction, share-of-voice, sentiment, and prompt-volume data are what all five
+competitors sell. Building them would reverse two locked Out of Scope decisions below,
+break the determinism claim the CI story and all V2 marketing copy rest on, and add
+per-customer LLM COGS that the $29 Pro tier cannot cover. Sequenced after first real
+user feedback so the design is informed by users rather than by cloning five competitors
+who are all guessing too. Full reasoning: `.planning/COMPETITIVE-PARITY.md`.
+
 ## Current State (v2.0 shipped)
 
 - **@aeorank/core**: 36-criteria scoring engine across 5 pillars with percentage weights, coherence + duplication gates, 9 file generators, per-page scoring (0-75 scale). 288 core tests.
@@ -42,7 +66,16 @@ A developer runs `npx aeorank-cli scan <url>` with zero config and gets an AEO s
 
 ### Active
 
-(None — planning next milestone)
+- Zero open critical/high Dependabot alerts, and every published claim measured — v3.0
+- Public REST API with scoped API keys, quotas, and OpenAPI spec — v3.0
+- MCP server exposing scan + results to AI coding agents — v3.0
+- AI crawler / agent log analytics from edge logs — v3.0
+- Alerts on score drop, crawler block, and generated-file regression — v3.0
+- CSV / JSON / PDF exports and scheduled report delivery — v3.0
+- Google Search Console, GA4, Vercel, Cloudflare integrations — v3.0
+- Multi-region and multi-language scanning — v3.0
+- Edge middleware serving AI-optimised page variants (answer to Scrunch AXP) — v3.0
+- Public scoreboard of 100 funded startups — v3.0
 
 ### Out of Scope
 
@@ -91,10 +124,12 @@ A developer runs `npx aeorank-cli scan <url>` with zero config and gets an AEO s
 | PILLAR_GROUPS in core | Single source of truth for UI/CLI | ✓ Good |
 | Server/client split for ScoreBreakdown | Turbopack bundling issue | ✓ Good — avoids playwright in browser |
 | Hardcoded dimension names in dashboard | Avoids core import in browser | ⚠️ Revisit — could use shared constants file |
+| Developer parity over full parity (v3.0) | Monitoring is a second product with per-customer LLM COGS; developer surface is cheap, on-identity, and uncontested | ⏳ In progress |
+| Launch blockers folded in as Phase 17 | 242 open alerts + false "0 alerts" claim in LAUNCH.md would undo the parity work on launch day | ⏳ In progress |
 
 ## Evolution
 
 This document evolves at phase transitions and milestone boundaries.
 
 ---
-*Last updated: 2026-03-28 after v2.0 milestone*
+*Last updated: 2026-08-15 at start of v3.0 Developer Parity milestone*

@@ -1,7 +1,7 @@
 import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import type { ScanResult } from "@aeorank/core";
+import { emptyCrawlerScanFields, type ScanResult } from "@aeorank/core";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 // Mock @aeorank/core
@@ -158,7 +158,6 @@ const mockResult: ScanResult = {
 		{ name: "faq-blocks.html", content: '<script type="application/ld+json">{}</script>' },
 		{ name: "citation-anchors.html", content: '<h2 id="about">About</h2>' },
 		{ name: "sitemap-ai.xml", content: '<?xml version="1.0"?><urlset></urlset>' },
-		{ name: "ai.txt", content: "User-Agent: *\nAllow-AI-Training: yes\nAllow-AI-Inference: yes" },
 	],
 	pages: [],
 	pageScores: [],
@@ -175,6 +174,7 @@ const mockResult: ScanResult = {
 	pagesScanned: 5,
 	duration: 3200,
 	scannedAt: "2026-03-14T00:00:00.000Z",
+	...emptyCrawlerScanFields(),
 };
 
 describe("CLI Integration Tests", () => {
@@ -254,7 +254,7 @@ describe("CLI Integration Tests", () => {
 		expect(parsed.score).toBe(65);
 		expect(parsed.grade).toBe("C");
 		expect(parsed.dimensions).toHaveLength(12);
-		expect(parsed.files).toHaveLength(9);
+		expect(parsed.files).toHaveLength(8);
 		expect(parsed.url).toBe("https://example.com");
 
 		// Verify no ANSI codes in JSON output

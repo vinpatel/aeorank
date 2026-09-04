@@ -19,7 +19,7 @@ This is a pnpm + turbo monorepo.
 
 | Path | What it is |
 | --- | --- |
-| `packages/core` | The scoring engine — 36 criteria, 9 generators. The brain. |
+| `packages/core` | The scoring engine — 36 criteria, 8 default generators. The brain. |
 | `packages/cli` | `aeorank-cli` — the terminal entrypoint most users hit first. |
 | `packages/next`, `packages/astro`, `packages/nuxt`, … | 13 framework plugins. Each wraps `@aeorank/core`. |
 | `apps/web` | Dashboard (`app.aeorank.dev`). Next.js + Clerk + Supabase. |
@@ -38,7 +38,7 @@ This is a pnpm + turbo monorepo.
 
 - **New framework plugins** — if your framework isn't in `packages/`, copy one of the existing ones and adapt it. `packages/astro` is the simplest template.
 - **New scoring criteria** — the 36 criteria live in `packages/core/src/checks/`. Each is a ~30-line file.
-- **Generator improvements** — the 9 files live in `packages/core/src/generators/`.
+- **Generator improvements** — the 8 default files live in `packages/core/src/generators/`.
 - **Real-world bug reports** — scan your own site, tell us what broke.
 
 See the [good first issues](https://github.com/vinpatel/aeorank/labels/good%20first%20issue) list for a concrete on-ramp.
