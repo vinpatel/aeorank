@@ -31,7 +31,9 @@ export const PLANS = {
 		priceId: process.env.STRIPE_PRO_PRICE_ID,
 	},
 	api: {
-		name: "API",
+		// Public name is Agency ($99). Key stays `api` so STRIPE_API_PRICE_ID
+		// and existing subscription rows keep working.
+		name: "Agency",
 		scansPerMonth: 500,
 		maxSites: 50,
 		priceId: process.env.STRIPE_API_PRICE_ID,

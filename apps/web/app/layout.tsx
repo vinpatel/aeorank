@@ -1,11 +1,17 @@
-import type { Metadata } from "next";
-import { Inter, JetBrains_Mono, Instrument_Serif } from "next/font/google";
+import { getClerkPublishableKey, warnIfClerkKeyMismatch } from "@/lib/clerk-env";
 import { ClerkProvider } from "@clerk/nextjs";
+import type { Metadata } from "next";
+import { Instrument_Serif, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const jetbrains = JetBrains_Mono({ subsets: ["latin"], variable: "--font-mono" });
-const instrument = Instrument_Serif({ subsets: ["latin"], weight: "400", style: ["normal", "italic"], variable: "--font-serif" });
+const instrument = Instrument_Serif({
+	subsets: ["latin"],
+	weight: "400",
+	style: ["normal", "italic"],
+	variable: "--font-serif",
+});
 
 export const metadata: Metadata = {
 	title: "AEOrank Dashboard",
@@ -17,10 +23,20 @@ export default function RootLayout({
 }: {
 	children: React.ReactNode;
 }) {
+	const publishableKey = getClerkPublishableKey();
+	warnIfClerkKeyMismatch(publishableKey);
+
 	return (
-		<ClerkProvider>
+		<ClerkProvider
+			{...(publishableKey ? { publishableKey } : {})}
+			signInUrl="/sign-in"
+			signUpUrl="/sign-up"
+			afterSignOutUrl="https://aeorank.dev"
+		>
 			<html lang="en">
-				<body className={`${inter.variable} ${jetbrains.variable} ${instrument.variable}`}>{children}</body>
+				<body className={`${inter.variable} ${jetbrains.variable} ${instrument.variable}`}>
+					{children}
+				</body>
 			</html>
 		</ClerkProvider>
 	);

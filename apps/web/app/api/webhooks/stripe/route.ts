@@ -1,13 +1,20 @@
-import { NextRequest, NextResponse } from "next/server";
-import type Stripe from "stripe";
-import { getStripeClient } from "@/lib/stripe";
+import {
+	resolvePlanFromCheckoutSession,
+	resolvePlanFromSubscription,
+	verifyStripeWebhookEvent,
+} from "@/lib/stripe-webhook";
 import { createServiceSupabaseClient } from "@/lib/supabase";
+import { type NextRequest, NextResponse } from "next/server";
+import type Stripe from "stripe";
 
 /**
  * Stripe webhook handler — PUBLIC route (excluded from Clerk auth in proxy.ts).
  *
  * CRITICAL: Uses request.text() for raw body, NOT request.json().
  * request.json() would re-serialize the body, breaking Stripe's HMAC signature verification.
+ *
+ * Fails closed (400) when Stripe-Signature or STRIPE_WEBHOOK_SECRET is missing,
+ * or when HMAC verification fails.
  *
  * Handles:
  *   - checkout.session.completed → upsert subscription as "active"
@@ -17,36 +24,26 @@ import { createServiceSupabaseClient } from "@/lib/supabase";
 export async function POST(request: NextRequest) {
 	const body = await request.text();
 	const signature = request.headers.get("stripe-signature");
+	const verified = verifyStripeWebhookEvent(body, signature, process.env.STRIPE_WEBHOOK_SECRET);
 
-	if (!signature) {
-		return NextResponse.json({ error: "Missing stripe-signature header" }, { status: 400 });
+	if (!verified.ok) {
+		return NextResponse.json({ error: verified.error }, { status: verified.status });
 	}
 
-	const stripe = getStripeClient();
-
-	let event: Stripe.Event;
-	try {
-		event = stripe.webhooks.constructEvent(
-			body,
-			signature,
-			process.env.STRIPE_WEBHOOK_SECRET!,
-		);
-	} catch (err) {
-		const message = err instanceof Error ? err.message : "Invalid signature";
-		return NextResponse.json({ error: `Webhook signature verification failed: ${message}` }, { status: 400 });
-	}
-
+	const event = verified.event;
 	const supabase = createServiceSupabaseClient();
 
 	try {
 		switch (event.type) {
 			case "checkout.session.completed": {
 				const session = event.data.object as Stripe.Checkout.Session;
-				const userId = session.metadata?.userId;
-				const plan = session.metadata?.plan;
+				const { userId, plan } = resolvePlanFromCheckoutSession(session);
 
-				if (!userId || !plan) {
-					console.error("Stripe webhook: missing userId or plan in session metadata", session.id);
+				if (!userId || plan === "free") {
+					console.error(
+						"Stripe webhook: missing userId or paid plan in session metadata",
+						session.id,
+					);
 					break;
 				}
 
@@ -66,23 +63,15 @@ export async function POST(request: NextRequest) {
 
 			case "customer.subscription.updated": {
 				const subscription = event.data.object as Stripe.Subscription;
-				const priceId = subscription.items.data[0]?.price.id;
+				const plan = resolvePlanFromSubscription(subscription);
 
-				// Resolve plan key from price ID
-				let plan = "free";
-				if (priceId === process.env.STRIPE_PRO_PRICE_ID) plan = "pro";
-				else if (priceId === process.env.STRIPE_API_PRICE_ID) plan = "api";
-
-				// Stripe v20: current_period_end is on the subscription item, not the subscription itself
 				const periodEnd = subscription.items.data[0]?.current_period_end;
 				await supabase
 					.from("subscriptions")
 					.update({
 						plan,
 						status: subscription.status,
-						current_period_end: periodEnd
-							? new Date(periodEnd * 1000).toISOString()
-							: null,
+						current_period_end: periodEnd ? new Date(periodEnd * 1000).toISOString() : null,
 						updated_at: new Date().toISOString(),
 					})
 					.eq("stripe_subscription_id", subscription.id);
@@ -103,12 +92,10 @@ export async function POST(request: NextRequest) {
 			}
 
 			default:
-				// Return 200 for unhandled events — Stripe retries on non-2xx responses
 				break;
 		}
 	} catch (err) {
 		console.error("Stripe webhook handler error:", err);
-		// Still return 200 to prevent Stripe from retrying non-idempotent events
 		return NextResponse.json({ error: "Handler error" }, { status: 200 });
 	}
 
