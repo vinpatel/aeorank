@@ -1,5 +1,4 @@
 import { auth } from "@clerk/nextjs/server";
-import { redirect } from "next/navigation";
 import Link from "next/link";
 import { SignOutButton } from "@clerk/nextjs";
 import { AeorankMark } from "@/components/AeorankMark";
@@ -11,10 +10,9 @@ export default async function DashboardLayout({
 }: {
 	children: React.ReactNode;
 }) {
-	const { userId } = await auth();
-	if (!userId) {
-		redirect("/sign-in");
-	}
+	// protect() sends unauthenticated users to Clerk sign-in and preserves
+	// the return URL (including ?plan=pro|agency on /upgrade).
+	await auth.protect();
 
 	const currentPlan = await getCurrentPlan();
 
