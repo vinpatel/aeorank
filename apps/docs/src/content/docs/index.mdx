@@ -1,9 +1,9 @@
 ---
 title: AEOrank Documentation
-description: Learn how to scan your site, understand your AEO score, and deploy the generated files that make your content visible to AI engines.
+description: Scan with aeorank-cli@0.1.1 — 12 dimensions, 8 files. Crawler access and extractability, not a citation promise.
 template: splash
 hero:
-  tagline: Scan your site, get an AEO score, and generate the 8 files AI engines look for.
+  tagline: Scan your site. Score 12 dimensions. Write the 8 files the published CLI actually generates.
   image:
     html: '<svg width="160" height="160" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="32" height="32" rx="7" fill="#E8590C" /><path d="M8 22L13.5 10H18.5L24 22" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M10.5 18H21.5" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/></svg>'
   actions:
@@ -22,26 +22,26 @@ import { Card, CardGrid, LinkCard } from '@astrojs/starlight/components';
 
 <CardGrid>
   <Card title="Quick Start" icon="rocket">
-    Run `npx aeorank-cli scan https://your-site.com` to get your AEO score and generate all 8 files.
+    Run `npx aeorank-cli@0.1.1 scan https://your-site.com` to score 12 dimensions and write 8 files.
     [Read the guide &rarr;](/getting-started/)
   </Card>
   <Card title="What is AEO?" icon="information">
-    Answer Engine Optimization helps AI engines like ChatGPT, Perplexity, and Claude find and cite your content.
+    Here AEO means crawler access plus extractability. We do not promise citations.
     [Learn more &rarr;](/what-is-aeo/)
   </Card>
   <Card title="CLI Reference" icon="laptop">
-    `scan`, `init`, and configuration options for the AEOrank CLI.
+    `scan` and `init` on aeorank-cli@0.1.1. GitHub Action owns fail-on-crawler-block.
     [View commands &rarr;](/cli/scan/)
   </Card>
   <Card title="Scoring" icon="star">
-    Understand the 36 criteria across 5 pillars, how scores are calculated, and what each grade means.
-    [See criteria &rarr;](/scoring/dimensions/)
+    12 dimensions (high / medium / low) on the published CLI. The 36-row catalog is archived.
+    [See dimensions &rarr;](/scoring/dimensions/)
   </Card>
 </CardGrid>
 
 ## Framework guides
 
-Drop-in plugins for your stack. One config change, 8 AEO files, zero maintenance.
+Drop-in plugins for your stack. One config change, 8 AEO files.
 
 <CardGrid>
   <LinkCard title="Next.js" href="/frameworks/next/" />
@@ -61,15 +61,15 @@ Drop-in plugins for your stack. One config change, 8 AEO files, zero maintenance
 
 ## Generated files
 
-AEOrank generates 8 files that AI engines look for at your site root.
+`aeorank-cli@0.1.1` writes these 8 files. Not generated: `ai.txt`.
 
 <CardGrid>
-  <LinkCard title="llms.txt" description="Summary of your site for LLM crawlers" href="/files/llms-txt/" />
-  <LinkCard title="llms-full.txt" description="Full-context version with all content" href="/files/llms-full-txt/" />
-  <LinkCard title="CLAUDE.md" description="Markdown context file for Claude" href="/files/claude-md/" />
+  <LinkCard title="llms.txt" description="Agent-readable site map — not a citation guarantee" href="/files/llms-txt/" />
   <LinkCard title="schema.json" description="JSON-LD structured data" href="/files/schema-json/" />
-  <LinkCard title="robots-patch.txt" description="AI-specific robots.txt rules" href="/files/robots-patch-txt/" />
-  <LinkCard title="faq-blocks.html" description="FAQ with schema.org markup" href="/files/faq-blocks-html/" />
-  <LinkCard title="citation-anchors.html" description="Citation anchor elements" href="/files/citation-anchors-html/" />
-  <LinkCard title="sitemap-ai.xml" description="AI-optimized sitemap" href="/files/sitemap-ai-xml/" />
+  <LinkCard title="llms-full.txt" description="Longer extract" href="/files/llms-full-txt/" />
+  <LinkCard title="CLAUDE.md" description="Markdown context for coding agents" href="/files/claude-md/" />
+  <LinkCard title="robots-patch.txt" description="Allow rules for GPTBot and peers" href="/files/robots-patch-txt/" />
+  <LinkCard title="faq-blocks.html" description="FAQ / speakable markup" href="/files/faq-blocks-html/" />
+  <LinkCard title="citation-anchors.html" description="Heading ids" href="/files/citation-anchors-html/" />
+  <LinkCard title="sitemap-ai.xml" description="Sitemap stub" href="/files/sitemap-ai-xml/" />
 </CardGrid>

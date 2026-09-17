@@ -7,7 +7,7 @@ export default defineConfig({
 		starlight({
 			title: "AEOrank",
 			description:
-				"Documentation for AEOrank — the open-source AEO scoring and file generation tool.",
+				"Documentation for AEOrank — MIT CLI that scores 12 dimensions and writes 8 files (aeorank-cli@0.1.1).",
 			logo: {
 				light: "./src/assets/logo-light.svg",
 				dark: "./src/assets/logo-dark.svg",
@@ -64,12 +64,12 @@ export default defineConfig({
 					],
 				},
 				{
-					label: "Generated Files",
+					label: "Generated Files (8)",
 					items: [
 						{ label: "llms.txt", slug: "files/llms-txt" },
+						{ label: "schema.json", slug: "files/schema-json" },
 						{ label: "llms-full.txt", slug: "files/llms-full-txt" },
 						{ label: "CLAUDE.md", slug: "files/claude-md" },
-						{ label: "schema.json", slug: "files/schema-json" },
 						{ label: "robots-patch.txt", slug: "files/robots-patch-txt" },
 						{ label: "faq-blocks.html", slug: "files/faq-blocks-html" },
 						{
@@ -77,7 +77,12 @@ export default defineConfig({
 							slug: "files/citation-anchors-html",
 						},
 						{ label: "sitemap-ai.xml", slug: "files/sitemap-ai-xml" },
-						{ label: "ai.txt", slug: "files/ai-txt" },
+					],
+				},
+				{
+					label: "Not in 0.1.1",
+					items: [
+						{ label: "ai.txt (not generated, not scored)", slug: "files/ai-txt" },
 					],
 				},
 				{
@@ -101,9 +106,10 @@ export default defineConfig({
 				{
 					label: "Scoring",
 					items: [
-						{ label: "36 Criteria", slug: "scoring/dimensions" },
+						{ label: "12 dimensions (CLI 0.1.1)", slug: "scoring/dimensions" },
 						{ label: "How Scores Work", slug: "scoring/calculation" },
 						{ label: "Grades", slug: "scoring/grades" },
+						{ label: "Catalog (unshipped)", slug: "scoring/dimensions-catalog" },
 					],
 				},
 			],

@@ -1,22 +1,8 @@
 ---
 title: Export & Reports
-description: Download generated files and export printable PDF reports.
+description: Download the 8 generated files as a ZIP from the dashboard.
 ---
 
-AEOrank provides two export options from the dashboard.
+The hosted dashboard can download the **8 files** the CLI writes as a ZIP after a scan.
 
-## Download files (ZIP)
-
-Click **Download all files (ZIP)** to get all 8 generated files for your site in a single archive. These are ready to deploy to your site.
-
-## Export report
-
-Click **Export report** to open a printable HTML report in a new tab. The report includes:
-
-- Overall AEO score and grade
-- Scan metadata (pages scanned, duration, date)
-- Full dimension breakdown with scores, weights, and recommendations
-
-To save as PDF, use your browser's print dialog (**Cmd+P** / **Ctrl+P**) and select **Save as PDF**.
-
-The report is designed for sharing with stakeholders or including in audits — clean formatting with no dashboard chrome.
+There is **no** dedicated PDF generator and **no** public REST API. If a printable view exists in the app, use the browser print dialog. Treat history charts and auto-rescan as dashboard convenience — plan gates are sites and scans per month.

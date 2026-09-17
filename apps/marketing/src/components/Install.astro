@@ -6,19 +6,13 @@ const tabs = [
 		id: "npx",
 		label: "npx",
 		title: "Scan from your terminal",
-		blurb: "Zero install. Zero account. Zero API key. Crawler table first, then 36 scores and the 8 files the published CLI writes. --fail-on-crawler-block fails the PR if GPTBot is blocked.",
+		blurb: "Zero install. Zero account. Zero API key. 12 dimensions, then the 8 files aeorank-cli@0.1.1 writes. To fail a PR if GPTBot is blocked, use the GitHub Action — that flag is not on npm 0.1.1.",
 		time: "~30s per scan",
 		code: `# one-off audit on any site
-$ npx aeorank-cli scan https://your-site.com --fail-on-crawler-block
-
-  AI Crawler Access
-    GPTBot             allow
-    ClaudeBot          allow
-    PerplexityBot      allow
-    Google-Extended    allow
+$ npx aeorank-cli@0.1.1 scan https://your-site.com
 
   AEO Score: 31/100 (F)
-  36 dimensions · 8 generated files
+  12 dimensions · 8 generated files
 
 ✔ wrote aeorank-output/llms.txt
 ✔ wrote aeorank-output/schema.json
@@ -91,7 +85,7 @@ jobs:
 				<p class="t-label">// three ways in</p>
 				<h2 class="t-h1 mt-2">Pick the surface that fits your team.</h2>
 				<p class="t-body mt-3 max-w-[58ch]">
-					Same scoring engine under all three. Same 36 checks. Same 8 generated files. Pick the surface closest to where you already ship — AEOrank is the only AEO tool that treats CI as a first-class target instead of an afterthought.
+					Same scorer under all three. Same 12 dimensions. Same 8 generated files. Pick the surface closest to where you already ship. The GitHub Action is the CI gate that can fail a PR if GPTBot is blocked.
 				</p>
 			</div>
 			<div class="section-meta">
@@ -159,7 +153,7 @@ jobs:
 				<span class="font-mono text-[10.5px] ink-3 ml-auto">drop-in, MIT, one line of config</span>
 			</header>
 			<div class="install-fw__grid">
-				{["next.js", "astro", "nuxt", "sveltekit", "remix", "eleventy", "hugo", "gatsby", "rails", "django", "hono", "fastify", "wordpress"].map(name => (
+				{["next.js", "astro", "nuxt", "sveltekit", "remix", "eleventy", "gatsby", "shopify", "vitepress", "docusaurus", "wordpress"].map(name => (
 					<div class="install-fw__cell">
 						<span class="font-mono text-[12px] ink">{name}</span>
 						<span class="font-mono text-[10.5px] sig-ok">✓</span>

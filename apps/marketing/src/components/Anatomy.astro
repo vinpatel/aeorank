@@ -2,41 +2,24 @@
 // /100 Anatomy — the scoring system as a dissected diagram
 // Centerpiece: huge "/100" with pulled-out pillar callouts
 
-const pillars = [
+const groups = [
 	{
-		code: "P1",
+		code: "HI",
+		weight: 90,
+		name: "High",
+		subs: ["llms.txt", "schema.org markup", "content structure"],
+	},
+	{
+		code: "MD",
+		weight: 60,
+		name: "Medium",
+		subs: ["AI crawler access", "answer-first", "FAQ & speakable", "E-E-A-T", "meta descriptions", "citation anchors"],
+	},
+	{
+		code: "LO",
 		weight: 30,
-		name: "Answer readiness",
-		subs: ["topical authority", "fact density", "citation-ready prose", "evidence packaging", "duplicate detection"],
-		line: { y1: 34, y2: 15 },
-	},
-	{
-		code: "P2",
-		weight: 21,
-		name: "Content structure",
-		subs: ["Q&A format", "answer density", "tables & lists", "definitions", "heading hierarchy"],
-		line: { y1: 44, y2: 40 },
-	},
-	{
-		code: "P3",
-		weight: 19,
-		name: "AI discovery",
-		subs: ["llms.txt", "ai.txt", "GPTBot · ClaudeBot · PerplexityBot", "licensing", "freshness"],
-		line: { y1: 48, y2: 60 },
-	},
-	{
-		code: "P4",
-		weight: 16,
-		name: "Trust & authority",
-		subs: ["E-E-A-T signals", "author schema", "meta descriptions", "internal linking", "answer-first framing"],
-		line: { y1: 55, y2: 80 },
-	},
-	{
-		code: "P5",
-		weight: 14,
-		name: "Technical foundation",
-		subs: ["schema.org coverage", "semantic HTML", "speakable markup", "image context", "extraction friction"],
-		line: { y1: 60, y2: 96 },
+		name: "Low",
+		subs: ["sitemap", "HTTPS & redirects", "page freshness"],
 	},
 ];
 ---
@@ -51,13 +34,13 @@ const pillars = [
 				<p class="t-label">// anatomy of a score</p>
 				<h2 class="t-h1 mt-2">Every point is auditable.</h2>
 				<p class="t-body mt-3 max-w-[56ch]">
-					Your AEO score is a weighted sum of 36 deterministic checks across five pillars. Every weight, every check, every line of logic is in the open-source repo. Click a pillar to read the actual subchecks.
+					Your AEO score is a weighted sum of <strong>12 dimensions</strong> <code>aeorank-cli@0.1.1</code> scores (high / medium / low). Not a citation rank. The 36-row catalog in the repo is archived until a published CLI matches it.
 				</p>
 			</div>
 			<div class="section-meta">
-				<span>36&nbsp;<b>criteria</b></span>
-				<span>5&nbsp;<b>pillars</b></span>
-				<span>288&nbsp;<b>tests</b></span>
+				<span>12&nbsp;<b>dimensions</b></span>
+				<span>3&nbsp;<b>weights</b></span>
+				<span>8&nbsp;<b>files</b></span>
 			</div>
 		</div>
 
@@ -79,14 +62,14 @@ const pillars = [
 
 			<!-- Pillar rows — asymmetric, editorial -->
 			<ol class="anat__pillars" start="1">
-				{pillars.map((p, i) => (
+				{groups.map((p) => (
 					<li class="anat-row" data-pillar={p.code}>
 						<div class="anat-row__index">
 							<span class="font-mono text-[10.5px] ink-3">{p.code}</span>
 						</div>
 						<div class="anat-row__bar" aria-hidden="true">
 							<div class="anat-row__bar-fill" style={`width: ${p.weight}%;`}></div>
-							<span class="anat-row__bar-weight font-mono text-[10.5px]">{p.weight}%</span>
+							<span class="anat-row__bar-weight font-mono text-[10.5px]">{p.name}</span>
 						</div>
 						<div class="anat-row__name">
 							<h3 class="t-h3">{p.name}</h3>
@@ -96,7 +79,7 @@ const pillars = [
 						</div>
 						<div class="anat-row__kbd">
 							<span class="font-mono text-[10.5px] ink-3">source</span>
-							<code class="ml-2">checks/{p.code.toLowerCase()}.ts</code>
+							<code class="ml-2">aeorank-cli@0.1.1</code>
 						</div>
 					</li>
 				))}
@@ -108,20 +91,20 @@ const pillars = [
 				<span class="font-mono text-[11px] ink-3">=</span>
 				<span class="font-mono text-[11px]">Σ (check · weight)</span>
 				<span class="font-mono text-[11px] ink-3">&nbsp;where&nbsp;</span>
-				<span class="font-mono text-[11px]">check ∈ { "{" }0, 1{ "}" }</span>
-				<span class="font-mono text-[11px] ink-3">&nbsp;and&nbsp;Σweights&nbsp;=&nbsp;100</span>
+				<span class="font-mono text-[11px]">check ∈ 0…10</span>
+				<span class="font-mono text-[11px] ink-3">&nbsp;and&nbsp;weight ∈ high, medium, low</span>
 			</div>
 		</div>
 
 		<!-- Grade chart -->
 		<div class="anat-grades mt-10" data-reveal>
 			{[
-				{ g: "A+", lo: 90, hi: 100, label: "ai-native" },
-				{ g: "A",  lo: 80, hi: 89,  label: "highly cited" },
-				{ g: "B",  lo: 70, hi: 79,  label: "consistently visible" },
-				{ g: "C",  lo: 60, hi: 69,  label: "sometimes cited" },
-				{ g: "D",  lo: 50, hi: 59,  label: "rare citation" },
-				{ g: "F",  lo: 0,  hi: 49,  label: "invisible" },
+				{ g: "A+", lo: 95, hi: 100, label: "crawler-ready" },
+				{ g: "A",  lo: 85, hi: 94,  label: "highly extractable" },
+				{ g: "B",  lo: 70, hi: 84,  label: "technically ready" },
+				{ g: "C",  lo: 55, hi: 69,  label: "partial readiness" },
+				{ g: "D",  lo: 40, hi: 54,  label: "weak signals" },
+				{ g: "F",  lo: 0,  hi: 39,  label: "blocked or unreadable" },
 			].map(grade => (
 				<div class={`anat-grade anat-grade--${grade.g.replace('+','plus').toLowerCase()}`}>
 					<div class="anat-grade__letter font-serif">{grade.g}</div>

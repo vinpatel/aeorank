@@ -1,52 +1,47 @@
 ---
 title: What is AEO?
-description: AI Engine Optimization explained — why it matters and how AEOrank helps.
+description: AI Engine Optimization — crawler access and extractability, not a citation promise.
 ---
 
-**AEO** stands for **AI Engine Optimization** — the practice of making your website visible and citable by AI engines like ChatGPT, Perplexity, Claude, and Google's AI Overviews.
+**AEO** stands for **AI Engine Optimization** — structuring a site so AI crawlers can **access** it and **extract** answers. That is technical readiness. It is not a ranking in ChatGPT.
 
-## Why AEO matters
+## Why it matters
 
-AI engines are becoming a primary way people discover information online. When someone asks ChatGPT "what's the best project management tool?" or Perplexity "how do I set up a Next.js app?", AI engines decide which sources to cite.
-
-Sites that are structured for AI visibility get cited. Sites that aren't get ignored.
+Models fetch pages through crawlers (GPTBot, ClaudeBot, PerplexityBot, Google-Extended). If `robots.txt` disallows them, or the HTML is hard to extract, they have nothing usable. Competitors that sell **monitoring** tell you whether you were mentioned. AEOrank scores the upstream files and access rules.
 
 ## How AEO differs from SEO
 
-SEO optimizes for search engine crawlers and ranking algorithms. AEO optimizes for language models and AI retrieval systems.
-
-| | SEO | AEO |
+| | SEO | AEO (what we score) |
 |---|-----|-----|
-| **Target** | Google, Bing crawlers | ChatGPT, Perplexity, Claude |
-| **Goal** | Rank in search results | Get cited in AI responses |
-| **Signals** | Backlinks, keywords, page speed | Structure, schema, llms.txt, FAQ markup |
-| **Output** | Meta tags, sitemaps | llms.txt, schema.json, robots directives |
+| **Target** | Search crawlers | AI crawlers |
+| **Goal** | Rank in results | Crawler access + extractability |
+| **Output we write** | — | 8 fix files the CLI generates |
 
-AEO complements SEO — you should do both.
+We do **not** treat “get cited in AI responses” as a deliverable.
 
 ## What AEOrank does
 
-AEOrank measures your site's AI visibility across [36 criteria across 5 pillars](/scoring/dimensions/) and generates 8 files:
+`npx aeorank-cli@0.1.1` (npm; `-V` may still print `0.0.1`):
 
-1. **Scans** your site (up to 200 pages)
-2. **Scores** your AI visibility from 0-100
-3. **Generates** the files listed below — the same set `npx aeorank-cli@latest` (npm 0.1.1) writes
+1. **Scans** a public URL (default cap **50** pages)
+2. **Scores** [12 dimensions](/scoring/dimensions/) 0–100
+3. **Writes** the 8 files below
 
-The CLI is free, open source, and MIT-licensed. No account required.
-
-The evidenced lever is **crawler allowlists + CI regression prevention**. `llms.txt` is agent-docs hygiene, not a citation guarantee.
+The CLI is MIT. No account required.
 
 ## The 8 generated files
 
-These match `generateFiles()` in `@aeorank/core` and the published CLI. The CLI does **not** write `ai.txt`, `answers.json`, `citations.json`, `humans.txt`, `feed.xml`, or `report.html`.
+Same set `aeorank-cli@0.1.1` writes. Not generated: `ai.txt`, `answers.json`, `report.html`.
 
-- **llms.txt** — a structured overview of your site for language models
-- **llms-full.txt** — full-text content for comprehensive indexing
-- **CLAUDE.md** — repository context for AI coding assistants
-- **schema.json** — Organization, WebSite, and FAQ structured data
-- **robots-patch.txt** — directives for GPTBot, ClaudeBot, PerplexityBot, Google-Extended
-- **faq-blocks.html** — speakable FAQ schema markup
-- **citation-anchors.html** — heading anchors for deep links
-- **sitemap-ai.xml** — AI-oriented sitemap
+- **llms.txt** — site map for agents (hygiene, not a citation guarantee)
+- **llms-full.txt** — longer extract
+- **CLAUDE.md** — repo context for coding agents
+- **schema.json** — JSON-LD
+- **robots-patch.txt** — GPTBot / ClaudeBot / PerplexityBot / Google-Extended allow rules
+- **faq-blocks.html** — FAQ / speakable markup
+- **citation-anchors.html** — heading ids
+- **sitemap-ai.xml** — sitemap stub
 
-Use `--fail-on-crawler-block` to fail the PR if GPTBot is blocked. The GitHub App uses that same crawler gate. `fail-below` (score threshold) is Action-only; it is not available on the App yet.
+## CI
+
+The **GitHub Action** input `fail-on-crawler-block` can fail the Check when a gated bot is **disallowed** in `robots.txt`. Missing robots = unknown, not blocked. That flag is **not** on `aeorank-cli@0.1.1`. App `fail-below` (score threshold) is **coming soon** — Action-only today.

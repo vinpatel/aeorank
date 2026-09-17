@@ -15,7 +15,7 @@ const instrument = Instrument_Serif({
 
 export const metadata: Metadata = {
 	title: "AEOrank Dashboard",
-	description: "Monitor and improve your AI Engine Optimization score",
+	description: "Score crawler access and extractability. 12 dimensions, 8 generated files. Sign in to scan a public URL.",
 };
 
 export default function RootLayout({

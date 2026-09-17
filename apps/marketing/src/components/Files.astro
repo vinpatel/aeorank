@@ -18,18 +18,15 @@ const files: GenFile[] = [
 		lang: "md",
 		content: `# Your Site
 
-> A short manifesto AI engines read first.
+> Agent-readable map of this site. Not a citation guarantee.
 
 ## Core pages
 - [Docs](/docs.md): developer reference
 - [Pricing](/pricing.md): plans and costs
 - [Blog](/blog.md): recent writing
 
-## Policies
-- crawl: allow
-- training: disallow
-- citation: preferred
-- license: CC-BY-4.0
+## Optional
+- [llms-full.txt](/llms-full.txt): extended extract
 `,
 	},
 	{
@@ -79,7 +76,7 @@ npx aeorank-cli scan https://your-site.com
 
 ## Commands
 - npx aeorank-cli scan https://your-site.com
-- npx aeorank-cli scan https://your-site.com --fail-on-crawler-block
+- npx aeorank-cli@0.1.1 scan https://your-site.com
 `,
 	},
 	{
@@ -238,7 +235,7 @@ Allow: /
 			<div class="files-below__item">
 				<span class="t-label">deterministic</span>
 				<p class="t-body mt-2">
-					Same HTML in → same files out. 288 tests pin output to byte-level stability, so a diff in your PR check means something actually changed — not just that an LLM was in a different mood.
+					Same HTML in → same files out. Tests pin output so a diff in your PR check means something actually changed — not just that an LLM was in a different mood.
 				</p>
 			</div>
 		</div>

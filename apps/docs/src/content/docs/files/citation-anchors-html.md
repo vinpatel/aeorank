@@ -1,9 +1,9 @@
 ---
 title: citation-anchors.html
-description: Heading anchor markup that makes your content directly linkable by AI engines.
+description: Heading id markup for deep links. Extractability, not a citation promise.
 ---
 
-The `citation-anchors.html` file contains heading anchor markup that makes specific sections of your content directly citable by AI engines.
+The `citation-anchors.html` file is heading markup with stable `id` attributes so sections can be deep-linked. Extractability, not a citation guarantee.
 
 ## What it is
 
@@ -11,7 +11,7 @@ HTML heading elements with stable `id` attributes and anchor links, enabling AI 
 
 ## Why it matters
 
-When AI engines cite your content, anchor links let them point to the exact section they're referencing. This improves user experience (readers land on the relevant section) and signals to AI engines that your content is well-structured.
+Heading `id` attributes make sections deep-linkable. That is extractability markup, not a promise that a model will cite the page.
 
 ## Example output
 
@@ -39,5 +39,5 @@ Most static site generators and content frameworks add heading anchors automatic
 - **WordPress** — use a table of contents plugin
 
 :::tip
-Keep heading IDs stable across deploys. Changing them breaks existing AI citations pointing to your content.
+Keep heading IDs stable across deploys so deep links do not break.
 :::

@@ -63,7 +63,7 @@ export function DownloadButton({ siteId, disabled = false }: DownloadButtonProps
 						Preparing download...
 					</>
 				) : (
-					"Download all files (ZIP)"
+					"Download 8 files (ZIP)"
 				)}
 			</button>
 			{error && (

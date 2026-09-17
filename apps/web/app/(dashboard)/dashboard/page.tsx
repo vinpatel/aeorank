@@ -93,12 +93,12 @@ export default async function DashboardPage() {
 					<div>
 						<p className="t-label">// your dashboard</p>
 						<h1 className="heading-xl mt-2 mb-1">Your sites</h1>
-						<p className="text-sm text-secondary">Add a site URL and we'll score it against 36 AEO criteria.</p>
+						<p className="text-sm text-secondary">Add a public URL. We'll run 12 dimensions and write the 8 files the CLI generates — crawler access and extractability, not a citation tracker.</p>
 					</div>
 					<div className="section-meta">
 						<span>{sites.length}&nbsp;<b>sites</b></span>
-						<span>36&nbsp;<b>criteria</b></span>
-						<span>9&nbsp;<b>files</b></span>
+						<span>12&nbsp;<b>dimensions</b></span>
+						<span>8&nbsp;<b>files</b></span>
 					</div>
 				</div>
 			</div>
@@ -113,7 +113,7 @@ export default async function DashboardPage() {
 						<rect x="4" y="4" width="40" height="40" rx="12" stroke="currentColor" strokeWidth="2" strokeDasharray="4 3"/>
 						<path d="M24 16v16m-8-8h16" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
 					</svg>
-					<p className="text-sm font-medium">No sites yet. Add your first site above.</p>
+					<p className="text-sm font-medium">No sites yet. Add a public URL above — 12 dimensions, then a ZIP of the 8 files.</p>
 				</div>
 			) : (
 				<div className="flex flex-col gap-6 stagger">

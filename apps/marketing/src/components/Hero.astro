@@ -26,13 +26,13 @@
 
 		<!-- Headline cluster -->
 		<div class="hero-head">
-			<p class="t-label" style="color:var(--color-mark-ink)">// start here</p>
+			<p class="t-label" style="color:var(--color-mark-ink)">// others monitor · we fix</p>
 			<h1 class="t-display mt-3">
-				Here's what AI reads<br/>
+				Here's what AI extracts<br/>
 				<span class="font-serif">when it visits your site.</span>
 			</h1>
 			<p class="t-lead mt-5 max-w-[54ch]">
-				The open-source AEO toolkit for teams who ship. Score your site against 36 deterministic checks for ChatGPT, Perplexity, Claude, and Gemini — then generate the eight files the published CLI (`aeorank-cli@0.1.1`) actually writes. Crawler allowlists plus CI stop GPTBot from staying blocked. Others monitor. AEOrank fixes.
+				MIT CLI for crawler access and extractability — not a citation tracker. <strong>12 dimensions</strong> <code>aeorank-cli@0.1.1</code> actually scores, then the <strong>8 files</strong> it writes. Profound, Peec, Otterly, Scrunch, and Athena watch mentions. We fix upstream readability. The GitHub Action can fail the PR if GPTBot is blocked.
 			</p>
 
 			<!-- Install one-liner -->
@@ -56,7 +56,13 @@
 
 			<!-- CTAs -->
 			<div class="hero-cta mt-6">
-				<a href="https://github.com/vinpatel/aeorank" class="btn btn-ink btn-lg" target="_blank" rel="noopener">
+				<a href="https://app.aeorank.dev/sign-up" class="btn btn-ink btn-lg">
+					Get your score
+					<svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+						<path d="M1 7h12M8 2l5 5-5 5"/>
+					</svg>
+				</a>
+				<a href="https://github.com/vinpatel/aeorank" class="btn btn-outline btn-lg" target="_blank" rel="noopener">
 					<svg width="13" height="13" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
 						<path d="M8 .25l2.39 4.84L15.75 6l-3.88 3.78.92 5.34L8 12.6l-4.79 2.52.92-5.34L.25 6l5.36-.91L8 .25z"/>
 					</svg>
@@ -65,16 +71,21 @@
 						<span class="gh-dot">·</span>&nbsp;<span data-gh-stars></span>
 					</span>
 				</a>
-				<a href="https://app.aeorank.dev/sign-up" class="btn btn-outline btn-lg">
-					Get your score
-					<svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-						<path d="M1 7h12M8 2l5 5-5 5"/>
-					</svg>
-				</a>
-				<span class="hero-cta__note font-mono text-[11px] ink-3">
-					no signup &nbsp;·&nbsp; ~30s
-				</span>
 			</div>
+			<p class="hero-cta__note font-mono text-[11px] ink-3 mt-3">
+				Free account · ~30s hosted scan · or CLI with no signup
+			</p>
+
+			<!-- Trust strip -->
+			<ul class="hero-trust mt-6" aria-label="Product facts">
+				<li><span class="sig sig-ok"><span class="dot dot-ok"></span>MIT</span></li>
+				<li class="hero-trust__dot" aria-hidden="true">·</li>
+				<li>CLI free</li>
+				<li class="hero-trust__dot" aria-hidden="true">·</li>
+				<li>CI crawler gate</li>
+				<li class="hero-trust__dot" aria-hidden="true">·</li>
+				<li>8 files</li>
+			</ul>
 		</div>
 
 		<!-- The dual-view inspector — the visual centerpiece -->
@@ -157,8 +168,8 @@
 							<span class="font-mono text-[11px] ink-3">404 · not found</span>
 						</div>
 						<div class="hv-ai__row hv-ai__row--missing">
-							<span class="sig sig-fail">✗ AI.TXT</span>
-							<span class="font-mono text-[11px] ink-3">404 · not found</span>
+							<span class="sig sig-fail">✗ ROBOTS</span>
+							<span class="font-mono text-[11px] ink-3">GPTBot disallowed</span>
 						</div>
 						<div class="hv-ai__row hv-ai__row--partial">
 							<span class="sig sig-warn">~ SCHEMA.ORG</span>
@@ -193,7 +204,7 @@
 					<div class="hv-ai__score">
 						<div class="hv-ai__score-label">
 							<span class="t-label">extracted score</span>
-							<span class="font-mono text-[10px] ink-3">// 36 checks</span>
+							<span class="font-mono text-[10px] ink-3">// 12 dimensions</span>
 						</div>
 						<div class="hv-ai__score-value">
 							<span class="font-mono ink">31</span>
@@ -214,7 +225,7 @@
 
 			<!-- Footer: scan stats -->
 			<footer class="hero-view__foot">
-				<span class="font-mono text-[10.5px] ink-3">36 checks · 9 failing · 11 partial · 16 passing</span>
+				<span class="font-mono text-[10.5px] ink-3">12 dimensions · illustrative demo · aeorank-cli@0.1.1</span>
 				<span class="font-mono text-[10.5px] ink-3">crawled 14 pages · 0.9s</span>
 				<span class="font-mono text-[10.5px] ink-mark" style="color:var(--color-mark-ink)">
 					fix failing checks → regenerate the 8 files → rescan
@@ -225,8 +236,8 @@
 		<!-- Inline stat row -->
 		<dl class="hero-stats mt-8" data-reveal>
 			<div class="hero-stats__cell">
-				<dt class="t-label">criteria checked</dt>
-				<dd class="hero-stats__num font-mono">36</dd>
+				<dt class="t-label">dimensions scored</dt>
+				<dd class="hero-stats__num font-mono">12</dd>
 			</div>
 			<div class="hero-stats__cell">
 				<dt class="t-label">files generated</dt>
@@ -235,10 +246,6 @@
 			<div class="hero-stats__cell">
 				<dt class="t-label">framework plugins</dt>
 				<dd class="hero-stats__num font-mono">11</dd>
-			</div>
-			<div class="hero-stats__cell">
-				<dt class="t-label">tests passing</dt>
-				<dd class="hero-stats__num font-mono">288</dd>
 			</div>
 			<div class="hero-stats__cell">
 				<dt class="t-label">first scan</dt>
@@ -318,7 +325,24 @@
 		gap: 10px;
 		flex-wrap: wrap;
 	}
-	.hero-cta__note { margin-left: 4px; }
+	.hero-cta__note { max-width: 62ch; line-height: 1.5; }
+	.hero-trust {
+		display: flex;
+		align-items: center;
+		flex-wrap: wrap;
+		gap: 8px 10px;
+		list-style: none;
+		margin: 0;
+		padding: 10px 12px;
+		max-width: 560px;
+		border: 1px solid var(--color-rule);
+		border-radius: 4px;
+		background: var(--color-page);
+		font-family: var(--font-mono);
+		font-size: 11px;
+		color: var(--color-ink-2);
+	}
+	.hero-trust__dot { color: var(--color-ink-3); }
 
 	/* ─── Dual-view inspector ─── */
 	.hero-view {
@@ -541,7 +565,7 @@
 	/* Stats row */
 	.hero-stats {
 		display: grid;
-		grid-template-columns: repeat(6, 1fr);
+		grid-template-columns: repeat(5, 1fr);
 		gap: 0;
 		border: 1px solid var(--color-rule);
 		border-radius: 4px;
@@ -585,6 +609,7 @@
 		.hero-stats__cell:nth-child(1),
 		.hero-stats__cell:nth-child(2),
 		.hero-stats__cell:nth-child(3) { border-bottom: 1px solid var(--color-rule); }
+		.hero-stats__cell:nth-child(5) { border-right: none; }
 	}
 	@media (max-width: 520px) {
 		.hero-stats { grid-template-columns: repeat(2, 1fr); }

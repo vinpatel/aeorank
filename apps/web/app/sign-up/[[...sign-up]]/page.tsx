@@ -32,7 +32,7 @@ export default async function SignUpPage({
 					? "Create your account to start Pro ($29/mo)"
 					: plan === "agency"
 						? "Create your account to start Agency ($99/mo)"
-						: "Monitor and improve your AI visibility score"
+						: "Score crawler access. Get the 8 files. No citation promises."
 			}
 		>
 			<SignUp
