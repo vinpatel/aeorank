@@ -21,7 +21,7 @@ This is a pnpm + turbo monorepo.
 | --- | --- |
 | `packages/core` | The scoring engine — 36 criteria, 8 default generators. The brain. |
 | `packages/cli` | `aeorank-cli` — the terminal entrypoint most users hit first. |
-| `packages/next`, `packages/astro`, `packages/nuxt`, … | 13 framework plugins. Each wraps `@aeorank/core`. |
+| `packages/next`, `packages/astro`, `packages/nuxt`, … | 11 framework plugins. Each wraps `@aeorank/core`. |
 | `apps/web` | Dashboard (`app.aeorank.dev`). Next.js + Clerk + Supabase. |
 | `apps/marketing` | Marketing site (`aeorank.dev`). Astro. |
 | `apps/docs` | Docs site (`docs.aeorank.dev`). Astro Starlight. |

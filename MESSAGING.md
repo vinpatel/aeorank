@@ -45,7 +45,7 @@ Mindtrades Audit offer stays compatible: **crawler-gate first → aeorank-cli �
 | **ZIP / score history / auto-rescan as Pro-only** | Pricing vs app | Download ZIP, 30-day charts, and auto-rescan are not plan-gated in code. Real gates: **sites + scans/mo**. |
 | **“no signup” next to the signup CTA** | Hero | CLI has no signup. App signup **works** (DB connected). Don’t contradict the button. |
 | **Fake plugin list** (hugo, rails, django, hono, fastify) | Install strip | Those packages do not exist. |
-| **README “13 plugins”** | README table + `pnpm test` comment | 11 plugin packages, not 13. |
+| **README “13 plugins”** | README table + `pnpm test` comment + CONTRIBUTING layout | 11 plugin packages, not 13. |
 | **Tweet intent: “generate the 9 files ChatGPT actually reads”** | README share | False file count + citation promise. |
 | **Homepage leaderboard scores that contradict `/scoreboard`** | Leaderboard vs Scoreboard | Anthropic 87 vs 31, etc. Use the scoreboard snapshot or don’t claim live weekly ranks. |
 | **“updated hourly” / “every week” scoreboard** | Leaderboard, Scoreboard | Static snapshot in repo. Don’t claim a live cadence we don’t run. |
@@ -65,6 +65,7 @@ Mindtrades Audit offer stays compatible: **crawler-gate first → aeorank-cli �
 | Agency as API platform | Agency = 50 sites / 500 scans. Same engine. | Pricing, upgrade |
 | Grade bands 90/80/70/60/50 + “cited” labels | Match `GRADE_THRESHOLDS`: A+ 95, A 85, B 70, C 55, D 40. Labels = readiness, not citations. | Anatomy |
 | Docs `ai.txt` under Generated Files | Scored if present; **not** in the 8-file CLI set. | Docs sidebar + `ai-txt.md` |
+| Files preview that sounded like `ai.txt` (“short manifesto AI engines read first”) | Sample is **llms.txt**: agent-readable site map, not a licensing manifesto. | Files.astro |
 | Dashboard “9 files” | 8 files ZIP after a scan. Empty state: add a public URL → 36 checks + 8 files. | Dashboard, download button |
 
 ---
