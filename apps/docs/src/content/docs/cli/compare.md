@@ -1,51 +1,10 @@
 ---
 title: compare
-description: Compare two scan results side by side in the terminal.
+description: Diff two scan JSON files. Not a command on aeorank-cli@0.1.1.
 ---
 
-The `compare` command shows a dimension-by-dimension diff between two scan result JSON files.
+:::caution[Not in npm 0.1.1]
+Published `aeorank-cli@0.1.1` commands are `scan` and `init` only. `compare` is not in that CLI's `--help`.
+:::
 
-## Usage
-
-```bash
-npx aeorank-cli compare before.json after.json
-```
-
-## How it works
-
-1. Run two scans with `--format json` and save the output:
-
-```bash
-npx aeorank-cli scan https://example.com -f json > before.json
-# ... make improvements ...
-npx aeorank-cli scan https://example.com -f json > after.json
-```
-
-2. Compare them:
-
-```bash
-npx aeorank-cli compare before.json after.json
-```
-
-The output shows:
-
-- **Overall score** change (e.g., `42 → 85 +43 pts`)
-- **Per-dimension** before/after scores with delta
-- Color-coded: green for improvements, red for regressions
-
-## Example output
-
-```
-  Scan Comparison
-  https://example.com
-
-  Overall: 42 → 85  +43 pts
-
-  Dimension                Before   After   Change
-  ───────────────────────────────────────────────────
-  llms.txt Presence        0/10  → 9/10    +9
-  Schema.org Markup        6/10  → 8/10    +2
-  Content Structure        8/10  → 9/10    +1
-  AI Crawler Access        3/10  → 9/10    +6
-  ...
-```
+If you have two JSON scan results (from `--format json`), diff `score` and `dimensions` with any JSON tool. Canonical dimension count is `dimensions.length` (**12** on 0.1.1).

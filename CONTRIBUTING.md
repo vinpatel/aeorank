@@ -19,7 +19,7 @@ This is a pnpm + turbo monorepo.
 
 | Path | What it is |
 | --- | --- |
-| `packages/core` | The scoring engine — 36 criteria, 8 default generators. The brain. |
+| `packages/core` | The scoring engine. Published CLI scores 12 dimensions; repo catalog may be larger. 8 default generators. |
 | `packages/cli` | `aeorank-cli` — the terminal entrypoint most users hit first. |
 | `packages/next`, `packages/astro`, `packages/nuxt`, … | 11 framework plugins. Each wraps `@aeorank/core`. |
 | `apps/web` | Dashboard (`app.aeorank.dev`). Next.js + Clerk + Supabase. |
@@ -37,7 +37,7 @@ This is a pnpm + turbo monorepo.
 ## What we're especially looking for
 
 - **New framework plugins** — if your framework isn't in `packages/`, copy one of the existing ones and adapt it. `packages/astro` is the simplest template.
-- **New scoring criteria** — the 36 criteria live in `packages/core/src/checks/`. Each is a ~30-line file.
+- **New scoring criteria** — published CLI is 12 dimensions. Extra catalog rows in `packages/core` are not marketing claims until npm matches.
 - **Generator improvements** — the 8 default files live in `packages/core/src/generators/`.
 - **Real-world bug reports** — scan your own site, tell us what broke.
 

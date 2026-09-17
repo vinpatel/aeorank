@@ -54,7 +54,7 @@ The Action runs `aeorank-cli scan <url> --format json --no-files` and posts the 
 
 - **Crawler table first** — GPTBot / ClaudeBot / PerplexityBot / Google-Extended → allow / block / unknown
 - Score and grade in the Check summary
-- Full 36-dimension breakdown table in the Check details
+- Dimension breakdown (12 on `aeorank-cli@0.1.1`) in the Check details
 - Conclusion: `success` (≥70), `neutral` (40–69), or `failure` (<40)
 - **Crawler block always fails the Check** (when `fail-on-crawler-block` is true), even if the overall score is high. The summary names which bot is blocked.
 
@@ -134,4 +134,4 @@ The App fails on crawler **block** only. `fail-below` (score threshold) is Actio
 - [Marketplace listing](https://github.com/marketplace/actions/aeorank-aeo-scanner)
 - [Action source code](https://github.com/vinpatel/aeorank-action)
 - [GitHub App alternative](/github-app)
-- [36 scoring criteria](/scoring/dimensions)
+- [12 scoring dimensions](/scoring/dimensions)

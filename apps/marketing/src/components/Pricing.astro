@@ -10,11 +10,11 @@ const tiers = [
 		price: "$0",
 		unit: "/mo",
 		hook: "Try everything. No credit card.",
-		note: "Good starting posture. 1 site, 3 hosted scans/month. The 36 checks, 8 files, and unlimited CLI stay free — nothing you need lives behind the paywall.",
+		note: "Good starting posture. 1 site, 3 hosted scans/month. The 12-dimension CLI, 8 files, and unlimited local scans stay free.",
 		scored: [
 			{ k: "sites",              v: "1",          on: true  },
 			{ k: "dashboard scans",    v: "3/mo",       on: true  },
-			{ k: "36-criteria scorer", v: "full",       on: true  },
+			{ k: "CLI dimensions",     v: "12",         on: true  },
 			{ k: "8 generated files",  v: "ZIP",        on: true  },
 			{ k: "CLI (local)",        v: "unlimited",  on: true  },
 			{ k: "GitHub App",         v: "included",   on: true  },
@@ -28,18 +28,15 @@ const tiers = [
 		grade: "A",
 		price: "$29",
 		unit: "/mo",
-		hook: "More sites. More scans. Same engine.",
-		note: "The pragmatic choice for a live site. Cheaper than typical monitoring SaaS ($89–$499/mo) — and the only one that writes the 8 fix files.",
+		hook: "More hosted scans. Same CLI. Same 8 fix files.",
+		note: "Lead with the fix: unlimited local CLI plus more hosted scans that write the 8 files. Cheaper than typical monitoring SaaS ($89–$499/mo) — we do not sell mention tracking.",
 		featured: true,
 		scored: [
 			{ k: "sites",              v: "5",          on: true  },
 			{ k: "dashboard scans",    v: "50/mo",      on: true  },
-			{ k: "36-criteria scorer", v: "full",       on: true  },
+			{ k: "CLI dimensions",     v: "12",         on: true  },
 			{ k: "8 generated files",  v: "ZIP",        on: true  },
 			{ k: "CLI (local)",        v: "unlimited",  on: true  },
-			{ k: "score history",      v: "from scans", on: true  },
-			{ k: "auto-rescan",        v: "daily/wk/mo",on: true  },
-			{ k: "printable report",   v: "HTML",       on: true  },
 		],
 		cta: { label: "Start Pro — $29", href: "https://app.aeorank.dev/upgrade?plan=pro", kind: "ink" },
 	},
@@ -54,7 +51,7 @@ const tiers = [
 		scored: [
 			{ k: "sites",              v: "50",         on: true  },
 			{ k: "dashboard scans",    v: "500/mo",     on: true  },
-			{ k: "36-criteria scorer", v: "full",       on: true  },
+			{ k: "CLI dimensions",     v: "12",         on: true  },
 			{ k: "8 generated files",  v: "ZIP",        on: true  },
 			{ k: "everything in Pro",  v: "included",   on: true  },
 		],
@@ -81,7 +78,7 @@ const competitors = [
 				<p class="t-label">// pricing</p>
 				<h2 class="t-h1 mt-2">Pricing, rendered as a report card.</h2>
 				<p class="t-body mt-3 max-w-[58ch]">
-					Same scoring engine on every plan. We don't gate the 36 criteria, the 8 generated files, or the CLI. You pay for more sites and hosted scans — never for the scoring or the fixes. Pro is $29; closed monitoring dashboards typically run $89–$499/mo.
+					Same CLI on every plan. We don't gate the 12 dimensions, the 8 generated files, or local scans. You pay for more sites and hosted scans. Pro is $29; closed monitoring dashboards typically run $89–$499/mo.
 				</p>
 			</div>
 			<div class="section-meta">

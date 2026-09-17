@@ -11,7 +11,7 @@ A plain text file that lists your site's pages grouped by section, with titles a
 
 ## Why it matters
 
-Language models and coding agents use `llms.txt` to understand what a site offers without crawling every page. That is **agent-docs hygiene**, not a citation guarantee. The evidenced lever for AI visibility is crawler allowlists (GPTBot and peers) plus a CI gate so they stay allowed.
+Language models and coding agents use `llms.txt` to understand what a site offers without crawling every page. That is **agent-docs hygiene**, not a citation guarantee. Crawler allowlists (GPTBot and peers) are the access lever. The GitHub Action can fail a Check when those bots are disallowed.
 
 ## Example output
 

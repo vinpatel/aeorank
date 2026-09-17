@@ -3,7 +3,7 @@ title: Per-Page Scoring
 description: See how each individual page on your site scores across AEO dimensions.
 ---
 
-AEOrank doesn't just give you a site-wide score — it scores every page individually across 7 page-level dimensions.
+AEOrank's hosted dashboard may show per-page rows for the page-level subset of the **12** published dimensions. Canonical site score is still `aeorank-cli@0.1.1`.
 
 ## How it works
 

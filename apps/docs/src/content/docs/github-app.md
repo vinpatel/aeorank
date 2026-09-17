@@ -17,7 +17,7 @@ The AEOrank GitHub App scores your site's AI visibility on every pull request â€
 When you open or update a pull request, AEOrank automatically:
 
 1. **Detects your site URL** from your repo (see [URL detection](#url-detection) below)
-2. **Scans your site** across 36 AI visibility criteria
+2. **Scans your site** with the same 12 dimensions as `aeorank-cli@0.1.1`
 3. **Posts a Check Run** on the commit with your score and grade
 4. **Posts a PR comment** with a full dimension breakdown and recommendations
 
@@ -52,7 +52,7 @@ The Check Run appears in your PR's checks tab with:
 
 - **AEO Score** (0â€“100) with letter grade (A+ through F)
 - **Pass/neutral/fail** conclusion based on score **and** crawler blocks
-- **Crawler table first** (allow / block / unknown), then the 36-dimension table
+- **Crawler access** among the 12 dimensions, then the dimension table
 
 ### PR comment
 
@@ -124,5 +124,5 @@ The App reads only the files needed for URL detection (`.aeorank`, `CNAME`, `pac
 
 - [Install the App](https://github.com/apps/aeorank)
 - [GitHub Action alternative](/cli/scan)
-- [36 scoring criteria](/scoring/dimensions)
+- [12 scoring dimensions](/scoring/dimensions)
 - [Privacy policy](https://aeorank.dev/privacy)
