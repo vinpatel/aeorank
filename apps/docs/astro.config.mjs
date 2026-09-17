@@ -64,7 +64,7 @@ export default defineConfig({
 					],
 				},
 				{
-					label: "Generated Files",
+					label: "Generated Files (8)",
 					items: [
 						{ label: "llms.txt", slug: "files/llms-txt" },
 						{ label: "llms-full.txt", slug: "files/llms-full-txt" },
@@ -77,7 +77,12 @@ export default defineConfig({
 							slug: "files/citation-anchors-html",
 						},
 						{ label: "sitemap-ai.xml", slug: "files/sitemap-ai-xml" },
-						{ label: "ai.txt", slug: "files/ai-txt" },
+					],
+				},
+				{
+					label: "Also scored",
+					items: [
+						{ label: "ai.txt (not generated)", slug: "files/ai-txt" },
 					],
 				},
 				{

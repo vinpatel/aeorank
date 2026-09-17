@@ -21,7 +21,7 @@ const pillars = [
 		code: "P3",
 		weight: 19,
 		name: "AI discovery",
-		subs: ["llms.txt", "ai.txt", "GPTBot · ClaudeBot · PerplexityBot", "licensing", "freshness"],
+		subs: ["llms.txt", "GPTBot · ClaudeBot · PerplexityBot", "robots allowlist", "licensing", "freshness"],
 		line: { y1: 48, y2: 60 },
 	},
 	{
@@ -57,7 +57,7 @@ const pillars = [
 			<div class="section-meta">
 				<span>36&nbsp;<b>criteria</b></span>
 				<span>5&nbsp;<b>pillars</b></span>
-				<span>288&nbsp;<b>tests</b></span>
+				<span>8&nbsp;<b>files</b></span>
 			</div>
 		</div>
 
@@ -116,12 +116,12 @@ const pillars = [
 		<!-- Grade chart -->
 		<div class="anat-grades mt-10" data-reveal>
 			{[
-				{ g: "A+", lo: 90, hi: 100, label: "ai-native" },
-				{ g: "A",  lo: 80, hi: 89,  label: "highly cited" },
-				{ g: "B",  lo: 70, hi: 79,  label: "consistently visible" },
-				{ g: "C",  lo: 60, hi: 69,  label: "sometimes cited" },
-				{ g: "D",  lo: 50, hi: 59,  label: "rare citation" },
-				{ g: "F",  lo: 0,  hi: 49,  label: "invisible" },
+				{ g: "A+", lo: 95, hi: 100, label: "crawler-ready" },
+				{ g: "A",  lo: 85, hi: 94,  label: "highly extractable" },
+				{ g: "B",  lo: 70, hi: 84,  label: "technically ready" },
+				{ g: "C",  lo: 55, hi: 69,  label: "partial readiness" },
+				{ g: "D",  lo: 40, hi: 54,  label: "weak signals" },
+				{ g: "F",  lo: 0,  hi: 39,  label: "blocked or unreadable" },
 			].map(grade => (
 				<div class={`anat-grade anat-grade--${grade.g.replace('+','plus').toLowerCase()}`}>
 					<div class="anat-grade__letter font-serif">{grade.g}</div>

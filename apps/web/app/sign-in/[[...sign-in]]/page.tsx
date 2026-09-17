@@ -28,7 +28,7 @@ export default async function SignInPage({
 	return (
 		<AuthPageShell
 			subtitle={
-				plan ? "Sign in to continue to checkout" : "Monitor and improve your AI visibility score"
+				plan ? "Sign in to continue to checkout" : "Score crawler access. Get the 8 files."
 			}
 		>
 			<SignIn

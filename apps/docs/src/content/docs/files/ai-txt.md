@@ -1,7 +1,9 @@
 ---
 title: ai.txt
-description: Machine-readable AI content licensing directives — declare how AI engines can train on, summarize, and cite your content.
+description: Content-licensing file the scorer checks if present. Not in the default 8-file CLI output.
 ---
+
+> **Not in the default CLI output.** `npx aeorank-cli@latest` (npm **0.1.1**) writes **8 files** and does **not** generate `ai.txt`. The scorer still checks for a live `/ai.txt` under Content Licensing. `generateAiTxt` exists in `@aeorank/core` but is not in `generateFiles()`.
 
 The `ai.txt` file is a machine-readable declaration of how AI systems are permitted to use your content for training, inference, summarization, and attribution.
 
@@ -54,7 +56,7 @@ Place `ai.txt` at the root of your site, alongside `robots.txt`:
 https://your-site.com/ai.txt
 ```
 
-If your site already has an `ai.txt`, AEOrank's generated file is a recommended template — review and merge with your existing terms before replacing.
+If your site already has an `ai.txt`, treat any template as a merge candidate — do not assume AEOrank will write this file on scan.
 
 :::caution
 `ai.txt` is an emerging convention, not a binding standard. Compliant crawlers respect it; non-compliant ones will not. Treat it as a clear public statement of your terms, not a technical access control.

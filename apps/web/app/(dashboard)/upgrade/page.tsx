@@ -46,8 +46,8 @@ export default async function UpgradePage({
 				`${PLANS.free.scansPerMonth} scans per month`,
 				`${PLANS.free.maxSites} site`,
 				"AEO score + letter grade",
-				"All 8 generated files",
-				"Basic dashboard",
+				"All 8 generated files (ZIP)",
+				"Unlimited local CLI",
 			],
 		},
 		{
@@ -60,9 +60,8 @@ export default async function UpgradePage({
 				`${PLANS.pro.scansPerMonth} scans per month`,
 				`${PLANS.pro.maxSites} sites`,
 				"Everything in Free",
-				"Score history chart",
-				"File download (ZIP)",
-				"Priority support",
+				"Score history from your scans",
+				"Auto-rescan (daily / weekly / monthly)",
 			],
 		},
 		{
@@ -74,9 +73,8 @@ export default async function UpgradePage({
 				`${PLANS.api.scansPerMonth} scans per month`,
 				`${PLANS.api.maxSites} sites`,
 				"Everything in Pro",
-				"REST API access",
-				"Webhook notifications",
-				"Priority support",
+				"Volume for agency audits",
+				"Same 8 files · same 36 checks",
 			],
 		},
 	];
@@ -96,7 +94,7 @@ export default async function UpgradePage({
 					Plans & Pricing
 				</h1>
 				<p style={{ color: "var(--text-secondary)", margin: 0, fontSize: "15px" }}>
-					Choose the plan that fits your AEO workflow. Pro is $29/mo. Agency is $99/mo.
+					Choose the plan that fits your AEO workflow. Same 36 checks and 8 files on every plan. Pro is $29/mo. Agency is $99/mo.
 				</p>
 			</div>
 

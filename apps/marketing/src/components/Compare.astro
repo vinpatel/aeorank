@@ -1,0 +1,176 @@
+---
+// Honest category split vs closed monitoring SaaS.
+// No invented features. No per-vendor prices we cannot source.
+
+const rows = [
+	{
+		k: "What they sell",
+		us: "Score + generate the 8 fix files",
+		them: "Brand-mention / prompt dashboards",
+	},
+	{
+		k: "License",
+		us: "MIT · fork and self-host",
+		them: "Closed source",
+	},
+	{
+		k: "How you run it",
+		us: "CLI, GitHub Action, GitHub App, hosted scan",
+		them: "Vendor dashboard",
+	},
+	{
+		k: "Scoring",
+		us: "36 deterministic checks",
+		them: "LLM prompt tracking (varies by run)",
+	},
+	{
+		k: "CI",
+		us: "Fail the PR if GPTBot is blocked",
+		them: "None",
+	},
+	{
+		k: "Output",
+		us: "8 files the published CLI writes",
+		them: "Mention reports — no fix files",
+	},
+	{
+		k: "Citation guarantee",
+		us: "None — crawler access + extractability",
+		them: "None — they monitor mentions after the fact",
+	},
+	{
+		k: "Price",
+		us: "CLI free · Pro $29/mo",
+		them: "Typically $89–$499/mo",
+	},
+];
+---
+
+<section id="compare" class="section">
+	<div class="wrap rail">
+		<span class="rail-tick" style="top:0"></span>
+		<span class="rail-coord" style="top:0">VS</span>
+
+		<div class="section-head">
+			<div>
+				<p class="t-label">// others monitor · we fix</p>
+				<h2 class="t-h1 mt-2">Profound, Peec, Otterly, Scrunch, Athena watch mentions. We fix readability.</h2>
+				<p class="t-body mt-3 max-w-[60ch]">
+					They are closed monitoring SaaS. AEOrank is MIT, CLI/CI-first, and writes the 8 files <code>aeorank-cli@0.1.1</code> actually generates. We do not promise citations. The evidenced lever is crawler access plus extractability.
+				</p>
+			</div>
+			<div class="section-meta">
+				<span>5&nbsp;<b>monitors</b></span>
+				<span>1&nbsp;<b>fixer</b></span>
+				<span>0&nbsp;<b>citation promises</b></span>
+			</div>
+		</div>
+
+		<div class="cmp cropped" data-reveal>
+			<span class="cr-tl" aria-hidden="true"></span>
+			<span class="cr-br" aria-hidden="true"></span>
+
+			<header class="cmp__hd">
+				<span class="t-label">// category split</span>
+				<span class="font-mono text-[10.5px] ink-3 ml-auto">honest product state · Sep 2026</span>
+			</header>
+
+			<table class="cmp__table">
+				<thead>
+					<tr>
+						<th scope="col" class="cmp__th"> </th>
+						<th scope="col" class="cmp__th cmp__th--us">AEOrank</th>
+						<th scope="col" class="cmp__th">Profound · Peec · Otterly · Scrunch · Athena</th>
+					</tr>
+				</thead>
+				<tbody>
+					{rows.map((r) => (
+						<tr>
+							<th scope="row" class="cmp__k">{r.k}</th>
+							<td class="cmp__us">{r.us}</td>
+							<td class="cmp__them">{r.them}</td>
+						</tr>
+					))}
+				</tbody>
+			</table>
+
+			<footer class="cmp__ft">
+				<span class="font-mono text-[10.5px] ink-3">
+					Agency audits (including Mindtrades): crawler-gate first, then <code>aeorank-cli</code>, then human-reviewed fixes.
+				</span>
+				<a href="https://app.aeorank.dev/sign-up" class="font-mono text-[11px] ink ilink">Get your score&nbsp;→</a>
+			</footer>
+		</div>
+	</div>
+</section>
+
+<style>
+	.cmp {
+		background: var(--color-page);
+		border: 1px solid var(--color-ink);
+		border-radius: 4px;
+		overflow: hidden;
+		margin-right: clamp(1.25rem, 4vw, 3.25rem);
+	}
+	.cmp__hd {
+		display: flex;
+		align-items: center;
+		padding: 10px 16px;
+		border-bottom: 1px solid var(--color-rule);
+		background: var(--color-paper-2);
+	}
+	.cmp__table {
+		width: 100%;
+		border-collapse: collapse;
+		font-size: 13.5px;
+	}
+	.cmp__th {
+		text-align: left;
+		font-family: var(--font-mono);
+		font-weight: 500;
+		font-size: 10.5px;
+		color: var(--color-ink-3);
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+		padding: 10px 16px;
+		border-bottom: 1px solid var(--color-rule);
+		background: var(--color-paper);
+	}
+	.cmp__th--us { color: var(--color-mark-ink); }
+	.cmp__k {
+		text-align: left;
+		font-weight: 540;
+		padding: 12px 16px;
+		border-bottom: 1px solid var(--color-rule);
+		border-right: 1px solid var(--color-rule);
+		width: 22%;
+		color: var(--color-ink-2);
+		background: var(--color-paper-2);
+	}
+	.cmp__us, .cmp__them {
+		padding: 12px 16px;
+		border-bottom: 1px solid var(--color-rule);
+		vertical-align: top;
+		color: var(--color-ink);
+	}
+	.cmp__us {
+		background: rgba(232,89,12,0.04);
+		font-weight: 540;
+		width: 34%;
+	}
+	.cmp__them { color: var(--color-ink-2); }
+	.cmp__ft {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 12px;
+		padding: 10px 16px;
+		background: var(--color-paper-2);
+		flex-wrap: wrap;
+	}
+
+	@media (max-width: 720px) {
+		.cmp__k { width: auto; }
+		.cmp__us, .cmp__them { width: auto; }
+	}
+</style>

@@ -2,10 +2,10 @@
   <img src=".github/banner.svg" alt="AEOrank" width="100%" />
 </p>
 
-<h3 align="center">Your site ranks #1 on Google — but is invisible to ChatGPT.</h3>
+<h3 align="center">Your site ranks #1 on Google — but crawlers may still extract nothing.</h3>
 
 <p align="center">
-  AEOrank scores your AI visibility 0–100 across <strong>36 criteria</strong>, then generates the <strong>8 files</strong> the published CLI (<code>aeorank-cli@0.1.1</code>) actually writes. Crawler allowlists + CI stop GPTBot from staying blocked; <code>llms.txt</code> is agent-docs hygiene, not a citation guarantee.<br/>
+  AEOrank scores crawler access and extractability 0–100 across <strong>36 criteria</strong>, then generates the <strong>8 files</strong> the published CLI (<code>aeorank-cli@0.1.1</code>) actually writes. Crawler allowlists + CI stop GPTBot from staying blocked; <code>llms.txt</code> is agent-docs hygiene, not a citation guarantee.<br/>
   <em>Others monitor. AEOrank fixes.</em>
 </p>
 
@@ -55,18 +55,18 @@ AEOrank does.
 
 ## AEOrank vs the competition
 
-Every other AEO tool is paid SaaS targeting marketers. AEOrank is the **only open-source, developer-native** AEO tool.
+Profound, Peec, Otterly, Scrunch, and Athena are **closed monitoring SaaS** (prompt tracking, brand mentions), typically **$89–$499/mo**. AEOrank is MIT, CLI/CI-first, and writes the 8 fix files. We do not promise citations.
 
-| | AEOrank | Scrunch | Adobe LLM Optimizer | Semrush AI |
-|---|:---:|:---:|:---:|:---:|
-| **Price** | **Free / MIT** | $499+/mo | Enterprise | $129+/mo |
-| **Open source** | ✅ | ❌ | ❌ | ❌ |
-| **CLI** | ✅ | ❌ | ❌ | ❌ |
-| **GitHub integration** | ✅ Action + App | ❌ | ❌ | ❌ |
-| **Framework plugins** | **13** | 0 | 0 | 0 |
-| **Generates AI files** | ✅ 8 files | ❌ | ❌ | ❌ |
-| **Scoring criteria** | 36 | Varies | Varies | Varies |
-| **Self-hostable** | ✅ | ❌ | ❌ | ❌ |
+| | AEOrank | Profound / Peec / Otterly / Scrunch / Athena |
+|---|:---:|:---:|
+| **Price** | **CLI free / Pro $29** | typically $89–$499/mo |
+| **Open source** | ✅ MIT | ❌ closed |
+| **CLI + CI** | ✅ Action + App | ❌ dashboards |
+| **Framework plugins** | **11** | 0 |
+| **Generates AI files** | ✅ 8 files | ❌ mention reports |
+| **Scoring** | 36 deterministic checks | LLM prompt tracking |
+| **Citation guarantee** | ❌ none | ❌ they monitor after the fact |
+| **Self-hostable** | ✅ | ❌ |
 
 ## Three ways to use it
 
@@ -181,12 +181,12 @@ export default withAeorank({
 
 ## SaaS Dashboard
 
-Track your AEO score over time at [app.aeorank.dev](https://app.aeorank.dev):
+Track crawler access and extractability over time at [app.aeorank.dev](https://app.aeorank.dev):
 
-- Scan any URL → full 36-criteria breakdown
-- 30-day score history with sparkline charts
+- Sign up, add a public URL → 36-criteria breakdown
 - Download the 8 generated files as a ZIP
-- Free tier: 1 site, 3 scans/month
+- Free tier: 1 site, 3 scans/month (CLI stays unlimited)
+- Pro $29: 5 sites, 50 scans/month
 
 ## Packages
 
@@ -234,14 +234,14 @@ We ship fast and merge fast. New framework plugins, new scoring criteria, and re
 git clone https://github.com/vinpatel/aeorank.git
 cd aeorank
 pnpm install
-pnpm test    # 675 tests across 13 packages
+pnpm test    # core + CLI + plugins
 ```
 
 ## Share
 
-If AEOrank saved you a $299/mo subscription, the best thank-you is sending it to one person who also needs it.
+If AEOrank saved you a closed monitoring subscription, the best thank-you is sending it to one person who also needs it.
 
-[![Tweet](https://img.shields.io/badge/Share-on%20X-000000?style=flat-square&logo=x&logoColor=white)](https://twitter.com/intent/tweet?text=AEOrank%20%E2%80%94%20open-source%20AI%20visibility%20scanner.%20Score%20your%20site%2C%20generate%20the%209%20files%20ChatGPT%20actually%20reads.%20MIT%2C%20free%2C%20self-hostable.&url=https%3A%2F%2Fgithub.com%2Fvinpatel%2Faeorank)
+[![Tweet](https://img.shields.io/badge/Share-on%20X-000000?style=flat-square&logo=x&logoColor=white)](https://twitter.com/intent/tweet?text=AEOrank%20%E2%80%94%20open-source%20AI%20visibility%20scanner.%20Score%20crawler%20access%2C%20generate%20the%208%20files%20the%20CLI%20actually%20writes.%20MIT%2C%20free%2C%20self-hostable.&url=https%3A%2F%2Fgithub.com%2Fvinpatel%2Faeorank)
 [![Share on Hacker News](https://img.shields.io/badge/Share-on%20Hacker%20News-FF6600?style=flat-square&logo=ycombinator&logoColor=white)](https://news.ycombinator.com/submitlink?u=https%3A%2F%2Fgithub.com%2Fvinpatel%2Faeorank&t=AEOrank%20%E2%80%94%20open-source%20AI-visibility%20scanner%20for%20ChatGPT%2C%20Perplexity%2C%20Claude)
 [![Share on Reddit](https://img.shields.io/badge/Share-on%20Reddit-FF4500?style=flat-square&logo=reddit&logoColor=white)](https://www.reddit.com/submit?url=https%3A%2F%2Fgithub.com%2Fvinpatel%2Faeorank&title=AEOrank%20%E2%80%94%20open-source%20AI-visibility%20scanner%20%28MIT%29)
 [![Share on LinkedIn](https://img.shields.io/badge/Share-on%20LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white)](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fgithub.com%2Fvinpatel%2Faeorank)

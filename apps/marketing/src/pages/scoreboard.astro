@@ -174,7 +174,7 @@ const slug = (s: string) => s.toLowerCase().replace(/[\s\/]+/g, '-');
 
 <Base
 	title="AEO Industry Scoreboard — 100 funded startups, scored"
-	description="We scan 100 top-funded startups weekly for AI visibility. See who ChatGPT, Perplexity, and Claude can actually read."
+	description="Public snapshot of 100 funded startups scored with aeorank-cli. 36 deterministic checks for crawler access and extractability — not a citation ranking."
 	route="/ inspector / scoreboard"
 >
 	<!-- Page hero -->
@@ -189,7 +189,7 @@ const slug = (s: string) => s.toLowerCase().replace(/[\s\/]+/g, '-');
 				<span class="font-serif">One brutal number.</span>
 			</h1>
 			<p class="t-lead mt-5 max-w-[60ch]">
-				We run <code>aeorank-cli scan</code> against {totalCompanies} of the most well-funded startups every week. OpenAI scores 16. Figma scores 30. The industry average is {globalAvg}/100. The data below is the entire spreadsheet.
+				We run <code>aeorank-cli scan</code> against {totalCompanies} well-funded public sites. OpenAI scores 16. Figma scores 30. The snapshot average is {globalAvg}/100. The data below is the entire spreadsheet — crawler access and extractability, not a citation ranking.
 			</p>
 
 			<!-- Top stat strip -->
@@ -232,11 +232,11 @@ const slug = (s: string) => s.toLowerCase().replace(/[\s\/]+/g, '-');
 			<div class="section-head">
 				<div>
 					<p class="t-label">// industry index</p>
-					<h2 class="t-h1 mt-2">Sorted by weekly mean.</h2>
+					<h2 class="t-h1 mt-2">Sorted by snapshot mean.</h2>
 				</div>
 				<div class="section-meta">
 					<span>{industries.length}&nbsp;<b>sectors</b></span>
-					<span>updated&nbsp;<b>hourly</b></span>
+					<span>cli&nbsp;<b>snapshot</b></span>
 				</div>
 			</div>
 

@@ -6,7 +6,7 @@
 const faqs = [
 	{
 		q: "Will this actually help me rank in ChatGPT answers?",
-		a: "Alone, no single file is a silver bullet. AEOrank scores 36 things at once — technical signals like llms.txt, content signals like answer density, trust signals like schema.Author, and access signals like crawler permissions. The evidenced lever is crawler allowlists plus a CI gate: --fail-on-crawler-block fails the PR if GPTBot is blocked. llms.txt is agent-docs hygiene, not a citation guarantee."
+		a: "Alone, no single file is a silver bullet. AEOrank scores 36 things at once — technical signals like llms.txt, content signals like answer density, trust signals like schema.Author, and access signals like crawler permissions. The evidenced lever is crawler allowlists plus a CI gate: --fail-on-crawler-block fails the PR if GPTBot is blocked. llms.txt is agent-docs hygiene, not a citation guarantee. We do not promise to get you cited."
 	},
 	{
 		q: "What does deterministic scoring actually mean?",
@@ -22,7 +22,7 @@ const faqs = [
 	},
 	{
 		q: "What's the difference vs Profound, Scrunch, Otterly, Peec, or AthenaHQ?",
-		a: "They monitor: they run prompts through LLMs and tell you what AI said about your brand this week. AEOrank fixes: it scores whether AI can read your site at all, then writes the 8 files the CLI generates. Floor prices there run $89–$295/mo; AEOrank Pro is $29 and the CLI is free. Useful complements, but they solve the downstream question — AEOrank solves the upstream one."
+		a: "They monitor: they run prompts through LLMs and tell you what AI said about your brand this week. AEOrank fixes upstream: it scores whether crawlers can access and extract your site, then writes the 8 files the CLI generates. Typical monitoring plans run $89–$499/mo; AEOrank Pro is $29 and the CLI is free. Complements, not clones — they answer the downstream question. Agency audits (including Mindtrades) still go crawler-gate first, then aeorank-cli, then human-reviewed fixes."
 	},
 	{
 		q: "Can I use this in CI?",

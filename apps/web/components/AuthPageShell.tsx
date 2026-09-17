@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 
 export function AuthPageShell({
 	children,
-	subtitle = "Monitor and improve your AI visibility score",
+	subtitle = "Score your site. Download the 8 files. Ship the fixes.",
 }: {
 	children: ReactNode;
 	subtitle?: string;
@@ -53,6 +53,17 @@ export function AuthPageShell({
 					</span>
 				</div>
 				<p style={{ color: "var(--text-secondary)", fontSize: "15px" }}>{subtitle}</p>
+				<p
+					style={{
+						margin: "12px 0 0",
+						fontFamily: "var(--font-mono)",
+						fontSize: "11px",
+						color: "var(--text-muted)",
+						letterSpacing: "0.02em",
+					}}
+				>
+					MIT · CLI free · CI gate · 8 files
+				</p>
 			</div>
 			{children}
 		</div>

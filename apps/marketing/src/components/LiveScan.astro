@@ -7,7 +7,6 @@ type Line = { sig: "ok" | "warn" | "fail"; tag: string; msg: string; delta?: str
 const lines: Line[] = [
 	{ sig: "ok",   tag: "title",         msg: "64 chars · well-formed",                    delta: "+2" },
 	{ sig: "fail", tag: "llms.txt",      msg: "404 · not found",                           delta: "-4" },
-	{ sig: "fail", tag: "ai.txt",        msg: "404 · not found",                           delta: "-3" },
 	{ sig: "warn", tag: "schema.org",    msg: "1/9 types present",                         delta: "-5" },
 	{ sig: "fail", tag: "gptbot",        msg: "blocked by robots.txt",                     delta: "-6" },
 	{ sig: "ok",   tag: "canonical",     msg: "present · single",                          delta: "+1" },
@@ -20,7 +19,7 @@ const lines: Line[] = [
 	{ sig: "ok",   tag: "sitemap.xml",   msg: "14 urls · fresh",                           delta: "+2" },
 	{ sig: "fail", tag: "rss",           msg: "feed missing",                              delta: "-2" },
 	{ sig: "ok",   tag: "viewport",      msg: "responsive · present",                      delta: "0" },
-	{ sig: "warn", tag: "citations",     msg: "2 internal · weak",                         delta: "-2" },
+	{ sig: "warn", tag: "attribution",   msg: "weak source phrases",                       delta: "-2" },
 	{ sig: "ok",   tag: "hreflang",      msg: "not needed",                                delta: "0" },
 	{ sig: "fail", tag: "perplexitybot", msg: "blocked by robots.txt",                     delta: "-4" },
 	{ sig: "ok",   tag: "headings",      msg: "h1→h2→h3 · ordered",                        delta: "+1" },
@@ -38,7 +37,7 @@ const lines: Line[] = [
 				<p class="t-label">// live scan</p>
 				<h2 class="t-h1 mt-2">Watch an actual audit stream past.</h2>
 				<p class="t-body mt-3 max-w-[56ch]">
-					Below is a real aeorank-cli run — the same output you get in your terminal, your CI, or your GitHub check. No mocks, no LLM guesswork. Each line is one deterministic criterion with a signed weight delta. Same input, same score, every run.
+					Same shape as an <code>aeorank-cli@0.1.1</code> run — crawler access first, then 36 deterministic checks. Illustrative stream, not a live scan of your site. No LLM guesswork.
 				</p>
 			</div>
 			<div class="section-meta">
@@ -88,7 +87,7 @@ const lines: Line[] = [
 				</span>
 				<span class="font-mono text-[10.5px] ink-3">final: <b class="ink">31/100 · grade F</b></span>
 				<span class="font-mono text-[10.5px]">
-					<a href="https://app.aeorank.dev/sign-up" class="ilink">fix all 9 →</a>
+					<a href="https://app.aeorank.dev/sign-up" class="ilink">get the 8 files →</a>
 				</span>
 			</div>
 		</div>
@@ -123,7 +122,7 @@ const lines: Line[] = [
 				</header>
 				<h3 class="t-h3 mt-2">Each failure ships with a fix.</h3>
 				<p class="t-body mt-2">
-					Other tools monitor — they tell you you're invisible and send a dashboard. AEOrank hands you the exact 8 files the CLI writes, ready to drop into your site root. One command, not a roadmap.
+					Other tools monitor — they tell you you're invisible and send a dashboard. AEOrank hands you the exact 8 files the CLI writes, ready to drop into your site root. One command, not a citation promise.
 				</p>
 				<code class="mt-3 inline-block">./dist/llms.txt · ./dist/schema.json · …</code>
 			</article>

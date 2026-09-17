@@ -1,22 +1,20 @@
 ---
 // Leaderboard table — real tabular data, no cards.
 
-type Row = { rank: number; name: string; tag: string; score: number; grade: string; delta: number };
+type Row = { rank: number; name: string; tag: string; score: number; grade: string };
 
 const rows: Row[] = [
-	{ rank: 1,  name: "Anthropic",     tag: "ai lab",        score: 87, grade: "A",  delta: +4 },
-	{ rank: 2,  name: "Vercel",        tag: "infra",         score: 81, grade: "A",  delta: +2 },
-	{ rank: 3,  name: "Linear",        tag: "saas",          score: 78, grade: "B",  delta: +6 },
-	{ rank: 4,  name: "Supabase",      tag: "infra",         score: 74, grade: "B",  delta: +1 },
-	{ rank: 5,  name: "Cursor",        tag: "dev tools",     score: 71, grade: "B",  delta: -2 },
-	{ rank: 6,  name: "Resend",        tag: "infra",         score: 68, grade: "C",  delta: +3 },
-	{ rank: 7,  name: "Stripe",        tag: "payments",      score: 57, grade: "D",  delta: 0  },
-	{ rank: 8,  name: "Notion",        tag: "saas",          score: 54, grade: "D",  delta: -1 },
-	{ rank: 9,  name: "OpenAI",        tag: "ai lab",        score: 42, grade: "F",  delta: -4 },
-	{ rank: 10, name: "Fly.io",        tag: "infra",         score: 38, grade: "F",  delta: -2 },
+	{ rank: 1,  name: "PlanetScale", tag: "devtools",     score: 71, grade: "B" },
+	{ rank: 2,  name: "Neon",        tag: "devtools",     score: 69, grade: "C" },
+	{ rank: 3,  name: "Aiven",       tag: "infra",        score: 65, grade: "C" },
+	{ rank: 4,  name: "Runway",      tag: "ai / ml",      score: 64, grade: "C" },
+	{ rank: 5,  name: "Segment",     tag: "martech",      score: 64, grade: "C" },
+	{ rank: 6,  name: "Amplitude",   tag: "martech",      score: 63, grade: "C" },
+	{ rank: 7,  name: "ClickUp",     tag: "saas",         score: 60, grade: "C" },
+	{ rank: 8,  name: "MongoDB",     tag: "infra",        score: 60, grade: "C" },
+	{ rank: 9,  name: "Klaviyo",     tag: "e-commerce",   score: 59, grade: "C" },
+	{ rank: 10, name: "Braze",       tag: "martech",      score: 58, grade: "C" },
 ];
-
-const delta = (d: number) => d > 0 ? `+${d}` : d === 0 ? "—" : `${d}`;
 ---
 
 <section id="leaderboard" class="section">
@@ -27,15 +25,15 @@ const delta = (d: number) => d > 0 ? `+${d}` : d === 0 ? "—" : `${d}`;
 		<div class="section-head">
 			<div>
 				<p class="t-label">// AI visibility scoreboard</p>
-				<h2 class="t-h1 mt-2">100 funded startups score 42/100 on average.</h2>
+				<h2 class="t-h1 mt-2">100 funded startups, scored with the same CLI.</h2>
 				<p class="t-body mt-3 max-w-[60ch]">
-					We scan the public sites of 100 funded startups every week with the same deterministic CLI you can run yourself. Below is today's top 10. The full board includes 90 more — filterable by industry, funding stage, and pillar. No LLM evals, no inflated numbers.
+					Public snapshot from <code>aeorank-cli</code> — the same 36 checks you can run. Below is the current top 10 from that board. No LLM evals, no inflated ranks, no citation claims.
 				</p>
 			</div>
 			<div class="section-meta">
 				<span>100&nbsp;<b>sites</b></span>
-				<span>wkly&nbsp;<b>scans</b></span>
-				<span>0.9s&nbsp;<b>mean runtime</b></span>
+				<span>36&nbsp;<b>checks</b></span>
+				<span>8&nbsp;<b>files</b></span>
 			</div>
 		</div>
 
@@ -45,15 +43,7 @@ const delta = (d: number) => d > 0 ? `+${d}` : d === 0 ? "—" : `${d}`;
 
 			<!-- Table chrome -->
 			<header class="lb__hd">
-				<span class="font-mono text-[11px] ink-3">scoreboard · week 16 · 2026</span>
-				<span class="lb__hd-filters">
-					<button class="lb__chip is-active" type="button">all</button>
-					<button class="lb__chip" type="button">infra</button>
-					<button class="lb__chip" type="button">saas</button>
-					<button class="lb__chip" type="button">ai lab</button>
-					<button class="lb__chip" type="button">dev tools</button>
-					<button class="lb__chip" type="button">payments</button>
-				</span>
+				<span class="font-mono text-[11px] ink-3">scoreboard · public snapshot</span>
 				<a href="/scoreboard" class="font-mono text-[11px] ink ilink ml-auto">full board&nbsp;→</a>
 			</header>
 
@@ -65,7 +55,6 @@ const delta = (d: number) => d > 0 ? `+${d}` : d === 0 ? "—" : `${d}`;
 						<th scope="col" class="lb__th">industry</th>
 						<th scope="col" class="lb__th lb__th--num">score</th>
 						<th scope="col" class="lb__th lb__th--grade">grade</th>
-						<th scope="col" class="lb__th lb__th--num">7d Δ</th>
 						<th scope="col" class="lb__th lb__th--bar">distribution</th>
 					</tr>
 				</thead>
@@ -86,9 +75,6 @@ const delta = (d: number) => d > 0 ? `+${d}` : d === 0 ? "—" : `${d}`;
 							<td class="lb__td lb__td--grade">
 								<span class={`lb__grade lb__grade--${r.grade.replace("+", "plus").toLowerCase()}`}>{r.grade}</span>
 							</td>
-							<td class={`lb__td lb__td--num font-mono ${r.delta > 0 ? "sig-ok" : r.delta < 0 ? "sig-fail" : "ink-3"}`}>
-								{delta(r.delta)}
-							</td>
 							<td class="lb__td lb__td--bar">
 								<span class="lb__bar" role="img" aria-label={`score ${r.score} of 100`}>
 									<span class="lb__bar-fill" style={`width: ${r.score}%;`}></span>
@@ -100,8 +86,8 @@ const delta = (d: number) => d > 0 ? `+${d}` : d === 0 ? "—" : `${d}`;
 			</table>
 
 			<footer class="lb__ft">
-				<span class="font-mono text-[10.5px] ink-3">showing 10 of 100 · updated hourly · all scores deterministic</span>
-				<a href="/scoreboard" class="font-mono text-[11px] ink ilink">scan your own site&nbsp;→</a>
+				<span class="font-mono text-[10.5px] ink-3">showing 10 of 100 · same CLI you can run · deterministic</span>
+				<a href="https://app.aeorank.dev/sign-up" class="font-mono text-[11px] ink ilink">scan your own site&nbsp;→</a>
 			</footer>
 		</div>
 	</div>

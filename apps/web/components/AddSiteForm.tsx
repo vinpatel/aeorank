@@ -53,6 +53,7 @@ export function AddSiteForm() {
 				required
 				disabled={loading}
 				className="input focus-ring"
+				aria-label="Public site URL to scan"
 			/>
 			<button
 				type="submit"
@@ -61,6 +62,9 @@ export function AddSiteForm() {
 			>
 				{loading ? "Scanning..." : "Scan site"}
 			</button>
+			<p className="w-full text-xs text-muted m-0">
+				Public URL only. 36 checks, then a ZIP of the 8 files. CLI stays free with no account.
+			</p>
 			{error && (
 				<div className="w-full text-error text-sm">
 					<p className="m-0">{error}</p>
