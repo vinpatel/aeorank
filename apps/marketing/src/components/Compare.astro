@@ -1,6 +1,7 @@
 ---
 // Honest category split vs closed monitoring SaaS.
 // No invented features. No per-vendor prices we cannot source.
+import { CLI_INSTALL_HREF } from "../lib/cta";
 
 const rows = [
 	{
@@ -15,7 +16,7 @@ const rows = [
 	},
 	{
 		k: "How you run it",
-		us: "CLI, GitHub Action, GitHub App, hosted scan",
+		us: "CLI, GitHub Action, GitHub App (hosted app is experimental)",
 		them: "Vendor dashboard",
 	},
 	{
@@ -98,7 +99,7 @@ const rows = [
 				<span class="font-mono text-[10.5px] ink-3">
 					Agency audits (including Mindtrades): crawler-gate first, then <code>aeorank-cli</code>, then human-reviewed fixes.
 				</span>
-				<a href="https://app.aeorank.dev/sign-up" class="font-mono text-[11px] ink ilink">Get your score&nbsp;→</a>
+				<a href={CLI_INSTALL_HREF} class="font-mono text-[11px] ink ilink">Get your score via CLI&nbsp;→</a>
 			</footer>
 		</div>
 	</div>

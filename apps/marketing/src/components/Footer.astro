@@ -1,7 +1,8 @@
 ---
+import { CLI_INSTALL_HREF, CLI_SCAN_CMD } from "../lib/cta";
+import AeorankMark from "./AeorankMark.astro";
 // Footer — treated as the "session end" of an inspector run
 // Final score card → final CTA → site map.
-import AeorankMark from "./AeorankMark.astro";
 
 const nowIso = new Date().toISOString();
 ---
@@ -33,10 +34,11 @@ const nowIso = new Date().toISOString();
 								<span class="gh-dot">·</span>&nbsp;<span data-gh-stars></span>
 							</span>
 						</a>
-						<a href="https://app.aeorank.dev/sign-up" class="btn btn-outline btn-lg">
-							Scan my site &nbsp;→
+						<a href={CLI_INSTALL_HREF} class="btn btn-outline btn-lg">
+							Scan with CLI &nbsp;→
 						</a>
 					</div>
+					<code class="mt-4 inline-block">{CLI_SCAN_CMD}</code>
 				</div>
 
 				<!-- Receipt card -->

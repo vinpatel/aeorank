@@ -1,6 +1,7 @@
 ---
 // Pricing — each tier rendered as an AEO report card, not a generic tier card
 // Letter grade, criteria scored, scorer's note.
+import { CLI_INSTALL_HREF, HOSTED_APP_HREF } from "../lib/cta";
 
 const tiers = [
 	{
@@ -9,8 +10,8 @@ const tiers = [
 		grade: "B",
 		price: "$0",
 		unit: "/mo",
-		hook: "Try everything. No credit card.",
-		note: "Good starting posture. 1 site, 3 hosted scans/month. The 12-dimension CLI, 8 files, and unlimited local scans stay free.",
+		hook: "CLI is free. No credit card. No account.",
+		note: "Good starting posture. Run aeorank-cli@0.1.1 locally — 12 dimensions, 8 files, unlimited scans. Hosted 1 site / 3 scans is experimental (dev) and is not required.",
 		scored: [
 			{ k: "sites",              v: "1",          on: true  },
 			{ k: "dashboard scans",    v: "3/mo",       on: true  },
@@ -20,7 +21,7 @@ const tiers = [
 			{ k: "GitHub App",         v: "included",   on: true  },
 			{ k: "11 framework plugins", v: "included", on: true  },
 		],
-		cta: { label: "Start free", href: "https://app.aeorank.dev/sign-up", kind: "outline" },
+		cta: { label: "Scan with CLI", href: CLI_INSTALL_HREF, kind: "outline" },
 	},
 	{
 		id: "pro",
@@ -29,7 +30,7 @@ const tiers = [
 		price: "$29",
 		unit: "/mo",
 		hook: "More hosted scans. Same CLI. Same 8 fix files.",
-		note: "Lead with the fix: unlimited local CLI plus more hosted scans that write the 8 files. Cheaper than typical monitoring SaaS ($89–$499/mo) — we do not sell mention tracking.",
+		note: "Lead with the fix: unlimited local CLI plus more hosted scans that write the 8 files. Hosted checkout is experimental (Clerk Development) — the working path today is the CLI. Cheaper than typical monitoring SaaS ($89–$499/mo) — we do not sell mention tracking.",
 		featured: true,
 		scored: [
 			{ k: "sites",              v: "5",          on: true  },
@@ -38,7 +39,7 @@ const tiers = [
 			{ k: "8 generated files",  v: "ZIP",        on: true  },
 			{ k: "CLI (local)",        v: "unlimited",  on: true  },
 		],
-		cta: { label: "Start Pro — $29", href: "https://app.aeorank.dev/upgrade?plan=pro", kind: "ink" },
+		cta: { label: "Hosted Pro — $29 (experimental)", href: `${HOSTED_APP_HREF}/upgrade?plan=pro`, kind: "ink" },
 	},
 	{
 		id: "agency",
@@ -47,7 +48,7 @@ const tiers = [
 		price: "$99",
 		unit: "/mo",
 		hook: "50 client sites. Same 8 files.",
-		note: "Built for teams running AEO as a service (crawler-gate first, then CLI, then human-reviewed fixes). Same scorer as Free — you pay for volume, not a fake API.",
+		note: "Built for teams running AEO as a service (crawler-gate first, then CLI, then human-reviewed fixes). Same scorer as Free — you pay for volume, not a fake API. Hosted checkout is experimental (dev).",
 		scored: [
 			{ k: "sites",              v: "50",         on: true  },
 			{ k: "dashboard scans",    v: "500/mo",     on: true  },
@@ -55,7 +56,7 @@ const tiers = [
 			{ k: "8 generated files",  v: "ZIP",        on: true  },
 			{ k: "everything in Pro",  v: "included",   on: true  },
 		],
-		cta: { label: "Start Agency — $99", href: "https://app.aeorank.dev/upgrade?plan=agency", kind: "outline" },
+		cta: { label: "Hosted Agency — $99 (experimental)", href: `${HOSTED_APP_HREF}/upgrade?plan=agency`, kind: "outline" },
 	},
 ];
 
@@ -78,7 +79,7 @@ const competitors = [
 				<p class="t-label">// pricing</p>
 				<h2 class="t-h1 mt-2">Pricing, rendered as a report card.</h2>
 				<p class="t-body mt-3 max-w-[58ch]">
-					Same CLI on every plan. We don't gate the 12 dimensions, the 8 generated files, or local scans. You pay for more sites and hosted scans. Pro is $29; closed monitoring dashboards typically run $89–$499/mo.
+					Same CLI on every plan. We don't gate the 12 dimensions, the 8 generated files, or local scans. You pay for more sites and hosted scans. Pro is $29; closed monitoring dashboards typically run $89–$499/mo. The working free path is <code>npx aeorank-cli@0.1.1 scan &lt;url&gt;</code> — hosted signup is experimental (dev) and not required.
 				</p>
 			</div>
 			<div class="section-meta">

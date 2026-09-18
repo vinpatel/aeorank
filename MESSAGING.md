@@ -31,6 +31,7 @@ Mindtrades audits stay: **crawler-gate first → CLI → human-reviewed fixes.**
 | **8 files** the published CLI writes | Matches `files[].name`. |
 | **12 dimensions** `aeorank-cli@0.1.1` scores | Live `dimensions.length`. |
 | **MIT / CLI free / no account** | True. |
+| **Primary marketing CTAs → `npx aeorank-cli@0.1.1 scan <url>` / docs** | Weekend sales do not depend on hosted signup. |
 | **Pro $29 / Agency $99 / Free 1 site · 3 scans** | Plan gates. |
 | **11 framework plugins** | Real packages. |
 | **`llms.txt` is agent-docs hygiene, not a citation guarantee** | True. |
@@ -50,6 +51,7 @@ Mindtrades audits stay: **crawler-gate first → CLI → human-reviewed fixes.**
 | **JSON `dimensionCount` / `crawlerAccess` as 0.1.1 fields** | Not present on published JSON. |
 | **13 plugins, REST API, PDF exclusive, 7–14×, $299** | False or unsourced. |
 | **App fail-below** | Coming soon only. |
+| **Primary “Get AEO Score” / “Scan my site” → `app.aeorank.dev/sign-up` or `/scan`** | Hosted app is Clerk Development; `/scan` is 404. CLI is the honest free path. |
 
 ---
 
@@ -73,3 +75,4 @@ Mindtrades audits stay: **crawler-gate first → CLI → human-reviewed fixes.**
 - [x] fail-on-crawler-block attributed to **Action**, not npm 0.1.1 CLI
 - [x] npm **0.1.1** canonical
 - [x] wedge = fix / crawler / CLI / CI / MIT
+- [x] primary public CTAs go to CLI 0.1.1 / docs, not broken app signup

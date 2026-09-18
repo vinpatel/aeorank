@@ -1,6 +1,7 @@
 ---
 // Live Scan strip — horizontal marquee of real scanner output
 // Feels like a CI log streaming past. Pauses on hover.
+import { CLI_INSTALL_HREF } from "../lib/cta";
 
 type Line = { sig: "ok" | "warn" | "fail"; tag: string; msg: string; delta?: string };
 
@@ -85,7 +86,7 @@ const lines: Line[] = [
 				</span>
 				<span class="font-mono text-[10.5px] ink-3">final: <b class="ink">31/100 · grade F</b></span>
 				<span class="font-mono text-[10.5px]">
-					<a href="https://app.aeorank.dev/sign-up" class="ilink">get the 8 files →</a>
+					<a href={CLI_INSTALL_HREF} class="ilink">run the CLI for the 8 files →</a>
 				</span>
 			</div>
 		</div>

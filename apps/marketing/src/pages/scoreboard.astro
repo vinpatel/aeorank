@@ -1,5 +1,6 @@
 ---
 import Base from "../layouts/Base.astro";
+import { CLI_DOCS_HREF, CLI_INSTALL_HREF, CLI_SCAN_CMD } from "../lib/cta";
 
 const industries = [
 	{
@@ -217,9 +218,10 @@ const slug = (s: string) => s.toLowerCase().replace(/[\s\/]+/g, '-');
 			</div>
 
 			<div class="flex gap-2 mt-6 flex-wrap">
-				<a href="https://app.aeorank.dev/sign-up" class="btn btn-ink btn-lg">Scan my site&nbsp;→</a>
+				<a href={CLI_INSTALL_HREF} class="btn btn-ink btn-lg">Scan with CLI&nbsp;→</a>
 				<a href="#industries" class="btn btn-outline btn-lg">Browse by industry</a>
 			</div>
+			<code class="mt-4 inline-block">{CLI_SCAN_CMD}</code>
 		</div>
 	</section>
 
@@ -335,17 +337,18 @@ const slug = (s: string) => s.toLowerCase().replace(/[\s\/]+/g, '-');
 					These companies raised billions. Their mean AEO score is {globalAvg}/100. You might be higher. You might be lower. Either way, it takes ~30 seconds to find out.
 				</p>
 				<div class="flex gap-2 mt-6 flex-wrap">
-					<a href="https://app.aeorank.dev/sign-up" class="btn btn-ink btn-lg">Scan my site free</a>
+					<a href={CLI_INSTALL_HREF} class="btn btn-ink btn-lg">Scan with CLI</a>
+					<a href={CLI_DOCS_HREF} class="btn btn-outline btn-lg">CLI docs</a>
 					<a href="https://github.com/vinpatel/aeorank" class="btn btn-outline btn-lg" target="_blank" rel="noopener">Or self-host it</a>
 				</div>
-				<code class="mt-4 inline-block">npx aeorank-cli scan https://your-site.com</code>
+				<code class="mt-4 inline-block">{CLI_SCAN_CMD}</code>
 			</div>
 
 			<!-- Methodology -->
 			<section class="sb-meth mt-8">
 				<h3 class="t-h3">Methodology</h3>
 				<p class="t-body mt-2">
-					All scores generated on 2026-04-09 using <code>aeorank-cli scan</code> with default settings (up to 10 pages per site, deterministic, no LLM calls). Published CLI scores 12 dimensions. Higher is better. Scores are point-in-time technical readiness, not citation ranking.
+					All scores generated on 2026-04-09 using <code>aeorank-cli@0.1.1 scan</code> with default settings (up to 10 pages per site, deterministic, no LLM calls). Published CLI scores 12 dimensions. Higher is better. Scores are point-in-time technical readiness, not citation ranking.
 				</p>
 				<h3 class="t-h3 mt-5">Trademarks</h3>
 				<p class="t-body mt-2">

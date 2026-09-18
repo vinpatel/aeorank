@@ -2,6 +2,7 @@
 // Hero v2 — "Here's what AI reads when it visits your site."
 // Split layout. Left: your site rendered normally. Right: the same site as a
 // crawler actually extracts. The contrast is the value prop.
+import { CLI_DOCS_HREF, CLI_INSTALL_HREF, CLI_SCAN_CMD } from "../lib/cta";
 ---
 
 <section id="hero" class="section section-first" data-hero>
@@ -43,8 +44,8 @@
 				</div>
 				<div class="hero-install__body">
 					<span class="font-mono text-[13px] ink-3 select-none" aria-hidden="true">$ </span>
-					<span class="font-mono text-[13px] ink">npx aeorank-cli scan your-site.com</span>
-					<button type="button" class="hero-install__copy" data-copy="npx aeorank-cli scan your-site.com" aria-label="Copy install command">
+					<span class="font-mono text-[13px] ink">{CLI_SCAN_CMD}</span>
+					<button type="button" class="hero-install__copy" data-copy={CLI_SCAN_CMD} aria-label="Copy scan command">
 						<svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
 							<rect x="4" y="4" width="9" height="9" rx="1.4"/>
 							<path d="M3 11V3a1.4 1.4 0 0 1 1.4-1.4H11"/>
@@ -54,10 +55,10 @@
 				</div>
 			</div>
 
-			<!-- CTAs -->
+			<!-- CTAs — primary path is CLI 0.1.1, not hosted signup -->
 			<div class="hero-cta mt-6">
-				<a href="https://app.aeorank.dev/sign-up" class="btn btn-ink btn-lg">
-					Get your score
+				<a href={CLI_INSTALL_HREF} class="btn btn-ink btn-lg">
+					Scan with CLI
 					<svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
 						<path d="M1 7h12M8 2l5 5-5 5"/>
 					</svg>
@@ -73,7 +74,7 @@
 				</a>
 			</div>
 			<p class="hero-cta__note font-mono text-[11px] ink-3 mt-3">
-				Free account · ~30s hosted scan · or CLI with no signup
+				No account · copy the command above or see <a href={CLI_DOCS_HREF} class="ilink">CLI docs</a> · hosted app is experimental (dev)
 			</p>
 
 			<!-- Trust strip -->
@@ -279,7 +280,7 @@
 
 	/* Install one-liner */
 	.hero-install {
-		max-width: 560px;
+		max-width: 640px;
 		background: var(--color-page);
 		border: 1px solid var(--color-rule);
 		border-radius: 6px;
