@@ -1,14 +1,13 @@
 ---
 title: Dimension catalog (unshipped)
-description: 36-row catalog in repo source. Not what aeorank-cli@0.1.1 scores. Archived until a published CLI matches.
+description: Not in aeorank-cli@0.1.1 / do not market. Local 36-row registry only, until a published CLI matches.
 ---
 
-:::caution[Not the published CLI]
-`npx aeorank-cli@0.1.1` scores **12 dimensions** (high / medium / low). This page is the in-repo 36-row catalog. Do not treat it as live product until npm CLI `dimensions.length` matches. See [12 dimensions](/scoring/dimensions/).
+:::danger[Not in aeorank-cli@0.1.1 / do not market]
+This page is **not** the published product. `npx aeorank-cli@0.1.1` scores **12 dimensions** (high / medium / low) and writes **8 files**. The 36-row catalog below is the local `@aeorank/core` registry — future / unpublished only. **Do not market** 36 dimensions, checks, or criteria until a published CLI's `dimensions.length` matches. Live list: [12 dimensions](/scoring/dimensions/).
 :::
 
-
-AEOrank scores your site across 36 criteria in 5 pillars. Each criterion is scored 0–10 and weighted by percentage importance (weights sum to 100%).
+The unpublished in-repo registry lists 36 criteria in 5 pillars. Each criterion is scored 0–10 and weighted by percentage importance (weights sum to 100%). This is **not** what `aeorank-cli@0.1.1` scores.
 
 ## Answer Readiness (26%)
 
