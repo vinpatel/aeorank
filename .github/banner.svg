@@ -25,12 +25,15 @@
   <!-- Session header tag -->
   <text x="128" y="72" fill="#111" fill-opacity="0.55" font-family="'JetBrains Mono', 'IBM Plex Mono', ui-monospace, monospace" font-size="12" letter-spacing="0.12em">// INSPECTOR SESSION · 2026-04-20</text>
 
-  <!-- Wordmark: brand A-block + "AEOrank" + version chip -->
-  <rect x="128" y="96" width="48" height="48" rx="4" fill="#111"/>
-  <path d="M142 132 L151 104 L160 132" stroke="#FAF9F2" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-  <path d="M145 124 H157" stroke="#FAF9F2" stroke-width="2.4" stroke-linecap="round"/>
-  <circle cx="168" cy="128" r="5" stroke="#FAF9F2" stroke-width="2.4" fill="none"/>
-  <path d="M168 128 L174 134" stroke="#E8590C" stroke-width="2.6" stroke-linecap="round"/>
+  <!-- Wordmark: Radar A + "AEOrank" + version chip -->
+  <g transform="translate(128, 96) scale(1.5)">
+    <rect width="32" height="32" rx="7" fill="#0A0B0F"/>
+    <path d="M6.943 23.133 A13.078 13.078 0 0 1 27.107 6.511" stroke="#3DFFB5" stroke-width="0.922" stroke-linecap="butt"/>
+    <path d="M10.039 20.800 A9.202 9.202 0 0 1 24.226 9.105" stroke="#3DFFB5" stroke-width="0.694" stroke-linecap="butt"/>
+    <circle cx="13.918" cy="13.333" r="1.425" fill="#3DFFB5"/>
+    <polygon points="17.352,14.502 17.352,19.470 6.539,30.283 6.539,25.315" fill="#F2F2F3"/>
+    <polygon points="17.425,14.502 17.425,19.470 28.237,30.283 28.237,25.315" fill="#3DFFB5"/>
+  </g>
 
   <text x="192" y="136" fill="#111" font-family="ui-sans-serif, -apple-system, 'Inter', system-ui, sans-serif" font-size="44" font-weight="620" letter-spacing="-0.022em">AEOrank</text>
 
@@ -39,7 +42,7 @@
   <text x="398" y="125" fill="#111" fill-opacity="0.7" font-family="'JetBrains Mono', 'IBM Plex Mono', ui-monospace, monospace" font-size="11" letter-spacing="0.06em">v1.0 · MIT</text>
 
   <!-- Tagline -->
-  <text x="128" y="176" fill="#111" font-family="ui-sans-serif, -apple-system, 'Inter', system-ui, sans-serif" font-size="19" font-weight="440" letter-spacing="-0.012em">AI-visibility scoring · 36 criteria · 9 generated files · 13 frameworks.</text>
+  <text x="128" y="176" fill="#111" font-family="ui-sans-serif, -apple-system, 'Inter', system-ui, sans-serif" font-size="19" font-weight="440" letter-spacing="-0.012em">AI-visibility scoring · 12 dimensions · 8 generated files · 11 plugins.</text>
 
   <!-- Receipt-style command card -->
   <g>
@@ -54,20 +57,17 @@
     </text>
   </g>
 
-  <!-- Pillar pills (right side) -->
+  <!-- Honest product chips (right side) -->
   <g font-family="'JetBrains Mono', 'IBM Plex Mono', ui-monospace, monospace" font-size="11" letter-spacing="0.02em">
-    <!-- PASS -->
-    <rect x="720" y="204" width="84" height="22" rx="3" fill="#fff" stroke="#111" stroke-width="1"/>
-    <circle cx="732" cy="215" r="3" fill="#2E7D32"/>
-    <text x="742" y="219" fill="#111">16 pass</text>
-    <!-- WARN -->
-    <rect x="812" y="204" width="84" height="22" rx="3" fill="#fff" stroke="#111" stroke-width="1"/>
-    <circle cx="824" cy="215" r="3" fill="#C58A00"/>
-    <text x="834" y="219" fill="#111">11 warn</text>
-    <!-- FAIL -->
-    <rect x="904" y="204" width="84" height="22" rx="3" fill="#fff" stroke="#111" stroke-width="1"/>
-    <circle cx="916" cy="215" r="3" fill="#B32A1E"/>
-    <text x="926" y="219" fill="#111">9 fail</text>
+    <rect x="720" y="204" width="92" height="22" rx="3" fill="#fff" stroke="#111" stroke-width="1"/>
+    <circle cx="732" cy="215" r="3" fill="#3DFFB5"/>
+    <text x="742" y="219" fill="#111">12 dims</text>
+    <rect x="820" y="204" width="92" height="22" rx="3" fill="#fff" stroke="#111" stroke-width="1"/>
+    <circle cx="832" cy="215" r="3" fill="#3DFFB5"/>
+    <text x="842" y="219" fill="#111">8 files</text>
+    <rect x="920" y="204" width="72" height="22" rx="3" fill="#fff" stroke="#111" stroke-width="1"/>
+    <circle cx="932" cy="215" r="3" fill="#3DFFB5"/>
+    <text x="942" y="219" fill="#111">MIT</text>
   </g>
 
   <!-- Score block (right) -->

@@ -8,11 +8,31 @@ export default defineConfig({
 			title: "AEOrank",
 			description:
 				"Documentation for AEOrank — MIT CLI that scores 12 dimensions and writes 8 files (aeorank-cli@0.1.1).",
+			favicon: "/favicon.svg",
 			logo: {
 				light: "./src/assets/logo-light.svg",
 				dark: "./src/assets/logo-dark.svg",
 				replacesTitle: false,
 			},
+			head: [
+				{
+					tag: "link",
+					attrs: {
+						rel: "apple-touch-icon",
+						sizes: "180x180",
+						href: "/apple-touch-icon.png",
+					},
+				},
+				{
+					tag: "link",
+					attrs: {
+						rel: "icon",
+						type: "image/png",
+						sizes: "32x32",
+						href: "/favicon-32.png",
+					},
+				},
+			],
 			social: [
 				{
 					icon: "github",
