@@ -40,11 +40,15 @@
 
 ---
 
-**One command. Zero config. Instant score.**
+**Star → try CLI → optional Audit**
+
+[Star this repo](https://github.com/vinpatel/aeorank/stargazers) if you want a deterministic CI gate and **8 fix files** — not another closed monitor.
 
 ```bash
-npx aeorank-cli scan https://your-site.com
+npx aeorank-cli@0.1.1 scan https://your-site.com
 ```
+
+Need it delivered? [Mindtrades](https://mindtrades.com) offers an AI Visibility Audit (separate paid service). AEOrank stays MIT/free: [aeorank.dev](https://aeorank.dev).
 
 <p align="center">
   <img src=".github/demo.gif" alt="AEOrank CLI scanning stripe.com — 56/100 (C) with per-dimension breakdown and top recommendations" width="100%" />
@@ -216,7 +220,10 @@ Last updated: September 17, 2026
 
 ## Star History
 
+Star if you want a **deterministic CI gate** and the **8 fix files** `aeorank-cli@0.1.1` actually writes — not another mention dashboard.
+
 <a href="https://www.star-history.com/#vinpatel/aeorank&Date">
+
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=vinpatel/aeorank&type=Date&theme=dark" />
     <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=vinpatel/aeorank&type=Date" />
@@ -242,11 +249,11 @@ pnpm test    # core + CLI + plugins
 
 ## Share
 
-If AEOrank saved you a closed monitoring subscription, the best thank-you is sending it to one person who also needs it.
+If AEOrank saved you a closed monitoring subscription, the best thank-you is a star plus sending it to one person who also needs a fix/CLI/CI tool.
 
-[![Tweet](https://img.shields.io/badge/Share-on%20X-000000?style=flat-square&logo=x&logoColor=white)](https://twitter.com/intent/tweet?text=AEOrank%20%E2%80%94%20open-source%20AEO%20CLI.%2012%20dimensions%2C%208%20fix%20files%20(aeorank-cli%400.1.1).%20MIT.%20No%20citation%20promises.&url=https%3A%2F%2Fgithub.com%2Fvinpatel%2Faeorank)
-[![Share on Hacker News](https://img.shields.io/badge/Share-on%20Hacker%20News-FF6600?style=flat-square&logo=ycombinator&logoColor=white)](https://news.ycombinator.com/submitlink?u=https%3A%2F%2Fgithub.com%2Fvinpatel%2Faeorank&t=AEOrank%20%E2%80%94%20open-source%20AI-visibility%20scanner%20for%20ChatGPT%2C%20Perplexity%2C%20Claude)
-[![Share on Reddit](https://img.shields.io/badge/Share-on%20Reddit-FF4500?style=flat-square&logo=reddit&logoColor=white)](https://www.reddit.com/submit?url=https%3A%2F%2Fgithub.com%2Fvinpatel%2Faeorank&title=AEOrank%20%E2%80%94%20open-source%20AI-visibility%20scanner%20%28MIT%29)
+[![Tweet](https://img.shields.io/badge/Share-on%20X-000000?style=flat-square&logo=x&logoColor=white)](https://twitter.com/intent/tweet?text=Others%20monitor.%20AEOrank%20fixes.%20MIT%20CLI%2FCI%3A%2012%20dimensions%2C%208%20fix%20files%20%28aeorank-cli%400.1.1%29.%20No%20citation%20promises.%20npx%20aeorank-cli%400.1.1%20scan%20https%3A%2F%2Fyour-site.com&url=https%3A%2F%2Fgithub.com%2Fvinpatel%2Faeorank)
+[![Share on Hacker News](https://img.shields.io/badge/Share-on%20Hacker%20News-FF6600?style=flat-square&logo=ycombinator&logoColor=white)](https://news.ycombinator.com/submitlink?u=https%3A%2F%2Fgithub.com%2Fvinpatel%2Faeorank&t=AEOrank%20%E2%80%94%20MIT%20CLI%2FCI%20for%20AI%20visibility%20%2812%20dimensions%2C%208%20fix%20files%29)
+[![Share on Reddit](https://img.shields.io/badge/Share-on%20Reddit-FF4500?style=flat-square&logo=reddit&logoColor=white)](https://www.reddit.com/submit?url=https%3A%2F%2Fgithub.com%2Fvinpatel%2Faeorank&title=AEOrank%20%E2%80%94%20MIT%20AI-visibility%20CLI%20%2812%20dimensions%2C%208%20fix%20files%29%20vs%20closed%20monitors)
 [![Share on LinkedIn](https://img.shields.io/badge/Share-on%20LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white)](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fgithub.com%2Fvinpatel%2Faeorank)
 
 ## License
