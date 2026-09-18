@@ -18,6 +18,10 @@
   <a href="https://github.com/vinpatel/aeorank/stargazers"><img src="https://img.shields.io/github/stars/vinpatel/aeorank?style=flat-square&color=E8590C" alt="GitHub Stars"></a>
 </p>
 
+<p align="center">
+  If this is useful, <a href="https://github.com/vinpatel/aeorank">star the repo</a> — it helps others find it.
+</p>
+
 <!-- STATS_START -->
 ![npm downloads](https://img.shields.io/badge/monthly%20downloads-55-blue)
 ![GitHub stars](https://img.shields.io/github/stars/vinpatel/aeorank?style=social)
