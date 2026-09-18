@@ -10,6 +10,13 @@
 </p>
 
 <p align="center">
+  <a href="https://github.com/vinpatel/aeorank/stargazers"><img src="https://img.shields.io/github/stars/vinpatel/aeorank?style=social" alt="Star AEOrank on GitHub"></a>
+</p>
+<p align="center">
+  Star the repo if this is useful — 12 dimensions, 8 files, <code>aeorank-cli@0.1.1</code>.
+</p>
+
+<p align="center">
   <a href="https://www.npmjs.com/package/aeorank-cli"><img src="https://img.shields.io/npm/v/aeorank-cli?style=flat-square&color=E8590C&label=CLI" alt="npm version"></a>
   <a href="https://www.npmjs.com/package/@aeorank/core"><img src="https://img.shields.io/npm/v/@aeorank/core?style=flat-square&color=E8590C&label=core" alt="core version"></a>
   <a href="https://github.com/marketplace/actions/aeorank-aeo-scanner"><img src="https://img.shields.io/badge/GitHub%20Action-Marketplace-blue?style=flat-square&logo=github" alt="GitHub Action"></a>
