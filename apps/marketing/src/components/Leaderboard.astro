@@ -1,5 +1,6 @@
 ---
 // Leaderboard table — real tabular data, no cards.
+import { CLI_INSTALL_HREF } from "../lib/cta";
 
 type Row = { rank: number; name: string; tag: string; score: number; grade: string };
 
@@ -87,7 +88,7 @@ const rows: Row[] = [
 
 			<footer class="lb__ft">
 				<span class="font-mono text-[10.5px] ink-3">showing 10 of 100 · same CLI you can run · deterministic</span>
-				<a href="https://app.aeorank.dev/sign-up" class="font-mono text-[11px] ink ilink">scan your own site&nbsp;→</a>
+				<a href={CLI_INSTALL_HREF} class="font-mono text-[11px] ink ilink">scan your own site with the CLI&nbsp;→</a>
 			</footer>
 		</div>
 	</div>

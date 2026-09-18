@@ -33,7 +33,8 @@
 <p align="center">
   <a href="https://aeorank.dev">Website</a> &nbsp;·&nbsp;
   <a href="https://docs.aeorank.dev">Docs</a> &nbsp;·&nbsp;
-  <a href="https://app.aeorank.dev">Dashboard</a> &nbsp;·&nbsp;
+  <a href="https://docs.aeorank.dev/getting-started/">CLI scan</a> &nbsp;·&nbsp;
+  <a href="https://app.aeorank.dev">Dashboard (experimental)</a> &nbsp;·&nbsp;
   <a href="https://github.com/marketplace/actions/aeorank-aeo-scanner">GitHub Action</a> &nbsp;·&nbsp;
   <a href="https://github.com/apps/aeorank">GitHub App</a>
 </p>
@@ -43,7 +44,7 @@
 **One command. Zero config. Instant score.**
 
 ```bash
-npx aeorank-cli scan https://your-site.com
+npx aeorank-cli@0.1.1 scan https://your-site.com
 ```
 
 <p align="center">
@@ -80,13 +81,13 @@ Profound, Peec, Otterly, Scrunch, and Athena are **closed monitoring SaaS** (pro
 ### 1. CLI — scan any URL
 
 ```bash
-npx aeorank-cli scan https://your-site.com
+npx aeorank-cli@0.1.1 scan https://your-site.com
 ```
 
 JSON output for scripting:
 
 ```bash
-npx aeorank-cli scan https://your-site.com --format json | jq '.score'
+npx aeorank-cli@0.1.1 scan https://your-site.com --format json | jq '.score'
 ```
 
 ### 2. GitHub App — zero-config PR checks
@@ -182,11 +183,11 @@ export default withAeorank({
 // → The 8 generated AEO files now served at your site root
 ```
 
-## SaaS Dashboard
+## SaaS Dashboard (experimental)
 
-Track crawler access and extractability over time at [app.aeorank.dev](https://app.aeorank.dev):
+The working score path is the CLI above — no account. The hosted dashboard at [app.aeorank.dev](https://app.aeorank.dev) is **experimental** (Clerk Development), not a Production signup flow:
 
-- Sign up, add a public URL → 12-dimension breakdown
+- Add a public URL → 12-dimension breakdown (when the hosted instance is available)
 - Download the 8 generated files as a ZIP
 - Free tier: 1 site, 3 scans/month (CLI stays unlimited)
 - Pro $29: 5 sites, 50 scans/month
@@ -195,7 +196,7 @@ Track crawler access and extractability over time at [app.aeorank.dev](https://a
 
 | Package | Description |
 |---------|-------------|
-| [`aeorank-cli`](https://www.npmjs.com/package/aeorank-cli) | CLI — `npx aeorank-cli scan <url>` |
+| [`aeorank-cli`](https://www.npmjs.com/package/aeorank-cli) | CLI — `npx aeorank-cli@0.1.1 scan <url>` |
 | [`@aeorank/core`](https://www.npmjs.com/package/@aeorank/core) | Core scanning + scoring engine |
 | [`@aeorank/next`](https://www.npmjs.com/package/@aeorank/next) | Next.js plugin |
 | [`@aeorank/astro`](https://www.npmjs.com/package/@aeorank/astro) | Astro integration |
