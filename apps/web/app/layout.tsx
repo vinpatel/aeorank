@@ -14,8 +14,34 @@ const instrument = Instrument_Serif({
 });
 
 export const metadata: Metadata = {
+	metadataBase: new URL("https://app.aeorank.dev"),
 	title: "AEOrank Dashboard",
-	description: "Score crawler access and extractability. 12 dimensions, 8 generated files. Sign in to scan a public URL.",
+	description:
+		"Score crawler access and extractability. 12 dimensions, 8 generated files. Sign in to scan a public URL.",
+	icons: {
+		icon: [
+			{ url: "/favicon.svg", type: "image/svg+xml" },
+			{ url: "/favicon-32.png", sizes: "32x32", type: "image/png" },
+			{ url: "/favicon-16.png", sizes: "16x16", type: "image/png" },
+			{ url: "/icon-512.png", sizes: "512x512", type: "image/png" },
+		],
+		apple: [{ url: "/apple-touch-icon.png", sizes: "180x180" }],
+	},
+	openGraph: {
+		siteName: "AEOrank",
+		images: [
+			{
+				url: "/og-image.png",
+				width: 1200,
+				height: 630,
+				alt: "AEOrank",
+			},
+		],
+	},
+	twitter: {
+		card: "summary_large_image",
+		images: ["/og-image.png"],
+	},
 };
 
 export default function RootLayout({

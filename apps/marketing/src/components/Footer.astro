@@ -1,6 +1,7 @@
 ---
 // Footer — treated as the "session end" of an inspector run
 // Final score card → final CTA → site map.
+import AeorankMark from "./AeorankMark.astro";
 
 const nowIso = new Date().toISOString();
 ---
@@ -91,13 +92,7 @@ const nowIso = new Date().toISOString();
 			<!-- Wordmark -->
 			<div class="footer-meta__brand">
 				<a href="/" class="footer-brand" aria-label="AEOrank home">
-					<svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-						<rect x="1" y="1" width="22" height="22" rx="2" fill="none" stroke="#111" stroke-width="1.4"/>
-						<path d="M5 17 L8 7 L11 17" stroke="#111" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-						<path d="M6 14 H10" stroke="#111" stroke-width="1.6" stroke-linecap="round"/>
-						<circle cx="17" cy="12" r="3" stroke="#111" stroke-width="1.6" fill="none"/>
-						<path d="M17 12 L20 15" stroke="#E8590C" stroke-width="1.8" stroke-linecap="round"/>
-					</svg>
+					<AeorankMark size={22} />
 					<span class="footer-brand__word">AEOrank</span>
 					<span class="footer-brand__ver">v2</span>
 				</a>

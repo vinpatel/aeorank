@@ -1,3 +1,4 @@
+import { AeorankMark } from "@/components/AeorankMark";
 import type { ReactNode } from "react";
 
 export function AuthPageShell({
@@ -30,17 +31,7 @@ export function AuthPageShell({
 						marginBottom: "12px",
 					}}
 				>
-					<svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true">
-						<rect width="32" height="32" rx="7" fill="#E8590C" />
-						<path
-							d="M8 22L13.5 10H18.5L24 22"
-							stroke="#fff"
-							strokeWidth="2.5"
-							strokeLinecap="round"
-							strokeLinejoin="round"
-						/>
-						<path d="M10.5 18H21.5" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" />
-					</svg>
+					<AeorankMark size={32} />
 					<span
 						style={{
 							fontFamily: "var(--font-display)",
