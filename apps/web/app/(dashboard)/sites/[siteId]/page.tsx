@@ -1,7 +1,7 @@
 import { auth } from "@clerk/nextjs/server";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { createServerSupabaseClient } from "@/lib/supabase";
+import { createServiceSupabaseClient } from "@/lib/supabase";
 import { ScanStatus } from "@/components/ScanStatus";
 import { ScoreBreakdown } from "@/components/ScoreBreakdown";
 import { ScoreChart } from "@/components/ScoreChart";
@@ -24,7 +24,7 @@ export default async function SiteDetailPage({ params }: PageProps) {
 	const { userId } = await auth();
 	if (!userId) return null; // Layout handles redirect
 
-	const supabase = createServerSupabaseClient();
+	const supabase = createServiceSupabaseClient();
 
 	// Fetch site and verify ownership
 	const { data: site, error: siteError } = await supabase

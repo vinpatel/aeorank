@@ -1,6 +1,6 @@
 import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
-import { createServerSupabaseClient } from "@/lib/supabase";
+import { createServiceSupabaseClient } from "@/lib/supabase";
 
 const VALID_SCHEDULES = ["daily", "weekly", "monthly", null];
 
@@ -35,7 +35,7 @@ export async function PUT(request: Request, { params }: RouteParams) {
 		return NextResponse.json({ error: "Invalid schedule. Use daily, weekly, monthly, or null." }, { status: 400 });
 	}
 
-	const supabase = createServerSupabaseClient();
+	const supabase = createServiceSupabaseClient();
 
 	// Subtract one cron period (24h) so the very next 6am UTC tick after
 	// roughly `interval` has elapsed picks this site up. Without this offset,

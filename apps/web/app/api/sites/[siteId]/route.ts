@@ -1,6 +1,6 @@
 import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
-import { createServerSupabaseClient } from "@/lib/supabase";
+import { createServiceSupabaseClient } from "@/lib/supabase";
 
 interface RouteParams {
 	params: Promise<{ siteId: string }>;
@@ -14,7 +14,7 @@ export async function DELETE(_request: Request, { params }: RouteParams) {
 
 	const { siteId } = await params;
 
-	const supabase = createServerSupabaseClient();
+	const supabase = createServiceSupabaseClient();
 
 	// Delete scans first (foreign key constraint)
 	await supabase
