@@ -61,18 +61,58 @@ alter table sites         enable row level security;
 alter table scans         enable row level security;
 alter table subscriptions enable row level security;
 
--- Sites: users own their own rows (all operations)
-create policy "users_own_sites" on sites
-  for all using ((select auth.jwt()->>'sub') = user_id);
+-- Data API grants. Newer Supabase projects do not grant these by default;
+-- without them the user-scoped client gets 42501 even when the policy matches.
+-- anon is intentionally not granted. Dashboard writes use the service role and
+-- set user_id from the Clerk session; these policies are the backstop for any
+-- request that still presents a Clerk session JWT.
+grant select, insert, update, delete on sites to authenticated;
+grant select, insert, update, delete on scans to authenticated;
+grant select on subscriptions to authenticated;
 
--- Scans: users own their own rows (all operations)
-create policy "users_own_scans" on scans
-  for all using ((select auth.jwt()->>'sub') = user_id);
+-- Sites: Clerk user id is auth.jwt()->>'sub'. INSERT/UPDATE need WITH CHECK;
+-- a USING-only policy does not document the write check, and UPSERT also
+-- evaluates the SELECT policy on the proposed row.
+create policy "users_own_sites_select" on sites
+  for select to authenticated
+  using ((select auth.jwt()->>'sub') = user_id);
+
+create policy "users_own_sites_insert" on sites
+  for insert to authenticated
+  with check ((select auth.jwt()->>'sub') = user_id);
+
+create policy "users_own_sites_update" on sites
+  for update to authenticated
+  using ((select auth.jwt()->>'sub') = user_id)
+  with check ((select auth.jwt()->>'sub') = user_id);
+
+create policy "users_own_sites_delete" on sites
+  for delete to authenticated
+  using ((select auth.jwt()->>'sub') = user_id);
+
+-- Scans: same ownership split.
+create policy "users_own_scans_select" on scans
+  for select to authenticated
+  using ((select auth.jwt()->>'sub') = user_id);
+
+create policy "users_own_scans_insert" on scans
+  for insert to authenticated
+  with check ((select auth.jwt()->>'sub') = user_id);
+
+create policy "users_own_scans_update" on scans
+  for update to authenticated
+  using ((select auth.jwt()->>'sub') = user_id)
+  with check ((select auth.jwt()->>'sub') = user_id);
+
+create policy "users_own_scans_delete" on scans
+  for delete to authenticated
+  using ((select auth.jwt()->>'sub') = user_id);
 
 -- Subscriptions: users can only select their own row
 -- Updates are performed by the Stripe webhook handler via service role key
 create policy "users_own_subscription" on subscriptions
-  for select using ((select auth.jwt()->>'sub') = user_id);
+  for select to authenticated
+  using ((select auth.jwt()->>'sub') = user_id);
 
 -- ============================================================
 -- INDEXES (for common query patterns)
