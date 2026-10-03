@@ -1,5 +1,5 @@
 import { auth } from "@clerk/nextjs/server";
-import { createServerSupabaseClient } from "@/lib/supabase";
+import { createServiceSupabaseClient } from "@/lib/supabase";
 
 interface DimensionScore {
 	id: string;
@@ -25,7 +25,7 @@ export async function GET(
 	}
 
 	const { siteId } = await params;
-	const supabase = createServerSupabaseClient();
+	const supabase = createServiceSupabaseClient();
 
 	const { data: site } = await supabase
 		.from("sites")

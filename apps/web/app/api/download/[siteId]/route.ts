@@ -1,6 +1,6 @@
 import { auth } from "@clerk/nextjs/server";
 import JSZip from "jszip";
-import { createServerSupabaseClient } from "@/lib/supabase";
+import { createServiceSupabaseClient } from "@/lib/supabase";
 
 interface GeneratedFile {
 	name: string;
@@ -20,7 +20,7 @@ export async function GET(
 	// Next.js 16 async params
 	const { siteId } = await params;
 
-	const supabase = createServerSupabaseClient();
+	const supabase = createServiceSupabaseClient();
 
 	// Query the latest complete scan for this site, verifying user ownership
 	const { data: scan, error } = await supabase

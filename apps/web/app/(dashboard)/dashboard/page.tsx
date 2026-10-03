@@ -1,6 +1,6 @@
 import { auth } from "@clerk/nextjs/server";
 import Link from "next/link";
-import { createServerSupabaseClient } from "@/lib/supabase";
+import { createServiceSupabaseClient } from "@/lib/supabase";
 import { AddSiteForm } from "@/components/AddSiteForm";
 import { DeleteSiteButton } from "@/components/DeleteSiteButton";
 
@@ -22,7 +22,7 @@ export default async function DashboardPage() {
 	const { userId } = await auth();
 	if (!userId) return null; // Layout handles redirect
 
-	const supabase = createServerSupabaseClient();
+	const supabase = createServiceSupabaseClient();
 
 	// Fetch user's sites with the most recent scan for each
 	let sites: SiteWithScan[] = [];

@@ -1,7 +1,6 @@
+import { createServiceSupabaseClient } from "@/lib/supabase";
 import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
-import { createServerSupabaseClient } from "@/lib/supabase";
-import { createServiceSupabaseClient } from "@/lib/supabase";
 
 // Scans stuck in pending/running for longer than this are considered stale
 const STALE_SCAN_TIMEOUT_MS = 5 * 60 * 1000; // 5 minutes
@@ -19,7 +18,7 @@ export async function GET(request: Request) {
 		return NextResponse.json({ error: "id is required" }, { status: 400 });
 	}
 
-	const supabase = createServerSupabaseClient();
+	const supabase = createServiceSupabaseClient();
 
 	const { data: scan, error } = await supabase
 		.from("scans")
@@ -38,15 +37,16 @@ export async function GET(request: Request) {
 		if (scannedAt) {
 			const elapsed = Date.now() - new Date(scannedAt).getTime();
 			if (elapsed > STALE_SCAN_TIMEOUT_MS) {
-				const serviceSupabase = createServiceSupabaseClient();
-				const timeoutMsg = scan.status === "pending"
-					? "Scan did not start processing. The job queue may not have delivered the request. Please retry."
-					: "Scan timed out while processing. Please retry.";
+				const timeoutMsg =
+					scan.status === "pending"
+						? "Scan did not start processing. The job queue may not have delivered the request. Please retry."
+						: "Scan timed out while processing. Please retry.";
 
-				await serviceSupabase
+				await supabase
 					.from("scans")
 					.update({ status: "error", error: timeoutMsg })
-					.eq("id", id);
+					.eq("id", id)
+					.eq("user_id", userId);
 
 				return NextResponse.json({ status: "error", error: timeoutMsg });
 			}
