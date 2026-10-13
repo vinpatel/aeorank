@@ -3,8 +3,8 @@
 > Auto-generated daily scan. See your own score at [aeorank.dev](https://aeorank.dev)
 
 **Scanned:** https://sumhealth.org  
-**Date:** October 12, 2026  
-**Score:** 63/100 (C)
+**Date:** October 13, 2026  
+**Score:** 59/100 (C)
 
 ## Dimension Scores
 
@@ -20,8 +20,8 @@
 | Meta Descriptions | 7 | ❌ |
 | Sitemap Presence | 0 | ❌ |
 | HTTPS & Redirects | 10 | ❌ |
-| Page Freshness | 6 | ❌ |
-| Citation Anchors | 3 | ❌ |
+| Page Freshness | 3 | ❌ |
+| Citation Anchors | 0 | ❌ |
 
 ---
 
