@@ -49,8 +49,6 @@
 npx aeorank-cli@0.1.1 scan https://your-site.com
 ```
 
-Need it delivered? [Mindtrades](https://mindtrades.com) offers an AI Visibility Audit (separate paid service). AEOrank stays MIT/free: [aeorank.dev](https://aeorank.dev).
-
 <p align="center">
   <img src=".github/demo.gif" alt="AEOrank CLI scanning stripe.com — 56/100 (C) with per-dimension breakdown and top recommendations" width="100%" />
 </p>
