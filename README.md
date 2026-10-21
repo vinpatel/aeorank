@@ -259,5 +259,5 @@ If AEOrank saved you a closed monitoring subscription, the best thank-you is a s
 
 ## License
 
-[MIT](LICENSE) — built by [Vin Patel](https://github.com/vinpatel), sponsored by [Linx Agency](https://linx.agency) & [Mindtrades](https://mindtrades.com).
+[MIT](LICENSE) — built by [Vin Patel](https://github.com/vinpatel).
 
