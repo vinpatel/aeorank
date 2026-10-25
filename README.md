@@ -26,7 +26,7 @@
 </p>
 
 <!-- STATS_START -->
-![npm downloads](https://img.shields.io/badge/monthly%20downloads-54-blue)
+![npm downloads](https://img.shields.io/badge/monthly%20downloads-41-blue)
 ![GitHub stars](https://img.shields.io/github/stars/vinpatel/aeorank?style=social)
 <!-- STATS_END -->
 
