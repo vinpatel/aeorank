@@ -215,7 +215,7 @@ The working score path is the CLI above — no account. The hosted dashboard at 
 
 See [DEMO.md](./DEMO.md) for today's auto-generated scan.
 
-Last updated: October 28, 2026
+Last updated: October 29, 2026
 
 ## Star History
 
