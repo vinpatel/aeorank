@@ -5,7 +5,7 @@
 <h3 align="center">Your site ranks #1 on Google — but crawlers may still extract nothing.</h3>
 
 <p align="center">
-  AEOrank scores crawler access and extractability 0–100 across <strong>12 dimensions</strong> (<code>aeorank-cli@0.1.1</code>), then generates the <strong>8 files</strong> that CLI actually writes. Crawler allowlists matter; the GitHub Action can fail a PR if GPTBot is blocked. <code>llms.txt</code> is agent-docs hygiene, not a citation guarantee.<br/>
+  AEOrank scores crawler access and extractability 0–100 across <strong>36 dimensions</strong> (<code>aeorank-cli@0.1.2</code>), then generates the <strong>8 files</strong> that CLI actually writes. Crawler allowlists matter; the GitHub Action can fail a PR if GPTBot is blocked. <code>llms.txt</code> is agent-docs hygiene, not a citation guarantee.<br/>
   <em>Others monitor. AEOrank fixes.</em>
 </p>
 
@@ -13,7 +13,7 @@
   <a href="https://github.com/vinpatel/aeorank/stargazers"><img src="https://img.shields.io/github/stars/vinpatel/aeorank?style=social" alt="Star AEOrank on GitHub"></a>
 </p>
 <p align="center">
-  Star the repo if this is useful — 12 dimensions, 8 files, <code>aeorank-cli@0.1.1</code>.
+  Star the repo if this is useful — 36 dimensions, 8 files, <code>aeorank-cli@0.1.2</code>.
 </p>
 
 <p align="center">
@@ -46,7 +46,7 @@
 [Star this repo](https://github.com/vinpatel/aeorank/stargazers) if you want a deterministic CI gate and **8 fix files** — not another closed monitor.
 
 ```bash
-npx aeorank-cli@0.1.1 scan https://your-site.com
+npx aeorank-cli@0.1.2 scan https://your-site.com
 ```
 
 <p align="center">
@@ -54,7 +54,7 @@ npx aeorank-cli@0.1.1 scan https://your-site.com
 </p>
 
 <p align="center">
-  <em>30-second scan · 12 dimensions · 8 files · Action can fail the PR if GPTBot is blocked</em>
+  <em>30-second scan · 36 dimensions · 8 files · Action can fail the PR if GPTBot is blocked</em>
 </p>
 
 ## Why does this matter?
@@ -74,7 +74,7 @@ Profound, Peec, Otterly, Scrunch, and Athena are **closed monitoring SaaS** (pro
 | **CLI + CI** | ✅ Action + App | ❌ dashboards |
 | **Framework plugins** | **11** | 0 |
 | **Generates AI files** | ✅ 8 files | ❌ mention reports |
-| **Scoring** | 12 dimensions (aeorank-cli@0.1.1) | LLM prompt tracking |
+| **Scoring** | 36 dimensions (aeorank-cli@0.1.2) | LLM prompt tracking |
 | **Citation guarantee** | ❌ none | ❌ they monitor after the fact |
 | **Self-hostable** | ✅ | ❌ |
 
@@ -83,13 +83,13 @@ Profound, Peec, Otterly, Scrunch, and Athena are **closed monitoring SaaS** (pro
 ### 1. CLI — scan any URL
 
 ```bash
-npx aeorank-cli@0.1.1 scan https://your-site.com
+npx aeorank-cli@0.1.2 scan https://your-site.com
 ```
 
 JSON output for scripting:
 
 ```bash
-npx aeorank-cli@0.1.1 scan https://your-site.com --format json | jq '.score'
+npx aeorank-cli@0.1.2 scan https://your-site.com --format json | jq '.score'
 ```
 
 ### 2. GitHub App — zero-config PR checks
@@ -118,21 +118,23 @@ jobs:
           fail-on-crawler-block: true  # fail the PR if GPTBot is blocked
 ```
 
-## 12 dimensions (aeorank-cli@0.1.1)
+## 36 dimensions (aeorank-cli@0.1.2)
 
-Published CLI weights are `high` / `medium` / `low` — not a 36-row percentage catalog.
+`calculateAeoScore()` scores every `DIMENSION_DEFS` id that has a scorer: **36** dimensions, each 0–10. JSON `dimensions.length` and `dimensionCount` are both 36. The score is `round(Σ (score / 10) × weightPct)`. Those percentage weights sum to 100. This is crawler access and extractability, not a citation rank.
 
-| Weight | Dimensions |
-|--------|------------|
-| **high** | llms.txt, schema.org markup, content structure |
-| **medium** | AI crawler access, answer-first, FAQ & speakable, E-E-A-T, meta descriptions, citation anchors |
-| **low** | sitemap, HTTPS & redirects, page freshness |
+| Pillar | Weight | Dimension ids |
+|--------|--------|----------------|
+| Answer Readiness | 26% | `topic-coherence`, `original-data`, `fact-density`, `duplicate-content`, `cross-page-duplication`, `evidence-packaging`, `citation-ready-writing` |
+| Content Structure | 25% | `content-structure`, `answer-first`, `qa-format`, `direct-answer-density`, `query-answer-alignment`, `tables-lists`, `definition-patterns`, `entity-disambiguation` |
+| Trust & Authority | 12% | `eeat-signals`, `citation-anchors`, `internal-linking` |
+| Technical Foundation | 25% | `llms-txt`, `schema-markup`, `ai-crawler-access`, `faq-speakable`, `meta-descriptions`, `semantic-html`, `extraction-friction`, `image-context`, `schema-coverage` |
+| AI Discovery | 12% | `sitemap`, `https-redirects`, `page-freshness`, `content-cannibalization`, `publishing-velocity`, `content-licensing`, `canonical-urls`, `rss-feed`, `visible-dates` |
 
-`ai.txt` is not scored and not generated. A 36-row catalog exists in repo source and is archived in docs until npm CLI `dimensions.length` matches it.
+`ai.txt` is **not generated**. The scanner reads `/ai.txt`, and the `content-licensing` dimension scores it. Names and hints: [scoring dimensions](https://docs.aeorank.dev/scoring/dimensions/).
 
 ## 8 generated files
 
-These are the files `npx aeorank-cli@latest` (npm **0.1.1**) actually writes (`generateFiles()` — no stubs, no `ai.txt`):
+These are the files `generateFiles()` writes for `aeorank-cli@0.1.2` (`GENERATED_FILE_NAMES` — no `ai.txt`):
 
 | File | Purpose |
 |------|---------|
@@ -145,11 +147,11 @@ These are the files `npx aeorank-cli@latest` (npm **0.1.1**) actually writes (`g
 | `citation-anchors.html` | Deep-linkable citation anchors |
 | `sitemap-ai.xml` | AI-optimized sitemap |
 
-The CLI JSON includes a `dimensions` array of length **12**. GitHub has a `v1.0.0` tag that is **not** on npm; do not treat that tag as the published CLI. Binary `-V` may still print `0.0.1` — npm **0.1.1** is canonical.
+Scan JSON includes `dimensions` (length **36**), `dimensionCount`, `generatedFiles`, `crawlerAccess`, and `crawlerGate`. `crawlerAccess` values are **`allow`**, **`block`**, or **`unknown`**. `meta.robotsTxt.crawlerAccess` keeps the parser's internal `allowed` / `disallowed` / `unknown`. The Action Check table maps those internal strings to `allow` / `block` and leaves the public values unchanged. `-V` prints **0.1.2** from `packages/cli/package.json`.
 
 ### Fail the PR if GPTBot is blocked
 
-That gate is the **GitHub Action** input `fail-on-crawler-block` (not a flag on `aeorank-cli@0.1.1`). It fails the Check when GPTBot, ClaudeBot, PerplexityBot, or Google-Extended is **disallowed** in `robots.txt`. A missing `robots.txt` is **unknown**, not blocked.
+`--fail-on-crawler-block` is a **CLI flag** (exit **2**) and a **GitHub Action input** (default true). The Action reads `crawlerGate` from JSON; it does not pass the flag. The gate fails when GPTBot, ClaudeBot, PerplexityBot, or Google-Extended is **`block`**. A missing `robots.txt` is **`unknown`**, not blocked.
 
 ## Framework plugins
 
@@ -189,7 +191,7 @@ export default withAeorank({
 
 The working score path is the CLI above — no account. The hosted dashboard at [app.aeorank.dev](https://app.aeorank.dev) is **experimental** (Clerk Development), not a Production signup flow:
 
-- Add a public URL → 12-dimension breakdown (when the hosted instance is available)
+- Add a public URL → 36-dimension breakdown (when the hosted instance is available)
 - Download the 8 generated files as a ZIP
 - Free tier: 1 site, 3 scans/month (CLI stays unlimited)
 - Pro $29: 5 sites, 50 scans/month
@@ -198,7 +200,7 @@ The working score path is the CLI above — no account. The hosted dashboard at 
 
 | Package | Description |
 |---------|-------------|
-| [`aeorank-cli`](https://www.npmjs.com/package/aeorank-cli) | CLI — `npx aeorank-cli@0.1.1 scan <url>` |
+| [`aeorank-cli`](https://www.npmjs.com/package/aeorank-cli) | CLI — `npx aeorank-cli@0.1.2 scan <url>` |
 | [`@aeorank/core`](https://www.npmjs.com/package/@aeorank/core) | Core scanning + scoring engine |
 | [`@aeorank/next`](https://www.npmjs.com/package/@aeorank/next) | Next.js plugin |
 | [`@aeorank/astro`](https://www.npmjs.com/package/@aeorank/astro) | Astro integration |
@@ -219,7 +221,7 @@ Last updated: November 01, 2026
 
 ## Star History
 
-Star if you want a **deterministic CI gate** and the **8 fix files** `aeorank-cli@0.1.1` actually writes — not another mention dashboard.
+Star if you want a **deterministic CI gate** and the **8 fix files** `aeorank-cli@0.1.2` actually writes — not another mention dashboard.
 
 <a href="https://www.star-history.com/#vinpatel/aeorank&Date">
 
@@ -250,9 +252,9 @@ pnpm test    # core + CLI + plugins
 
 If AEOrank saved you a closed monitoring subscription, the best thank-you is a star plus sending it to one person who also needs a fix/CLI/CI tool.
 
-[![Tweet](https://img.shields.io/badge/Share-on%20X-000000?style=flat-square&logo=x&logoColor=white)](https://twitter.com/intent/tweet?text=Others%20monitor.%20AEOrank%20fixes.%20MIT%20CLI%2FCI%3A%2012%20dimensions%2C%208%20fix%20files%20%28aeorank-cli%400.1.1%29.%20No%20citation%20promises.%20npx%20aeorank-cli%400.1.1%20scan%20https%3A%2F%2Fyour-site.com&url=https%3A%2F%2Fgithub.com%2Fvinpatel%2Faeorank)
-[![Share on Hacker News](https://img.shields.io/badge/Share-on%20Hacker%20News-FF6600?style=flat-square&logo=ycombinator&logoColor=white)](https://news.ycombinator.com/submitlink?u=https%3A%2F%2Fgithub.com%2Fvinpatel%2Faeorank&t=AEOrank%20%E2%80%94%20MIT%20CLI%2FCI%20for%20AI%20visibility%20%2812%20dimensions%2C%208%20fix%20files%29)
-[![Share on Reddit](https://img.shields.io/badge/Share-on%20Reddit-FF4500?style=flat-square&logo=reddit&logoColor=white)](https://www.reddit.com/submit?url=https%3A%2F%2Fgithub.com%2Fvinpatel%2Faeorank&title=AEOrank%20%E2%80%94%20MIT%20AI-visibility%20CLI%20%2812%20dimensions%2C%208%20fix%20files%29%20vs%20closed%20monitors)
+[![Tweet](https://img.shields.io/badge/Share-on%20X-000000?style=flat-square&logo=x&logoColor=white)](https://twitter.com/intent/tweet?text=Others%20monitor.%20AEOrank%20fixes.%20MIT%20CLI%2FCI%3A%2036%20dimensions%2C%208%20fix%20files%20%28aeorank-cli%400.1.2%29.%20No%20citation%20promises.%20npx%20aeorank-cli%400.1.2%20scan%20https%3A%2F%2Fyour-site.com&url=https%3A%2F%2Fgithub.com%2Fvinpatel%2Faeorank)
+[![Share on Hacker News](https://img.shields.io/badge/Share-on%20Hacker%20News-FF6600?style=flat-square&logo=ycombinator&logoColor=white)](https://news.ycombinator.com/submitlink?u=https%3A%2F%2Fgithub.com%2Fvinpatel%2Faeorank&t=AEOrank%20%E2%80%94%20MIT%20CLI%2FCI%20for%20AI%20visibility%20%2836%20dimensions%2C%208%20fix%20files%29)
+[![Share on Reddit](https://img.shields.io/badge/Share-on%20Reddit-FF4500?style=flat-square&logo=reddit&logoColor=white)](https://www.reddit.com/submit?url=https%3A%2F%2Fgithub.com%2Fvinpatel%2Faeorank&title=AEOrank%20%E2%80%94%20MIT%20AI-visibility%20CLI%20%2836%20dimensions%2C%208%20fix%20files%29%20vs%20closed%20monitors)
 [![Share on LinkedIn](https://img.shields.io/badge/Share-on%20LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white)](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fgithub.com%2Fvinpatel%2Faeorank)
 
 ## License

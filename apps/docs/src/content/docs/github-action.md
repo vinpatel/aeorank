@@ -33,7 +33,7 @@ jobs:
 | `url` | Yes | — | URL to scan |
 | `token` | No | `github.token` | GitHub token for API calls |
 | `fail-below` | No | `0` | Fail the Check if score drops below this value (0 = never fail) |
-| `fail-on-crawler-block` | No | `true` | **Fail the PR if GPTBot is blocked.** Check fails when GPTBot, ClaudeBot, PerplexityBot, or Google-Extended is disallowed in `robots.txt`. A missing `robots.txt` is unknown, not blocked. |
+| `fail-on-crawler-block` | No | `true` | **Fail the PR if GPTBot is blocked.** Check fails when GPTBot, ClaudeBot, PerplexityBot, or Google-Extended is `block` in `crawlerAccess`. A missing `robots.txt` is `unknown`, not blocked. The CLI has the same flag (exit 2). |
 
 ## Permissions
 
@@ -50,11 +50,11 @@ permissions:
 
 **On every push and pull request:**
 
-The Action runs `aeorank-cli scan <url> --format json --no-files` and posts the result as a **Check Run** with:
+The Action runs `npx aeorank-cli@0.1.2 scan <url> --format json --no-files` and posts the result as a **Check Run** with:
 
-- **Crawler table first** — GPTBot / ClaudeBot / PerplexityBot / Google-Extended → allow / block / unknown
+- **Crawler table first** — GPTBot / ClaudeBot / PerplexityBot / Google-Extended. The CLI emits `allow` / `block` / `unknown`. The table maps internal `allowed` / `disallowed` onto `allow` / `block` and passes the public values through.
 - Score and grade in the Check summary
-- Dimension breakdown (12 on `aeorank-cli@0.1.1`) in the Check details
+- Dimension breakdown (36 on `aeorank-cli@0.1.2`) in the Check details
 - Conclusion: `success` (≥70), `neutral` (40–69), or `failure` (<40)
 - **Crawler block always fails the Check** (when `fail-on-crawler-block` is true), even if the overall score is high. The summary names which bot is blocked.
 
@@ -82,7 +82,7 @@ PRs that drop the score below 70 will show a failing Check — blocking merge if
     fail-on-crawler-block: true
 ```
 
-That input is "fail the PR if GPTBot is blocked." The CLI JSON fields `crawlerAccess` and `crawlerGate` are the contract; `vinpatel/aeorank-action` can consume them without guessing.
+That input is "fail the PR if GPTBot is blocked." The CLI also has `--fail-on-crawler-block` (exit 2). The Action does not pass the flag; it reads `crawlerAccess` (`allow` | `block` | `unknown`) and `crawlerGate`.
 
 ## Check conclusion logic
 
@@ -98,14 +98,14 @@ Missing `robots.txt` → **unknown**, not a crawler-block failure.
 
 ## Caching
 
-Speed up runs by caching npm:
+The Action installs the npm package `aeorank-cli` (not `aeorank`), pinned to `aeorank-cli@0.1.2`. Cache that download:
 
 ```yaml
 steps:
   - uses: actions/cache@v4
     with:
       path: ~/.npm
-      key: ${{ runner.os }}-npm-aeorank
+      key: ${{ runner.os }}-npm-aeorank-cli
   - uses: vinpatel/aeorank-action@v1
     with:
       url: https://your-site.com
@@ -134,4 +134,4 @@ The App fails on crawler **block** only. `fail-below` (score threshold) is Actio
 - [Marketplace listing](https://github.com/marketplace/actions/aeorank-aeo-scanner)
 - [Action source code](https://github.com/vinpatel/aeorank-action)
 - [GitHub App alternative](/github-app)
-- [12 scoring dimensions](/scoring/dimensions)
+- [36 scoring dimensions](/scoring/dimensions)

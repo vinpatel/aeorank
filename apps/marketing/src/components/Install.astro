@@ -6,13 +6,13 @@ const tabs = [
 		id: "npx",
 		label: "npx",
 		title: "Scan from your terminal",
-		blurb: "Zero install. Zero account. Zero API key. 12 dimensions, then the 8 files aeorank-cli@0.1.1 writes. To fail a PR if GPTBot is blocked, use the GitHub Action — that flag is not on npm 0.1.1.",
+		blurb: "Zero install. Zero account. Zero API key. 36 dimensions, then the 8 files aeorank-cli@0.1.2 writes. --fail-on-crawler-block exits 2 when GPTBot is block. The GitHub Action input does the same from crawlerGate.",
 		time: "~30s per scan",
 		code: `# one-off audit on any site
-$ npx aeorank-cli@0.1.1 scan https://your-site.com
+$ npx aeorank-cli@0.1.2 scan https://your-site.com
 
   AEO Score: 31/100 (F)
-  12 dimensions · 8 generated files
+  36 dimensions · 8 generated files
 
 ✔ wrote aeorank-output/llms.txt
 ✔ wrote aeorank-output/schema.json
@@ -85,7 +85,7 @@ jobs:
 				<p class="t-label">// three ways in</p>
 				<h2 class="t-h1 mt-2">Pick the surface that fits your team.</h2>
 				<p class="t-body mt-3 max-w-[58ch]">
-					Same scorer under all three. Same 12 dimensions. Same 8 generated files. Pick the surface closest to where you already ship. The GitHub Action is the CI gate that can fail a PR if GPTBot is blocked.
+					Same scorer under all three. Same 36 dimensions. Same 8 generated files. Pick the surface closest to where you already ship. The CLI flag and the GitHub Action can fail a PR if GPTBot is blocked. No citation promises.
 				</p>
 			</div>
 			<div class="section-meta">

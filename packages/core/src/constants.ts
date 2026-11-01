@@ -216,9 +216,9 @@ export const CRAWLER_GATE_BOTS = [
 ] as const;
 
 /**
- * Files `generateFiles()` / `npx aeorank-cli@latest` (npm 0.1.1) actually write.
+ * Files `generateFiles()` writes for `aeorank-cli@0.1.2`.
  * Public claims must match this 8-file list. `generateAiTxt` exists but is not
- * in the default set — do not add stubs to hit a higher count.
+ * called here — `/ai.txt` is scored by `content-licensing`, not generated.
  */
 export const GENERATED_FILE_NAMES = [
 	"llms.txt",
