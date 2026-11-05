@@ -1,5 +1,6 @@
 import { Command } from "commander";
 import { compareCommand } from "./commands/compare.js";
+import { doctorCommand } from "./commands/doctor.js";
 import { initCommand } from "./commands/init.js";
 import { scanCommand } from "./commands/scan.js";
 import { getCliVersion } from "./version.js";
@@ -12,6 +13,7 @@ program
 	.version(getCliVersion());
 
 program.addCommand(scanCommand);
+program.addCommand(doctorCommand);
 program.addCommand(initCommand);
 program.addCommand(compareCommand);
 
