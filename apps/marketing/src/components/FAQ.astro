@@ -6,7 +6,7 @@
 const faqs = [
 	{
 		q: "Will this actually help me rank in ChatGPT answers?",
-		a: "Alone, no. AEOrank scores 12 dimensions on aeorank-cli@0.1.1 — llms.txt, schema, crawler access, structure, answer-first, FAQ/speakable, E-E-A-T, meta descriptions, citation anchors, sitemap, HTTPS, freshness. Then it writes 8 fix files. The GitHub Action can fail a PR if GPTBot is blocked; that flag is not on npm 0.1.1. llms.txt is agent-docs hygiene, not a citation guarantee. We do not promise to get you cited."
+		a: "Alone, no. aeorank-cli@0.1.2 scores 36 dimensions (percentage weights, sum 100) and writes 8 fix files. ai.txt is scored by content-licensing and is not generated. fail-on-crawler-block is a CLI flag (exit 2) and a GitHub Action input. llms.txt is agent-docs hygiene, not a citation guarantee. We do not promise to get you cited.",
 	},
 	{
 		q: "What does deterministic scoring actually mean?",
@@ -18,15 +18,15 @@ const faqs = [
 	},
 	{
 		q: "How is this different from Ahrefs, Semrush, or their AI add-ons?",
-		a: "Classical SEO tools check ranking signals for Google's blue-link results. AEOrank scores crawler access and extractability (12 dimensions on aeorank-cli@0.1.1) and writes the 8 files the CLI generates. Semrush's AI add-on and Ahrefs' Brand Radar report on visibility; neither writes those files."
+		a: "Classical SEO tools check ranking signals for Google's blue-link results. AEOrank scores crawler access and extractability (36 dimensions on aeorank-cli@0.1.2) and writes the 8 files the CLI generates. Semrush's AI add-on and Ahrefs' Brand Radar report on visibility; neither writes those files.",
 	},
 	{
 		q: "What's the difference vs Profound, Scrunch, Otterly, Peec, or AthenaHQ?",
-		a: "They monitor: they run prompts through LLMs and tell you what AI said about your brand this week. AEOrank fixes upstream: 12 dimensions plus the 8 files aeorank-cli@0.1.1 writes. Typical monitoring plans run $89–$499/mo; AEOrank Pro is $29 and the CLI is free. Complements, not clones. Agency audits (including Mindtrades) still go crawler-gate first, then CLI, then human-reviewed fixes."
+		a: "They monitor: they run prompts through LLMs and tell you what AI said about your brand this week. AEOrank fixes upstream: 36 dimensions plus the 8 files aeorank-cli@0.1.2 writes. Typical monitoring plans run $89–$499/mo; AEOrank Pro is $29 and the CLI is free. Complements, not clones. We do not promise citations. Agency audits (including Mindtrades) still go crawler-gate first, then CLI, then human-reviewed fixes.",
 	},
 	{
 		q: "Can I use this in CI?",
-		a: "AEOrank is CLI/CI-first. The GitHub Action (vinpatel/aeorank-action) can fail the PR if GPTBot is blocked (fail-on-crawler-block). That flag is not on aeorank-cli@0.1.1. The GitHub App does not support fail-below yet (coming soon). Only claim merge-blocking for the gates that exist."
+		a: "AEOrank is CLI/CI-first. fail-on-crawler-block is a flag on aeorank-cli@0.1.2 (exit 2) and an input on the GitHub Action (vinpatel/aeorank-action). The GitHub App does not support fail-below yet (coming soon). Only claim merge-blocking for the gates that exist. No citation promises.",
 	},
 	{
 		q: "Does AEOrank send my site to an LLM?",

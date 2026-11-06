@@ -1,10 +1,12 @@
 ---
 title: compare
-description: Diff two scan JSON files. Not a command on aeorank-cli@0.1.1.
+description: Diff two scan JSON files with aeorank-cli@0.1.2 compare.
 ---
 
-:::caution[Not in npm 0.1.1]
-Published `aeorank-cli@0.1.1` commands are `scan` and `init` only. `compare` is not in that CLI's `--help`.
-:::
+`aeorank-cli@0.1.2` includes `compare`:
 
-If you have two JSON scan results (from `--format json`), diff `score` and `dimensions` with any JSON tool. Canonical dimension count is `dimensions.length` (**12** on 0.1.1).
+```bash
+npx aeorank-cli@0.1.2 compare before.json after.json
+```
+
+Both files are scan JSON (`--format json`). The command prints the score delta and per-dimension changes. Canonical dimension count is `dimensions.length` (**36**). This does not promise a citation change.

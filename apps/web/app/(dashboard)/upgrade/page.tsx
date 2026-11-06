@@ -73,7 +73,7 @@ export default async function UpgradePage({
 				`${PLANS.api.maxSites} sites`,
 				"Everything in Pro",
 				"Volume for agency audits",
-				"Same 8 files · same 12 dimensions",
+				"Same 8 files · same 36 dimensions",
 			],
 		},
 	];
@@ -93,7 +93,7 @@ export default async function UpgradePage({
 					Plans & Pricing
 				</h1>
 				<p style={{ color: "var(--text-secondary)", margin: 0, fontSize: "15px" }}>
-					Choose the plan that fits your AEO workflow. Same 12 dimensions and 8 files on every plan. Pro is $29/mo. Agency is $99/mo.
+					Choose the plan that fits your AEO workflow. Same 36 dimensions and 8 files on every plan. Pro is $29/mo. Agency is $99/mo. No citation promises.
 				</p>
 			</div>
 

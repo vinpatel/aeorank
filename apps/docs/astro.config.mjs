@@ -7,7 +7,7 @@ export default defineConfig({
 		starlight({
 			title: "AEOrank",
 			description:
-				"Documentation for AEOrank — MIT CLI that scores 12 dimensions and writes 8 files (aeorank-cli@0.1.1).",
+				"Documentation for AEOrank — MIT CLI that scores 36 dimensions and writes 8 files (aeorank-cli@0.1.2). No citation promises.",
 			favicon: "/favicon.svg",
 			logo: {
 				light: "./src/assets/logo-light.svg",
@@ -100,9 +100,9 @@ export default defineConfig({
 					],
 				},
 				{
-					label: "Not in 0.1.1",
+					label: "Not generated",
 					items: [
-						{ label: "ai.txt (not generated, not scored)", slug: "files/ai-txt" },
+						{ label: "ai.txt (scored, not written)", slug: "files/ai-txt" },
 					],
 				},
 				{
@@ -126,10 +126,10 @@ export default defineConfig({
 				{
 					label: "Scoring",
 					items: [
-						{ label: "12 dimensions (CLI 0.1.1)", slug: "scoring/dimensions" },
+						{ label: "36 dimensions (CLI 0.1.2)", slug: "scoring/dimensions" },
 						{ label: "How Scores Work", slug: "scoring/calculation" },
 						{ label: "Grades", slug: "scoring/grades" },
-						{ label: "Catalog (unshipped)", slug: "scoring/dimensions-catalog" },
+						{ label: "Dimension catalog", slug: "scoring/dimensions-catalog" },
 					],
 				},
 			],

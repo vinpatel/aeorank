@@ -3,7 +3,7 @@ title: Per-Page Scoring
 description: See how each individual page on your site scores across AEO dimensions.
 ---
 
-AEOrank's hosted dashboard may show per-page rows for the page-level subset of the **12** published dimensions. Canonical site score is still `aeorank-cli@0.1.1`.
+The scorer's `PAGE_LEVEL_DIMENSIONS` list is what a per-page row can include. The site score is still `aeorank-cli@0.1.2` (36 dimensions, 8 files).
 
 ## How it works
 
@@ -11,27 +11,17 @@ After a scan completes, the dashboard shows a **Per-Page Scores** table below th
 
 ### Page-level dimensions
 
-These dimensions are evaluated per page:
+These ids are in `PAGE_LEVEL_DIMENSIONS`:
 
-| Dimension | What it checks |
-|-----------|---------------|
-| Content Structure | H1 presence and heading hierarchy |
-| Answer-First Formatting | Concise lead paragraph (<300 chars) |
-| Meta Descriptions | Presence and optimal length (50–160 chars) |
-| Page Freshness | Publication/modification dates |
-| Citation Anchors | H2/H3 headings with ID attributes |
-| Schema.org Markup | Structured data on the page |
-| E-E-A-T Signals | Author name, dates, about page |
+`content-structure`, `answer-first`, `meta-descriptions`, `page-freshness`, `citation-anchors`, `schema-markup`, `eeat-signals`, `fact-density`, `duplicate-content`, `evidence-packaging`, `citation-ready-writing`, `qa-format`, `direct-answer-density`, `query-answer-alignment`, `tables-lists`, `definition-patterns`, `entity-disambiguation`, `internal-linking`, `semantic-html`, `extraction-friction`, `image-context`, `schema-coverage`, `content-cannibalization`, `canonical-urls`, `visible-dates`.
 
 ### Site-level dimensions
 
-These dimensions are scored only at the site level (not per-page):
+These ids are scored on the site and are not in `PAGE_LEVEL_DIMENSIONS`:
 
-- llms.txt Presence
-- AI Crawler Access
-- Sitemap Presence
-- HTTPS & Redirects
-- FAQ & Speakable
+`llms-txt`, `ai-crawler-access`, `faq-speakable`, `sitemap`, `https-redirects`, `topic-coherence`, `original-data`, `cross-page-duplication`, `publishing-velocity`, `content-licensing`, `rss-feed`.
+
+`content-licensing` is where `/ai.txt` is scored. The file is not generated.
 
 ## Using per-page scores
 

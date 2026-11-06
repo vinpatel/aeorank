@@ -1,107 +1,65 @@
 ---
-title: 12 dimensions
-description: The 12 dimensions aeorank-cli@0.1.1 actually scores (high / medium / low).
+title: 36 dimensions
+description: The 36 dimensions aeorank-cli@0.1.2 scores. Percentage weights sum to 100. No citation promises.
 ---
 
-`npx aeorank-cli@0.1.1` scores **12 dimensions**. Each is 0–10 with a `high` / `medium` / `low` weight. JSON has a `dimensions` array; there is no `dimensionCount` field on this release. The in-repo 36-row catalog is [archived](/scoring/dimensions-catalog/) until a published CLI matches it.
+`npx aeorank-cli@0.1.2` scores **36 dimensions**. Each is 0–10. JSON has `dimensions` (length 36) and `dimensionCount`. The score is `round(Σ (score / 10) × weightPct)`. `weightPct` sums to 100.
 
-This is technical readiness (crawler access + extractability), **not** a citation rank.
+This is technical readiness (crawler access + extractability), **not** a citation rank. Long-form notes are in the [catalog](/scoring/dimensions-catalog/).
 
-## High
+## Crawler status
 
-### llms.txt Presence
+`crawlerAccess` emits **`allow`**, **`block`**, or **`unknown`** for GPTBot, ClaudeBot, PerplexityBot, Google-Extended, and anthropic-ai. A missing `robots.txt` is **`unknown`**, not blocked.
 
-**ID:** `llms-txt`
+`meta.robotsTxt.crawlerAccess` keeps the parser's internal `allowed` / `disallowed` / `unknown`. The GitHub Action Check table maps `allowed` → `allow` and `disallowed` → `block`, and shows the public values unchanged.
 
-Checks for a root `/llms.txt`. Agent-docs hygiene, not a citation guarantee.
+`--fail-on-crawler-block` is a **CLI flag** (exit 2 when `crawlerGate.failed` is true) and a **GitHub Action input**. The Action reads `crawlerGate`; it does not pass the flag. The gate checks GPTBot, ClaudeBot, PerplexityBot, and Google-Extended. `unknown` does not fail it.
 
-### Schema.org Markup
+## ai.txt
 
-**ID:** `schema-markup`
+`ai.txt` is **not generated**. The scanner reads `/ai.txt`, and the `content-licensing` dimension scores it. `generateAiTxt` is not in `GENERATED_FILE_NAMES`.
 
-JSON-LD / microdata types present on the scanned pages.
+## The 36
 
-### Content Structure
+| weightPct | ID | Name |
+|----------:|----|------|
+| 5 | `llms-txt` | llms.txt Presence |
+| 4 | `schema-markup` | Schema.org Markup |
+| 5 | `content-structure` | Content Structure |
+| 3 | `ai-crawler-access` | AI Crawler Access |
+| 4 | `answer-first` | Answer-First Formatting |
+| 5 | `faq-speakable` | FAQ & Speakable |
+| 6 | `eeat-signals` | E-E-A-T Signals |
+| 2 | `meta-descriptions` | Meta Descriptions |
+| 2 | `citation-anchors` | Citation Anchors |
+| 1 | `sitemap` | Sitemap Presence |
+| 2 | `https-redirects` | HTTPS & Redirects |
+| 2 | `page-freshness` | Page Freshness |
+| 7 | `topic-coherence` | Topical Authority |
+| 5 | `original-data` | Original Research & Data |
+| 4 | `fact-density` | Fact & Data Density |
+| 4 | `duplicate-content` | Duplicate Content |
+| 2 | `cross-page-duplication` | Cross-Page Duplication |
+| 2 | `evidence-packaging` | Evidence Packaging |
+| 2 | `citation-ready-writing` | Citation-Ready Writing |
+| 4 | `qa-format` | Q&A Content Format |
+| 4 | `direct-answer-density` | Direct Answer Density |
+| 2 | `query-answer-alignment` | Query-Answer Alignment |
+| 2 | `tables-lists` | Tables & Lists |
+| 2 | `definition-patterns` | Definition Patterns |
+| 2 | `entity-disambiguation` | Entity Disambiguation |
+| 4 | `internal-linking` | Internal Linking |
+| 2 | `semantic-html` | Semantic HTML |
+| 2 | `extraction-friction` | Extraction Friction |
+| 1 | `image-context` | Image Context for AI |
+| 1 | `schema-coverage` | Schema Coverage |
+| 2 | `content-cannibalization` | Content Cannibalization |
+| 1 | `publishing-velocity` | Publishing Velocity |
+| 1 | `content-licensing` | Content Licensing |
+| 1 | `canonical-urls` | Canonical URLs |
+| 1 | `rss-feed` | RSS/Atom Feed |
+| 1 | `visible-dates` | Visible Date Signals |
 
-**ID:** `content-structure`
+`citation-anchors` and `citation-ready-writing` are markup and writing checks. They do not promise that a model will cite you.
 
-Headings, hierarchy, and extractable blocks.
-
-## Medium
-
-### AI Crawler Access
-
-**ID:** `ai-crawler-access`
-
-Reads `robots.txt` for GPTBot, ClaudeBot, PerplexityBot, Google-Extended. Status is allow / block / unknown. A missing `robots.txt` is **unknown**, not blocked.
-
-`--fail-on-crawler-block` is **not** a flag on `aeorank-cli@0.1.1`. The GitHub Action input `fail-on-crawler-block` can fail a Check when a gated bot is **disallowed**.
-
-### Answer-First Formatting
-
-**ID:** `answer-first`
-
-Whether the page leads with a direct answer.
-
-### FAQ & Speakable
-
-**ID:** `faq-speakable`
-
-FAQPage / speakable markup.
-
-### E-E-A-T Signals
-
-**ID:** `eeat-signals`
-
-Author, organization, and trust cues in the HTML.
-
-### Meta Descriptions
-
-**ID:** `meta-descriptions`
-
-Presence and quality of meta description.
-
-### Citation Anchors
-
-**ID:** `citation-anchors`
-
-Stable heading ids for deep links. This is markup, not a promise that models will cite you.
-
-## Low
-
-### Sitemap Presence
-
-**ID:** `sitemap`
-
-A discoverable sitemap.
-
-### HTTPS & Redirects
-
-**ID:** `https-redirects`
-
-HTTPS and redirect hygiene.
-
-### Page Freshness
-
-**ID:** `page-freshness`
-
-Visible date / last-modified signals.
-
-## Quick reference
-
-| Weight | ID | Name |
-|--------|----|------|
-| high | `llms-txt` | llms.txt Presence |
-| high | `schema-markup` | Schema.org Markup |
-| high | `content-structure` | Content Structure |
-| medium | `ai-crawler-access` | AI Crawler Access |
-| medium | `answer-first` | Answer-First Formatting |
-| medium | `faq-speakable` | FAQ & Speakable |
-| medium | `eeat-signals` | E-E-A-T Signals |
-| medium | `meta-descriptions` | Meta Descriptions |
-| medium | `citation-anchors` | Citation Anchors |
-| low | `sitemap` | Sitemap Presence |
-| low | `https-redirects` | HTTPS & Redirects |
-| low | `page-freshness` | Page Freshness |
-
-`ai.txt` is **not** in this list and is **not** one of the 8 generated files.
+The 8 generated files are listed on [Quick Start](/getting-started/). `ai.txt` is not one of them.

@@ -1,13 +1,9 @@
 ---
-title: Dimension catalog (unshipped)
-description: Not in aeorank-cli@0.1.1 / do not market. Local 36-row registry only, until a published CLI matches.
+title: Dimension catalog
+description: Notes for the 36 dimensions aeorank-cli@0.1.2 scores. No citation promises.
 ---
 
-:::danger[Not in aeorank-cli@0.1.1 / do not market]
-This page is **not** the published product. `npx aeorank-cli@0.1.1` scores **12 dimensions** (high / medium / low) and writes **8 files**. The 36-row catalog below is the local `@aeorank/core` registry — future / unpublished only. **Do not market** 36 dimensions, checks, or criteria until a published CLI's `dimensions.length` matches. Live list: [12 dimensions](/scoring/dimensions/).
-:::
-
-The unpublished in-repo registry lists 36 criteria in 5 pillars. Each criterion is scored 0–10 and weighted by percentage importance (weights sum to 100%). This is **not** what `aeorank-cli@0.1.1` scores.
+`aeorank-cli@0.1.2` scores these **36** dimensions (0–10, `weightPct` summing to 100) and writes **8 files**. The id table is [36 dimensions](/scoring/dimensions/). Nothing on this page promises that a model will cite you.
 
 ## Answer Readiness (26%)
 
@@ -17,7 +13,7 @@ These 7 criteria measure whether your content is ready to be used as a direct an
 
 **ID:** `topic-coherence` · **Weight:** 7% · **Max Score:** 10
 
-Checks whether your site demonstrates coherent topical coverage — that pages reinforce a consistent subject area rather than covering unrelated topics. AI engines prefer citing sources with clear subject authority.
+Checks whether your site demonstrates coherent topical coverage — that pages reinforce a consistent subject area rather than covering unrelated topics. Coherent coverage is easier to extract as one subject. This is not a citation promise.
 
 **Pass:** Strong topical consistency across pages
 **Warn:** Mixed topics with some coherence
@@ -27,7 +23,7 @@ Checks whether your site demonstrates coherent topical coverage — that pages r
 
 **ID:** `original-data` · **Weight:** 5% · **Max Score:** 10
 
-Checks whether your content includes proprietary data, statistics, studies, or original research. AI engines prefer citing primary sources over pages that merely summarize others.
+Checks whether your content includes proprietary data, statistics, studies, or original research. Primary figures are easier to extract than a retelling of someone else's numbers. This is not a citation promise.
 
 **Pass:** Original data, statistics, or research present
 **Warn:** Some original data mixed with summaries
@@ -244,7 +240,7 @@ Checks for structured data using Schema.org vocabulary (JSON-LD, Microdata, or R
 
 **ID:** `ai-crawler-access` · **Weight:** 3% · **Max Score:** 10
 
-Checks robots.txt for AI-specific crawler rules. Each bot is **allow**, **block**, or **unknown**. A missing `robots.txt` (HTTP 404) is **unknown**, not blocked. `--fail-on-crawler-block` fails CI only on **block** (disallow) for GPTBot, ClaudeBot, PerplexityBot, or Google-Extended.
+Checks robots.txt for AI-specific crawler rules. Public status is **allow**, **block**, or **unknown**. A missing `robots.txt` (HTTP 404) is **unknown**, not blocked. `--fail-on-crawler-block` is a CLI flag (exit 2) and a GitHub Action input. It fails only on **block** for GPTBot, ClaudeBot, PerplexityBot, or Google-Extended.
 
 **Pass:** All major AI crawlers allowed
 **Warn:** Some crawlers blocked or unknown
@@ -330,7 +326,7 @@ Checks that the site uses HTTPS and handles redirects properly. AI engines prefe
 
 **ID:** `page-freshness` · **Weight:** 2% · **Max Score:** 10
 
-Checks for publication and modification dates. AI engines prefer citing current content over stale pages.
+Checks for publication and modification dates. Dated pages are easier to judge as current or stale. This is not a citation promise.
 
 **Pass:** Recent dates detected on most pages
 **Warn:** Some pages have dates, some don't

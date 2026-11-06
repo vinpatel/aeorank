@@ -63,7 +63,7 @@ export function ScanStatus({ scanId, initialStatus }: ScanStatusProps) {
 				<div>
 					<p className="font-semibold">{label}</p>
 					<p className="text-sm text-secondary mt-0.5">
-						12 dimensions on a public URL. Typically 10–60 seconds.
+						36 dimensions on a public URL. Typically 10–60 seconds.
 					</p>
 				</div>
 			</div>
