@@ -21,17 +21,17 @@ We do **not** treat “get cited in AI responses” as a deliverable.
 
 ## What AEOrank does
 
-`npx aeorank-cli@0.1.1` (npm; `-V` may still print `0.0.1`):
+`npx aeorank-cli@0.1.2` (`-V` prints 0.1.2):
 
-1. **Scans** a public URL (default cap **50** pages)
-2. **Scores** [12 dimensions](/scoring/dimensions/) 0–100
+1. **Scans** a public URL (default cap **200** pages)
+2. **Scores** [36 dimensions](/scoring/dimensions/) 0–100
 3. **Writes** the 8 files below
 
 The CLI is MIT. No account required.
 
 ## The 8 generated files
 
-Same set `aeorank-cli@0.1.1` writes. Not generated: `ai.txt`, `answers.json`, `report.html`.
+Same set `aeorank-cli@0.1.2` writes. Not generated: `ai.txt` (scored by `content-licensing`), `answers.json`, `report.html`.
 
 - **llms.txt** — site map for agents (hygiene, not a citation guarantee)
 - **llms-full.txt** — longer extract
@@ -44,4 +44,4 @@ Same set `aeorank-cli@0.1.1` writes. Not generated: `ai.txt`, `answers.json`, `r
 
 ## CI
 
-The **GitHub Action** input `fail-on-crawler-block` can fail the Check when a gated bot is **disallowed** in `robots.txt`. Missing robots = unknown, not blocked. That flag is **not** on `aeorank-cli@0.1.1`. App `fail-below` (score threshold) is **coming soon** — Action-only today.
+`--fail-on-crawler-block` is a **CLI flag** (exit 2) and a **GitHub Action** input. Both fail when a gated bot’s public status is **`block`**. Missing robots = **`unknown`**, not blocked. App `fail-below` (score threshold) is **coming soon** — Action-only today.

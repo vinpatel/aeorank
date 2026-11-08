@@ -1,6 +1,6 @@
 ---
 title: Quick Start
-description: First AEO scan with aeorank-cli@0.1.1.
+description: First AEO scan with aeorank-cli@0.1.2.
 ---
 
 Get a score and the 8 fix files in a few minutes.
@@ -13,21 +13,21 @@ Get a score and the 8 fix files in a few minutes.
 ## Step 1: Scan
 
 ```bash
-npx aeorank-cli@0.1.1 scan https://your-site.com
+npx aeorank-cli@0.1.2 scan https://your-site.com
 ```
 
-The published CLI crawls up to **50** pages by default, scores **12 dimensions**, and writes **8 files**. npm version **0.1.1** is canonical (`-V` may still print `0.0.1`).
+With no config file the CLI crawls up to **200** pages, scores **36 dimensions**, and writes **8 files**. `-V` prints **0.1.2**. `init` writes a config whose `maxPages` is 50.
 
 ## Step 2: Read the score
 
-You’ll see a 0–100 score, a letter grade, and the 12 dimensions (`high` / `medium` / `low`). See [12 dimensions](/scoring/dimensions/).
+You’ll see a 0–100 score, a letter grade, and the 36 dimensions (`weightPct`). See [36 dimensions](/scoring/dimensions/).
 
 Illustrative shape (not a live transcript of your site):
 
 ```
 Scanning https://your-site.com...
 AEO Score: 42/100 (D)
-12 dimensions · 8 generated files
+36 dimensions · 8 generated files
 → 8 files written to ./aeorank-output/
 ```
 
@@ -46,7 +46,7 @@ AEO Score: 42/100 (D)
 | `citation-anchors.html` | Heading anchors |
 | `sitemap-ai.xml` | Sitemap stub |
 
-Not written: `ai.txt`, `answers.json`, `report.html`.
+Not written: `ai.txt` (scored by `content-licensing`, not generated), `answers.json`, `report.html`.
 
 ## Step 4: Deploy
 
@@ -59,4 +59,4 @@ Rescan after deploy. Score change is technical readiness, not a citation timelin
 
 ## CI
 
-To fail a PR when GPTBot is **blocked**, use the [GitHub Action](/github-action/) `fail-on-crawler-block` input. That flag is not on `aeorank-cli@0.1.1`.
+To fail when GPTBot is **`block`**, pass `--fail-on-crawler-block` (exit 2) or the [GitHub Action](/github-action/) input of the same name. Missing `robots.txt` is **`unknown`**, not blocked.

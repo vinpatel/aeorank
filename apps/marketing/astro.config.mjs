@@ -13,7 +13,7 @@ export default defineConfig({
 			siteName: "AEOrank",
 			siteUrl: "https://aeorank.dev",
 			description:
-				"MIT CLI for crawler access and extractability. aeorank-cli@0.1.1 scores 12 dimensions and writes 8 files. No citation promises. Pro $29 vs closed monitoring SaaS.",
+				"MIT CLI for crawler access and extractability. aeorank-cli@0.1.2 scores 36 dimensions and writes 8 files. No citation promises. Pro $29 vs closed monitoring SaaS.",
 			organization: {
 				name: "AEOrank",
 				url: "https://aeorank.dev",
@@ -27,7 +27,7 @@ export default defineConfig({
 				{
 					question: "My customers use ChatGPT and Perplexity. Why isn't my brand showing up?",
 					answer:
-						"If GPTBot or peers are blocked, or the HTML is hard to extract, crawlers have little to work with. AEOrank scores 12 dimensions and writes 8 files (llms.txt, schema.json, and six more). It does not generate or score ai.txt, and it does not promise citations.",
+						"If GPTBot or peers are blocked, or the HTML is hard to extract, crawlers have little to work with. AEOrank scores 36 dimensions and writes 8 files (llms.txt, schema.json, and six more). It does not generate ai.txt (the content-licensing dimension scores /ai.txt) and it does not promise citations.",
 				},
 				{
 					question: "What is AEO and why should I care?",
@@ -37,17 +37,17 @@ export default defineConfig({
 				{
 					question: "How is AEOrank different from SEO tools like Ahrefs or Semrush?",
 					answer:
-						"SEO tools check Google rankings. aeorank-cli@0.1.1 scores 12 dimensions (llms.txt, schema, crawler access, structure, and more) and writes 8 files you can deploy.",
+						"SEO tools check Google rankings. aeorank-cli@0.1.2 scores 36 dimensions (llms.txt, schema, crawler access, structure, and more) and writes 8 files you can deploy.",
 				},
 				{
 					question: "How is AEOrank different from Profound, Otterly, or Scrunch?",
 					answer:
-						"They monitor brand mentions in model answers. AEOrank is MIT, CLI/CI-first: 12 dimensions, 8 fix files, Pro $29 vs typical monitoring SaaS at $89–$499/mo. Complements, not clones. We do not promise citations.",
+						"They monitor brand mentions in model answers. AEOrank is MIT, CLI/CI-first: 36 dimensions, 8 fix files, Pro $29 vs typical monitoring SaaS at $89–$499/mo. Complements, not clones. We do not promise citations.",
 				},
 				{
 					question: "Is it really free? What's the catch?",
 					answer:
-						"The CLI and 11 framework plugins are MIT. Hosted Free is 1 site and 3 scans/month. Pro is $29 for 5 sites and 50 scans. Agency is $99 for 50 sites and 500 scans. Same 12-dimension CLI and 8 files. No public REST API. No PDF generator as a plan feature.",
+						"The CLI and 11 framework plugins are MIT. Hosted Free is 1 site and 3 scans/month. Pro is $29 for 5 sites and 50 scans. Agency is $99 for 50 sites and 500 scans. Same 36-dimension CLI and 8 files. No public REST API. No PDF generator as a plan feature.",
 				},
 				{
 					question: "What AI engines does AEOrank optimize for?",
@@ -57,17 +57,17 @@ export default defineConfig({
 				{
 					question: "How long does a scan take?",
 					answer:
-						"Often under 30 seconds. Default crawl cap is 50 pages. Deterministic — no LLM calls.",
+						"Often under 30 seconds. With no config file the crawl cap is 200 pages. Deterministic — no LLM calls.",
 				},
 				{
 					question: "Does llms.txt actually work?",
 					answer:
-						"llms.txt is agent-docs hygiene, not a citation guarantee. AEOrank still writes it as one of 8 files and scores its presence as one of 12 dimensions.",
+						"llms.txt is agent-docs hygiene, not a citation guarantee. AEOrank still writes it as one of 8 files and scores its presence as one of 36 dimensions.",
 				},
 				{
 					question: "Can I use AEOrank in CI/CD?",
 					answer:
-						"The GitHub Action can fail the PR if GPTBot is blocked (fail-on-crawler-block). That flag is not on aeorank-cli@0.1.1. App fail-below is coming soon — Action-only today.",
+						"fail-on-crawler-block is on aeorank-cli@0.1.2 (exit 2) and on the GitHub Action. App fail-below is coming soon — Action-only today. No citation promises.",
 				},
 			],
 		}),

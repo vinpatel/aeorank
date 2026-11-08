@@ -88,7 +88,7 @@ Replace `https://example.com` with the URL you want to scan on every push or pul
 
 **On every push and pull request:**
 
-The action runs `aeorank scan <url> --format json --no-files` using the AEOrank CLI. It then posts the result as a **GitHub Check Run** attached to the commit:
+The action runs `npx aeorank-cli@0.1.2 scan <url> --format json --no-files`. It then posts the result as a **GitHub Check Run** attached to the commit:
 
 - Score and grade shown in the Check summary
 - Full dimension breakdown table in the Check details
@@ -106,12 +106,13 @@ Set `fail-below: 70` (or any threshold from 1–100) to make the Check fail when
 
 The Check fails when GPTBot, ClaudeBot, PerplexityBot, or Google-Extended is **disallowed** in `robots.txt` — even if the overall score is high. The Check summary names which bot is blocked. A missing `robots.txt` is **unknown** and does not fail.
 
-The CLI JSON contract (for `vinpatel/aeorank-action` to consume):
+The CLI JSON contract (`aeorank-cli@0.1.2`):
 
-- `crawlerAccess`: `{ "GPTBot": "allow"|"block"|"unknown", ... }`
-- `crawlerGate.failed`: `true` only on explicit disallow
+- `crawlerAccess` emits **`allow`**, **`block`**, or **`unknown`** (for example `{ "GPTBot": "block" }`). That is the public status. `meta.robotsTxt.crawlerAccess` still uses the parser's internal **`allowed`** / **`disallowed`** / **`unknown`**.
+- The Check table maps `allowed` → `allow` and `disallowed` → `block`, and shows `allow` / `block` / `unknown` unchanged.
+- `crawlerGate.failed`: `true` only when a checked bot's public status is `block`
 - `crawlerGate.blockedBots`: names to put in the Check summary
-- CLI `--fail-on-crawler-block` exits **2** (scan errors stay **1**)
+- CLI `--fail-on-crawler-block` exits **2** (scan errors stay **1**). The Action input does not pass that flag; it reads `crawlerGate`.
 
 ---
 
@@ -148,7 +149,7 @@ For most projects, the simplest approach is to skip Check/comment posting on for
 
 ## Caching (Optional)
 
-`npx aeorank@latest` downloads the CLI from npm on every run, adding 5–15 seconds. You can reduce this with npm caching:
+The Action installs `aeorank-cli@0.1.2` (package name `aeorank-cli`, not `aeorank`) from npm on a cold runner, adding 5–15 seconds. You can reduce this with npm caching:
 
 ```yaml
 jobs:
@@ -159,7 +160,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.npm
-          key: ${{ runner.os }}-npm-aeorank
+          key: ${{ runner.os }}-npm-aeorank-cli
           restore-keys: |
             ${{ runner.os }}-npm-
 

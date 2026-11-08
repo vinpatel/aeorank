@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 	metadataBase: new URL("https://app.aeorank.dev"),
 	title: "AEOrank Dashboard",
 	description:
-		"Score crawler access and extractability. 12 dimensions, 8 generated files. Sign in to scan a public URL.",
+		"Score crawler access and extractability. 36 dimensions, 8 generated files. Sign in to scan a public URL.",
 	icons: {
 		icon: [
 			{ url: "/favicon.svg", type: "image/svg+xml" },

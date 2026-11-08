@@ -4,22 +4,34 @@
 
 const groups = [
 	{
-		code: "HI",
-		weight: 90,
-		name: "High",
-		subs: ["llms.txt", "schema.org markup", "content structure"],
+		code: "26%",
+		weight: 26,
+		name: "Answer Readiness",
+		subs: ["topical authority", "original data", "fact density", "duplication", "evidence", "citation-ready writing"],
 	},
 	{
-		code: "MD",
-		weight: 60,
-		name: "Medium",
-		subs: ["AI crawler access", "answer-first", "FAQ & speakable", "E-E-A-T", "meta descriptions", "citation anchors"],
+		code: "25%",
+		weight: 25,
+		name: "Content Structure",
+		subs: ["structure", "answer-first", "Q&A", "tables", "definitions", "entities"],
 	},
 	{
-		code: "LO",
-		weight: 30,
-		name: "Low",
-		subs: ["sitemap", "HTTPS & redirects", "page freshness"],
+		code: "12%",
+		weight: 12,
+		name: "Trust & Authority",
+		subs: ["E-E-A-T", "citation anchors", "internal linking"],
+	},
+	{
+		code: "25%",
+		weight: 25,
+		name: "Technical Foundation",
+		subs: ["llms.txt", "schema", "crawler access", "FAQ", "semantic HTML"],
+	},
+	{
+		code: "12%",
+		weight: 12,
+		name: "AI Discovery",
+		subs: ["sitemap", "HTTPS", "freshness", "licensing", "RSS", "dates"],
 	},
 ];
 ---
@@ -34,12 +46,12 @@ const groups = [
 				<p class="t-label">// anatomy of a score</p>
 				<h2 class="t-h1 mt-2">Every point is auditable.</h2>
 				<p class="t-body mt-3 max-w-[56ch]">
-					Your AEO score is a weighted sum of <strong>12 dimensions</strong> <code>aeorank-cli@0.1.1</code> scores (high / medium / low). Not a citation rank. The 36-row catalog in the repo is archived until a published CLI matches it.
+					Your AEO score is a weighted sum of <strong>36 dimensions</strong> <code>aeorank-cli@0.1.2</code> scores. Weights are percentages and sum to 100. Not a citation rank. <code>ai.txt</code> is scored by content-licensing and is not one of the 8 generated files.
 				</p>
 			</div>
 			<div class="section-meta">
-				<span>12&nbsp;<b>dimensions</b></span>
-				<span>3&nbsp;<b>weights</b></span>
+				<span>36&nbsp;<b>dimensions</b></span>
+				<span>5&nbsp;<b>pillars</b></span>
 				<span>8&nbsp;<b>files</b></span>
 			</div>
 		</div>
@@ -79,7 +91,7 @@ const groups = [
 						</div>
 						<div class="anat-row__kbd">
 							<span class="font-mono text-[10.5px] ink-3">source</span>
-							<code class="ml-2">aeorank-cli@0.1.1</code>
+							<code class="ml-2">aeorank-cli@0.1.2</code>
 						</div>
 					</li>
 				))}
@@ -91,8 +103,8 @@ const groups = [
 				<span class="font-mono text-[11px] ink-3">=</span>
 				<span class="font-mono text-[11px]">Σ (check · weight)</span>
 				<span class="font-mono text-[11px] ink-3">&nbsp;where&nbsp;</span>
-				<span class="font-mono text-[11px]">check ∈ 0…10</span>
-				<span class="font-mono text-[11px] ink-3">&nbsp;and&nbsp;weight ∈ high, medium, low</span>
+				<span class="font-mono text-[11px]">(score / 10) × weightPct</span>
+				<span class="font-mono text-[11px] ink-3">&nbsp;and&nbsp;Σ weightPct = 100</span>
 			</div>
 		</div>
 

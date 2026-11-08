@@ -1,9 +1,9 @@
 ---
 title: AEOrank Documentation
-description: Scan with aeorank-cli@0.1.1 — 12 dimensions, 8 files. Crawler access and extractability, not a citation promise.
+description: Scan with aeorank-cli@0.1.2 — 36 dimensions, 8 files. Crawler access and extractability, not a citation promise.
 template: splash
 hero:
-  tagline: Scan your site. Score 12 dimensions. Write the 8 files the published CLI actually generates.
+  tagline: Scan your site. Score 36 dimensions. Write the 8 files the CLI actually generates.
   image:
     html: '<svg width="160" height="160" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="32" height="32" rx="7" fill="#0A0B0F"/><path d="M6.943 23.133 A13.078 13.078 0 0 1 27.107 6.511" stroke="#3DFFB5" stroke-width="0.922" stroke-linecap="butt"/><path d="M10.039 20.800 A9.202 9.202 0 0 1 24.226 9.105" stroke="#3DFFB5" stroke-width="0.694" stroke-linecap="butt"/><circle cx="13.918" cy="13.333" r="1.425" fill="#3DFFB5"/><polygon points="17.352,14.502 17.352,19.470 6.539,30.283 6.539,25.315" fill="#F2F2F3"/><polygon points="17.425,14.502 17.425,19.470 28.237,30.283 28.237,25.315" fill="#3DFFB5"/></svg>'
   actions:
@@ -22,7 +22,7 @@ import { Card, CardGrid, LinkCard } from '@astrojs/starlight/components';
 
 <CardGrid>
   <Card title="Quick Start" icon="rocket">
-    Run `npx aeorank-cli@0.1.1 scan https://your-site.com` to score 12 dimensions and write 8 files.
+    Run `npx aeorank-cli@0.1.2 scan https://your-site.com` to score 36 dimensions and write 8 files.
     [Read the guide &rarr;](/getting-started/)
   </Card>
   <Card title="What is AEO?" icon="information">
@@ -30,11 +30,11 @@ import { Card, CardGrid, LinkCard } from '@astrojs/starlight/components';
     [Learn more &rarr;](/what-is-aeo/)
   </Card>
   <Card title="CLI Reference" icon="laptop">
-    `scan` and `init` on aeorank-cli@0.1.1. GitHub Action owns fail-on-crawler-block.
+    `scan`, `init`, and `compare` on aeorank-cli@0.1.2. `--fail-on-crawler-block` is a CLI flag and an Action input.
     [View commands &rarr;](/cli/scan/)
   </Card>
   <Card title="Scoring" icon="star">
-    12 dimensions (high / medium / low) on the published CLI. The 36-row catalog is archived.
+    36 dimensions (`weightPct`, sum 100). `ai.txt` is scored, not generated. No citation promises.
     [See dimensions &rarr;](/scoring/dimensions/)
   </Card>
 </CardGrid>
@@ -61,7 +61,7 @@ Drop-in plugins for your stack. One config change, 8 AEO files.
 
 ## Generated files
 
-`aeorank-cli@0.1.1` writes these 8 files. Not generated: `ai.txt`.
+`aeorank-cli@0.1.2` writes these 8 files. `ai.txt` is scored by `content-licensing` and is not generated.
 
 <CardGrid>
   <LinkCard title="llms.txt" description="Agent-readable site map — not a citation guarantee" href="/files/llms-txt/" />

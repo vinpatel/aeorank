@@ -1,36 +1,26 @@
 # Product Truths — v2-redesign
 
-Ground-truth reference for marketing copy. Canonical product is **`npx aeorank-cli@0.1.1`** (npm). Every numeric claim in `apps/marketing` must either be on the Verified list below, or fetched live at runtime.
+Ground-truth reference for marketing copy. Canonical product in this repo is **`npx aeorank-cli@0.1.2`**. npm still serves `0.1.1` until `@aeorank/core@0.1.2` and `aeorank-cli@0.1.2` are published, in that order. Every numeric claim in `apps/marketing` must either be on the Verified list below, or fetched live at runtime. Do not promise citations.
 
-**Live product (npm 0.1.1):** **12 dimensions**, **8 files**. Weights are `high` / `medium` / `low`.
-
-The in-repo `@aeorank/core` 36-row registry is **local / unpublished only**. Do not market 36 dimensions, 36 checks, or 36 criteria until a published CLI's `dimensions.length` matches. See `MESSAGING.md`.
+**This CLI:** **36 dimensions**, **8 files**. Weights are `weightPct` and sum to 100.
 
 ## Verified — safe to state in copy
 
 | Claim | Value | Source of truth |
 |---|---|---|
-| Scoring dimensions | **12** | `aeorank-cli@0.1.1` JSON `dimensions.length`. IDs: `llms-txt`, `schema-markup`, `ai-crawler-access`, `content-structure`, `answer-first`, `faq-speakable`, `eeat-signals`, `meta-descriptions`, `sitemap`, `https-redirects`, `page-freshness`, `citation-anchors`. |
-| Dimension weights | **high / medium / low** | Published CLI. Not percentage pillars. |
-| Generated files | **8** | CLI `files[].name` / `packages/core/src/constants.ts` `GENERATED_FILE_NAMES` — llms.txt, llms-full.txt, CLAUDE.md, schema.json, robots-patch.txt, faq-blocks.html, citation-anchors.html, sitemap-ai.xml. |
-| `ai.txt` | **neither generated nor scored** | Not in 0.1.1 output or dimension list. |
+| Scoring dimensions | **36** | `calculateAeoScore()` / `DIMENSION_DEFS` / `DIMENSION_SCORERS`. JSON `dimensions.length` and `dimensionCount`. |
+| Dimension weights | **`weightPct` summing to 100** | `packages/core/src/constants.ts`. Five pillars: Answer Readiness 26, Content Structure 25, Trust & Authority 12, Technical Foundation 25, AI Discovery 12. |
+| Generated files | **8** | `GENERATED_FILE_NAMES`: llms.txt, llms-full.txt, CLAUDE.md, schema.json, robots-patch.txt, faq-blocks.html, citation-anchors.html, sitemap-ai.xml. |
+| `ai.txt` | **scored, not generated** | Fetched by the scanner. Scored inside `content-licensing`. Not in `generateFiles()`. |
+| Crawler status | **`allow` \| `block` \| `unknown`** | `CrawlerPublicStatus` on `crawlerAccess`. Internal `meta.robotsTxt.crawlerAccess` is `allowed` \| `disallowed` \| `unknown`. The Action maps the internal words onto the public ones. |
+| `--fail-on-crawler-block` | **CLI flag and Action input** | CLI exits 2. Action reads `crawlerGate` and does not pass the flag. |
 | Framework plugins | **11** | `packages/` dirs minus `cli` / `config` / `core`: 11ty, astro, docusaurus, gatsby, next, nuxt, remix, shopify, sveltekit, vitepress, wordpress |
-| Tests | **288** | `pnpm --filter @aeorank/core test` output, 2026-04-19 |
-| CLI version | **0.1.1** | npm package `aeorank-cli` (`packages/cli/package.json`). Binary `-V` may still print `0.0.1`; npm version is canonical. |
+| CLI version | **0.1.2** | `packages/cli/package.json`. `-V` reads that file. Core is `0.1.2`. |
 | License | **MIT** | repo root LICENSE + `vinpatel/aeorank` GitHub metadata |
 | Primary language | **TypeScript** | directory scan |
 | Scan time | **< 30s** typical | unit scan benchmarks; expressed as "~30s" or "<30s", never a point estimate |
 | Typical scan runtime in fixtures | **0.9s** | used as illustrative in the LiveScan mockup only; never as an external benchmark claim |
-| Default crawl cap | **50** | `aeorank-cli@0.1.1` `maxPages` |
-
-## Local / unpublished — DO NOT market as live product
-
-These exist in repo source only. They are **not** `aeorank-cli@0.1.1`. Do not use as marketing ground-truth.
-
-| Claim | Value | Status |
-|---|---|---|
-| Scoring criteria / checks / dimensions | **36** | Local `@aeorank/core` registry (`packages/core/src/scorer/dimensions.ts` — 36 `export function score*` entries). Future / unpublished until a shipped CLI emits that `dimensionCount` / `dimensions.length`. Archived at docs `scoring/dimensions-catalog`. |
-| Scoring pillars | **5** (percentage weights summing to 100%) | Grouping for the unpublished 36-row catalog only (`DESIGN-DIRECTION.md`). Published CLI does not use these pillar weights. |
+| Default crawl cap | **200** | `DEFAULT_CONFIG.maxPages`. `aeorank-cli init` writes `maxPages: 50`. |
 
 ## Live — fetched at runtime, never hardcoded
 
@@ -51,8 +41,7 @@ These exist in repo source only. They are **not** `aeorank-cli@0.1.1`. Do not us
 
 These were caught by the fake-numbers audit and must not return without a ground-truth source:
 
-- **36 dimensions / checks / criteria** as current product (local registry only).
-- A specific release version other than `0.1.1`.
+- A specific release version other than `0.1.2` for the current CLI. Historical snapshots may still say they were scored with `0.1.1`.
 - A specific stargazer count hardcoded anywhere.
 - A weekly star growth rate (`+N/wk`).
 - A contributor count as a specific integer.
@@ -62,7 +51,7 @@ These were caught by the fake-numbers audit and must not return without a ground
 - "Made in SF" or any specific origin claim.
 - Any "first/only/leader" framing.
 - Any testimonial or quote attribution.
-- `ai.txt` generated or scored.
+- `ai.txt` generated (it is scored, not written).
 - Citation timelines / “get you cited” outcome claims.
 
 ## Product-truth asks — claims we'd like but can't yet make
@@ -74,14 +63,14 @@ Ordered by potential marketing lift. Each becomes a product / tooling task befor
 3. **"288 tests passing on `main`."** True at the time of the scan, but could regress silently. To claim: add a CI badge (shields.io/github/workflow-status) pointing at the test workflow, link next to the 288 number.
 4. **"Deployed in production by N teams."** No proof. To claim: one named early-adopter with permission, or an opt-in `aeorank-cli scan --anonymous-telemetry` counter.
 5. **"2–4 weeks to citation lift"** in the FAQ. Plausible but not measured. To soften or verify with a before/after case study on a real site.
-6. ~~**"8 vs 9 files" build-log discrepancy.**~~ Resolved: public claims match the 8-file `generateFiles()` list. `ai.txt` is **neither generated nor scored** on `aeorank-cli@0.1.1`.
-7. **"36 dimensions."** Local registry only. To claim: ship a CLI whose published JSON `dimensions.length` is 36, then un-archive the catalog.
+6. ~~**"8 vs 9 files" build-log discrepancy.**~~ Resolved: public claims match the 8-file `generateFiles()` list. `ai.txt` is scored by `content-licensing` and is not generated.
+7. ~~**"36 dimensions."**~~ The CLI on this branch scores 36. npm still has `0.1.1` until the publish plan runs.
 
 ## Illustrative (not a claim)
 
 Some elements are explicitly framed as mockups of product output. These are allowed to carry placeholder numbers *because the framing is illustrative*, not claimed:
 
-- Hero dual-view "inspector" panel — the 31/100 score and 12-dimension demo is an illustrative audit of a generic "your-site.com" (`aeorank-cli@0.1.1` shape). Do not restore a 36-check / 9-file breakdown.
+- Hero dual-view "inspector" panel — the 31/100 score is an illustrative audit of a generic "your-site.com". The caption says 36 dimensions (`aeorank-cli@0.1.2`). Do not restore a 9-file or `ai.txt` file count.
 - Footer receipt card — #0000047, 0.93s runtime, 31/100 score — styled as a receipt mockup.
 - LiveScan marquee lines (`title 64 chars · well-formed`, etc.) — plausible per-criterion output, shown as an example stream.
 
